@@ -1,8 +1,14 @@
-export const navLinks = [
+type mainMenu = {
+  id: string;
+  title: string;
+  link?: string;
+}
+
+export const navLinks: mainMenu[] = [
   {
-    id: "about",
-    title: "About",
-    link: "a"
+    id: "home",
+    title: "Home",
+    link: "/home",
   },
   {
     id: "work",
