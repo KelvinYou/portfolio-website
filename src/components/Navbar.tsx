@@ -3,8 +3,7 @@
 import React, { useState } from 'react'
 import Image from 'next/image';
 
-import { styles } from "@/styles";
-import { navLinks } from "@/constants/menu";
+import { navLinks } from "@/constants";
 import { logo, menu, close } from "@/assets";
 import Link from 'next/link';
 
@@ -47,6 +46,10 @@ const Navbar = () => {
                 <a href={link.link} target="_blank" rel="noreferrer noopener">
                   {link.title}
                 </a>
+              ) : link?.path ? (
+                <Link href={link.path}>
+                  {link.title}
+                </Link>
               ) : (
                 <a href={`#${link.id}`}>{link.title}</a>
               )}

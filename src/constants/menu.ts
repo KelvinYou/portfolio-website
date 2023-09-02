@@ -1,21 +1,31 @@
+import { HOME_PATH, PROJECTS_PATH, RESUME_LINK, WORKS_PATH } from "./routes";
+
 type mainMenu = {
   id: string;
   title: string;
   link?: string;
+  path?: string;
 }
 
 export const navLinks: mainMenu[] = [
   {
     id: "home",
     title: "Home",
-    link: "/home",
+    path: HOME_PATH,
   },
   {
-    id: "work",
-    title: "Work",
+    id: "works",
+    title: "Works",
+    path: WORKS_PATH,
   },
   {
-    id: "contact",
-    title: "Contact",
+    id: "projects",
+    title: "Projects",
+    path: PROJECTS_PATH,
+  },
+  {
+    id: "resume",
+    title: "Resume",
+    link: RESUME_LINK,
   },
 ];
