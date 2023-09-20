@@ -1,15 +1,17 @@
 "use client";
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image';
 
 import { navLinks } from "@/constants";
 import { logo, menu, close } from "@/assets";
 import Link from 'next/link';
+import "@/styles/index.scss";
 
 const Navbar = () => {
   // state variables
-  const [active, setActive] = useState("");
+  // console.log("path: ", window.location.pathname);
+  const [active, setActive] = useState(navLinks[0].title);
   const [toggle, setToggle] = useState(false);
 
   return (
@@ -34,24 +36,24 @@ const Navbar = () => {
 
         {/* Nav Links (Desktop) */}
         <ul className="list-none hidden md:flex flex-row gap-10">
-          {navLinks.map((link) => (
+          {navLinks.map((link, index) => (
             <li
-              key={link.id}
+              key={link.id + index}
               className={`${
                 active === link.title ? "text-white" : "text-secondary"
               } hover:text-white text-[18px] font-medium cursor-pointer`}
-              onClick={() => !link?.link && setActive(link.title)}
+              onClick={() => !link?.newTab && setActive(link.title)}
             >
               {link?.link ? (
-                <a href={link.link} target="_blank" rel="noreferrer noopener">
-                  {link.title}
-                </a>
-              ) : link?.path ? (
-                <Link href={link.path}>
+                <Link 
+                  href={link.link} 
+                  target={link.newTab ? `_blank` : '_self'}
+                  rel="noreferrer noopener"
+                >
                   {link.title}
                 </Link>
               ) : (
-                <a href={`#${link.id}`}>{link.title}</a>
+                <a href={`/#${link.id}`}>{link.title}</a>
               )}
             </li>
           ))}
@@ -73,27 +75,27 @@ const Navbar = () => {
           >
             {/* Nav Links (Mobile) */}
             <ul className="list-none flex justify-end items-start flex-col gap-4">
-              {navLinks.map((link) => (
+              {navLinks.map((navLink) => (
                 <li
-                  key={link.id}
+                  key={navLink.id}
                   className={`${
-                    active === link.title ? "text-white" : "text-secondary"
+                    active === navLink.title ? "text-white" : "text-secondary"
                   } font-poppins font-medium cursor-pointer text-[16px]`}
                   onClick={() => {
-                    !link?.link && setToggle(!toggle);
-                    !link?.link && setActive(link.title);
+                    !navLink?.link && setToggle(!toggle);
+                    !navLink?.link && setActive(navLink.title);
                   }}
                 >
-                  {link?.link ? (
-                    <a
-                      href={link.link}
-                      target="_blank"
+                  {navLink?.link ? (
+                    <Link 
+                      href={navLink.link} 
+                      target={navLink.newTab ? `_blank` : '_self'}
                       rel="noreferrer noopener"
                     >
-                      {link.title}
-                    </a>
+                      {navLink.title}
+                    </Link>
                   ) : (
-                    <a href={`#${link.id}`}>{link.title}</a>
+                    <a href={`/#${navLink.id}`}>{navLink.title}</a>
                   )}
                 </li>
               ))}

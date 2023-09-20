@@ -4,28 +4,29 @@ type mainMenu = {
   id: string;
   title: string;
   link?: string;
-  path?: string;
+  newTab?: boolean;
 }
 
 export const navLinks: mainMenu[] = [
   {
     id: "home",
     title: "Home",
-    path: HOME_PATH,
+    link: HOME_PATH,
   },
   {
     id: "works",
     title: "Works",
-    path: WORKS_PATH,
+    link: WORKS_PATH,
   },
   {
     id: "projects",
     title: "Projects",
-    path: PROJECTS_PATH,
+    link: PROJECTS_PATH,
   },
   {
     id: "resume",
     title: "Resume",
     link: RESUME_LINK,
+    newTab: true,
   },
 ];
