@@ -36,7 +36,29 @@ const Navbar = () => {
 
         {/* Nav Links (Desktop) */}
         <ul className="list-none hidden md:flex flex-row gap-10">
-          {navLinks.map((link, index) => (
+          {navLinks.slice(0, 2).map((link, index) => (
+            <li
+              key={link.id + index}
+              className={`${
+                active === link.title ? "text-white" : "text-secondary"
+              } hover:text-white text-[18px] font-medium cursor-pointer`}
+              onClick={() => !link?.newTab && setActive(link.title)}
+            >
+              {link?.link ? (
+                <Link 
+                  href={link.link} 
+                  target={link.newTab ? `_blank` : '_self'}
+                  rel="noreferrer noopener"
+                >
+                  {link.title}
+                </Link>
+              ) : (
+                <a href={`/#${link.id}`}>{link.title}</a>
+              )}
+            </li>
+          ))}
+
+          {navLinks.slice(2, 4).map((link, index) => (
             <li
               key={link.id + index}
               className={`${
@@ -82,7 +104,7 @@ const Navbar = () => {
                     active === navLink.title ? "text-white" : "text-secondary"
                   } font-poppins font-medium cursor-pointer text-[16px]`}
                   onClick={() => {
-                    !navLink?.link && setToggle(!toggle);
+                    navLink?.link && setToggle(!toggle);
                     !navLink?.link && setActive(navLink.title);
                   }}
                 >
