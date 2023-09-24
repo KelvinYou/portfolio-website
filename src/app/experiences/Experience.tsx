@@ -1,5 +1,5 @@
 "use client";
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import Image from 'next/image';
 import {
   VerticalTimeline,
@@ -41,12 +41,17 @@ const ExperienceCard: FC<any> = ({ experience }) => (
       </p>
     </div>
 
+    {experience.description && <div className="mt-5 text-justify">
+        {experience.description}
+      </div>
+    }
+    
     {/* Experience Points */}
     <ul className="mt-5 list-disc ml-5 space-y-2">
       {experience.points.map((point: string, i: number) => (
         <li
           key={`experience-point-${i}`}
-          className="text-white-100 text-[14px] pl-1 tracking-wider"
+          className="text-white-100 text-[14px] pl-1 tracking-wider text-justify"
         >
           {point}
         </li>
@@ -54,7 +59,7 @@ const ExperienceCard: FC<any> = ({ experience }) => (
     </ul>
 
     <div className="mt-5 flex flex-wrap gap-y-2">
-      {experience.tools.map((language: string, index: number) => (
+      {experience.techStacks.map((language: string, index: number) => (
         <div 
           key={index}
           className="text-xs font-medium mr-2 px-2.5 py-0.5 rounded bg-gray-700 text-gray-300"
@@ -72,9 +77,18 @@ const Experience: FC = () => {
       idName='experience'
     >
       {/* Title */}
-      <motion.div variants={textVariant()}>
-        <p className="sm:text-[18px] text-[14px] text-secondary uppercase tracking-wider">What I have done so far</p>
-        <h2 className="text-white font-black md:text-[60px] sm:text-[50px] xs:text-[40px] text-[30px]">Work Experience.</h2>
+      <motion.div
+        initial="hidden"
+        animate="show"
+        variants={textVariant()}
+      >
+      {/* <motion.div> */}
+        <p className="sm:text-[18px] text-[14px] text-secondary uppercase tracking-wider">
+          What I have done so far
+        </p>
+        <h2 className="text-white font-black md:text-[60px] sm:text-[50px] xs:text-[40px] text-[30px]">
+          Work Experience and Education.
+        </h2>
       </motion.div>
 
       {/* Experience Card */}

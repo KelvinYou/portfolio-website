@@ -17,10 +17,9 @@ export const experiences = [
     date: "Aug 2023 - Today",
     points: [
     ],
-    tools: [
+    techStacks: [
       "ReactJS",
       "Git",
-      // ""
     ],
   },
   {
@@ -29,13 +28,16 @@ export const experiences = [
     icon: finexus,
     iconBg: "#383E56",
     date: "Feb 2023 - Jul 2023",
+    description: "Finexus International Sdn Bhd is a dynamic and innovative technology company specializing in financial solutions.",
     points: [
-      "Focused on Java-based project maintenance, utilizing JSP and Tomcat. Conducted R&D for innovative features such as reusable custom dialogs and remote log file retrieval. Conducted comprehensive testing and documentation for quality assurance.",
-      "Contributed to large-scale projects involving multiple teams, including frontend, backend, and mobile, fostering effective collaboration and coordination for successful project execution.",
-      "Skilled in utilizing log files for debugging, adept at efficient web resource searching, and knowledgeable in SIT and UAT workflows.",
-      "Proficient in deploying applications using Tomcat, SQLDeveloper, and FileZilla for streamlined server management and file transfer."
+      "Spearheaded Java-based projects with innovative features and rigorous testing, fostering seamless collaboration across teams.",
+      "Mastered debugging, efficient web resource searching, and streamlined application deployment for optimal project performance."
+      // "Focused on Java-based project maintenance, utilizing JSP and Tomcat. Conducted R&D for innovative features such as reusable custom dialogs and remote log file retrieval. Conducted comprehensive testing and documentation for quality assurance.",
+      // "Contributed to large-scale projects involving multiple teams, including frontend, backend, and mobile, fostering effective collaboration and coordination for successful project execution.",
+      // "Skilled in utilizing log files for debugging, adept at efficient web resource searching, and knowledgeable in SIT and UAT workflows.",
+      // "Proficient in deploying applications using Tomcat, SQLDeveloper, and FileZilla for streamlined server management and file transfer."
     ],
-    tools: [
+    techStacks: [
       "NextJS",
       "ReactJS",
       "Java for Android",
@@ -49,7 +51,28 @@ export const experiences = [
     ],
   },
   {
-    title: "Web Developer Intern",
+    title: "Bachelor (Hons) of Software Engineering",
+    company_name: "Tunku Abdul Rahman University of Management and Technology",
+    // icon: tarumt,
+    iconBg: "#383E56",
+    date: "Jun 2021 - Jul 2023",
+    cgpa: "3.7200",
+    description: "",
+    points: [
+      "Taken core courses for software development such as Data Structure and Algorithm in Java, Human-Computer Interaction, Graphics Programming, Distributed System and Parallel Computing. Exposed to technologies such as Mobile Application Development, Blockchain App Development, Data Science through elective courses.",
+    ],
+    techStacks: [
+      "Java",
+      "C++",
+      "TypeScript",
+      "ReactJS",
+      "Linux",
+      "Python",
+      "Git"
+    ],
+  },
+  {
+    title: "Software Engineer Intern",
     company_name: "Techtics Blockchain PLT",
     icon: techtics,
     iconBg: "#E6DEDD",
@@ -60,7 +83,7 @@ export const experiences = [
       "Explored Laravel's router functionality, MVC architecture, ORM, events, listeners, and data seeding techniques for efficient database testing.",
       "Implemented key functionalities such as authentication, real-time exchange rate fetching, dynamic UI updates, and built APIs for seamless CRUD operations on transactions.",
     ],
-    tools: [
+    techStacks: [
       "Laravel PHP",
       "PhpMyAdmin",
       "Typescript",
@@ -75,19 +98,39 @@ export const experiences = [
     ],
   },
   {
-    title: "Web Developer Intern",
+    title: "Bachelor (Hons) of Software Engineering",
+    company_name: "Tunku Abdul Rahman University of Management and Technology",
+    // icon: tarumt,
+    iconBg: "#383E56",
+    date: "May 2019 - Jun 2021",
+    cgpa: "3.7200",
+    description: "",
+    points: [
+      "Taken core courses for software development such as Data Structure and Algorithm in Java, Human-Computer Interaction, Graphics Programming, Distributed System and Parallel Computing. Exposed to technologies such as Mobile Application Development, Blockchain App Development, Data Science through elective courses.",
+    ],
+    techStacks: [
+      "Java",
+      "C++",
+      "TypeScript",
+      "ReactJS",
+      "Linux",
+      "Python",
+      "Git"
+    ],
+  },
+  {
+    title: "Frontend Web Developer",
     company_name: "Jonvi Marketing Sdn. Bhd.",
     icon: jonvi,
     iconBg: "#E6DEDD",
     date: "Jan 2019 - May 2019",
+    description: "Jonvi Exchange elegantly provides a seamless platform for effortless buying, selling, and trading of digital assets, ensuring both convenience and robust security.",
     points: [
-      "Master website design with HTML, CSS, JavaScript and some simple Bootstrap.",
-      "Understand how to connect the frontend and backend through APIs.",
-      "Explore HTTPS methods (GET, POST, DELETE, PUT) and practice testing with Postman. Learn how to call APIs in HTML or PHP files.",
-      "Acquired Python scripting skills.",
-      "Gained expertise in using Google Scripts to automate data entry tasks in Google Sheets.",
+      "Developed 2 web apps using HTML, CSS, JavaScript, PHP, and Bootstrap, with a focus on user-friendly design.",
+      "Integrated front-end components to interact with API endpoints for authentication and CRUD operations.",
+      "Leveraged Python and Google Script to automate data tasks, including fetching, entry, and Excel file generation.",
     ],
-    tools: [
+    techStacks: [
       "HTML",
       "CSS",
       "JavaScript",
@@ -100,4 +143,13 @@ export const experiences = [
       "Postman API"
     ],
   },
+];
+
+export type EducationType = typeof education;
+
+// Experiences
+export const education = [
+  {
+    name: "",
+  }
 ];

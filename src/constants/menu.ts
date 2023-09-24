@@ -15,7 +15,7 @@ export const navLinks: mainMenu[] = [
   },
   {
     id: "experiences",
-    title: "Experiences",
+    title: "Experiences & Educations",
     link: EXPERIENCES_PATH,
   },
   {
