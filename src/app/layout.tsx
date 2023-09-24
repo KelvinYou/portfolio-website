@@ -17,7 +17,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${poppins.className} overflow-hidden`}>
+      <body className={`${poppins.className} bg-primary`}>
         <Navbar />
         <div className='pt-20'>
           {children}

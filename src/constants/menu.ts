@@ -1,4 +1,4 @@
-import { HOME_PATH, PROJECTS_PATH, RESUME_LINK, WORKS_PATH } from "./routes";
+import { HOME_PATH, PROJECTS_PATH, RESUME_LINK, EXPERIENCES_PATH } from "./routes";
 
 type mainMenu = {
   id: string;
@@ -14,9 +14,9 @@ export const navLinks: mainMenu[] = [
     link: HOME_PATH,
   },
   {
-    id: "works",
-    title: "Works",
-    link: WORKS_PATH,
+    id: "experiences",
+    title: "Experiences",
+    link: EXPERIENCES_PATH,
   },
   {
     id: "projects",
