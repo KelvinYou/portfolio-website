@@ -1,16 +1,82 @@
 "use client";
 
-import React, { useEffect, useState } from 'react'
+import React, { FC, useEffect, useRef, useState } from 'react'
 import Image from 'next/image';
 
 import { navLinks } from "@/constants";
 import { logo, menu, close } from "@/assets";
 import Link from 'next/link';
 import "@/styles/index.scss";
+import { MainMenu } from '@/constants/menu';
+
+const DropdownMenu: FC<any> = (link) => {
+  const [active, setActive] = useState(navLinks[0].title);
+
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const timeoutRef = useRef<NodeJS.Timeout | undefined>(undefined);;
+
+  const toggleDropdown = () => {
+    clearTimeout(timeoutRef.current);
+    setDropdownOpen(true);
+  };
+
+  const closeDropdown = () => {
+    // Delay the closing of the dropdown by a short time
+    timeoutRef.current = setTimeout(() => {
+      setDropdownOpen(false);
+    }, 200); // Adjust the delay time as needed
+  };
+
+  return (
+    <div className="relative"         
+      onMouseEnter={toggleDropdown}
+      onMouseLeave={closeDropdown}
+    >
+      <li
+        className={`text-secondary
+        font-medium cursor-pointer`}
+      >
+        <a 
+          className={`text-secondary hover:text-white text-[18px] `}
+          onClick={(e) => e.preventDefault()}>
+          Experiences
+        </a>
+        {isDropdownOpen && (
+          <ul className="absolute top-8 left-0 bg-black shadow-md">
+            {/* Add dropdown menu items here */}
+            {link.link.subMenu.map((menu: any, index: number) => {
+              return (
+                <li
+                  key={index}
+                  className={`${
+                    active === menu.title ? "text-white" : "text-secondary"
+                  } hover:text-white text-[18px] font-medium cursor-pointer`}
+                  onClick={() => !menu?.newTab && setActive(menu.title)}
+                >
+                  {menu?.link ? (
+                    <Link 
+                      href={menu.link} 
+                      target={menu.newTab ? `_blank` : '_self'}
+                      rel="noreferrer noopener"
+                      onClick={closeDropdown}
+                    >
+                      {menu.title}
+                    </Link>
+                  ) : (
+                    <a href={`/#${menu.id}`}>{menu.title}</a>
+                  )}
+                </li>
+              )
+            })}
+          </ul>
+        )}
+      </li>
+    </div>
+  );
+}
 
 const Navbar = () => {
   // state variables
-  // console.log("path: ", window.location.pathname);
   const [active, setActive] = useState(navLinks[0].title);
   const [toggle, setToggle] = useState(false);
 
@@ -36,49 +102,39 @@ const Navbar = () => {
 
         {/* Nav Links (Desktop) */}
         <ul className="list-none hidden md:flex flex-row gap-10">
-          {navLinks.slice(0, 2).map((link, index) => (
-            <li
-              key={link.id + index}
-              className={`${
-                active === link.title ? "text-white" : "text-secondary"
-              } hover:text-white text-[18px] font-medium cursor-pointer`}
-              onClick={() => !link?.newTab && setActive(link.title)}
-            >
-              {link?.link ? (
-                <Link 
-                  href={link.link} 
-                  target={link.newTab ? `_blank` : '_self'}
-                  rel="noreferrer noopener"
+          {navLinks.map((link, index) => {
+            if (link.subMenu) {
+              return (
+                <DropdownMenu 
+                  key={link.id + index}
+                  link={link}
+                />
+              )
+            } else {
+              return (
+                <li
+                  key={link.id + index}
+                  className={`${
+                    active === link.title ? "text-white" : "text-secondary"
+                  } hover:text-white text-[18px] font-medium cursor-pointer`}
+                  onClick={() => !link?.newTab && setActive(link.title)}
                 >
-                  {link.title}
-                </Link>
-              ) : (
-                <a href={`/#${link.id}`}>{link.title}</a>
-              )}
-            </li>
-          ))}
+                  {link?.link ? (
+                    <Link 
+                      href={link.link} 
+                      target={link.newTab ? `_blank` : '_self'}
+                      rel="noreferrer noopener"
+                    >
+                      {link.title}
+                    </Link>
+                  ) : (
+                    <a href={`/#${link.id}`}>{link.title}</a>
+                  )}
+                </li>
+              )
+            }
 
-          {navLinks.slice(2, 4).map((link, index) => (
-            <li
-              key={link.id + index}
-              className={`${
-                active === link.title ? "text-white" : "text-secondary"
-              } hover:text-white text-[18px] font-medium cursor-pointer`}
-              onClick={() => !link?.newTab && setActive(link.title)}
-            >
-              {link?.link ? (
-                <Link 
-                  href={link.link} 
-                  target={link.newTab ? `_blank` : '_self'}
-                  rel="noreferrer noopener"
-                >
-                  {link.title}
-                </Link>
-              ) : (
-                <a href={`/#${link.id}`}>{link.title}</a>
-              )}
-            </li>
-          ))}
+          })}
         </ul>
 
         {/* Hamburger Menu (Mobile) */}

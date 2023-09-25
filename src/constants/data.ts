@@ -3,6 +3,7 @@ import {
   techtics,
   finexus,
   beyondsoft,
+  tarumt
 } from "@/assets";
 
 export type ExperienceType = typeof experiences;
@@ -21,6 +22,7 @@ export const experiences = [
       "ReactJS",
       "Git",
     ],
+    experienceCategory: "work"
   },
   {
     title: "Java Software Engineer Intern",
@@ -49,11 +51,12 @@ export const experiences = [
       "Jasper",
       "TortoiseSVN"
     ],
+    experienceCategory: "work"
   },
   {
     title: "Bachelor (Hons) of Software Engineering",
     company_name: "Tunku Abdul Rahman University of Management and Technology",
-    // icon: tarumt,
+    icon: tarumt,
     iconBg: "#383E56",
     date: "Jun 2021 - Jul 2023",
     cgpa: "3.7200",
@@ -70,6 +73,7 @@ export const experiences = [
       "Python",
       "Git"
     ],
+    experienceCategory: "education",
   },
   {
     title: "Software Engineer Intern",
@@ -96,11 +100,12 @@ export const experiences = [
       "Git",
       "MetaMask"
     ],
+    experienceCategory: "work",
   },
   {
-    title: "Bachelor (Hons) of Software Engineering",
+    title: "Diploma in Computer Science",
     company_name: "Tunku Abdul Rahman University of Management and Technology",
-    // icon: tarumt,
+    icon: tarumt,
     iconBg: "#383E56",
     date: "May 2019 - Jun 2021",
     cgpa: "3.7200",
@@ -117,6 +122,7 @@ export const experiences = [
       "Python",
       "Git"
     ],
+    experienceCategory: "education",
   },
   {
     title: "Frontend Web Developer",
@@ -142,6 +148,7 @@ export const experiences = [
       "Bootstrap",
       "Postman API"
     ],
+    experienceCategory: "work",
   },
 ];
 

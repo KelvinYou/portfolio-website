@@ -1,13 +1,20 @@
 import { HOME_PATH, PROJECTS_PATH, RESUME_LINK, EXPERIENCES_PATH } from "./routes";
 
-type mainMenu = {
+export type MainMenu = {
   id: string;
   title: string;
+  subMenu?: SubMenu[];
   link?: string;
   newTab?: boolean;
 }
 
-export const navLinks: mainMenu[] = [
+type SubMenu = {
+  title: string;
+  subMenu?: SubMenu[];
+  link?: string;
+}
+
+export const navLinks: MainMenu[] = [
   {
     id: "home",
     title: "Home",
@@ -15,8 +22,22 @@ export const navLinks: mainMenu[] = [
   },
   {
     id: "experiences",
-    title: "Experiences & Educations",
+    title: "Experiences",
     link: EXPERIENCES_PATH,
+    subMenu: [
+      {
+        title: "All",
+        link: "/exp?type=all",
+      },
+      {
+        title: "Educations",
+        link: "/exp?type=education",
+      },
+      {
+        title: "Works",
+        link: "/exp?type=works",
+      }
+    ]
   },
   {
     id: "projects",

@@ -12,6 +12,7 @@ import "react-vertical-timeline-component/style.min.css";
 import { SectionWrapper } from '@/hoc';
 import { textVariant } from "@/utils/motion";
 import { experiences } from "@/constants/data";
+import { useSearchParams } from 'next/navigation';
 
 // Experience Card
 const ExperienceCard: FC<any> = ({ experience }) => (
@@ -72,6 +73,10 @@ const ExperienceCard: FC<any> = ({ experience }) => (
 );
 
 const Experience: FC = () => {
+  const searchParams = useSearchParams()
+  const type = searchParams.get('type') ?? "1";
+  console.log("params.type: " + type)
+  
   return (
     <SectionWrapper
       idName='experience'
