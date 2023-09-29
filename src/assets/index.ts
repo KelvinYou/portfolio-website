@@ -1,7 +1,10 @@
 export { default as logo } from "./logo.png";
 
+// general
 export { default as menu } from "./general/menu.svg";
 export { default as close } from "./general/close.svg";
+export { default as preview } from "./general/preview.png";
+export { default as github } from "./general/github.png";
 
 // companies
 export { default as beyondsoft } from "./companies/beyondsoft.jpeg";
@@ -11,3 +14,5 @@ export { default as jonvi } from "./companies/jonvi.png";
 
 // schools
 export { default as tarumt } from "./schools/tarumt.png";
+
+// projects

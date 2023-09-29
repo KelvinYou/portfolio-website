@@ -152,11 +152,61 @@ export const experiences = [
   },
 ];
 
-export type EducationType = typeof education;
+export type ProjectType = typeof projects;
 
-// Experiences
-export const education = [
+export const projects = [
   {
-    name: "",
-  }
-];
+    name: "My Portfolio",
+    description: 
+      "A place full of my love",
+    tags: [
+      {
+        name: "react",
+        color: "blue-text-gradient",
+      },
+      {
+        name: "tailwind-css",
+        color: "blue-text-gradient",
+      },
+    ],
+    images: [jonvi, techtics],
+    live_site_link: "https://kelvinyou.vercel.app/",
+  },
+  {
+    name: "Travel Guide",
+    description: 
+      "Mobile application created using Flutter with dart as programming language",
+    tags: [
+      {
+        name: "flutter",
+        color: "blue-text-gradient",
+      },
+      {
+        name: "firebase",
+        color: "orange-text-gradient",
+      },
+    ],
+    images: [],
+    source_code_link: "https://github.com/KelvinYou/fyp_tour_guide_app",
+  },
+  {
+    name: "Disney+ Clone",
+    description: 
+      "Disney+ is one of the biggest streaming platforms used by millions of people world-wide and allows us to stream high quality content in 4k and various other formats",
+    tags: [
+      {
+        name: "react",
+        color: "blue-text-gradient",
+      },
+      {
+        name: "firebase",
+        color: "green-text-gradient",
+      },
+      {
+        name: "css",
+        color: "pink-text-gradient",
+      },
+    ],
+    images: [],
+  },
+]
