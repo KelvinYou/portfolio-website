@@ -1,5 +1,6 @@
 "use client";
 import { github, preview } from '@/assets';
+import Tooltip from '@/components/ui/Tooltip';
 import { projects } from '@/constants/data';
 import { SectionWrapper } from '@/hoc'
 import { fadeIn, textVariant } from '@/utils/motion'
@@ -28,6 +29,7 @@ const ProjectCard = (props: any) => {
             ? <Image
               src={project.images[0]}
               alt={project.name}
+              priority={true}
               className="w-full h-full object-cover rounded-2xl"
             />
             : <div className="w-full h-full object-cover rounded-2xl flex items-center justify-center bg-gray-300 dark:bg-gray-700">
@@ -40,31 +42,39 @@ const ProjectCard = (props: any) => {
           <div className="absolute inset-0 flex justify-end m-3 card-img_hover">
 
             {/* Live Site */}
-            {project.live_site_link && <div
-              onClick={() => window.open(project.live_site_link, "_blank", "noreferrer")}
-              className="black-gradient w-10 h-10 rounded-full flex justify-center items-center cursor-pointer"
+            {project.live_site_link && <Tooltip
+              content="Live Preview"
             >
-              <Image
-                src={preview}
-                alt="Live Site"
-                title="Live Site"
-                className="w-2/3 h-2/3 object-contain"
-              />
-            </div>}
+              <div
+                onClick={() => window.open(project.live_site_link, "_blank", "noreferrer")}
+                className="black-gradient w-10 h-10 rounded-full flex justify-center items-center cursor-pointer"
+              >
+                <Image
+                  src={preview}
+                  alt="Live Site"
+                  title="Live Site"
+                  className="w-2/3 h-2/3 object-contain"
+                />
+              </div>
+            </Tooltip>}
             
 
             {/* Github */}
-            {project.source_code_link && <div
-              onClick={() => window.open(project.source_code_link, "_blank", "noreferrer")}
-              className="black-gradient w-10 h-10 rounded-full flex justify-center items-center cursor-pointer ml-2"
+            {project.source_code_link && <Tooltip
+              content="View Source Code"
             >
-              <Image
-                src={github}
-                alt="Github"
-                title="Github"
-                className="w-1/2 h-1/2 object-contain"
-              />
-            </div>}
+              <div
+                onClick={() => window.open(project.source_code_link, "_blank", "noreferrer")}
+                className="black-gradient w-10 h-10 rounded-full flex justify-center items-center cursor-pointer ml-2"
+              >
+                <Image
+                  src={github}
+                  alt="Github"
+                  title="Github"
+                  className="w-1/2 h-1/2 object-contain"
+                />
+              </div>
+            </Tooltip>}
 
           </div>
         </div>

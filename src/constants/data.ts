@@ -189,24 +189,4 @@ export const projects = [
     images: [],
     source_code_link: "https://github.com/KelvinYou/fyp_tour_guide_app",
   },
-  {
-    name: "Disney+ Clone",
-    description: 
-      "Disney+ is one of the biggest streaming platforms used by millions of people world-wide and allows us to stream high quality content in 4k and various other formats",
-    tags: [
-      {
-        name: "react",
-        color: "blue-text-gradient",
-      },
-      {
-        name: "firebase",
-        color: "green-text-gradient",
-      },
-      {
-        name: "css",
-        color: "pink-text-gradient",
-      },
-    ],
-    images: [],
-  },
 ]
