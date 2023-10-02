@@ -1,10 +1,34 @@
 import {
+  mobile,
+  backend,
+  creator,
+  web,
+
   jonvi,
   techtics,
   finexus,
   beyondsoft,
-  tarumt
+  tarumt,
 } from "@/assets";
+
+export const services = [
+  {
+    title: "Web Developer",
+    icon: web,
+  },
+  {
+    title: "Flutter Developer",
+    icon: mobile,
+  },
+  {
+    title: "Backend Developer",
+    icon: backend,
+  },
+  {
+    title: "Blockchain Developer",
+    icon: creator,
+  },
+];
 
 export type ExperienceType = typeof experiences;
 
@@ -152,11 +176,58 @@ export const experiences = [
   },
 ];
 
-export type EducationType = typeof education;
+export type ProjectType = typeof projects;
 
-// Experiences
-export const education = [
+export const projects = [
   {
-    name: "",
-  }
-];
+    name: "My Portfolio",
+    description: 
+      "A place full of my love",
+    tags: [
+      {
+        name: "react",
+        color: "blue-text-gradient",
+      },
+      {
+        name: "tailwind-css",
+        color: "blue-text-gradient",
+      },
+    ],
+    // images: [jonvi, techtics],
+    live_site_link: "https://kelvinyou.vercel.app/",
+  },
+  {
+    name: "Travel Guide",
+    description: 
+      "Mobile application created using Flutter with dart as programming language",
+    tags: [
+      {
+        name: "flutter",
+        color: "blue-text-gradient",
+      },
+      {
+        name: "firebase",
+        color: "orange-text-gradient",
+      },
+    ],
+    images: [],
+    source_code_link: "https://github.com/KelvinYou/fyp_tour_guide_app",
+  },
+]
+
+
+
+export const socialMedias = [
+  {
+    name: "Github",
+    link: "https://github.com/KelvinYou",
+  },
+  {
+    name: "LinkedIn",
+    link: "https://www.linkedin.com/in/kelvinyou2001/",
+  },
+  {
+    name: "Instagram",
+    link: "https://www.instagram.com/kelvinyou0220/",
+  },
+]

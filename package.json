@@ -1,5 +1,5 @@
 {
-  "name": "portfolio-2.0",
+  "name": "kelvin-you-portfolio",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@react-three/drei": "^9.86.3",
+    "@react-three/fiber": "^8.14.3",
     "@types/node": "20.4.2",
     "@types/react": "18.2.15",
     "@types/react-dom": "18.2.7",
@@ -19,9 +21,12 @@
     "postcss": "8.4.26",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-popper": "^2.3.0",
+    "react-tilt": "^1.0.2",
     "react-vertical-timeline-component": "^3.6.0",
     "sass": "^1.67.0",
     "tailwindcss": "3.3.3",
+    "three": "^0.157.0",
     "typescript": "5.1.6"
   },
   "devDependencies": {
