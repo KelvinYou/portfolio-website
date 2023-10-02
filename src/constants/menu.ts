@@ -1,3 +1,8 @@
+import { 
+  experienceIcon, 
+  homeIcon 
+} from "@/assets";
+
 import { HOME_PATH, PROJECTS_PATH, RESUME_LINK, EXPERIENCES_PATH } from "./routes";
 
 export type MainMenu = {
@@ -6,6 +11,7 @@ export type MainMenu = {
   subMenu?: SubMenu[];
   link?: string;
   newTab?: boolean;
+  icon?: any;
 }
 
 type SubMenu = {
@@ -19,11 +25,13 @@ export const navLinks: MainMenu[] = [
     id: "home",
     title: "Home",
     link: HOME_PATH,
+    icon: homeIcon,
   },
   {
     id: "experiences",
     title: "Experiences",
     link: EXPERIENCES_PATH,
+    icon: experienceIcon,
     subMenu: [
       {
         title: "All",
