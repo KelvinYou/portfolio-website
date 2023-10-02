@@ -1,10 +1,34 @@
 import {
+  mobile,
+  backend,
+  creator,
+  web,
+
   jonvi,
   techtics,
   finexus,
   beyondsoft,
   tarumt
 } from "@/assets";
+
+export const services = [
+  {
+    title: "Web Developer",
+    icon: web,
+  },
+  {
+    title: "Flutter Developer",
+    icon: mobile,
+  },
+  {
+    title: "Backend Developer",
+    icon: backend,
+  },
+  {
+    title: "Blockchain Developer",
+    icon: creator,
+  },
+];
 
 export type ExperienceType = typeof experiences;
 

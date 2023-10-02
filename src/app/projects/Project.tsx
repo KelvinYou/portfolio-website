@@ -109,7 +109,6 @@ const Project = () => {
         animate="show"
         variants={textVariant()}
       >
-      {/* <motion.div> */}
         <p className="sm:text-[18px] text-[14px] text-secondary uppercase tracking-wider">
           My work
         </p>

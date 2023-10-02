@@ -6,6 +6,14 @@ export { default as close } from "./general/close.svg";
 export { default as preview } from "./general/preview.png";
 export { default as github } from "./general/github.png";
 
+// services
+export { default as backend } from "./services/backend.png";
+export { default as creator } from "./services/creator.png";
+export { default as mobile } from "./services/mobile.png";
+export { default as web } from "./services/web.png";
+
+
+
 // companies
 export { default as beyondsoft } from "./companies/beyondsoft.jpeg";
 export { default as techtics } from "./companies/techtics.png";
