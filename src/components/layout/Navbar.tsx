@@ -7,69 +7,88 @@ import { navLinks } from "@/constants";
 import { logo, menu, close } from "@/assets";
 import Link from 'next/link';
 import "@/styles/index.scss";
-import { MainMenu } from '@/constants/menu';
 
-const DropdownMenu: FC<any> = (link) => {
+const DropdownMenu: FC<any> = (props) => {
+  const { 
+    link,
+    parentActive,
+    setparentActive
+  } = props;
+
+  useEffect(() => {
+    console.log("parentActive: ", parentActive);
+  }, [parentActive]);
+
   const [active, setActive] = useState(navLinks[0].title);
 
   const [isDropdownOpen, setDropdownOpen] = useState(false);
-  const timeoutRef = useRef<NodeJS.Timeout | undefined>(undefined);;
 
   const toggleDropdown = () => {
-    clearTimeout(timeoutRef.current);
-    setDropdownOpen(true);
-  };
+    setDropdownOpen(!isDropdownOpen)
+  }
 
   const closeDropdown = () => {
-    // Delay the closing of the dropdown by a short time
-    timeoutRef.current = setTimeout(() => {
-      setDropdownOpen(false);
-    }, 200); // Adjust the delay time as needed
-  };
+    setDropdownOpen(false)
+  }
 
   return (
     <div className="relative"         
-      onMouseEnter={toggleDropdown}
-      onMouseLeave={closeDropdown}
+      // onMouseEnter={openDropdown}
+      // onMouseLeave={closeDropdown}
+      onClick={toggleDropdown}
     >
       <li
         className={`text-secondary
         font-medium cursor-pointer`}
       >
         <a 
-          className={`text-secondary hover:text-white text-[18px] `}
+          className={`${
+            parentActive === link.title ? "text-white" : "text-secondary"
+          } hover:text-white text-[18px] `}
           onClick={(e) => e.preventDefault()}>
-          Experiences
+          {link.title}
         </a>
-        {isDropdownOpen && (
-          <ul className="absolute top-8 left-0 bg-black shadow-md">
-            {/* Add dropdown menu items here */}
-            {link.link.subMenu.map((menu: any, index: number) => {
-              return (
-                <li
-                  key={index}
-                  className={`${
-                    active === menu.title ? "text-white" : "text-secondary"
-                  } hover:text-white text-[18px] font-medium cursor-pointer`}
-                  onClick={() => !menu?.newTab && setActive(menu.title)}
-                >
-                  {menu?.link ? (
-                    <Link 
-                      href={menu.link} 
-                      target={menu.newTab ? `_blank` : '_self'}
-                      rel="noreferrer noopener"
-                      onClick={closeDropdown}
+
+        <div
+          className={`${
+            !isDropdownOpen ? "hidden" : "flex" 
+          } ml-[-10px] py-6 black-gradient absolute mx-4 my-2 min-w-[140px] z-10 rounded-xl`}
+        >
+          {/* Nav Links (Mobile) */}
+          <ul className="list-none flex justify-end items-start flex-col gap-4">
+            {link.subMenu.map((menu: any, index: number) => (
+              <li
+                key={index}
+                className={`${
+                  active === menu.title ? "text-white" : "text-secondary"
+                }`}
+              >
+                {menu?.link && (
+                  <Link 
+                    href={menu.link} 
+                    className=""
+                    target={menu.newTab ? `_blank` : '_self'}
+                    rel="noreferrer noopener"
+                    onClick={() => {
+                      closeDropdown;
+                      setActive(menu.title);
+                      setparentActive(link.title);
+                    }}
+                  >
+                    <div
+                      className={`${
+                        active === menu.title ? "text-white" : "text-secondary"
+                      } w-[140px] px-6  font-poppins font-medium cursor-pointer text-[16px]`}
                     >
                       {menu.title}
-                    </Link>
-                  ) : (
-                    <a href={`/#${menu.id}`}>{menu.title}</a>
-                  )}
-                </li>
-              )
-            })}
+
+                    </div>
+                  </Link>
+                )}
+              </li>
+            ))}
           </ul>
-        )}
+        </div>
       </li>
     </div>
   );
@@ -108,6 +127,8 @@ const Navbar = () => {
                 <DropdownMenu 
                   key={link.id + index}
                   link={link}
+                  parentActive={active}
+                  setparentActive={setActive}
                 />
               )
             } else {

@@ -74,8 +74,7 @@ const ExperienceCard: FC<any> = ({ experience }) => (
 
 const Experience: FC = () => {
   const searchParams = useSearchParams()
-  const type = searchParams.get('type') ?? "1";
-  console.log("params.type: " + type)
+  const experienceCategory = searchParams.get('category') ?? "all";
   
   return (
     <SectionWrapper
@@ -92,16 +91,28 @@ const Experience: FC = () => {
           What I have done so far
         </p>
         <h2 className="text-white font-black md:text-[60px] sm:text-[50px] xs:text-[40px] text-[30px]">
-          Work Experience and Education.
+          {experienceCategory === "all" && "Work Experience and Education."}
+          {experienceCategory === "work" && "Work Experience."}
+          {experienceCategory === "education" && "Education."}
         </h2>
       </motion.div>
 
       {/* Experience Card */}
       <div className="empty-20 flex flex-col">
         <VerticalTimeline>
-          {experiences.map((experience, i) => (
-            <ExperienceCard key={i} experience={experience} />
-          ))}
+          {experienceCategory === "all" 
+            ? experiences.map((experience, i) => {
+                return (
+                  <ExperienceCard key={i} experience={experience} />
+                )
+              })
+            : experiences.map((experience, i) => {
+              if (experience.experienceCategory === experienceCategory) {
+                return (
+                  <ExperienceCard key={i} experience={experience} />
+                )
+              }})
+          }
         </VerticalTimeline>
       </div>
     </SectionWrapper>
