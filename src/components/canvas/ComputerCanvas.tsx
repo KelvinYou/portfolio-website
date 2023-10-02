@@ -13,13 +13,13 @@ const Computer = ({ isMobile }: { isMobile: boolean }) => {
     // Mesh
     <mesh>
       {/* Light */}
-      <hemisphereLight intensity={0.15} groundColor="black" />
-      <pointLight intensity={1} />
+      <hemisphereLight intensity={4} groundColor="black" />
+      <pointLight intensity={10} color="white" position={[0, 5, 0]} />
       <spotLight
         position={[-20, 50, 10]}
         angle={0.12}
         penumbra={1}
-        intensity={1}
+        intensity={3}
         castShadow
         shadow-mapSize={1024}
       />

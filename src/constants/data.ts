@@ -8,7 +8,7 @@ import {
   techtics,
   finexus,
   beyondsoft,
-  tarumt
+  tarumt,
 } from "@/assets";
 
 export const services = [
@@ -193,7 +193,7 @@ export const projects = [
         color: "blue-text-gradient",
       },
     ],
-    images: [jonvi, techtics],
+    // images: [jonvi, techtics],
     live_site_link: "https://kelvinyou.vercel.app/",
   },
   {
@@ -212,5 +212,22 @@ export const projects = [
     ],
     images: [],
     source_code_link: "https://github.com/KelvinYou/fyp_tour_guide_app",
+  },
+]
+
+
+
+export const socialMedias = [
+  {
+    name: "Github",
+    link: "https://github.com/KelvinYou",
+  },
+  {
+    name: "LinkedIn",
+    link: "https://www.linkedin.com/in/kelvinyou2001/",
+  },
+  {
+    name: "Instagram",
+    link: "https://www.instagram.com/kelvinyou0220/",
   },
 ]
