@@ -42,7 +42,7 @@ const AboutMe = () => {
       idName='about me'
     >
       {/* Title */}
-      <motion.div
+      {/* <motion.div
         initial="hidden"
         animate="show"
         variants={textVariant()}
@@ -77,8 +77,6 @@ const AboutMe = () => {
 
       </motion.div>
 
-
-      {/* Body */}
       <motion.p
         variants={fadeIn("", "", 0.1, 1)}
         className="empty-4 text-gray-300 text-[17px] max-w-3xl leading-[30px] text-justify"
@@ -92,7 +90,7 @@ const AboutMe = () => {
         <span className="text-[#7de7eb] font-bold"> Flutter </span> 
         proficiently to build hybrid apps that transcend the traditional boundaries 
         of the Android and iOS platforms.
-      </motion.p>
+      </motion.p> */}
 
       {/* Title */}
       <motion.div
