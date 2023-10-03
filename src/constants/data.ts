@@ -30,6 +30,74 @@ export const services = [
   },
 ];
 
+export const socialMedia = [
+  {
+    name: "Github",
+    link: "https://github.com/KelvinYou",
+  },
+  {
+    name: "LinkedIn",
+    link: "https://www.linkedin.com/in/kelvinyou2001/",
+  },
+  {
+    name: "Instagram",
+    link: "https://www.instagram.com/kelvinyou0220/",
+  },
+]
+
+export const personalData = {
+  nickname: "Kelvin You",
+  full_name: "Kelvin You Kok Eng",
+  location: "Kuala Lumpur, Malaysia",
+  email: "ykekelvin0220@gmail.com",
+  phone: "+(60) 18 373-2752",
+  birthDate: "2001-02-20",
+  gender: "Male",
+  socialMedia: [ {
+    name: "Personal Website",
+    link: "https://kelvinyou.vercel.app/"
+  }, ... socialMedia],
+};
+
+export const strengths = [
+  {
+    name: "Self-taught Person",
+    description: "Powered by Internet: Youtube, Github, Leetcode, etc",
+  },
+  {
+    name: "Love to Code",
+    description: "Love exploring more best practice, problem solving, clean code, code structure",
+  },
+  {
+    name: "New Tech Lover",
+    description: "Love to spend my free time to catch up with new tech stack",
+  }
+];
+
+export const careerData = {
+  role: "Full Stack Software Engineer",
+  start_coding: "2018-12-20",
+  desc: "I develop Web, Mobile and Blockchain App."
+};
+
+export const languages = [
+  {
+    name: "Mandarin",
+    speak: 0.9,
+    read_and_write: 0.9,
+  },
+  {
+    name: "Malay",
+    speak: 0.7,
+    read_and_write: 0.8,
+  },
+  {
+    name: "English",
+    speak: 0.6,
+    read_and_write: 0.8,
+  },
+]
+
 export type ExperienceType = typeof experiences;
 
 // Experiences
@@ -37,6 +105,7 @@ export const experiences = [
   {
     title: "Frontend Web Developer",
     company_name: "Beyondsoft (Malaysia) Sdn. Bhd.",
+    company_url: "https://www.beyondsoft.com/",
     icon: beyondsoft,
     iconBg: "#FFF",
     date: "Aug 2023 - Today",
@@ -51,6 +120,7 @@ export const experiences = [
   {
     title: "Java Software Engineer Intern",
     company_name: "Finexus International Sdn. Bhd.",
+    company_url: "https://www.finexusgroup.com/",
     icon: finexus,
     iconBg: "#383E56",
     date: "Feb 2023 - Jul 2023",
@@ -58,10 +128,6 @@ export const experiences = [
     points: [
       "Spearheaded Java-based projects with innovative features and rigorous testing, fostering seamless collaboration across teams.",
       "Mastered debugging, efficient web resource searching, and streamlined application deployment for optimal project performance."
-      // "Focused on Java-based project maintenance, utilizing JSP and Tomcat. Conducted R&D for innovative features such as reusable custom dialogs and remote log file retrieval. Conducted comprehensive testing and documentation for quality assurance.",
-      // "Contributed to large-scale projects involving multiple teams, including frontend, backend, and mobile, fostering effective collaboration and coordination for successful project execution.",
-      // "Skilled in utilizing log files for debugging, adept at efficient web resource searching, and knowledgeable in SIT and UAT workflows.",
-      // "Proficient in deploying applications using Tomcat, SQLDeveloper, and FileZilla for streamlined server management and file transfer."
     ],
     techStacks: [
       "NextJS",
@@ -80,6 +146,7 @@ export const experiences = [
   {
     title: "Bachelor (Hons) of Software Engineering",
     company_name: "Tunku Abdul Rahman University of Management and Technology",
+    company_url: "https://tarc.edu.my/",
     icon: tarumt,
     iconBg: "#383E56",
     date: "Jun 2021 - Jul 2023",
@@ -102,6 +169,7 @@ export const experiences = [
   {
     title: "Software Engineer Intern",
     company_name: "Techtics Blockchain PLT",
+    company_url: "https://www.techtics.io/",
     icon: techtics,
     iconBg: "#E6DEDD",
     date: "Oct 2020 - Jan 2021",
@@ -129,9 +197,11 @@ export const experiences = [
   {
     title: "Diploma in Computer Science",
     company_name: "Tunku Abdul Rahman University of Management and Technology",
+    company_url: "https://tarc.edu.my/",
     icon: tarumt,
     iconBg: "#383E56",
     date: "May 2019 - Jun 2021",
+
     cgpa: "3.7200",
     description: "",
     points: [
@@ -176,6 +246,25 @@ export const experiences = [
   },
 ];
 
+export const commonEducation = [
+  {
+    title: "Pure Science Class",
+    start_date: "2014-1-1",
+    end_date: "2018-12-6",
+    school: "SMK Taman Desa",
+    school_url: "https://ms.wikipedia.org/wiki/Sekolah_Menengah_Kebangsaan_Taman_Desa,_Bandar_Country_Homes",
+    description: "Pure science class, studied Chinese, Malay, English, Maths, Moral, Sejarah, Biology, Chemistry, Physic and Add Maths"
+  },
+  {
+    title: "Pure Science",
+    start_date: "2008-1-1",
+    end_date: "2013-12-1",
+    school: "SJK(C) Kundang",
+    school_url: "http://www.sjkckundang.edu.my/",
+    description: ""
+  },
+]
+
 export type ProjectType = typeof projects;
 
 export const projects = [
@@ -215,19 +304,21 @@ export const projects = [
   },
 ]
 
-
-
-export const socialMedias = [
+export const co_curricular = [
   {
-    name: "Github",
-    link: "https://github.com/KelvinYou",
+    title: "Chinese Language Society",
+    start_date: "2019-5-28",
+    end_date: "2023-7-31",
+    school: "Tunku Abdul Rahman University of Management and Technology",
+    school_url: "https://tarc.edu.my/",
+    description: "Made friends and established connections with them, Learnt communication skills",
   },
   {
-    name: "LinkedIn",
-    link: "https://www.linkedin.com/in/kelvinyou2001/",
-  },
-  {
-    name: "Instagram",
-    link: "https://www.instagram.com/kelvinyou0220/",
+    title: "Chess Club",
+    start_date: "2019-5-28",
+    end_date: "2023-7-31",
+    school: "Tunku Abdul Rahman University of Management and Technology",
+    school_url: "https://tarc.edu.my/",
+    description: "Learnt how to solve chess tactics, Learnt time management.",
   },
 ]

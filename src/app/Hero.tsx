@@ -2,6 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 
 import ComputerCanvas from "@/components/canvas/ComputerCanvas";
+import { careerData } from "@/constants/data";
 
 // Hero
 const Hero = () => {
@@ -24,8 +25,7 @@ const Hero = () => {
             </h1>
             <p className={`text-[#dfd9ff] font-medium lg:text-[30px] sm:text-[26px] xs:text-[20px] text-[16px] lg:leading-[40px] mt-2 text-white-100`}>
 
-              I develop Web App, Mobile <br className="sm:block hidden" />
-              App and Blockchain App.
+              {careerData.desc}
             </p>
           </div>
         </div>

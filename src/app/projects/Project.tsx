@@ -14,14 +14,17 @@ const ProjectCard = (props: any) => {
   const { project } = props;
 
   return (
-    <motion.div variants={fadeIn("up", "spring", project.index * 0.5, 0.75)}>
+    <motion.div 
+      variants={fadeIn("up", "spring", project.index * 0.5, 0.75)} 
+      className='sm:w-[360px] w-full'
+    >
       <Tilt
         options={{
           max: 45,
           scale: 1,
           speed: 450,
         }}
-        className="bg-tertiary p-5 rounded-2xl sm:w-[360px] w-full"
+        className="bg-tertiary p-5 rounded-2xl h-full"
       >
         <div className="relative w-full h-[230px]">
           {/* Work image */}

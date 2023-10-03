@@ -1,4 +1,4 @@
-import { socialMedias } from '@/constants/data';
+import { socialMedia } from '@/constants/data';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react'
@@ -52,7 +52,7 @@ const Footer = () => {
     <footer className="mt-[300px]">
       <div className="w-full text-center">
         <div className="mb-6 flex justify-center gap-1">
-          {socialMedias.map((socialMedia, index) => {
+          {socialMedia.map((socialMedia, index) => {
             return (
               <SocialMedia 
                 key={index} 

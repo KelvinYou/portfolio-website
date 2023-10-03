@@ -15,10 +15,6 @@ const DropdownMenu: FC<any> = (props) => {
     setparentActive
   } = props;
 
-  useEffect(() => {
-    console.log("parentActive: ", parentActive);
-  }, [parentActive]);
-
   const [active, setActive] = useState(navLinks[0].title);
 
   const [isDropdownOpen, setDropdownOpen] = useState(false);
@@ -54,13 +50,13 @@ const DropdownMenu: FC<any> = (props) => {
             !isDropdownOpen ? "hidden" : "flex" 
           } ml-[-10px] py-6 black-gradient absolute mx-4 my-2 min-w-[140px] z-10 rounded-xl`}
         >
-          {/* Nav Links (Mobile) */}
           <ul className="list-none flex justify-end items-start flex-col gap-4">
             {link.subMenu.map((menu: any, index: number) => (
               <li
                 key={index}
                 className={`${
-                  active === menu.title ? "text-white" : "text-secondary"
+                  (parentActive == link.title) && (active === menu.title) ? 
+                  "text-white" : "text-secondary"
                 }`}
               >
                 {menu?.link && (
