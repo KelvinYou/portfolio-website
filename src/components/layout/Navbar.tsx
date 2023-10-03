@@ -7,12 +7,13 @@ import { navLinks } from "@/constants";
 import { logo, menu, close } from "@/assets";
 import Link from 'next/link';
 import "@/styles/index.scss";
+import { careerData, personalData } from '@/constants/data';
 
 const DropdownMenu: FC<any> = (props) => {
   const { 
     link,
     parentActive,
-    setparentActive
+    setParentActive
   } = props;
 
   const [active, setActive] = useState(navLinks[0].title);
@@ -68,7 +69,7 @@ const DropdownMenu: FC<any> = (props) => {
                     onClick={() => {
                       closeDropdown;
                       setActive(menu.title);
-                      setparentActive(link.title);
+                      setParentActive(link.title);
                     }}
                   >
                     <div
@@ -111,7 +112,7 @@ const Navbar = () => {
         >
           <img src={logo.src} alt="Logo" className="w-9 h-9 object-contain" />
           <p className="text-white text-[18px] font-bold cursor-pointer flex">
-            Kelvin You&nbsp;<span className="lg:block hidden">| Software Engineer</span>
+            {personalData.nickname}&nbsp;<span className="lg:block hidden">| {careerData.role}</span>
           </p>
         </Link>
 
@@ -124,7 +125,7 @@ const Navbar = () => {
                   key={link.id + index}
                   link={link}
                   parentActive={active}
-                  setparentActive={setActive}
+                  setParentActive={setActive}
                 />
               )
             } else {

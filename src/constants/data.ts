@@ -205,7 +205,7 @@ export const experiences = [
     cgpa: "3.7200",
     description: "",
     points: [
-      "Taken core courses for software development such as Data Structure and Algorithm in Java, Human-Computer Interaction, Graphics Programming, Distributed System and Parallel Computing. Exposed to technologies such as Mobile Application Development, Blockchain App Development, Data Science through elective courses.",
+      "Basic Programming Concepts through various languages such as Object-Oriented Programming in Java, C, and Assembly Language. Mathematics courses included Algebra, Calculus, Statistics, Discrete Math.",
     ],
     techStacks: [
       "Java",

@@ -2,13 +2,13 @@ import React from "react";
 import { motion } from "framer-motion";
 
 import ComputerCanvas from "@/components/canvas/ComputerCanvas";
-import { careerData } from "@/constants/data";
+import { careerData, personalData } from "@/constants/data";
 
 // Hero
 const Hero = () => {
   return (
     <div className="bg-hero-pattern bg-cover bg-no-repeat bg-center">
-      <section className="relative w-full h-screen mx-auto">
+      <section className="relative w-full h-[calc(100vh-80px)] mx-auto">
         <div
           className={`sm:px-16 px-6 absolute inset-0 top-[120px] max-w-7xl mx-auto flex flex-row items-start gap-5`}
         >
@@ -17,11 +17,10 @@ const Hero = () => {
             <div className="w-5 h-5 rounded-full bg-[#7de7eb]" />
             <div className="w-1 sm:h-80 h-40 violet-gradient" />
           </div>
-
           {/* About Me */}
           <div>
             <h1 className={`font-black lg:text-[80px] sm:text-[60px] xs:text-[50px] text-[40px] lg:leading-[98px] mt-2 text-white`}>
-              Hi, I'm <span className="text-gradient">Kelvin You</span>
+              Hi, I'm <span className="text-gradient"> {personalData.nickname} </span>
             </h1>
             <p className={`text-[#dfd9ff] font-medium lg:text-[30px] sm:text-[26px] xs:text-[20px] text-[16px] lg:leading-[40px] mt-2 text-white-100`}>
 
