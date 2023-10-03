@@ -9,6 +9,7 @@ import {
   finexus,
   beyondsoft,
   tarumt,
+  portfolio,
 } from "@/assets";
 
 export const services = [
@@ -44,6 +45,7 @@ export const socialMedia = [
     link: "https://www.instagram.com/kelvinyou0220/",
   },
 ]
+export type PersonalDataType = typeof personalData;
 
 export const personalData = {
   nickname: "Kelvin You",
@@ -98,7 +100,6 @@ export const languages = [
   },
 ]
 
-export type ExperienceType = typeof experiences;
 
 // Experiences
 export const experiences = [
@@ -271,19 +272,21 @@ export const projects = [
   {
     name: "My Portfolio",
     description: 
-      "A place full of my love",
+      "A self-introduction website. The place full of my love",
     tags: [
       {
-        name: "react",
+        name: "NextJS",
         color: "blue-text-gradient",
       },
       {
-        name: "tailwind-css",
+        name: "Tailwind CSS",
         color: "blue-text-gradient",
       },
     ],
-    // images: [jonvi, techtics],
+    images: [portfolio],
     live_site_link: "https://kelvinyou.vercel.app/",
+    platforms: ["Web"],
+    date: "2023-10-02",
   },
   {
     name: "Travel Guide",
@@ -291,16 +294,86 @@ export const projects = [
       "Mobile application created using Flutter with dart as programming language",
     tags: [
       {
-        name: "flutter",
+        name: "Flutter",
         color: "blue-text-gradient",
       },
       {
-        name: "firebase",
+        name: "Firebase",
         color: "orange-text-gradient",
       },
     ],
     images: [],
     source_code_link: "https://github.com/KelvinYou/fyp_tour_guide_app",
+    platforms: ["Android", "iOS"],
+    date: "2022-12-17",
+  },
+  {
+    name: "Restaurant Landing",
+    description: 
+      "Just to build an UI refer from Figma",
+    tags: [
+      {
+        name: "ReactJS",
+        color: "blue-text-gradient",
+      },
+      {
+        name: "Bootstrap",
+        color: "pink-text-gradient",
+      },
+    ],
+    images: [],
+    live_site_link: "https://restaurant-landing-kelvinyou.vercel.app/",
+    platforms: ["Web"],
+    date: "2023-2-21",
+  },
+  {
+    name: "Automated Market-Making System",
+    description: 
+      "An assignment from Blockchain course which to build a liquidity pool using smart contract",
+    tags: [
+      {
+        name: "ReactJS",
+        color: "blue-text-gradient",
+      },
+      {
+        name: "Solidity",
+        color: "blue-text-gradient",
+      },
+    ],
+    images: [],
+    source_code_link: "https://github.com/KelvinYou/amm-assignment",
+    platforms: ["Web"],
+    date: "2023-1-5",
+  },
+  {
+    name: "Edge Detection System",
+    description: 
+      "An assignment for the Distributed Systems and Parallel Computing course, Detecting edges in images. We also use tools like Threading, Dask, Classified, etc. to speed up the process",
+    tags: [
+      {
+        name: "Python",
+        color: "pink-text-gradient",
+      },
+    ],
+    images: [],
+    source_code_link: "https://github.com/KelvinYou/dspc-assignment",
+    platforms: [],
+    date: "2022-9-23",
+  },
+  {
+    name: "Donation System",
+    description: 
+      "An assignment for the Data Structures and Algorithms course, create adt using doubly linked list",
+    tags: [
+      {
+        name: "Java",
+        color: "pink-text-gradient",
+      },
+    ],
+    images: [],
+    source_code_link: "https://github.com/KelvinYou/dsa-assignment",
+    platforms: ["Command Line"],
+    date: "2022-9-9",
   },
 ]
 
