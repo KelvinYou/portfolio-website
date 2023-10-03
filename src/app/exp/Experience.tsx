@@ -99,9 +99,9 @@ const ExperienceCard: FC<any> = ({ experience }) => (
       ))}
     </div>
     
-    <button className="mt-10">
+    {/* <button className="mt-10">
       Explore More {"->"}
-    </button>
+    </button> */}
   </VerticalTimelineElement>
 );
 
