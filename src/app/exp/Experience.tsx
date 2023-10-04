@@ -27,21 +27,21 @@ const ExperienceCard: FC<any> = ({ experience }) => (
     iconStyle={{ background: experience.iconBg }}
     icon={
       <div className="flex justify-center items-center w-full h-full">
-        {experience.company_url 
+        {experience.companyUrl 
         ? <Link 
-          href={experience.company_url}
+          href={experience.companyUrl}
           target='_blank'
           className="flex justify-center items-center w-full h-full"
         >
           <Image
             src={experience.icon}
-            alt={experience.company_name}
+            alt={experience.companyName}
             className="w-[80%] h-[80%] object-contain"
           />
         </Link>
         : <Image
           src={experience.icon}
-          alt={experience.company_name}
+          alt={experience.companyName}
           className="w-[80%] h-[80%] object-contain"
         />}
       </div>
@@ -50,22 +50,22 @@ const ExperienceCard: FC<any> = ({ experience }) => (
     {/* Title */}
     <div>
       <h3 className="text-white text-[24px] font-bold">{experience.title}</h3>
-      {experience.company_url ? <Link 
-      href={experience.company_url}
+      {experience.companyUrl ? <Link 
+      href={experience.companyUrl}
       target='_blank'
       >
         <p
           className="text-secondary text-[16px] font-semibold flex gap-2 hover:text-white"
           style={{ margin: 0 }}
         >
-          {/* {experience.company_name} <SvgIcon color={"white"} type={ICON_TYPE.OPEN_LINK} /> */}
-          {experience.company_name}
+          {/* {experience.companyName} <SvgIcon color={"white"} type={ICON_TYPE.OPEN_LINK} /> */}
+          {experience.companyName}
         </p>
       </Link> : <p
         className="text-secondary text-[16px] font-semibold"
         style={{ margin: 0 }}
       >
-        {experience.company_name}
+        {experience.companyName}
       </p>}
       
       

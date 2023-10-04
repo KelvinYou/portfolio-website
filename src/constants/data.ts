@@ -49,7 +49,7 @@ export type PersonalDataType = typeof personalData;
 
 export const personalData = {
   nickname: "Kelvin You",
-  full_name: "Kelvin You Kok Eng",
+  fullName: "Kelvin You Kok Eng",
   location: "Kuala Lumpur, Malaysia",
   email: "ykekelvin0220@gmail.com",
   phone: "+(60) 18 373-2752",
@@ -78,7 +78,7 @@ export const strengths = [
 
 export const careerData = {
   role: "Full Stack Software Engineer",
-  start_coding: "2018-12-20",
+  startCoding: "2018-12-20",
   desc: "I develop Web, Mobile and Blockchain App."
 };
 
@@ -86,17 +86,17 @@ export const languages = [
   {
     name: "Mandarin",
     speak: 0.9,
-    read_and_write: 0.9,
+    readAndWrite: 0.9,
   },
   {
     name: "Malay",
     speak: 0.7,
-    read_and_write: 0.8,
+    readAndWrite: 0.8,
   },
   {
     name: "English",
     speak: 0.6,
-    read_and_write: 0.8,
+    readAndWrite: 0.8,
   },
 ]
 
@@ -105,8 +105,8 @@ export const languages = [
 export const experiences = [
   {
     title: "Frontend Web Developer",
-    company_name: "Beyondsoft (Malaysia) Sdn. Bhd.",
-    company_url: "https://www.beyondsoft.com/",
+    companyName: "Beyondsoft (Malaysia) Sdn. Bhd.",
+    companyUrl: "https://www.beyondsoft.com/",
     icon: beyondsoft,
     iconBg: "#FFF",
     date: "Aug 2023 - Today",
@@ -120,8 +120,8 @@ export const experiences = [
   },
   {
     title: "Java Software Engineer Intern",
-    company_name: "Finexus International Sdn. Bhd.",
-    company_url: "https://www.finexusgroup.com/",
+    companyName: "Finexus International Sdn. Bhd.",
+    companyUrl: "https://www.finexusgroup.com/",
     icon: finexus,
     iconBg: "#383E56",
     date: "Feb 2023 - Jul 2023",
@@ -146,8 +146,8 @@ export const experiences = [
   },
   {
     title: "Bachelor (Hons) of Software Engineering",
-    company_name: "Tunku Abdul Rahman University of Management and Technology",
-    company_url: "https://tarc.edu.my/",
+    companyName: "Tunku Abdul Rahman University of Management and Technology",
+    companyUrl: "https://tarc.edu.my/",
     icon: tarumt,
     iconBg: "#383E56",
     date: "Jun 2021 - Jul 2023",
@@ -169,8 +169,8 @@ export const experiences = [
   },
   {
     title: "Software Engineer Intern",
-    company_name: "Techtics Blockchain PLT",
-    company_url: "https://www.techtics.io/",
+    companyName: "Techtics Blockchain PLT",
+    companyUrl: "https://www.techtics.io/",
     icon: techtics,
     iconBg: "#E6DEDD",
     date: "Oct 2020 - Jan 2021",
@@ -197,8 +197,8 @@ export const experiences = [
   },
   {
     title: "Diploma in Computer Science",
-    company_name: "Tunku Abdul Rahman University of Management and Technology",
-    company_url: "https://tarc.edu.my/",
+    companyName: "Tunku Abdul Rahman University of Management and Technology",
+    companyUrl: "https://tarc.edu.my/",
     icon: tarumt,
     iconBg: "#383E56",
     date: "May 2019 - Jun 2021",
@@ -221,7 +221,7 @@ export const experiences = [
   },
   {
     title: "Frontend Web Developer",
-    company_name: "Jonvi Marketing Sdn. Bhd.",
+    companyName: "Jonvi Marketing Sdn. Bhd.",
     icon: jonvi,
     iconBg: "#E6DEDD",
     date: "Jan 2019 - May 2019",
@@ -253,7 +253,7 @@ export const commonEducation = [
     start_date: "2014-1-1",
     end_date: "2018-12-6",
     school: "SMK Taman Desa",
-    school_url: "https://ms.wikipedia.org/wiki/Sekolah_Menengah_Kebangsaan_Taman_Desa,_Bandar_Country_Homes",
+    schoolUrl: "https://ms.wikipedia.org/wiki/Sekolah_Menengah_Kebangsaan_Taman_Desa,_Bandar_Country_Homes",
     description: "Pure science class, studied Chinese, Malay, English, Maths, Moral, Sejarah, Biology, Chemistry, Physic and Add Maths"
   },
   {
@@ -261,7 +261,7 @@ export const commonEducation = [
     start_date: "2008-1-1",
     end_date: "2013-12-1",
     school: "SJK(C) Kundang",
-    school_url: "http://www.sjkckundang.edu.my/",
+    schoolUrl: "http://www.sjkckundang.edu.my/",
     description: ""
   },
 ]
@@ -284,7 +284,7 @@ export const projects = [
       },
     ],
     images: [portfolio],
-    live_site_link: "https://kelvinyou.vercel.app/",
+    liveSiteLink: "https://kelvinyou.vercel.app/",
     platforms: ["Web"],
     date: "2023-10-02",
   },
@@ -303,7 +303,7 @@ export const projects = [
       },
     ],
     images: [],
-    source_code_link: "https://github.com/KelvinYou/fyp_tour_guide_app",
+    sourceCodeLink: "https://github.com/KelvinYou/fyp_tour_guide_app",
     platforms: ["Android", "iOS"],
     date: "2022-12-17",
   },
@@ -322,8 +322,8 @@ export const projects = [
       },
     ],
     images: [],
-    live_site_link: "https://restaurant-landing-kelvinyou.vercel.app/",
-    source_code_link: "https://github.com/KelvinYou/react-selflearn/tree/main/react-restaurant-landing",
+    liveSiteLink: "https://restaurant-landing-kelvinyou.vercel.app/",
+    sourceCodeLink: "https://github.com/KelvinYou/react-selflearn/tree/main/react-restaurant-landing",
     platforms: ["Web"],
     date: "2023-2-21",
   },
@@ -342,7 +342,7 @@ export const projects = [
       },
     ],
     images: [],
-    source_code_link: "https://github.com/KelvinYou/amm-assignment",
+    sourceCodeLink: "https://github.com/KelvinYou/amm-assignment",
     platforms: ["Web"],
     date: "2023-1-5",
   },
@@ -357,7 +357,7 @@ export const projects = [
       },
     ],
     images: [],
-    source_code_link: "https://github.com/KelvinYou/dspc-assignment",
+    sourceCodeLink: "https://github.com/KelvinYou/dspc-assignment",
     platforms: [],
     date: "2022-9-23",
   },
@@ -372,19 +372,19 @@ export const projects = [
       },
     ],
     images: [],
-    source_code_link: "https://github.com/KelvinYou/dsa-assignment",
+    sourceCodeLink: "https://github.com/KelvinYou/dsa-assignment",
     platforms: ["Command Line"],
     date: "2022-9-9",
   },
 ]
 
-export const co_curricular = [
+export const coCurricular = [
   {
     title: "Chinese Language Society",
     start_date: "2019-5-28",
     end_date: "2023-7-31",
     school: "Tunku Abdul Rahman University of Management and Technology",
-    school_url: "https://tarc.edu.my/",
+    schoolUrl: "https://tarc.edu.my/",
     description: "Made friends and established connections with them, Learnt communication skills",
   },
   {
@@ -392,7 +392,7 @@ export const co_curricular = [
     start_date: "2019-5-28",
     end_date: "2023-7-31",
     school: "Tunku Abdul Rahman University of Management and Technology",
-    school_url: "https://tarc.edu.my/",
+    schoolUrl: "https://tarc.edu.my/",
     description: "Learnt how to solve chess tactics, Learnt time management.",
   },
 ]

@@ -45,11 +45,11 @@ const ProjectCard = (props: any) => {
           <div className="absolute inset-0 flex justify-end m-3 card-img_hover">
 
             {/* Live Site */}
-            {project.live_site_link && <Tooltip
+            {project.liveSiteLink && <Tooltip
               content="Live Preview"
             >
               <div
-                onClick={() => window.open(project.live_site_link, "_blank", "noreferrer")}
+                onClick={() => window.open(project.liveSiteLink, "_blank", "noreferrer")}
                 className="black-gradient w-10 h-10 rounded-full flex justify-center items-center cursor-pointer"
               >
                 <Image
@@ -63,11 +63,11 @@ const ProjectCard = (props: any) => {
             
 
             {/* Github */}
-            {project.source_code_link && <Tooltip
+            {project.sourceCodeLink && <Tooltip
               content="View Source Code"
             >
               <div
-                onClick={() => window.open(project.source_code_link, "_blank", "noreferrer")}
+                onClick={() => window.open(project.sourceCodeLink, "_blank", "noreferrer")}
                 className="black-gradient w-10 h-10 rounded-full flex justify-center items-center cursor-pointer ml-2"
               >
                 <Image
