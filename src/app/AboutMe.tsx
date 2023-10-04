@@ -4,7 +4,7 @@ import { Tilt } from "react-tilt";
 import { motion } from "framer-motion";
 import Image from "next/image";
 // import { styles } from "../styles";
-import { services } from '@/constants/data';
+import { languages, services } from '@/constants/data';
 import { fadeIn, textVariant } from "../utils/motion";
 import { SectionWrapper } from "../hoc";
 import Link from "next/link";
@@ -111,6 +111,57 @@ const AboutMe = () => {
       <motion.div
         variants={fadeIn("", "", 0.1, 1)}
       >
+        {/* <ul className="text-gray-300 max-w-3xl">
+
+          <li>
+            <span>
+              Name:
+            </span>
+
+            <span>
+              Kelvin
+            </span>
+          </li>
+
+          <li>
+            <span>
+              Start Coding:
+            </span>
+
+            <span>
+              2018
+            </span>
+          </li>
+
+          <li>
+            <span>Language: </span>
+            <span>
+              <ul>
+                {languages.map((language, index: number) => {
+                  const percentage = ((language.readAndWrite * 100) + (language.speak * 100)) / 2;
+                  const formattedPercentage = percentage.toFixed(0) + "%";
+
+                  return (
+                    <li key={language.name + index} className="flex items-center gap-2">
+                      <span>{language.name}</span>
+                      <span>
+                        <div className="w-[300px] max-w-80% bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+                          <div className="bg-[#7de7eb] h-2.5 rounded-full" style={{width: `${formattedPercentage}`}}></div>
+                        </div>
+                      </span>
+                      <div>{formattedPercentage}</div>
+                    </li>
+                  )
+                })}
+              </ul>
+            </span>
+            
+          </li>
+          
+        </ul> */}
+        
+
+
         <p className="empty-4 text-gray-300 text-[17px] max-w-3xl leading-[30px] text-justify">
           I have developed in the field of software development for 4 years, 
           eagerly immersed in the exploration of cutting-edge trends such as 
