@@ -8,8 +8,15 @@ import { logo, menu, close } from "@/assets";
 import Link from 'next/link';
 import "@/styles/index.scss";
 import { careerData, personalData } from '@/constants/data';
+import { MainMenu } from '@/constants/menu';
 
-const DropdownMenu: FC<any> = (props) => {
+interface DropdownMenuProps {
+  link: MainMenu;
+  parentActive: string;
+  setParentActive: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const DropdownMenu: FC<DropdownMenuProps> = (props) => {
   const { 
     link,
     parentActive,
@@ -17,32 +24,49 @@ const DropdownMenu: FC<any> = (props) => {
   } = props;
 
   const [active, setActive] = useState(navLinks[0].title);
-
   const [isDropdownOpen, setDropdownOpen] = useState(false);
 
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
   const toggleDropdown = () => {
-    setDropdownOpen(!isDropdownOpen)
+    setDropdownOpen(!isDropdownOpen);
   }
 
   const closeDropdown = () => {
-    setDropdownOpen(false)
+    setDropdownOpen(false);
   }
 
+  const handleDocumentClick = (e: MouseEvent) => {
+    // Close the dropdown if the click is outside the dropdown
+    if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+      closeDropdown();
+    }
+  };
+
+  useEffect(() => {
+    // Attach the click event listener when the component mounts
+    document.addEventListener('click', handleDocumentClick);
+
+    // Detach the event listener when the component unmounts
+    return () => {
+      document.removeEventListener('click', handleDocumentClick);
+    };
+  }, []); // Empty dependency array ensures this effect runs only once on mount
+
   return (
-    <div className="relative"         
-      // onMouseEnter={openDropdown}
-      // onMouseLeave={closeDropdown}
-      onClick={toggleDropdown}
-    >
+    <div className="relative" ref={dropdownRef}>
       <li
-        className={`text-secondary
-        font-medium cursor-pointer`}
+        className={`text-secondary font-medium cursor-pointer`}
       >
         <a 
           className={`${
             parentActive === link.title ? "text-white" : "text-secondary"
           } hover:text-white text-[18px] `}
-          onClick={(e) => e.preventDefault()}>
+          onClick={(e) => {
+            e.preventDefault();
+            toggleDropdown();
+          }}
+        >
           {link.title}
         </a>
 
@@ -52,11 +76,11 @@ const DropdownMenu: FC<any> = (props) => {
           } ml-[-10px] py-6 black-gradient absolute mx-4 my-2 min-w-[140px] z-10 rounded-xl`}
         >
           <ul className="list-none flex justify-end items-start flex-col gap-4">
-            {link.subMenu.map((menu: any, index: number) => (
+            {link.subMenu && link.subMenu.map((menu: any, index: number) => (
               <li
                 key={index}
                 className={`${
-                  (parentActive == link.title) && (active === menu.title) ? 
+                  ((parentActive == link.title) && (active === menu.title)) ? 
                   "text-white" : "text-secondary"
                 }`}
               >
@@ -67,7 +91,7 @@ const DropdownMenu: FC<any> = (props) => {
                     target={menu.newTab ? `_blank` : '_self'}
                     rel="noreferrer noopener"
                     onClick={() => {
-                      closeDropdown;
+                      closeDropdown();
                       setActive(menu.title);
                       setParentActive(link.title);
                     }}
@@ -78,7 +102,6 @@ const DropdownMenu: FC<any> = (props) => {
                       } w-[140px] px-6  font-poppins font-medium cursor-pointer text-[16px]`}
                     >
                       {menu.title}
-
                     </div>
                   </Link>
                 )}

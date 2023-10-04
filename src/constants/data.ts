@@ -323,6 +323,7 @@ export const projects = [
     ],
     images: [],
     live_site_link: "https://restaurant-landing-kelvinyou.vercel.app/",
+    source_code_link: "https://github.com/KelvinYou/react-selflearn/tree/main/react-restaurant-landing",
     platforms: ["Web"],
     date: "2023-2-21",
   },
