@@ -99,7 +99,7 @@ const ProjectCard = (props: any) => {
           ))}
         </div>
 
-        <div className="flex gap-1 justify-end absolute bottom-4 right-4 opacity-50">
+        <div className="flex gap-1 justify-end absolute bottom-4 right-4 opacity-80">
           <SvgIcon type={ICON_TYPE.CLOCK_OUTLINE} color="rgb(254 240 138)" size={18}/>
           <p className="text-yellow-200 text-[12px]">{formatDate(project.date)}</p>
         </div>
