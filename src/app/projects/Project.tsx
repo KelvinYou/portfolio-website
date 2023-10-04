@@ -1,8 +1,10 @@
 "use client";
 import { github, preview } from '@/assets';
+import SvgIcon, { ICON_TYPE } from '@/assets/SvgIcon';
 import Tooltip from '@/components/ui/Tooltip';
 import { projects } from '@/constants/data';
 import { SectionWrapper } from '@/hoc'
+import { formatDate } from '@/utils/dateUtil';
 import { fadeIn, textVariant } from '@/utils/motion'
 import { motion } from 'framer-motion'
 import Image from 'next/image';
@@ -24,7 +26,7 @@ const ProjectCard = (props: any) => {
           scale: 1,
           speed: 450,
         }}
-        className="bg-tertiary p-5 rounded-2xl h-full"
+        className="bg-tertiary p-5 rounded-2xl h-full relative"
       >
         <div className="relative w-full h-[230px]">
           {/* Work image */}
@@ -89,12 +91,17 @@ const ProjectCard = (props: any) => {
         </div>
 
         {/* Work Tag */}
-        <div className="mt-4 flex flex-wrap gap-2">
+        <div className="mt-4 flex flex-wrap gap-2 mb-10">
           {project.tags.map((tag: any, index: number) => (
             <p key={index + tag.name} className={`text-[14px] ${tag.color}`}>
               #{tag.name}
             </p>
           ))}
+        </div>
+
+        <div className="flex gap-1 justify-end absolute bottom-4 right-4 opacity-50">
+          <SvgIcon type={ICON_TYPE.CLOCK_OUTLINE} color="rgb(254 240 138)" size={18}/>
+          <p className="text-yellow-200 text-[12px]">{formatDate(project.date)}</p>
         </div>
       </Tilt>
     </motion.div>

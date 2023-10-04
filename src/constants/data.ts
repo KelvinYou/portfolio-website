@@ -71,8 +71,8 @@ export const strengths = [
     description: "Love exploring more best practice, problem solving, clean code, code structure",
   },
   {
-    name: "New Tech Lover",
-    description: "Love to spend my free time to catch up with new tech stack",
+    name: "Problem Solving",
+    description: "Can solve problem on time and love to provide idea to colleague due to the problems they faced",
   }
 ];
 
