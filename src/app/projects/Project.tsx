@@ -17,6 +17,8 @@ const ProjectCard = (props: any) => {
 
   return (
     <motion.div 
+      initial="hidden"
+      animate="show"
       variants={fadeIn("up", "spring", project.index * 0.5, 0.75)} 
       className='sm:w-[360px] w-full'
     >
@@ -111,7 +113,7 @@ const ProjectCard = (props: any) => {
 const Project = () => {
   return (
     <SectionWrapper
-      idName='experience'
+      idName='project'
     >
       {/* Title */}
       <motion.div
