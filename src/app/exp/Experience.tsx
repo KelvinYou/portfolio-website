@@ -13,6 +13,10 @@ import { SectionWrapper } from '@/hoc';
 import { textVariant } from "@/utils/motion";
 import { experiences } from "@/constants/data";
 import { useSearchParams } from 'next/navigation';
+import Link from 'next/link';
+import SvgIcon, { ICON_TYPE } from '@/assets/SvgIcon';
+import Tooltip from '@/components/ui/Tooltip';
+import CustomButton from '@/components/ui/CustomButton';
 
 // Experience Card
 const ExperienceCard: FC<any> = ({ experience }) => (
@@ -23,23 +27,48 @@ const ExperienceCard: FC<any> = ({ experience }) => (
     iconStyle={{ background: experience.iconBg }}
     icon={
       <div className="flex justify-center items-center w-full h-full">
-        <Image
+        {experience.companyUrl 
+        ? <Link 
+          href={experience.companyUrl}
+          target='_blank'
+          className="flex justify-center items-center w-full h-full"
+        >
+          <Image
+            src={experience.icon}
+            alt={experience.companyName}
+            className="w-[80%] h-[80%] object-contain"
+          />
+        </Link>
+        : <Image
           src={experience.icon}
-          alt={experience.company_name}
-          className="w-[60%] h-[60%] object-contain"
-        />
+          alt={experience.companyName}
+          className="w-[80%] h-[80%] object-contain"
+        />}
       </div>
     }
   >
     {/* Title */}
     <div>
       <h3 className="text-white text-[24px] font-bold">{experience.title}</h3>
-      <p
+      {experience.companyUrl ? <Link 
+      href={experience.companyUrl}
+      target='_blank'
+      >
+        <p
+          className="text-secondary text-[16px] font-semibold flex gap-2 hover:text-white"
+          style={{ margin: 0 }}
+        >
+          {/* {experience.companyName} <SvgIcon color={"white"} type={ICON_TYPE.OPEN_LINK} /> */}
+          {experience.companyName}
+        </p>
+      </Link> : <p
         className="text-secondary text-[16px] font-semibold"
         style={{ margin: 0 }}
       >
-        {experience.company_name}
-      </p>
+        {experience.companyName}
+      </p>}
+      
+      
     </div>
 
     {experience.description && <div className="mt-5 text-justify">
@@ -69,6 +98,10 @@ const ExperienceCard: FC<any> = ({ experience }) => (
         </div>
       ))}
     </div>
+    
+    {/* <button className="mt-10">
+      Explore More {"->"}
+    </button> */}
   </VerticalTimelineElement>
 );
 

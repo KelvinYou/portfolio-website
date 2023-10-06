@@ -4,9 +4,10 @@ import { Tilt } from "react-tilt";
 import { motion } from "framer-motion";
 import Image from "next/image";
 // import { styles } from "../styles";
-import { services } from '@/constants/data';
+import { languages, services } from '@/constants/data';
 import { fadeIn, textVariant } from "../utils/motion";
 import { SectionWrapper } from "../hoc";
+import Link from "next/link";
 
 // Service Card
 const ServiceCard = ({ index, title, icon }: { index: any, title: any, icon: any }) => {
@@ -45,20 +46,7 @@ const AboutMe: FC = () => {
         initial="hidden"
         animate="show"
         variants={textVariant()}
-      >
-        <p className="sm:text-[18px] text-[14px] text-secondary uppercase tracking-wider">
-          Know who is me faster
-        </p>
-        <h2 className="text-white font-black md:text-[60px] sm:text-[50px] xs:text-[40px] text-[30px]">
-          About Me.
-        </h2>
-      </motion.div>
-
-      {/* Title */}
-      <motion.div
-        initial="hidden"
-        animate="show"
-        variants={textVariant()}
+        className="mt-[100px]"
       >
         <p className="sm:text-[18px] text-[14px] text-secondary uppercase tracking-wider">
           Introduction
@@ -69,42 +57,74 @@ const AboutMe: FC = () => {
       </motion.div>
 
       {/* Body */}
-      <motion.p
+      <motion.div
+        initial="hidden"
+        animate="show"
         variants={fadeIn("", "", 0.1, 1)}
-        className="empty-4 text-gray-300 text-[17px] max-w-3xl leading-[30px] text-justify"
       >
-        I have developed in the field of software development for 4 years, 
-        eagerly immersed in the exploration of cutting-edge trends such as 
-        <span className="text-[#7de7eb] font-bold"> blockchain (web3) technology </span> 
-        . With my proficiency, I can leverage the power of the 
-        <span className="text-[#7de7eb] font-bold"> NodeJS framework (ReactJS, NextJS, ExpressJS) </span> 
-        and leverage 
-        <span className="text-[#7de7eb] font-bold"> Flutter </span> 
-        proficiently to build hybrid apps that transcend the traditional boundaries 
-        of the Android and iOS platforms.
-        {/* I'm a 
-        with experience in TypeScript and Javascript, and expertise in frameworks like 
-        <span className="text-[#915eff] font-bold"> ReactJS (NextJS) </span>, 
-        <span className="text-[#915eff] font-bold"> NodeJS (ExpressJS) </span>and
-        <span className="text-[#915eff] font-bold"> Flutter</span>.
-        I have a keen interest in staying up-to-date with the 
-        
-        <span className="text-[#915eff] font-bold"> latest trends and best practices </span>
-        in technology. I am skilled in 
+        {/* <ul className="text-gray-300 max-w-3xl">
 
-        <span className="text-[#915eff] font-bold"> problem-solving </span>
-        and thrive 
-        on finding innovative solutions. Collaborating closely with clients, I strive 
-        to create 
+          <li>
+            <span>
+              Name:
+            </span>
+
+            <span>
+              Kelvin
+            </span>
+          </li>
+
+          <li>
+            <span>
+              Start Coding:
+            </span>
+
+            <span>
+              2018
+            </span>
+          </li>
+
+          <li>
+            <span>Language: </span>
+            <span>
+              <ul>
+                {languages.map((language, index: number) => {
+                  const percentage = ((language.readAndWrite * 100) + (language.speak * 100)) / 2;
+                  const formattedPercentage = percentage.toFixed(0) + "%";
+
+                  return (
+                    <li key={language.name + index} className="flex items-center gap-2">
+                      <span>{language.name}</span>
+                      <span>
+                        <div className="w-[300px] max-w-80% bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+                          <div className="bg-[#7de7eb] h-2.5 rounded-full" style={{width: `${formattedPercentage}`}}></div>
+                        </div>
+                      </span>
+                      <div>{formattedPercentage}</div>
+                    </li>
+                  )
+                })}
+              </ul>
+            </span>
+            
+          </li>
+          
+        </ul> */}
         
-        
-        <span className="text-[#915eff] font-bold"> efficient, scalable, and user-friendly </span>
-        applications that address 
-        real-world challenges. I am a 
-        <span className="text-[#915eff] font-bold"> quick learner </span>
-        and dedicated to bringing your 
-        ideas to life. Let's work together to bring your ideas to life! */}
-      </motion.p>
+
+
+        <p className="empty-4 text-gray-300 text-[17px] max-w-3xl leading-[30px] text-justify">
+          I have developed in the field of software development for 4 years, 
+          eagerly immersed in the exploration of cutting-edge trends such as 
+          <span className="text-[#7de7eb] font-bold"> blockchain (web3) technology </span> 
+          . With my proficiency, I can leverage the power of the 
+          <span className="text-[#7de7eb] font-bold"> NodeJS framework (ReactJS, NextJS, ExpressJS) </span> 
+          and leverage 
+          <span className="text-[#7de7eb] font-bold"> Flutter </span> 
+          proficiently to build hybrid apps that transcend the traditional boundaries 
+          of the Android and iOS platforms.
+        </p>
+      </motion.div>
 
       {/* Service Card */}
       <div className="mt-20 flex flex-wrap gap-10">

@@ -9,6 +9,7 @@ import {
   finexus,
   beyondsoft,
   tarumt,
+  portfolio,
 } from "@/assets";
 
 export const services = [
@@ -30,13 +31,82 @@ export const services = [
   },
 ];
 
-export type ExperienceType = typeof experiences;
+export const socialMedia = [
+  {
+    name: "Github",
+    link: "https://github.com/KelvinYou",
+  },
+  {
+    name: "LinkedIn",
+    link: "https://www.linkedin.com/in/kelvinyou2001/",
+  },
+  {
+    name: "Instagram",
+    link: "https://www.instagram.com/kelvinyou0220/",
+  },
+]
+export type PersonalDataType = typeof personalData;
+
+export const personalData = {
+  nickname: "Kelvin You",
+  fullName: "Kelvin You Kok Eng",
+  location: "Kuala Lumpur, Malaysia",
+  email: "ykekelvin0220@gmail.com",
+  phone: "+(60) 18 373-2752",
+  birthDate: "2001-02-20",
+  gender: "Male",
+  socialMedia: [ {
+    name: "Personal Website",
+    link: "https://kelvinyou.vercel.app/"
+  }, ... socialMedia],
+};
+
+export const strengths = [
+  {
+    name: "Self-taught Person",
+    description: "Powered by Internet: Youtube, Github, Leetcode, etc",
+  },
+  {
+    name: "Love to Code",
+    description: "Love exploring more best practice, problem solving, clean code, code structure",
+  },
+  {
+    name: "Problem Solving",
+    description: "Can solve problem on time and love to provide idea to colleague due to the problems they faced",
+  }
+];
+
+export const careerData = {
+  role: "Full Stack Software Engineer",
+  startCoding: "2018-12-20",
+  desc: "I develop Web, Mobile and Blockchain App."
+};
+
+export const languages = [
+  {
+    name: "Mandarin",
+    speak: 0.9,
+    readAndWrite: 0.9,
+  },
+  {
+    name: "Malay",
+    speak: 0.7,
+    readAndWrite: 0.8,
+  },
+  {
+    name: "English",
+    speak: 0.6,
+    readAndWrite: 0.8,
+  },
+]
+
 
 // Experiences
 export const experiences = [
   {
     title: "Frontend Web Developer",
-    company_name: "Beyondsoft (Malaysia) Sdn. Bhd.",
+    companyName: "Beyondsoft (Malaysia) Sdn. Bhd.",
+    companyUrl: "https://www.beyondsoft.com/",
     icon: beyondsoft,
     iconBg: "#FFF",
     date: "Aug 2023 - Today",
@@ -50,7 +120,8 @@ export const experiences = [
   },
   {
     title: "Java Software Engineer Intern",
-    company_name: "Finexus International Sdn. Bhd.",
+    companyName: "Finexus International Sdn. Bhd.",
+    companyUrl: "https://www.finexusgroup.com/",
     icon: finexus,
     iconBg: "#383E56",
     date: "Feb 2023 - Jul 2023",
@@ -58,10 +129,6 @@ export const experiences = [
     points: [
       "Spearheaded Java-based projects with innovative features and rigorous testing, fostering seamless collaboration across teams.",
       "Mastered debugging, efficient web resource searching, and streamlined application deployment for optimal project performance."
-      // "Focused on Java-based project maintenance, utilizing JSP and Tomcat. Conducted R&D for innovative features such as reusable custom dialogs and remote log file retrieval. Conducted comprehensive testing and documentation for quality assurance.",
-      // "Contributed to large-scale projects involving multiple teams, including frontend, backend, and mobile, fostering effective collaboration and coordination for successful project execution.",
-      // "Skilled in utilizing log files for debugging, adept at efficient web resource searching, and knowledgeable in SIT and UAT workflows.",
-      // "Proficient in deploying applications using Tomcat, SQLDeveloper, and FileZilla for streamlined server management and file transfer."
     ],
     techStacks: [
       "NextJS",
@@ -79,7 +146,8 @@ export const experiences = [
   },
   {
     title: "Bachelor (Hons) of Software Engineering",
-    company_name: "Tunku Abdul Rahman University of Management and Technology",
+    companyName: "Tunku Abdul Rahman University of Management and Technology",
+    companyUrl: "https://tarc.edu.my/",
     icon: tarumt,
     iconBg: "#383E56",
     date: "Jun 2021 - Jul 2023",
@@ -101,7 +169,8 @@ export const experiences = [
   },
   {
     title: "Software Engineer Intern",
-    company_name: "Techtics Blockchain PLT",
+    companyName: "Techtics Blockchain PLT",
+    companyUrl: "https://www.techtics.io/",
     icon: techtics,
     iconBg: "#E6DEDD",
     date: "Oct 2020 - Jan 2021",
@@ -128,14 +197,16 @@ export const experiences = [
   },
   {
     title: "Diploma in Computer Science",
-    company_name: "Tunku Abdul Rahman University of Management and Technology",
+    companyName: "Tunku Abdul Rahman University of Management and Technology",
+    companyUrl: "https://tarc.edu.my/",
     icon: tarumt,
     iconBg: "#383E56",
     date: "May 2019 - Jun 2021",
+
     cgpa: "3.7200",
     description: "",
     points: [
-      "Taken core courses for software development such as Data Structure and Algorithm in Java, Human-Computer Interaction, Graphics Programming, Distributed System and Parallel Computing. Exposed to technologies such as Mobile Application Development, Blockchain App Development, Data Science through elective courses.",
+      "Basic Programming Concepts through various languages such as Object-Oriented Programming in Java, C, and Assembly Language. Mathematics courses included Algebra, Calculus, Statistics, Discrete Math.",
     ],
     techStacks: [
       "Java",
@@ -150,7 +221,7 @@ export const experiences = [
   },
   {
     title: "Frontend Web Developer",
-    company_name: "Jonvi Marketing Sdn. Bhd.",
+    companyName: "Jonvi Marketing Sdn. Bhd.",
     icon: jonvi,
     iconBg: "#E6DEDD",
     date: "Jan 2019 - May 2019",
@@ -176,25 +247,46 @@ export const experiences = [
   },
 ];
 
+export const commonEducation = [
+  {
+    title: "Pure Science Class",
+    start_date: "2014-1-1",
+    end_date: "2018-12-6",
+    school: "SMK Taman Desa",
+    schoolUrl: "https://ms.wikipedia.org/wiki/Sekolah_Menengah_Kebangsaan_Taman_Desa,_Bandar_Country_Homes",
+    description: "Pure science class, studied Chinese, Malay, English, Maths, Moral, Sejarah, Biology, Chemistry, Physic and Add Maths"
+  },
+  {
+    title: "Pure Science",
+    start_date: "2008-1-1",
+    end_date: "2013-12-1",
+    school: "SJK(C) Kundang",
+    schoolUrl: "http://www.sjkckundang.edu.my/",
+    description: ""
+  },
+]
+
 export type ProjectType = typeof projects;
 
 export const projects = [
   {
     name: "My Portfolio",
     description: 
-      "A place full of my love",
+      "A self-introduction website. The place full of my love",
     tags: [
       {
-        name: "react",
+        name: "NextJS",
         color: "blue-text-gradient",
       },
       {
-        name: "tailwind-css",
+        name: "Tailwind CSS",
         color: "blue-text-gradient",
       },
     ],
-    // images: [jonvi, techtics],
-    live_site_link: "https://kelvinyou.vercel.app/",
+    images: [portfolio],
+    liveSiteLink: "https://kelvinyou.vercel.app/",
+    platforms: ["Web"],
+    date: "2023-10-02",
   },
   {
     name: "Travel Guide",
@@ -202,32 +294,105 @@ export const projects = [
       "Mobile application created using Flutter with dart as programming language",
     tags: [
       {
-        name: "flutter",
+        name: "Flutter",
         color: "blue-text-gradient",
       },
       {
-        name: "firebase",
+        name: "Firebase",
         color: "orange-text-gradient",
       },
     ],
     images: [],
-    source_code_link: "https://github.com/KelvinYou/fyp_tour_guide_app",
+    sourceCodeLink: "https://github.com/KelvinYou/fyp_tour_guide_app",
+    platforms: ["Android", "iOS"],
+    date: "2022-12-17",
+  },
+  {
+    name: "Restaurant Landing",
+    description: 
+      "Just to build an UI refer from Figma",
+    tags: [
+      {
+        name: "ReactJS",
+        color: "blue-text-gradient",
+      },
+      {
+        name: "Bootstrap",
+        color: "pink-text-gradient",
+      },
+    ],
+    images: [],
+    liveSiteLink: "https://restaurant-landing-kelvinyou.vercel.app/",
+    sourceCodeLink: "https://github.com/KelvinYou/react-selflearn/tree/main/react-restaurant-landing",
+    platforms: ["Web"],
+    date: "2023-2-21",
+  },
+  {
+    name: "Automated Market-Making System",
+    description: 
+      "An assignment from Blockchain course which to build a liquidity pool using smart contract",
+    tags: [
+      {
+        name: "ReactJS",
+        color: "blue-text-gradient",
+      },
+      {
+        name: "Solidity",
+        color: "blue-text-gradient",
+      },
+    ],
+    images: [],
+    sourceCodeLink: "https://github.com/KelvinYou/amm-assignment",
+    platforms: ["Web"],
+    date: "2023-1-5",
+  },
+  {
+    name: "Edge Detection System",
+    description: 
+      "An assignment for the Distributed Systems and Parallel Computing course, Detecting edges in images. We also use tools like Threading, Dask, Classified, etc. to speed up the process",
+    tags: [
+      {
+        name: "Python",
+        color: "pink-text-gradient",
+      },
+    ],
+    images: [],
+    sourceCodeLink: "https://github.com/KelvinYou/dspc-assignment",
+    platforms: [],
+    date: "2022-9-23",
+  },
+  {
+    name: "Donation System",
+    description: 
+      "An assignment for the Data Structures and Algorithms course, create adt using doubly linked list",
+    tags: [
+      {
+        name: "Java",
+        color: "pink-text-gradient",
+      },
+    ],
+    images: [],
+    sourceCodeLink: "https://github.com/KelvinYou/dsa-assignment",
+    platforms: ["Command Line"],
+    date: "2022-9-9",
   },
 ]
 
-
-
-export const socialMedias = [
+export const coCurricular = [
   {
-    name: "Github",
-    link: "https://github.com/KelvinYou",
+    title: "Chinese Language Society",
+    start_date: "2019-5-28",
+    end_date: "2023-7-31",
+    school: "Tunku Abdul Rahman University of Management and Technology",
+    schoolUrl: "https://tarc.edu.my/",
+    description: "Made friends and established connections with them, Learnt communication skills",
   },
   {
-    name: "LinkedIn",
-    link: "https://www.linkedin.com/in/kelvinyou2001/",
-  },
-  {
-    name: "Instagram",
-    link: "https://www.instagram.com/kelvinyou0220/",
+    title: "Chess Club",
+    start_date: "2019-5-28",
+    end_date: "2023-7-31",
+    school: "Tunku Abdul Rahman University of Management and Technology",
+    schoolUrl: "https://tarc.edu.my/",
+    description: "Learnt how to solve chess tactics, Learnt time management.",
   },
 ]

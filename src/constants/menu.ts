@@ -52,10 +52,10 @@ export const navLinks: MainMenu[] = [
     title: "Projects",
     link: PROJECTS_PATH,
   },
-  {
-    id: "resume",
-    title: "Resume",
-    link: RESUME_LINK,
-    newTab: true,
-  },
+  // {
+  //   id: "resume",
+  //   title: "Resume",
+  //   link: RESUME_LINK,
+  //   newTab: true,
+  // },
 ];

@@ -1,8 +1,10 @@
 "use client";
 import { github, preview } from '@/assets';
+import SvgIcon, { ICON_TYPE } from '@/assets/SvgIcon';
 import Tooltip from '@/components/ui/Tooltip';
 import { projects } from '@/constants/data';
 import { SectionWrapper } from '@/hoc'
+import { formatDate } from '@/utils/dateUtil';
 import { fadeIn, textVariant } from '@/utils/motion'
 import { motion } from 'framer-motion'
 import Image from 'next/image';
@@ -14,14 +16,19 @@ const ProjectCard = (props: any) => {
   const { project } = props;
 
   return (
-    <motion.div variants={fadeIn("up", "spring", project.index * 0.5, 0.75)}>
+    <motion.div 
+      initial="hidden"
+      animate="show"
+      variants={fadeIn("up", "spring", project.index * 0.5, 0.75)} 
+      className='sm:w-[360px] w-full'
+    >
       <Tilt
         options={{
           max: 45,
           scale: 1,
           speed: 450,
         }}
-        className="bg-tertiary p-5 rounded-2xl sm:w-[360px] w-full"
+        className="bg-tertiary p-5 rounded-2xl h-full relative"
       >
         <div className="relative w-full h-[230px]">
           {/* Work image */}
@@ -42,11 +49,11 @@ const ProjectCard = (props: any) => {
           <div className="absolute inset-0 flex justify-end m-3 card-img_hover">
 
             {/* Live Site */}
-            {project.live_site_link && <Tooltip
+            {project.liveSiteLink && <Tooltip
               content="Live Preview"
             >
               <div
-                onClick={() => window.open(project.live_site_link, "_blank", "noreferrer")}
+                onClick={() => window.open(project.liveSiteLink, "_blank", "noreferrer")}
                 className="black-gradient w-10 h-10 rounded-full flex justify-center items-center cursor-pointer"
               >
                 <Image
@@ -60,11 +67,11 @@ const ProjectCard = (props: any) => {
             
 
             {/* Github */}
-            {project.source_code_link && <Tooltip
+            {project.sourceCodeLink && <Tooltip
               content="View Source Code"
             >
               <div
-                onClick={() => window.open(project.source_code_link, "_blank", "noreferrer")}
+                onClick={() => window.open(project.sourceCodeLink, "_blank", "noreferrer")}
                 className="black-gradient w-10 h-10 rounded-full flex justify-center items-center cursor-pointer ml-2"
               >
                 <Image
@@ -86,12 +93,17 @@ const ProjectCard = (props: any) => {
         </div>
 
         {/* Work Tag */}
-        <div className="mt-4 flex flex-wrap gap-2">
+        <div className="mt-4 flex flex-wrap gap-2 mb-10">
           {project.tags.map((tag: any, index: number) => (
             <p key={index + tag.name} className={`text-[14px] ${tag.color}`}>
               #{tag.name}
             </p>
           ))}
+        </div>
+
+        <div className="flex gap-1 justify-end absolute bottom-4 right-4 opacity-80">
+          <SvgIcon type={ICON_TYPE.CLOCK_OUTLINE} color="rgb(254 240 138)" size={18}/>
+          <p className="text-yellow-200 text-[12px]">{formatDate(project.date)}</p>
         </div>
       </Tilt>
     </motion.div>
@@ -101,7 +113,7 @@ const ProjectCard = (props: any) => {
 const Project: FC = () => {
   return (
     <SectionWrapper
-      idName='experience'
+      idName='project'
     >
       {/* Title */}
       <motion.div
@@ -126,10 +138,11 @@ const Project: FC = () => {
           className="mt-3 text-secondary text-[17px] max-w-3xl leading-[30px]"
         >
           Following projects showcases my skills and experience through
-          real-world examples of my work. Each project is briefly described with
-          links to code repositories and live demos in it. It reflects my
-          ability to solve complex problems, work with different technologies,
-          and manage projects effectively.
+          real-world examples of my work. {" "}
+          {/* Each project is briefly described with
+          links to code repositories and live demos in it. */}
+           It reflects my ability to solve complex problems, work with different technologies,
+          and manage projects effectively. 
         </motion.p>
       </div>
 

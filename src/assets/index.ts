@@ -24,3 +24,6 @@ export { default as jonvi } from "./companies/jonvi.png";
 
 // schools
 export { default as tarumt } from "./schools/tarumt.png";
+
+// projects
+export { default as portfolio } from "./projects/portfolio/home.png";
