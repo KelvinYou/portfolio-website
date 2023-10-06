@@ -6,7 +6,7 @@ import { SectionWrapper } from '@/hoc'
 import { fadeIn, textVariant } from '@/utils/motion'
 import { motion } from 'framer-motion'
 import Image from 'next/image';
-import React from 'react'
+import React, { FC } from 'react'
 import { Tilt } from "react-tilt";
 
 // Project Card
@@ -98,7 +98,7 @@ const ProjectCard = (props: any) => {
   )
 }
 
-const Project = () => {
+const Project: FC = () => {
   return (
     <SectionWrapper
       idName='experience'

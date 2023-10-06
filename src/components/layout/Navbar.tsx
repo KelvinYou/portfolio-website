@@ -94,9 +94,8 @@ const DropdownMenu: FC<any> = (props) => {
   );
 }
 
-const Navbar = () => {
-  // state variables
-  const [active, setActive] = useState(navLinks[0].title);
+const Navbar: FC = () => {
+  const [active, setActive] = useState("");
   const [toggle, setToggle] = useState(false);
 
   return (

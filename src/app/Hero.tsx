@@ -1,10 +1,9 @@
-import React from "react";
+import React, { FC } from "react";
 import { motion } from "framer-motion";
 
 import ComputerCanvas from "@/components/canvas/ComputerCanvas";
 
-// Hero
-const Hero = () => {
+const Hero: FC = () => {
   return (
     <div className="bg-hero-pattern bg-cover bg-no-repeat bg-center">
       <section className="relative w-full h-screen mx-auto">

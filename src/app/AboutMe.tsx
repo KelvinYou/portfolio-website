@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { FC } from "react";
 import { Tilt } from "react-tilt";
 import { motion } from "framer-motion";
 import Image from "next/image";
@@ -35,7 +35,7 @@ const ServiceCard = ({ index, title, icon }: { index: any, title: any, icon: any
 };
 
 // About
-const AboutMe = () => {
+const AboutMe: FC = () => {
   return (
     <SectionWrapper
       idName='about me'
