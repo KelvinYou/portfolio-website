@@ -4,8 +4,7 @@ import ComputerCanvas from "@/components/canvas/ComputerCanvas";
 
 import { careerData, personalData } from "@/constants/data";
 
-// Hero
-const Hero = () => {
+const Hero: FC = () => {
   return (
     <div className="bg-hero-pattern bg-cover bg-no-repeat bg-center">
       <section className="relative w-full h-[calc(100vh-80px)] mx-auto">
