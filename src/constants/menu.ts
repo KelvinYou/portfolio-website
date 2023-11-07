@@ -3,7 +3,7 @@ import {
   homeIcon 
 } from "@/assets";
 
-import { HOME_PATH, PROJECTS_PATH, RESUME_LINK, EXPERIENCES_PATH } from "./routes";
+import { HOME_PATH, PROJECTS_PATH, RESUME_LINK, EXPERIENCES_PATH, SPACE_LINK } from "./routes";
 
 export type MainMenu = {
   id: string;
@@ -52,10 +52,10 @@ export const navLinks: MainMenu[] = [
     title: "Projects",
     link: PROJECTS_PATH,
   },
-  // {
-  //   id: "resume",
-  //   title: "Resume",
-  //   link: RESUME_LINK,
-  //   newTab: true,
-  // },
+  {
+    id: "space",
+    title: "Space",
+    link: SPACE_LINK,
+    newTab: true,
+  },
 ];

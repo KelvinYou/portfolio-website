@@ -1,7 +1,7 @@
-import React from "react";
-import { motion } from "framer-motion";
-
+import React, { FC } from "react";
+// import { motion } from "framer-motion";
 import ComputerCanvas from "@/components/canvas/ComputerCanvas";
+
 import { careerData, personalData } from "@/constants/data";
 
 // Hero

@@ -9,6 +9,7 @@ import Link from 'next/link';
 import "@/styles/index.scss";
 import { careerData, personalData } from '@/constants/data';
 import { MainMenu } from '@/constants/menu';
+import { ExternalLink } from 'lucide-react';
 
 interface DropdownMenuProps {
   link: MainMenu;
@@ -169,7 +170,7 @@ const Navbar = () => {
                       {link.title}
                     </Link>
                   ) : (
-                    <a href={`/#${link.id}`}>{link.title}</a>
+                    <a href={`/#${link.id}`}>{link.title} <ExternalLink /></a>
                   )}
                 </li>
               )

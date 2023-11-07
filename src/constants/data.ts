@@ -149,7 +149,7 @@ export const experiences = [
     companyName: "Tunku Abdul Rahman University of Management and Technology",
     companyUrl: "https://tarc.edu.my/",
     icon: tarumt,
-    iconBg: "#383E56",
+    iconBg: "#FFF",
     date: "Jun 2021 - Jul 2023",
     cgpa: "3.7200",
     description: "",
@@ -200,7 +200,7 @@ export const experiences = [
     companyName: "Tunku Abdul Rahman University of Management and Technology",
     companyUrl: "https://tarc.edu.my/",
     icon: tarumt,
-    iconBg: "#383E56",
+    iconBg: "#FFF",
     date: "May 2019 - Jun 2021",
 
     cgpa: "3.7200",

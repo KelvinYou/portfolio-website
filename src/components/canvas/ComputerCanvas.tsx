@@ -1,5 +1,5 @@
 "use client";
-import React, { Suspense, useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState, useMemo } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Preload, useGLTF } from "@react-three/drei";
 import CanvasLoader from "../ui/CanvasLoader";
@@ -12,7 +12,7 @@ const Computer = ({ isMobile }: { isMobile: boolean }) => {
   return (
     // Mesh
     <mesh>
-      {/* Light */}
+      {/* Lights */}
       <hemisphereLight intensity={4} groundColor="black" />
       <pointLight intensity={10} color="white" position={[0, 5, 0]} />
       <spotLight
@@ -56,6 +56,9 @@ const ComputerCanvas = () => {
     };
   }, []);
 
+  // Memoize the Computer component
+  const MemoizedComputer = useMemo(() => <Computer isMobile={isMobile} />, [isMobile]);
+
   return (
     <Canvas
       frameloop="demand"
@@ -71,7 +74,7 @@ const ComputerCanvas = () => {
           minPolarAngle={Math.PI / 2}
         />
         {/* Show Model */}
-        <Computer isMobile={isMobile} />
+        {MemoizedComputer}
       </Suspense>
 
       {/* Preload all */}
