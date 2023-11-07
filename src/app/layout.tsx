@@ -8,9 +8,9 @@ const poppins = Poppins({ weight: "400", subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Kelvin You | Software Engineer',
-  description: 'A personal website',
+  description: 'Kelvin You - Software Engineer | Explore my portfolio, projects, and learn more about my expertise in web development and technology solutions. Connect with a passionate developer.',
   icons: {
-    icon: '/favicon.ico',
+    icon: '/logo.png',
   },
 }
 

@@ -13,8 +13,8 @@ const Computer1 = ({ isMobile }: { isMobile: boolean }) => {
     // Mesh
     <mesh>
       {/* Lights */}
-      <hemisphereLight intensity={4} groundColor="black" />
-      <pointLight intensity={10} color="white" position={[0, 5, 0]} />
+      <hemisphereLight intensity={2} groundColor="black" />
+      <pointLight intensity={5} color="white" position={[0, 3, 0]} />
       <spotLight
         position={[-20, 50, 10]}
         angle={0.12}
@@ -33,7 +33,7 @@ const Computer1 = ({ isMobile }: { isMobile: boolean }) => {
   );
 };
 
-const Computer = ({ isMobile }: { isMobile: boolean }) => {
+const Computer2 = ({ isMobile }: { isMobile: boolean }) => {
   // Import scene
   const computer = useGLTF("./desktop-pc2/scene.gltf");
 
@@ -85,7 +85,7 @@ const ComputerCanvas = () => {
   }, []);
 
   // Memoize the Computer component
-  const MemoizedComputer = useMemo(() => <Computer isMobile={isMobile} />, [isMobile]);
+  const MemoizedComputer = useMemo(() => <Computer1 isMobile={isMobile} />, [isMobile]);
 
   if (isMobile) return null;
   return (
