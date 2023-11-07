@@ -178,14 +178,14 @@ const Navbar: FC = () => {
                         {link.newTab && <ExternalLink />}
                       </div>
 
-
+                      <div className={`bg-gradient-to-r from-[#33bbcf] to-[#7de7eb] 
+                        h-1 rounded ${active === link.title ? "w-full" : "w-0"} group-hover:w-full transition-width ease-in-out 
+                        duration-200`}></div>
                     </Link>
                   ) : (
                     <a href={`/#${link.id}`}>{link.title} <ExternalLink /></a>
                   )}
-                    <div className={`bg-gradient-to-r from-[#33bbcf] to-[#7de7eb] 
-                    h-1 rounded ${active === link.title ? "w-full" : "w-0"} group-hover:w-full transition-width ease-in-out 
-                    duration-200`}></div>
+                    
                 </li>
               )
             }
