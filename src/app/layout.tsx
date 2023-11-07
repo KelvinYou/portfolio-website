@@ -9,6 +9,9 @@ const poppins = Poppins({ weight: "400", subsets: ['latin'] })
 export const metadata: Metadata = {
   title: 'Kelvin You | Software Engineer',
   description: 'A personal website',
+  icons: {
+    icon: '/favicon.ico',
+  },
 }
 
 export default function RootLayout({

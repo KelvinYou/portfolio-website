@@ -1,0 +1,11 @@
+Model Information:
+* title:	Computer and laptop
+* source:	https://sketchfab.com/3d-models/computer-and-laptop-8757cd8dd5c941248cc1048fd6368290
+* author:	sugaa (https://sketchfab.com/sugaa)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Computer and laptop" (https://sketchfab.com/3d-models/computer-and-laptop-8757cd8dd5c941248cc1048fd6368290) by sugaa (https://sketchfab.com/sugaa) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

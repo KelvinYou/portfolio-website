@@ -5,7 +5,7 @@ import { OrbitControls, Preload, useGLTF } from "@react-three/drei";
 import CanvasLoader from "../ui/CanvasLoader";
 
 // Computers
-const Computer = ({ isMobile }: { isMobile: boolean }) => {
+const Computer1 = ({ isMobile }: { isMobile: boolean }) => {
   // Import scene
   const computer = useGLTF("./desktop_pc/scene.gltf");
 
@@ -28,6 +28,34 @@ const Computer = ({ isMobile }: { isMobile: boolean }) => {
         scale={isMobile ? 0.7 : 0.75}
         position={isMobile ? [0, -3, -2.2] : [0, -3.25, -1.5]}
         rotation={[-0.01, -0.2, -0.1]}
+      />
+    </mesh>
+  );
+};
+
+const Computer = ({ isMobile }: { isMobile: boolean }) => {
+  // Import scene
+  const computer = useGLTF("./desktop-pc2/scene.gltf");
+
+  return (
+    // Mesh
+    <mesh>
+      {/* Lights */}
+      <hemisphereLight intensity={3} groundColor="black" />
+      {/* <pointLight intensity={10} color="white" position={[0, 5, 0]} />
+      <spotLight
+        position={[-20, 50, 10]}
+        angle={0.12}
+        penumbra={1}
+        intensity={3}
+        castShadow
+        shadow-mapSize={1024}
+      /> */}
+      <primitive
+        object={computer.scene}
+        scale={isMobile ? 0.12 : 0.12}
+        position={isMobile ? [0, -3, -2.2] : [0, -3.25, -1.5]}
+        rotation={[0, 1.3, 0]}
       />
     </mesh>
   );
@@ -59,6 +87,7 @@ const ComputerCanvas = () => {
   // Memoize the Computer component
   const MemoizedComputer = useMemo(() => <Computer isMobile={isMobile} />, [isMobile]);
 
+  if (isMobile) return null;
   return (
     <Canvas
       frameloop="demand"

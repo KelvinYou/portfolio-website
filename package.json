@@ -26,6 +26,7 @@
     "react-tilt": "^1.0.2",
     "react-vertical-timeline-component": "^3.6.0",
     "sass": "^1.67.0",
+    "sharp": "^0.32.6",
     "tailwindcss": "3.3.5",
     "three": "0.158.0",
     "typescript": "5.2.2"

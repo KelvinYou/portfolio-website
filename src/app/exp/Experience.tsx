@@ -1,5 +1,5 @@
 "use client";
-import React, { FC, useEffect } from 'react';
+import React, { FC } from 'react';
 import Image from 'next/image';
 import {
   VerticalTimeline,
@@ -14,9 +14,8 @@ import { textVariant } from "@/utils/motion";
 import { experiences } from "@/constants/data";
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import SvgIcon, { ICON_TYPE } from '@/assets/SvgIcon';
-import Tooltip from '@/components/ui/Tooltip';
-import CustomButton from '@/components/ui/CustomButton';
+
+import "./Experience.scss";
 
 // Experience Card
 const ExperienceCard: FC<any> = ({ experience }) => (
@@ -89,12 +88,12 @@ const ExperienceCard: FC<any> = ({ experience }) => (
     </ul>
 
     <div className="mt-5 flex flex-wrap gap-y-2">
-      {experience.techStacks.map((language: string, index: number) => (
+      {experience.techStacks.map((techStack: string, index: number) => (
         <div 
           key={index}
           className="text-xs font-medium mr-2 px-2.5 py-0.5 rounded bg-gray-700 text-gray-300"
         >
-          {language}
+          {techStack}
         </div>
       ))}
     </div>
@@ -133,19 +132,14 @@ const Experience: FC = () => {
       {/* Experience Card */}
       <div className="empty-20 flex flex-col">
         <VerticalTimeline>
-          {experienceCategory === "all" 
-            ? experiences.map((experience, i) => {
-                return (
-                  <ExperienceCard key={i} experience={experience} />
-                )
-              })
-            : experiences.map((experience, i) => {
-              if (experience.experienceCategory === experienceCategory) {
-                return (
-                  <ExperienceCard key={i} experience={experience} />
-                )
-              }})
-          }
+          {experiences
+            .filter((experience) => {
+              if (experienceCategory === 'all') return true;
+              return experience.experienceCategory === experienceCategory;
+            })
+            .map((experience, i) => (
+              <ExperienceCard key={i} experience={experience} />
+            ))}
         </VerticalTimeline>
       </div>
     </SectionWrapper>
