@@ -5,8 +5,8 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 // import { styles } from "../styles";
 import { languages, services } from '@/constants/data';
-import { fadeIn, textVariant } from "../utils/motion";
-import { SectionWrapper } from "../hoc";
+import { fadeIn, textVariant } from "../../utils/motion";
+import { SectionWrapper } from "../../hoc";
 import Link from "next/link";
 
 // Service Card
@@ -97,7 +97,7 @@ const AboutMe: FC = () => {
                       <span>{language.name}</span>
                       <span>
                         <div className="w-[300px] max-w-80% bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
-                          <div className="bg-[#7de7eb] h-2.5 rounded-full" style={{width: `${formattedPercentage}`}}></div>
+                          <div className="bg-on-primary h-2.5 rounded-full" style={{width: `${formattedPercentage}`}}></div>
                         </div>
                       </span>
                       <div>{formattedPercentage}</div>
@@ -116,11 +116,11 @@ const AboutMe: FC = () => {
         <p className="empty-4 text-gray-300 text-[17px] max-w-3xl leading-[30px] text-justify">
           I have developed in the field of software development for 4 years, 
           eagerly immersed in the exploration of cutting-edge trends such as 
-          <span className="text-[#7de7eb] font-bold"> blockchain (web3) technology </span> 
+          <span className="text-on-primary font-bold"> blockchain (web3) technology </span> 
           . With my proficiency, I can leverage the power of the 
-          <span className="text-[#7de7eb] font-bold"> NodeJS framework (ReactJS, NextJS, ExpressJS) </span> 
+          <span className="text-on-primary font-bold"> NodeJS framework (ReactJS, NextJS, ExpressJS) </span> 
           and leverage 
-          <span className="text-[#7de7eb] font-bold"> Flutter </span> 
+          <span className="text-on-primary font-bold"> Flutter </span> 
           proficiently to build hybrid apps that transcend the traditional boundaries 
           of the Android and iOS platforms.
         </p>

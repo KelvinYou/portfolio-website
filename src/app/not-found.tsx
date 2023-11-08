@@ -1,4 +1,5 @@
 "use client";
+
 import { HOME_PATH } from '@/constants/routes'
 import { useRouter } from 'next/navigation'
 import React, { useEffect } from 'react'
@@ -11,7 +12,7 @@ const NotFound = () => {
   });
   
   return (
-    <>404 Page Not Found</>
+    <>Loading ...</>
   )
 }
 
