@@ -100,6 +100,18 @@ export const languages = [
   },
 ]
 
+const techStack = {
+  projectManagement: ['Jira'],
+  frontend: ['React', 'NextJS'],
+  backend: ['NodeJS', 'Express'],
+  database: ['MongoDB', 'PostgreSQL'],
+  mobile: ['Flutter'],
+  versionControl: ['Git', 'Bitbucket'],
+  cloud: ['Firebase'],
+  // devOps: ['Docker', 'Jenkins'],
+  languages: ['JavaScript', 'TypeScript'],
+  tools: ['VS Code', 'Postman'],
+};
 
 // Experiences
 export const experiences = [
