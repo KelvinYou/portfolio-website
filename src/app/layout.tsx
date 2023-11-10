@@ -7,10 +7,14 @@ import Footer from '@/components/layout/Footer'
 const poppins = Poppins({ weight: "400", subsets: ['latin'] })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://kelvinyou.vercel.app'),
   title: 'Kelvin You | Software Engineer',
   description: 'Kelvin You - Software Engineer | Explore my portfolio, projects, and learn more about my expertise in web development and technology solutions. Connect with a passionate developer.',
   icons: {
     icon: '/logo.png',
+  },
+  openGraph: {
+    images: '/hero-bg/benz.jpg',
   },
 }
 
