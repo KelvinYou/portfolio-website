@@ -1,8 +1,11 @@
+"use client"
+
 import React, { FC } from "react";
 // import { motion } from "framer-motion";
 import ComputerCanvas from "@/components/canvas/ComputerCanvas";
 
 import { careerData, personalData } from "@/constants/data";
+import Typewriter from "typewriter-effect";
 
 const Hero: FC = () => {
   return (
@@ -21,10 +24,25 @@ const Hero: FC = () => {
             <h1 className={`font-black lg:text-[80px] sm:text-[60px] xs:text-[50px] text-[40px] lg:leading-[98px] mt-2 text-white`}>
               Hi, I'm <span className="text-gradient"> {personalData.nickname} </span>
             </h1>
-            <p className={`text-on-secondary font-medium lg:text-[30px] sm:text-[26px] xs:text-[20px] text-[16px] lg:leading-[40px] mt-2 text-white-100`}>
+            {/* <p className={`text-on-secondary font-medium lg:text-[30px] sm:text-[26px] xs:text-[20px] text-[16px] lg:leading-[40px] mt-2`}>
 
               {careerData.desc}
-            </p>
+            </p> */}
+
+            <div className=" font-medium text-on-secondary lg:text-[30px] sm:text-[26px] xs:text-[20px] text-[16px] lg:leading-[40px] mt-2">
+              <Typewriter
+                options={{
+                  strings: [
+                    "Software Engineer",
+                    "Full Stack Developer",
+                  ],
+                  autoStart: true,
+                  loop: true,
+                  deleteSpeed: 50,
+                }}
+              />
+            </div>
+
           </div>
         </div>
 
