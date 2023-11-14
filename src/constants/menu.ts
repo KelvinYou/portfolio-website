@@ -9,7 +9,7 @@ export type MainMenu = {
   id: string;
   title: string;
   subMenu?: SubMenu[];
-  link?: string;
+  link: string;
   newTab?: boolean;
   icon?: any;
 }

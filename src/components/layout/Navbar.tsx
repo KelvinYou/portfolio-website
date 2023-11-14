@@ -10,18 +10,15 @@ import "@/styles/index.scss";
 import { careerData, personalData } from '@/constants/data';
 import { MainMenu } from '@/constants/menu';
 import { ExternalLink } from 'lucide-react';
+import { usePathname } from 'next/navigation';
 
 interface DropdownMenuProps {
   link: MainMenu;
-  parentActive: string;
-  setParentActive: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const DropdownMenu: FC<DropdownMenuProps> = (props) => {
   const { 
     link,
-    parentActive,
-    setParentActive
   } = props;
 
   const [active, setActive] = useState(navLinks[0].title);
@@ -61,7 +58,7 @@ const DropdownMenu: FC<DropdownMenuProps> = (props) => {
       >
         <a 
           className={`${
-            parentActive === link.title ? "text-white" : "text-secondary"
+            "/exp" === link.link ? "text-white" : "text-secondary"
           } hover:text-white text-[18px] group`}
           onClick={(e) => {
             e.preventDefault();
@@ -72,7 +69,7 @@ const DropdownMenu: FC<DropdownMenuProps> = (props) => {
             {link.title}
           </div>
           <div className={`bg-gradient-to-r from-[#33bbcf] to-[#7de7eb] 
-            h-1 rounded ${parentActive === link.title ? "w-full" : "w-0"} group-hover:w-full transition-width ease-in-out 
+            h-1 rounded ${"/exp" === link.link ? "w-full" : "w-0"} group-hover:w-full transition-width ease-in-out 
             duration-200`}></div>
         </a>
 
@@ -86,7 +83,7 @@ const DropdownMenu: FC<DropdownMenuProps> = (props) => {
               <li
                 key={index}
                 className={`${
-                  ((parentActive == link.title) && (active === menu.title)) ? 
+                  (active === menu.title) ? 
                   "text-white" : "text-secondary"
                 }`}
               >
@@ -99,12 +96,11 @@ const DropdownMenu: FC<DropdownMenuProps> = (props) => {
                     onClick={() => {
                       closeDropdown();
                       setActive(menu.title);
-                      setParentActive(link.title);
                     }}
                   >
                     <div
                       className={`${
-                        active === menu.title ? "text-white" : "text-secondary"
+                        active === menu.link ? "text-white" : "text-secondary"
                       } w-[140px] px-6  font-poppins font-medium cursor-pointer text-[16px]`}
                     >
                       {menu.title}
@@ -125,6 +121,7 @@ const DropdownMenu: FC<DropdownMenuProps> = (props) => {
 const Navbar: FC = () => {
   const [active, setActive] = useState("");
   const [toggle, setToggle] = useState(false);
+  const pathname = usePathname();
 
   return (
     <nav
@@ -149,46 +146,34 @@ const Navbar: FC = () => {
         {/* Nav Links (Desktop) */}
         <ul className="list-none hidden md:flex flex-row gap-10">
           {navLinks.map((link, index) => {
-            if (link.subMenu) {
-              return (
-                <DropdownMenu 
-                  key={link.id + index}
-                  link={link}
-                  parentActive={active}
-                  setParentActive={setActive}
-                />
-              )
-            } else {
-              return (
-                <li
-                  key={link.id + index}
-                  className={`${
-                    active === link.title ? "text-white" : "text-secondary"
-                  } hover:text-white text-[18px] font-medium cursor-pointer group`}
-                  onClick={() => !link?.newTab && setActive(link.title)}
-                >
-                  {link?.link ? (
-                    <Link 
-                      href={link.link} 
-                      target={link.newTab ? '_blank' : '_self'}
-                      rel="noreferrer noopener"
-                    >
-                      <div className='flex gap-2 group-hover:w-full'>
-                        {link.title}
-                        {link.newTab && <ExternalLink />}
-                      </div>
+            return (
+              <li
+                key={link.id + index}
+                className={`${
+                  pathname === link.link ? "text-white" : "text-secondary"
+                } hover:text-white text-[18px] font-medium cursor-pointer group`}
+              >
+                {link?.link ? (
+                  <Link 
+                    href={link.link} 
+                    target={link.newTab ? '_blank' : '_self'}
+                    rel="noreferrer noopener"
+                  >
+                    <div className='flex gap-2 group-hover:w-full'>
+                      {link.title}
+                      {link.newTab && <ExternalLink />}
+                    </div>
 
-                      <div className={`bg-gradient-to-r from-[#33bbcf] to-[#7de7eb] 
-                        h-1 rounded ${active === link.title ? "w-full" : "w-0"} group-hover:w-full transition-width ease-in-out 
-                        duration-200`}></div>
-                    </Link>
-                  ) : (
-                    <a href={`/#${link.id}`}>{link.title} <ExternalLink /></a>
-                  )}
-                    
-                </li>
-              )
-            }
+                    <div className={`bg-gradient-to-r from-[#33bbcf] to-[#7de7eb] 
+                      h-1 rounded ${pathname === link.link ? "w-full" : "w-0"} group-hover:w-full transition-width ease-in-out 
+                      duration-200`}></div>
+                  </Link>
+                ) : (
+                  <a href={`/#${link.id}`}>{link.title} <ExternalLink /></a>
+                )}
+                  
+              </li>
+            )
 
           })}
         </ul>
