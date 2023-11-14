@@ -282,6 +282,7 @@ export type ProjectType = typeof projects;
 
 export const projects = [
   {
+    id: 1,
     name: "My Portfolio",
     description: 
       "A self-introduction website. The place full of my love",
@@ -301,6 +302,7 @@ export const projects = [
     date: "2023-10-02",
   },
   {
+    id: 2,
     name: "Travel Guide",
     description: 
       "Mobile application created using Flutter with dart as programming language",
@@ -340,6 +342,7 @@ export const projects = [
     date: "2023-2-21",
   },
   {
+    id: 3,
     name: "Automated Market-Making System",
     description: 
       "An assignment from Blockchain course which to build a liquidity pool using smart contract",

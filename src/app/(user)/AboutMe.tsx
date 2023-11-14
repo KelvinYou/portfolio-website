@@ -8,6 +8,7 @@ import { languages, services } from '@/constants/data';
 import { fadeIn, textVariant } from "../../utils/motion";
 import { SectionWrapper } from "../../hoc";
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
 // Service Card
 const ServiceCard = ({ index, title, icon }: { index: any, title: any, icon: any }) => {
@@ -62,6 +63,36 @@ const AboutMe: FC = () => {
         animate="show"
         variants={fadeIn("", "", 0.1, 1)}
       >
+        {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-4">
+          <div>
+            <div className="h-[60px] font-bold text-lg text-on-primary flex flex-row justify-start items-start">
+              <div className="text-[50px] mb-[-10px]">
+                4
+              </div>
+              <div className="text-[30px] mt-[-5px]">
+                +
+              </div>
+            </div>
+            <div className="text-secondary">
+              years of experience
+            </div>
+          </div>
+
+          <div>
+            <div className="h-[60px] font-bold text-lg text-on-primary flex flex-row justify-start items-start">
+              <div className="text-[50px] mb-[-10px]">
+                6
+              </div>
+              <div className="text-[30px] mt-[-5px]">
+                +
+              </div>
+            </div>
+            <div className="text-secondary">
+              projects
+            </div>
+          </div>
+
+        </div> */}
         {/* <ul className="text-gray-300 max-w-3xl">
 
           <li>
@@ -125,6 +156,20 @@ const AboutMe: FC = () => {
           of the Android and iOS platforms.
         </p>
       </motion.div>
+
+      {/* <motion.div
+        initial="hidden"
+        animate="show"
+        variants={textVariant()}
+        className="mt-4"
+      >
+        <Link 
+          href="/resume"
+          className="px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-bold 
+          rounded-lg transition-transform transform-gpu hover:-translate-y-1 hover:shadow-lg flex gap-3 w-fit">
+          Resume <ArrowRight />
+        </Link>
+      </motion.div> */}
 
       {/* Service Card */}
       <div className="mt-20 flex flex-wrap gap-10">
