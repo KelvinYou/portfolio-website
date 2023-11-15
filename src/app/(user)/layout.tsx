@@ -3,6 +3,7 @@ import './../globals.css'
 import type { Metadata } from 'next'
 import { Poppins } from 'next/font/google'
 import Footer from '@/components/layout/Footer'
+import ComputerView from './ComputerView'
 
 const poppins = Poppins({ weight: "400", subsets: ['latin'] })
 
@@ -20,11 +21,18 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${poppins.className} bg-primary`}>
         <Navbar />
-        <div className='pt-20'>
-          {children}
+
+
+        <div className='pt-20 relative'>
+
+          <div>
+            {children}
+            <Footer />
+          </div>
+          
+          <ComputerView />
 
         </div>
-        <Footer />
       </body>
     </html>
   )
