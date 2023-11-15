@@ -1,8 +1,11 @@
 import React from 'react'
+import Resume from './Resume'
 
 const ResumePage = () => {
   return (
-    <div>ResumePage</div>
+    <>
+      <Resume />
+    </>
   )
 }
 
