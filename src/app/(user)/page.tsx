@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Hero from './Hero'
 import AboutMe from './AboutMe'
+import Github from './Github'
 
 export default function Home() {
   return (
@@ -8,6 +9,8 @@ export default function Home() {
       <Hero />
 
       <AboutMe />
+
+      <Github />
     </main>
   )
 }
