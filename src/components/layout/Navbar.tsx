@@ -291,19 +291,53 @@ const Navbar: FC = () => {
 
         {/* Hamburger Menu (Mobile) */}
         <div className="md:hidden flex flex-1 justify-end items-center">
-          <Image
+          <Dropdown trigger={
+            <Image
+              src={menu}
+              alt="Menu"
+              className="w-[28px] h-[28px] object-contain cursor-pointer"
+            />
+          }>
+            {/* Dropdown Content */}
+            <div className="p-2">
+              {/* <strong className="block p-2 text-xs font-medium uppercase text-gray-400">
+                General
+              </strong> */}
+
+              {navLinks.map((link, index) => {
+                return (
+                  <Link 
+                    key={index + link.title}
+                    href={link.link} 
+                    target={link.newTab ? '_blank' : '_self'}
+                    className="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                    role="menuitem"
+                  >
+                    <div className='flex gap-2'>
+                      {link.title}
+                      {link.newTab && <ExternalLink size={20}/>}
+                    </div>
+                    
+                  </Link>
+                )
+              })
+                
+              }
+            </div>
+          </Dropdown>
+
+          {/* <Image
             src={toggle ? close : menu}
             alt="Menu"
             className="w-[28px] h-[28px] object-contain cursor-pointer"
             onClick={() => setToggle(!toggle)}
-          />
+          /> */}
 
-          <div
+          {/* <div
             className={`${
               !toggle ? "hidden" : "flex"
             } p-6 black-gradient absolute top-20 right-0 mx-4 my-2 min-w-[140px] z-10 rounded-xl`}
           >
-            {/* Nav Links (Mobile) */}
             <ul className="list-none flex justify-end items-start flex-col gap-4">
               {navLinks.map((navLink) => (
                 <li
@@ -332,7 +366,7 @@ const Navbar: FC = () => {
                 </li>
               ))}
             </ul>
-          </div>
+          </div> */}
         </div>
       </div>
     </nav>
