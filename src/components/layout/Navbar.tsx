@@ -9,8 +9,9 @@ import Link from 'next/link';
 import "@/styles/index.scss";
 import { careerData, personalData } from '@/constants/data';
 import { MainMenu } from '@/constants/menu';
-import { ExternalLink } from 'lucide-react';
+import { ArrowBigDown, ChevronDown, ExternalLink } from 'lucide-react';
 import { usePathname } from 'next/navigation';
+import Dropdown from '@/components/ui/Dropdown';
 
 interface DropdownMenuProps {
   link: MainMenu;
@@ -145,7 +146,7 @@ const Navbar: FC = () => {
 
         {/* Nav Links (Desktop) */}
         <ul className="list-none hidden md:flex flex-row gap-10">
-          {navLinks.map((link, index) => {
+          {navLinks.slice(0, 3).map((link, index) => {
             return (
               <li
                 key={link.id + index}
@@ -176,6 +177,116 @@ const Navbar: FC = () => {
             )
 
           })}
+
+          <li
+            className={`${
+              pathname === "/more" ? "text-white" : "text-secondary"
+            } hover:text-white text-[18px] font-medium cursor-pointer group`}
+          >
+            {/* <div className='flex gap-2 group-hover:w-full'>
+              More
+            </div> */}
+            <Dropdown trigger={
+              <div className='flex gap-2 group-hover:w-full'>
+                More
+                <ChevronDown />
+              </div>
+            }>
+              {/* Dropdown Content */}
+              <div className="p-2">
+                {/* <strong className="block p-2 text-xs font-medium uppercase text-gray-400">
+                  General
+                </strong> */}
+
+                {navLinks.slice(3).map((link, index) => {
+                  return (
+                    <Link 
+                      key={index + link.title}
+                      href={link.link} 
+                      target={link.newTab ? '_blank' : '_self'}
+                      className="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                      role="menuitem"
+                    >
+                      <div className='flex gap-2'>
+                        {link.title}
+                        {link.newTab && <ExternalLink size={20}/>}
+                      </div>
+                      
+                    </Link>
+                  )
+                })
+                  
+                }
+                {/* <a
+                  href="#"
+                  className="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                  role="menuitem"
+                >
+                  View on Storefront
+                </a>
+
+                <a
+                  href="#"
+                  className="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                  role="menuitem"
+                >
+                  View Warehouse Info
+                </a>
+
+                <a
+                  href="#"
+                  className="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                  role="menuitem"
+                >
+                  Duplicate Product
+                </a>
+
+                <a
+                  href="#"
+                  className="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                  role="menuitem"
+                >
+                  Unpublish Product
+                </a> */}
+              </div>
+
+              {/* <div className="p-2">
+                <strong className="block p-2 text-xs font-medium uppercase text-gray-400">
+                  Danger Zone
+                </strong>
+
+                <form method="POST" action="#">
+                  <button
+                    type="submit"
+                    className="flex w-full items-center gap-2 rounded-lg px-4 py-2 text-sm text-red-700 hover:bg-red-50"
+                    role="menuitem"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-4 w-4"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                      />
+                    </svg>
+
+                    Delete Product
+                  </button>
+                </form>
+              </div> */}
+            </Dropdown>
+            <div className={`bg-gradient-to-r from-[#33bbcf] to-[#7de7eb] 
+              h-1 rounded ${pathname === "/more" ? "w-full" : "w-0"} group-hover:w-full transition-width ease-in-out 
+              duration-200`}></div>
+          </li>
+
+
         </ul>
 
         {/* Hamburger Menu (Mobile) */}

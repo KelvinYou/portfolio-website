@@ -53,6 +53,11 @@ export const navLinks: MainMenu[] = [
     link: PROJECTS_PATH,
   },
   {
+    id: "resume",
+    title: "Resume",
+    link: RESUME_LINK,
+  },
+  {
     id: "space",
     title: "Space",
     link: SPACE_LINK,

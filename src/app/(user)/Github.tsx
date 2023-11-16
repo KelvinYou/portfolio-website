@@ -1,7 +1,7 @@
 "use client"
 
 import SectionWrapper from "@/hoc/SectionWrapper";
-import { textVariant } from "@/utils/motion";
+import { fadeIn, textVariant } from "@/utils/motion";
 import { motion } from "framer-motion";
 import React from "react";
 import GitHubCalendar from "react-github-calendar";
@@ -25,7 +25,20 @@ const Github = () => {
           Github Calendar.
         </h2>
       </motion.div>
-      <div className="text-white mt-4">
+
+      <div className="w-full flex">
+        <motion.p
+          initial="hidden"
+          animate="show"
+          variants={fadeIn("", "", 0.1, 1)}
+          className="mt-3 text-secondary text-[17px] max-w-3xl leading-[30px]"
+        >
+          {/* Explanation: */}
+          GitHub Calendar is a visual representation of my daily coding activity. 
+        </motion.p>
+      </div>
+
+      <div className="text-white mt-20">
         <GitHubCalendar
           username="KelvinYou"
           blockSize={15}
