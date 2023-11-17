@@ -103,8 +103,8 @@ const ExperienceCard: FC<any> = ({ experience }) => (
 
     <div className='mt-6'>
       <Link
-        className=" group relative inline-flex items-center overflow-hidden rounded bg-on-primary px-8 py-3 text-black focus:outline-none focus:ring active:bg-indigo-500"
-        href="/download"
+        className=" group relative inline-flex items-center overflow-hidden rounded bg-on-primary px-8 py-3 text-black focus:outline-none focus:ring"
+        href={`/exp/${experience.id}`}
       >
         
         <span className="absolute -end-full transition-all group-hover:end-4">
