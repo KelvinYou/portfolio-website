@@ -89,11 +89,12 @@ const ExperienceCard: FC<any> = ({ experience }) => (
       ))}
     </ul>
 
-    <div className="mt-5 flex flex-wrap gap-y-2">
+    <div className="mt-5 flex flex-wrap">
       {experience.techStacks.map((techStack: string, index: number) => (
         <div 
           key={index}
-          className="text-xs font-medium mr-2 px-2.5 py-0.5 rounded "
+          className={`text-sm font-medium mr-2 rounded 
+          ${index % 2 === 0 ? 'blue-text-gradient' : 'orange-text-gradient'}`}
         >
           #{techStack}
         </div>
