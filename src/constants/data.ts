@@ -300,6 +300,7 @@ export const projects = [
     liveSiteLink: "https://kelvinyou.vercel.app/",
     platforms: ["Web"],
     date: "2023-10-02",
+    projectCategory: "side_project",
   },
   {
     id: 2,
@@ -320,6 +321,7 @@ export const projects = [
     sourceCodeLink: "https://github.com/KelvinYou/fyp_tour_guide_app",
     platforms: ["Android", "iOS"],
     date: "2022-12-17",
+    projectCategory: "school_project",
   },
   {
     name: "Restaurant Landing",
@@ -340,6 +342,7 @@ export const projects = [
     sourceCodeLink: "https://github.com/KelvinYou/react-selflearn/tree/main/react-restaurant-landing",
     platforms: ["Web"],
     date: "2023-2-21",
+    projectCategory: "side_project",
   },
   {
     id: 3,
@@ -360,6 +363,7 @@ export const projects = [
     sourceCodeLink: "https://github.com/KelvinYou/amm-assignment",
     platforms: ["Web"],
     date: "2023-1-5",
+    projectCategory: "school_project",
   },
   {
     name: "Edge Detection System",
@@ -375,6 +379,7 @@ export const projects = [
     sourceCodeLink: "https://github.com/KelvinYou/dspc-assignment",
     platforms: [],
     date: "2022-9-23",
+    projectCategory: "school_project",
   },
   {
     name: "Donation System",
@@ -390,6 +395,7 @@ export const projects = [
     sourceCodeLink: "https://github.com/KelvinYou/dsa-assignment",
     platforms: ["Command Line"],
     date: "2022-9-9",
+    projectCategory: "school_project",
   },
 ]
 

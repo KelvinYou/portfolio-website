@@ -17,7 +17,7 @@ const ProjectCard = (props: any) => {
       initial="hidden"
       animate="show"
       variants={fadeIn("up", "spring", project.index * 0.5, 0.75)} 
-      className='sm:w-[360px] w-full'
+      className='sm:w-[360px] w-full cursor-pointer'
     >
       <Tilt
         options={{

@@ -10,22 +10,24 @@ import { fadeIn, textVariant } from '@/utils/motion'
 import { motion } from 'framer-motion'
 import { Clock } from 'lucide-react';
 import Image from 'next/image';
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 import { Tilt } from "react-tilt";
 import ProjectCard from './ProjectCard';
 
 
 const Project: FC = () => {
+  const [projectCategory, setProjectCategory] = useState("all");
+
   const handleOptionChange = (selectedOption: string) => {
     // Do something with the selected option, such as updating state
-    console.log('Selected Option:', selectedOption);
+    setProjectCategory(selectedOption);
   };
   
   const options = [
     { id: 'all', label: 'All' },
-    { id: 'side_projects', label: 'Side Projects' },
-    { id: 'industrial_projects', label: 'Industrial Projects' },
-    { id: 'school_projects', label: 'School Projects' },
+    { id: 'side_project', label: 'Side Projects' },
+    { id: 'industrial_project', label: 'Industrial Projects' },
+    { id: 'school_project', label: 'School Projects' },
   ];
 
   return (
@@ -78,12 +80,17 @@ const Project: FC = () => {
 
       {/* Project Card */}
         <div className="mt-10 flex flex-wrap gap-7">
-        {projects.map((project, index: number) => (
-          <ProjectCard 
-            key={`project-${index}`} 
-            project={project}
-          />
-        ))}
+        {projects
+          .filter((project) => {
+            if (projectCategory === 'all') return true;
+            return project.projectCategory === projectCategory;
+          })
+          .map((project, index: number) => (
+            <ProjectCard 
+              key={`project-${index}`} 
+              project={project}
+            />
+          ))}
       </div>
     </SectionWrapper>
   )
