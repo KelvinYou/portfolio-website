@@ -8,9 +8,9 @@ import { fadeIn } from "@/utils/motion";
 import { motion } from "framer-motion";
 import { Clock } from "lucide-react";
 import { Tilt } from "react-tilt";
+import { FC } from 'react';
 
-const ProjectCard = (props: any) => {
-  const { project } = props;
+const ProjectCard: FC<{ project: any }> = ({ project }) => {
 
   return (
     <motion.div 

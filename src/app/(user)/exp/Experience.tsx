@@ -17,6 +17,7 @@ import Link from 'next/link';
 
 import "./Experience.scss";
 import SelectableButtonGroup from '@/components/SelectableButtonGroup';
+import { ChevronsRight } from 'lucide-react';
 
 // Experience Card
 const ExperienceCard: FC<any> = ({ experience }) => (
@@ -92,16 +93,30 @@ const ExperienceCard: FC<any> = ({ experience }) => (
       {experience.techStacks.map((techStack: string, index: number) => (
         <div 
           key={index}
-          className="text-xs font-medium mr-2 px-2.5 py-0.5 rounded bg-gray-700 text-gray-300"
+          className="text-xs font-medium mr-2 px-2.5 py-0.5 rounded "
         >
-          {techStack}
+          #{techStack}
         </div>
       ))}
     </div>
-    
-    {/* <button className="mt-10">
-      Explore More {"->"}
-    </button> */}
+
+    <div className='mt-6'>
+      <Link
+        className=" group relative inline-flex items-center overflow-hidden rounded bg-on-primary px-8 py-3 text-black focus:outline-none focus:ring active:bg-indigo-500"
+        href="/download"
+      >
+        
+        <span className="absolute -end-full transition-all group-hover:end-4">
+          <ChevronsRight />
+        </span>
+
+        <span className="text-sm font-medium transition-all group-hover:me-4">
+          Find Out More
+        </span>
+      </Link>
+    </div>
+
+    {/* <CustomButton>More</CustomButton> */}
   </VerticalTimelineElement>
 );
 

@@ -116,6 +116,7 @@ const techStack = {
 // Experiences
 export const experiences = [
   {
+    id: 6,
     title: "Frontend Web Developer",
     companyName: "Beyondsoft (Malaysia) Sdn. Bhd.",
     companyUrl: "https://www.beyondsoft.com/",
@@ -131,6 +132,7 @@ export const experiences = [
     experienceCategory: "work"
   },
   {
+    id: 5,
     title: "Java Software Engineer Intern",
     companyName: "Finexus International Sdn. Bhd.",
     companyUrl: "https://www.finexusgroup.com/",
@@ -157,6 +159,7 @@ export const experiences = [
     experienceCategory: "work"
   },
   {
+    id: 4,
     title: "Bachelor (Hons) of Software Engineering",
     companyName: "Tunku Abdul Rahman University of Management and Technology",
     companyUrl: "https://tarc.edu.my/",
@@ -180,6 +183,7 @@ export const experiences = [
     experienceCategory: "education",
   },
   {
+    id: 3,
     title: "Software Engineer Intern",
     companyName: "Techtics Blockchain PLT",
     companyUrl: "https://www.techtics.io/",
@@ -208,6 +212,7 @@ export const experiences = [
     experienceCategory: "work",
   },
   {
+    id: 2,
     title: "Diploma in Computer Science",
     companyName: "Tunku Abdul Rahman University of Management and Technology",
     companyUrl: "https://tarc.edu.my/",
@@ -232,6 +237,7 @@ export const experiences = [
     experienceCategory: "education",
   },
   {
+    id: 1,
     title: "Frontend Web Developer",
     companyName: "Jonvi Marketing Sdn. Bhd.",
     icon: jonvi,

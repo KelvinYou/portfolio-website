@@ -35,6 +35,9 @@ const Hero: FC = () => {
                   strings: [
                     "Software Engineer",
                     "Full Stack Developer",
+                    "UI/UX Designer",
+                    "Software Consultant",
+                    "Tech Blogger",
                   ],
                   autoStart: true,
                   loop: true,
