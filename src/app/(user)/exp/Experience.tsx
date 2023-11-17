@@ -1,5 +1,5 @@
 "use client";
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import Image from 'next/image';
 import {
   VerticalTimeline,
@@ -10,12 +10,13 @@ import { motion } from "framer-motion";
 import "react-vertical-timeline-component/style.min.css";
 
 import { SectionWrapper } from '@/hoc';
-import { textVariant } from "@/utils/motion";
+import { fadeIn, textVariant } from "@/utils/motion";
 import { experiences } from "@/constants/data";
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 
 import "./Experience.scss";
+import SelectableButtonGroup from '@/components/SelectableButtonGroup';
 
 // Experience Card
 const ExperienceCard: FC<any> = ({ experience }) => (
@@ -106,8 +107,19 @@ const ExperienceCard: FC<any> = ({ experience }) => (
 
 const Experience: FC = () => {
   const searchParams = useSearchParams()
-  const experienceCategory = searchParams.get('category') ?? "all";
+  const [experienceCategory, setExperienceCategory] = useState(searchParams.get('category') ?? "all");
   
+  const handleOptionChange = (selectedOption: string) => {
+    // Do something with the selected option, such as updating state
+    setExperienceCategory(selectedOption);
+  };
+  
+  const options = [
+    { id: 'all', label: 'All' },
+    { id: 'work', label: 'Works' },
+    { id: 'education', label: 'Educations' },
+  ];
+
   return (
     <SectionWrapper
       idName='experience'
@@ -123,14 +135,24 @@ const Experience: FC = () => {
           What I have done so far
         </p>
         <h2 className="text-white font-black md:text-[60px] sm:text-[50px] xs:text-[40px] text-[30px]">
-          {experienceCategory === "all" && "Work Experience and Education."}
-          {experienceCategory === "work" && "Work Experience."}
-          {experienceCategory === "education" && "Education."}
+          { "Work Experience and Education."}
         </h2>
+      </motion.div>
+      
+      <motion.div 
+        initial="hidden"
+        animate="show"
+        variants={fadeIn("", "", 0.1, 1)}
+        className='flex items-center justify-center mt-20'
+      >
+        <SelectableButtonGroup
+          options={options}
+          onOptionChange={handleOptionChange}
+        />
       </motion.div>
 
       {/* Experience Card */}
-      <div className="empty-20 flex flex-col">
+      <div className="empty-20 flex flex-col mt-10">
         <VerticalTimeline>
           {experiences
             .filter((experience) => {

@@ -17,7 +17,7 @@ export type MainMenu = {
 type SubMenu = {
   title: string;
   subMenu?: SubMenu[];
-  link?: string;
+  link?: any;
 }
 
 export const navLinks: MainMenu[] = [
@@ -25,13 +25,12 @@ export const navLinks: MainMenu[] = [
     id: "home",
     title: "Home",
     link: HOME_PATH,
-    icon: homeIcon,
+    icon: "Home",
   },
   {
     id: "experiences",
     title: "Experiences",
     link: EXPERIENCES_PATH,
-    icon: experienceIcon,
     subMenu: [
       {
         title: "All",
@@ -55,6 +54,11 @@ export const navLinks: MainMenu[] = [
   {
     id: "resume",
     title: "Resume",
+    link: RESUME_LINK,
+  },
+  {
+    id: "blog",
+    title: "Blog",
     link: RESUME_LINK,
   },
   {
