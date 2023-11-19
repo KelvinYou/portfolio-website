@@ -4,10 +4,11 @@ import { motion } from 'framer-motion'
 import React, { FC } from 'react'
 import ProjectDetail from './ProjectDetail'
 
-const ProjectPage: FC = () => {
+const ProjectPage = ({ params }: { params: any }) => {
+
   return (
     <>
-      <ProjectDetail />
+      <ProjectDetail id={params.id}/>
     </>
   )
 }

@@ -1,28 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import fs from "fs/promises";
 import path from "path";
+import { Project } from "@/types/data";
 
 const dataFolderPath = path.resolve("src/data");
 const projectsFilePath = path.join(dataFolderPath, "projects.json");
-
-interface Tag {
-  name: string;
-  color: string;
-}
-
-interface Project {
-  id?: string;
-  name: string;
-  description: string;
-  tags?: Tag[];
-  images?: string[];
-  liveSiteLink?: string;
-  platforms?: string[];
-  date: string;
-  createDate: string;
-  modifyDate: string;
-}
-
 
 export const GET = async (request: NextRequest) => {
   // Get the pathname from the request

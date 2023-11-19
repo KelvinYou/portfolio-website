@@ -9,7 +9,9 @@ import {
   finexus,
   beyondsoft,
   tarumt,
+
   portfolio,
+  restaurantLanding,
 } from "@/assets";
 
 export const services = [
@@ -343,7 +345,7 @@ export const projects = [
         color: "pink-text-gradient",
       },
     ],
-    images: [],
+    images: [restaurantLanding],
     liveSiteLink: "https://restaurant-landing-kelvinyou.vercel.app/",
     sourceCodeLink: "https://github.com/KelvinYou/react-selflearn/tree/main/react-restaurant-landing",
     platforms: ["Web"],

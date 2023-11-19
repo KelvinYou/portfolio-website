@@ -27,3 +27,4 @@ export { default as tarumt } from "./schools/tarumt.png";
 
 // projects
 export { default as portfolio } from "./projects/portfolio/home.png";
+export { default as restaurantLanding } from "./projects/restaurant-landing/1.png";

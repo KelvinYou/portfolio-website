@@ -1,11 +1,11 @@
 import Navbar from '@/components/layout/user/Navbar'
 import './../globals.css'
 import type { Metadata } from 'next'
-import { Poppins, AR_One_Sans } from 'next/font/google'
+import { Poppins } from 'next/font/google'
 import Footer from '@/components/layout/user/Footer'
 import ComputerView from './ComputerView'
 
-const poppins = AR_One_Sans({ weight: "400", subsets: ['latin'] })
+const poppins = Poppins({ weight: "400", subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Kelvin You | Software Engineer',

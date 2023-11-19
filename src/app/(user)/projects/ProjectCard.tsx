@@ -11,7 +11,6 @@ import { Tilt } from "react-tilt";
 import { FC } from 'react';
 
 const ProjectCard: FC<{ project: any }> = ({ project }) => {
-
   return (
     <motion.div 
       initial="hidden"

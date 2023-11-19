@@ -1,11 +1,34 @@
 "use client"
 
+import { projects } from '@/constants/data'
 import SectionWrapper from '@/hoc/SectionWrapper'
 import { textVariant } from '@/utils/motion'
 import { motion } from 'framer-motion'
 import React, { FC } from 'react'
 
-const ProjectDetail: FC = () => {
+interface ProjectDetailProps {
+  id: string,
+}
+
+const ProjectDetail: FC<ProjectDetailProps> = (props) => {
+  const { id } = props;
+  const projectDetail = projects.find((project) => project.id === parseInt(id));
+
+  if (!projectDetail) {
+    return <div>Project not found</div>;
+  }
+
+  const {
+    name,
+    description,
+    tags,
+    images,
+    liveSiteLink,
+    sourceCodeLink,
+    platforms,
+    date,
+  } = projectDetail;
+
   return (
     <SectionWrapper
       idName='project'
@@ -20,7 +43,7 @@ const ProjectDetail: FC = () => {
           My project
         </p>
         <h2 className="text-white font-black md:text-[60px] sm:text-[50px] xs:text-[40px] text-[30px]">
-          Projects.
+          {name}
         </h2>
       </motion.div>
     </SectionWrapper>
