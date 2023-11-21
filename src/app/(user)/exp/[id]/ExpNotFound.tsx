@@ -1,21 +1,18 @@
-"use client";
+"use client"
 
-import { SectionWrapper } from '@/hoc'
+import SectionWrapper from '@/hoc/SectionWrapper'
 import { textVariant } from '@/utils/motion'
 import { motion } from 'framer-motion'
-import { ChevronsLeft } from 'lucide-react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { ChevronsLeft } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import React from 'react'
 
-const ExpDetail = ({ expDetail }: { expDetail: any }) => {
+const ExpNotFound = () => {
   const router = useRouter();
-  
   return (
     <SectionWrapper
-      idName='expDetail'
+      idName='expNotFound'
     >
-      
       {/* Title */}
       <motion.div
         initial="hidden"
@@ -42,18 +39,16 @@ const ExpDetail = ({ expDetail }: { expDetail: any }) => {
         </div>
 
         <p className="mt-10 sm:text-[18px] text-[14px] text-secondary uppercase tracking-wider">
-          {expDetail.companyName}
+          Experience Not Found
         </p>
 
         <h2 className="text-white font-black md:text-[60px] sm:text-[50px] xs:text-[40px] text-[30px]">
-          {expDetail.title}.
+          No Such Experience Found.
         </h2>
 
       </motion.div>
-
-      
     </SectionWrapper>
   )
 }
 
-export default ExpDetail
+export default ExpNotFound

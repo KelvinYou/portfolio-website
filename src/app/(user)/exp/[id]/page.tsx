@@ -1,12 +1,21 @@
-import { experiences } from '@/constants/data'
+import { combinedExperiences } from '@/constants/data'
 import React from 'react'
 import ExpDetail from './ExpDetail';
+import ExpNotFound from './ExpNotFound';
 
 const ExpPage = ({ params }: {
   params: { id: string }
 }) => {
   
-  const expDetail = experiences.find((exp) => (exp.id === parseInt(params.id)));
+  const expDetail = combinedExperiences.find((exp) => (exp.id === params.id));
+
+  if (!expDetail) {
+    return (
+      <>
+        <ExpNotFound />
+      </>
+    )
+  }
 
   return (
     <>

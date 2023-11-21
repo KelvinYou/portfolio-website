@@ -116,15 +116,17 @@ const techStack = {
 };
 
 // Experiences
-export const experiences = [
+export const workExperiences = [
   {
-    id: 6,
+    id: "6",
     title: "Frontend Web Developer",
     companyName: "Beyondsoft (Malaysia) Sdn. Bhd.",
     companyUrl: "https://www.beyondsoft.com/",
     icon: beyondsoft,
     iconBg: "#FFF",
     date: "Aug 2023 - Today",
+    startDate: "2023-2-1",
+    endDate: null,
     points: [
     ],
     techStacks: [
@@ -134,13 +136,15 @@ export const experiences = [
     experienceCategory: "work"
   },
   {
-    id: 5,
+    id: "5",
     title: "Java Software Engineer Intern",
     companyName: "Finexus International Sdn. Bhd.",
     companyUrl: "https://www.finexusgroup.com/",
     icon: finexus,
     iconBg: "#383E56",
     date: "Feb 2023 - Jul 2023",
+    startDate: "2023-2-1",
+    endDate: "2023-7-31",
     description: "Finexus International Sdn Bhd is a dynamic and innovative technology company specializing in financial solutions.",
     points: [
       "Spearheaded Java-based projects with innovative features and rigorous testing, fostering seamless collaboration across teams.",
@@ -161,37 +165,15 @@ export const experiences = [
     experienceCategory: "work"
   },
   {
-    id: 4,
-    title: "Bachelor (Hons) of Software Engineering",
-    companyName: "Tunku Abdul Rahman University of Management and Technology",
-    companyUrl: "https://tarc.edu.my/",
-    icon: tarumt,
-    iconBg: "#FFF",
-    date: "Jun 2021 - Jul 2023",
-    cgpa: "3.7200",
-    description: "",
-    points: [
-      "Taken core courses for software development such as Data Structure and Algorithm in Java, Human-Computer Interaction, Graphics Programming, Distributed System and Parallel Computing. Exposed to technologies such as Mobile Application Development, Blockchain App Development, Data Science through elective courses.",
-    ],
-    techStacks: [
-      "Java",
-      "C++",
-      "TypeScript",
-      "ReactJS",
-      "Linux",
-      "Python",
-      "Git"
-    ],
-    experienceCategory: "education",
-  },
-  {
-    id: 3,
+    id: "3",
     title: "Software Engineer Intern",
     companyName: "Techtics Blockchain PLT",
     companyUrl: "https://www.techtics.io/",
     icon: techtics,
     iconBg: "#E6DEDD",
     date: "Oct 2020 - Jan 2021",
+    startDate: "2020-10-1",
+    endDate: "2021-1-31",
     points: [
       "Revitalized project's frontend using ReactJS for enhanced maintenance, modernization, and dynamic website capabilities.",
       "Developed a cutting-edge blockchain application utilizing ReactJS and Solidity to seamlessly integrate smart contracts with MetaMask for secure and streamlined transactions.",
@@ -214,37 +196,14 @@ export const experiences = [
     experienceCategory: "work",
   },
   {
-    id: 2,
-    title: "Diploma in Computer Science",
-    companyName: "Tunku Abdul Rahman University of Management and Technology",
-    companyUrl: "https://tarc.edu.my/",
-    icon: tarumt,
-    iconBg: "#FFF",
-    date: "May 2019 - Jun 2021",
-
-    cgpa: "3.7200",
-    description: "",
-    points: [
-      "Basic Programming Concepts through various languages such as Object-Oriented Programming in Java, C, and Assembly Language. Mathematics courses included Algebra, Calculus, Statistics, Discrete Math.",
-    ],
-    techStacks: [
-      "Java",
-      "C++",
-      "TypeScript",
-      "ReactJS",
-      "Linux",
-      "Python",
-      "Git"
-    ],
-    experienceCategory: "education",
-  },
-  {
-    id: 1,
+    id: "1",
     title: "Frontend Web Developer",
     companyName: "Jonvi Marketing Sdn. Bhd.",
     icon: jonvi,
     iconBg: "#E6DEDD",
     date: "Jan 2019 - May 2019",
+    startDate: "2019-1-1",
+    endDate: "2019-5-20",
     description: "Jonvi Exchange elegantly provides a seamless platform for effortless buying, selling, and trading of digital assets, ensuring both convenience and robust security.",
     points: [
       "Developed 2 web apps using HTML, CSS, JavaScript, PHP, and Bootstrap, with a focus on user-friendly design.",
@@ -266,6 +225,65 @@ export const experiences = [
     experienceCategory: "work",
   },
 ];
+
+export const educations = [
+  {
+    id: "degree",
+    title: "Bachelor (Hons) of Software Engineering",
+    universityName: "Tunku Abdul Rahman University of Management and Technology",
+    universityUrl: "https://tarc.edu.my/",
+    icon: tarumt,
+    iconBg: "#FFF",
+    date: "Jun 2021 - Jul 2023",
+    startDate: "2021-6-20",
+    endDate: "2023-7-31",
+    cgpa: "3.7200",
+    description: "",
+    points: [
+      "Taken core courses for software development such as Data Structure and Algorithm in Java, Human-Computer Interaction, Graphics Programming, Distributed System and Parallel Computing. ",
+      "Exposed to technologies such as Mobile Application Development, Blockchain App Development, Data Science through elective courses.",
+    ],
+    techStacks: [
+      "Java",
+      "C++",
+      "TypeScript",
+      "ReactJS",
+      "Linux",
+      "Python",
+      "Git"
+    ],
+    experienceCategory: "education",
+  },
+  {
+    id: "diploma",
+    title: "Diploma in Computer Science",
+    universityName: "Tunku Abdul Rahman University of Management and Technology",
+    universityUrl: "https://tarc.edu.my/",
+    icon: tarumt,
+    iconBg: "#FFF",
+    date: "May 2019 - Jun 2021",
+    startDate: "2019-5-28",
+    endDate: "2021-5-31",
+    cgpa: "3.7200",
+    description: "",
+    points: [
+      "Basic Programming Concepts through various languages such as Object-Oriented Programming in Java, C, and Assembly Language.",
+      "Mathematics courses included Algebra, Calculus, Statistics, Discrete Math.",
+    ],
+    techStacks: [
+      "Java",
+      "C++",
+      "TypeScript",
+      "ReactJS",
+      "Linux",
+      "Python",
+      "Git"
+    ],
+    experienceCategory: "education",
+  },
+]
+
+export const combinedExperiences = [...workExperiences , ...educations];
 
 export const commonEducation = [
   {

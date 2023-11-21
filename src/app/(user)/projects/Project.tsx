@@ -1,17 +1,11 @@
 "use client";
-import { github, preview } from '@/assets';
-import SvgIcon, { ICON_TYPE } from '@/assets/SvgIcon';
+
 import SelectableButtonGroup from '@/components/SelectableButtonGroup';
-import Tooltip from '@/components/ui/Tooltip';
 import { projects } from '@/constants/data';
 import { SectionWrapper } from '@/hoc'
-import { formatDate } from '@/utils/dateUtil';
 import { fadeIn, textVariant } from '@/utils/motion'
 import { motion } from 'framer-motion'
-import { Clock } from 'lucide-react';
-import Image from 'next/image';
 import React, { FC, useState } from 'react'
-import { Tilt } from "react-tilt";
 import ProjectCard from './ProjectCard';
 
 
