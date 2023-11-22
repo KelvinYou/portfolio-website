@@ -2,6 +2,7 @@ import { combinedExperiences } from '@/constants/data'
 import React from 'react'
 import ExpDetail from './ExpDetail';
 import ExpNotFound from './ExpNotFound';
+import EducationDetail from './EducationDetail';
 
 const ExpPage = ({ params }: {
   params: { id: string }
@@ -19,7 +20,12 @@ const ExpPage = ({ params }: {
 
   return (
     <>
-      <ExpDetail expDetail={expDetail} />
+      {expDetail.experienceCategory === "education" ?
+        <EducationDetail educationDetail={expDetail} /> 
+        :
+        <ExpDetail expDetail={expDetail} />
+      }
+      
     </>
   )
 }

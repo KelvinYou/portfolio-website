@@ -8,12 +8,12 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React from 'react'
 
-const ExpDetail = ({ expDetail }: { expDetail: any }) => {
+const EducationDetail = ({ educationDetail }: { educationDetail: any }) => {
   const router = useRouter();
   
   return (
     <SectionWrapper
-      idName='expDetail'
+      idName='educationDetail'
     >
       
       {/* Title */}
@@ -42,15 +42,13 @@ const ExpDetail = ({ expDetail }: { expDetail: any }) => {
         </div>
 
         <p className="mt-10 sm:text-[18px] text-[14px] text-secondary uppercase tracking-wider">
-          {expDetail.companyName}
+          {educationDetail.universityName}
         </p>
 
         <h2 className="text-white font-black md:text-[60px] sm:text-[50px] xs:text-[40px] text-[30px]">
-          {expDetail.title}.
+          {educationDetail.title}.
         </h2>
 
-
-        {/* Projects Involved */}
       </motion.div>
 
       
@@ -58,4 +56,4 @@ const ExpDetail = ({ expDetail }: { expDetail: any }) => {
   )
 }
 
-export default ExpDetail
+export default EducationDetail

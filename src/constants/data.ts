@@ -125,7 +125,7 @@ export const workExperiences = [
     icon: beyondsoft,
     iconBg: "#FFF",
     date: "Aug 2023 - Today",
-    startDate: "2023-2-1",
+    startDate: "2023-8-7",
     endDate: null,
     points: [
     ],
@@ -147,20 +147,34 @@ export const workExperiences = [
     endDate: "2023-7-31",
     description: "Finexus International Sdn Bhd is a dynamic and innovative technology company specializing in financial solutions.",
     points: [
-      "Spearheaded Java-based projects with innovative features and rigorous testing, fostering seamless collaboration across teams.",
-      "Mastered debugging, efficient web resource searching, and streamlined application deployment for optimal project performance."
+      {
+        value: "Revitalized and advanced Java-based projects by integrating innovative features and implementing a thorough testing regimen. ",
+        highlightedTexts: [
+          "Java-based",
+          "features",
+          "testing regimen",
+        ],
+      },
+      {
+        value: "Proficiently mastered debugging techniques, conducted efficient web resource searches, simplify application deployment processes, ensuring optimal project performance.",
+        highlightedTexts: [
+          "debugging",
+          "web resource searches",
+          "simplify",
+          "performance"
+        ],
+      },
     ],
     techStacks: [
-      "NextJS",
-      "ReactJS",
-      "Java for Android",
+      "Java",
       "Firebase",
       "Oracle SQL",
       "XML",
       "JavaServer Pages (JSP)",
+      "Tomcat",
       "Linux",
       "Jasper",
-      "TortoiseSVN"
+      "TortoiseSVN",
     ],
     experienceCategory: "work"
   },
@@ -175,10 +189,41 @@ export const workExperiences = [
     startDate: "2020-10-1",
     endDate: "2021-1-31",
     points: [
-      "Revitalized project's frontend using ReactJS for enhanced maintenance, modernization, and dynamic website capabilities.",
-      "Developed a cutting-edge blockchain application utilizing ReactJS and Solidity to seamlessly integrate smart contracts with MetaMask for secure and streamlined transactions.",
-      "Explored Laravel's router functionality, MVC architecture, ORM, events, listeners, and data seeding techniques for efficient database testing.",
-      "Implemented key functionalities such as authentication, real-time exchange rate fetching, dynamic UI updates, and built APIs for seamless CRUD operations on transactions.",
+      {
+        value: "Revitalized project's frontend using ReactJS for enhanced maintenance, modernization, and dynamic website capabilities.",
+        highlightedTexts: [
+          "ReactJS",
+          "enhanced maintenance",
+          "modernization",
+          "dynamic website capabilities"
+        ],
+      },
+      {
+        value: "Developed a cutting-edge blockchain app utilizing ReactJS and Solidity to seamlessly integrate smart contracts with MetaMask for secure and streamlined transactions.",
+        highlightedTexts: [
+          "ReactJS and Solidity",
+          // "seamlessly integrate smart contracts",
+          // "secure and streamlined transactions",
+        ],
+      },
+      {
+        value: "Explored Laravel's router functionality, MVC architecture, ORM, events, listeners, and data seeding techniques for efficient database testing.",
+        highlightedTexts: [
+          "MVC",
+          "ORM",
+          "events, listeners",
+          "data seeding",
+        ],
+      },
+      {
+        value: "Implemented key functionalities such as authentication, real-time exchange rate fetching, dynamic UI updates, and built APIs for seamless CRUD operations on transactions.",
+        highlightedTexts: [
+          "authentication",
+          "real-time exchange rate fetching",
+          "dynamic UI",
+          "built APIs",
+        ],
+      },
     ],
     techStacks: [
       "Laravel PHP",
@@ -206,9 +251,24 @@ export const workExperiences = [
     endDate: "2019-5-20",
     description: "Jonvi Exchange elegantly provides a seamless platform for effortless buying, selling, and trading of digital assets, ensuring both convenience and robust security.",
     points: [
-      "Developed 2 web apps using HTML, CSS, JavaScript, PHP, and Bootstrap, with a focus on user-friendly design.",
-      "Integrated front-end components to interact with API endpoints for authentication and CRUD operations.",
-      "Leveraged Python and Google Script to automate data tasks, including fetching, entry, and Excel file generation.",
+      {
+        value: "Developed 2 web apps using HTML, CSS, JavaScript, PHP, and Bootstrap, with a focus on user-friendly design.",
+        highlightedTexts: [
+          "2 web apps",
+        ],
+      },
+      {
+        value: "Integrated front-end components to interact with API endpoints for authentication and CRUD operations.",
+        highlightedTexts: [
+          "interact with API endpoints",
+        ],
+      },
+      {
+        value: "Leveraged Python and Google Script to automate data tasks, including fetching, entry, and Excel file generation.",
+        highlightedTexts: [
+          "automate data tasks"
+        ],
+      },
     ],
     techStacks: [
       "HTML",
@@ -240,8 +300,25 @@ export const educations = [
     cgpa: "3.7200",
     description: "",
     points: [
-      "Taken core courses for software development such as Data Structure and Algorithm in Java, Human-Computer Interaction, Graphics Programming, Distributed System and Parallel Computing. ",
-      "Exposed to technologies such as Mobile Application Development, Blockchain App Development, Data Science through elective courses.",
+      {
+        value: "Taken core courses for software development such as Data Structure and Algorithm in Java, Human-Computer Interaction, Graphics Programming, Distributed System and Parallel Computing. ",
+        highlightedTexts: [
+          "Data Structure and Algorithm in Java", 
+          "Human-Computer Interaction", 
+          "Graphics Programming",
+          "Distributed System and Parallel Computing"
+        ],
+      },
+      {
+        value: "Exposed to technologies such as Mobile App Development, Blockchain App Development, Data Science through elective courses.",
+        highlightedTexts: [
+          "Mobile App Development",
+          "Blockchain App Development",
+          "Data Science"
+        ],
+      },
+      
+      
     ],
     techStacks: [
       "Java",
@@ -267,8 +344,14 @@ export const educations = [
     cgpa: "3.7200",
     description: "",
     points: [
-      "Basic Programming Concepts through various languages such as Object-Oriented Programming in Java, C, and Assembly Language.",
-      "Mathematics courses included Algebra, Calculus, Statistics, Discrete Math.",
+      {
+        value: "Basic Programming Concepts through various languages such as Object-Oriented Programming in Java, C, and Assembly Language.",
+        highlightedTexts: ["Basic Programming Concepts"],
+      },
+      {
+        value: "Mathematics courses included Algebra, Calculus, Statistics, Discrete Math.",
+        highlightedTexts: ["Mathematics courses"],
+      },
     ],
     techStacks: [
       "Java",
