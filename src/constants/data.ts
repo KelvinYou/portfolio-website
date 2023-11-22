@@ -16,19 +16,19 @@ import {
 
 export const services = [
   {
-    title: "Web Developer",
+    title: "Web App Development", // freelancer
     icon: web,
   },
   {
-    title: "Flutter Developer",
+    title: "Flutter Development",
     icon: mobile,
   },
   {
-    title: "Backend Developer",
+    title: "Blockchain App Development",
     icon: backend,
   },
   {
-    title: "Blockchain Developer",
+    title: "Software Consultant",
     icon: creator,
   },
 ];
