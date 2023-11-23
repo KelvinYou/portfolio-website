@@ -1,0 +1,106 @@
+[
+  {
+    "_id": "1",
+    "title": "Why I Created My Personal Website",
+    "paragraph":
+      "As a technophile and an advocate for professional self-expression, I've always known the importance of having a space that could function as a portfolio, a testament to my journey, a place to share my thoughts, and a platform that represents who I am as an individual. Today, I'm thrilled to welcome you to my own personal triumph - my website.",
+    "image": "/images/blog/blog-01.jpg",
+    "elements": [
+      {
+        "type": "header",
+        "content": {
+          "text": "A Professional Portal",
+          "level": 2
+        }
+      },
+      {
+        "type": "paragraph",
+        "content": {
+          "text": "In this fast-paced world, having a digital presence is crucial, particularly for those of us in the tech industry. With my website, I've created a professional portal that showcases not just who I am but what I do and how I can contribute value. From my experiences in software development to my pioneering adventures in AI, you'll find all delightful details here.",
+          "keywords": []
+        }
+      },
+      {
+        "type": "header",
+        "content": {
+          "text": "My Experiences",
+          "level": 2
+        }
+      },
+      {
+        "type": "paragraph",
+        "content": {
+          "text": "Every experience in my career has played an integral role in forging the professional I am today. Under the “Experiences” section, I share my journey through diverse roles, unique challenges, and the milestones I've achieved along the way. This section is as much a testimony to my perseverance as it is a documentation of my growth.",
+          "keywords": []
+        }
+      },
+      {
+        "type": "header",
+        "content": {
+          "text": "Educational Endeavors",
+          "level": 2
+        }
+      },
+      {
+        "type": "paragraph",
+        "content": {
+          "text": "Education has been the bedrock of my professional journey. I wouldn't be where I am today without the academic disciplines I've undertaken, and the knowledge I've gained from them. In my “Education” section, I take you through these academic quests that have helped me build the technical skillset I possess today.",
+          "keywords": []
+        }
+      },
+      {
+        "type": "header",
+        "content": {
+          "text": "Projects Pavilion",
+          "level": 2
+        }
+      },
+      {
+        "type": "paragraph",
+        "content": {
+          "text": "In the \"Projects\" section, I have amassed my trials, triumphs, and transformations. You'll find an array of projects that I've persevered on, each unique and challenging in their own ways. From mitigating real-world problems to creating innovative solutions, this section presents the tangible testament of my capabilities.",
+          "keywords": []
+        }
+      },
+      {
+        "type": "header",
+        "content": {
+          "text": "Blogs: Thoughts Rendered",
+          "level": 2
+        }
+      },
+      {
+        "type": "paragraph",
+        "content": {
+          "text": "One of my goals in creating a personal website was to have a platform to share the knowledge I’ve accumulated. The “Blogs” section of my site serves this purpose. Here, you will find a collection of my thoughts, explorations, and experiences in varied subjects that intrigue me.",
+          "keywords": []
+        }
+      },
+      {
+        "type": "header",
+        "content": {
+          "text": "In Conclusion",
+          "level": 2
+        }
+      },
+      {
+        "type": "paragraph",
+        "content": {
+          "text": "My website is more than just an online resume or a digital portfolio. It is an insight into my journey, my growth, and the milestones I have achieved along the way. Through this platform, I invite you to delve deeper into the experiences and knowledge I have to offer. I’m thrilled about the start of this personal endeavor and look forward to the interactions it will enable.",
+          "keywords": []
+        }
+      }
+    ],
+    "author": [
+      {
+        "name": "Kelvin You",
+        "image": "/images/blog/author-01.png",
+        "designation": "Software Engineer",
+        "contribution": 1
+      }
+    ],
+    "tags": ["creative"],
+    "createDate": "2023-11-23",
+    "modifyDate": "2023-11-23"
+  }
+]

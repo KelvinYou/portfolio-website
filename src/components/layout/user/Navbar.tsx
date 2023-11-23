@@ -120,8 +120,6 @@ const DropdownMenu: FC<DropdownMenuProps> = (props) => {
 }
 
 const Navbar: FC = () => {
-  const [active, setActive] = useState("");
-  const [toggle, setToggle] = useState(false);
   const pathname = usePathname();
 
   return (
@@ -134,7 +132,6 @@ const Navbar: FC = () => {
           href="/"
           className="flex items-center gap-2"
           onClick={() => {
-            setActive("");
             window.scrollTo(0, 0);
           }}
         >
@@ -146,7 +143,7 @@ const Navbar: FC = () => {
 
         {/* Nav Links (Desktop) */}
         <ul className="list-none hidden md:flex flex-row gap-10">
-          {navLinks.slice(0, 3).map((link, index) => {
+          {navLinks.slice(0, 4).map((link, index) => {
             return (
               <li
                 key={link.id + index}
@@ -179,26 +176,22 @@ const Navbar: FC = () => {
           })}
 
           <li
-            className={`${
-              pathname === "/more" ? "text-white" : "text-secondary"
-            } hover:text-white text-[18px] font-medium cursor-pointer group`}
+            className={`text-secondary hover:text-white text-[18px] font-medium cursor-pointer group`}
           >
-            {/* <div className='flex gap-2 group-hover:w-full'>
-              More
-            </div> */}
             <Dropdown trigger={
-              <div className='flex gap-2 group-hover:w-full'>
+              <div 
+                className='flex gap-2 group-hover:w-full'
+              >
                 More
                 <ChevronDown />
               </div>
             }>
-              {/* Dropdown Content */}
               <div className="p-2">
-                {/* <strong className="block p-2 text-xs font-medium uppercase text-gray-400">
+                <strong className="block p-2 text-xs font-medium uppercase text-gray-400">
                   General
-                </strong> */}
+                </strong>
 
-                {navLinks.slice(3).map((link, index) => {
+                {navLinks.slice(4).map((link, index) => {
                   return (
                     <Link 
                       key={index + link.title}

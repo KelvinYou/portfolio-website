@@ -56,11 +56,11 @@ export const navLinks: MainMenu[] = [
   //   title: "Resume",
   //   link: RESUME_LINK,
   // },
-  // {
-  //   id: "blog",
-  //   title: "Blog",
-  //   link: "/blog",
-  // },
+  {
+    id: "blog",
+    title: "Blogs",
+    link: "/blog",
+  },
   {
     id: "space",
     title: "Space",

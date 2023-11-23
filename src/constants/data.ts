@@ -79,7 +79,7 @@ export const strengths = [
 ];
 
 export const careerData = {
-  role: "Full Stack Software Engineer",
+  role: "Software Engineer",
   startCoding: "2018-12-20",
   desc: "I develop Web, Mobile and Blockchain App."
 };

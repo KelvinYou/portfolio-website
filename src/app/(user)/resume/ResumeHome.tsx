@@ -5,7 +5,7 @@ import { textVariant } from '@/utils/motion'
 import { motion } from 'framer-motion'
 import React from 'react'
 
-const Resume = () => {
+const ResumeHome = () => {
   return (
     <SectionWrapper
       idName='project'
@@ -29,4 +29,4 @@ const Resume = () => {
   )
 }
 
-export default Resume
+export default ResumeHome

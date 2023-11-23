@@ -9,19 +9,24 @@ import { motion } from "framer-motion";
 import { Clock } from "lucide-react";
 import { Tilt } from "react-tilt";
 import { FC } from 'react';
+import { Blog, BlogPage } from '@/types/blog';
+import { useRouter } from 'next/navigation';
 
-interface ProjectCardProps {
-  project: any;
+interface BlogCardProps {
+  blog: BlogPage;
   index: number;
 }
 
-const ProjectCard: FC<ProjectCardProps> = ({ project, index }) => {
+const BlogCard: FC<BlogCardProps> = ({ blog, index }) => {
+  const router = useRouter();
+
   return (
     <motion.div 
       initial="hidden"
       animate="show"
       variants={fadeIn("up", "spring", index * 0.1, 0.75)} 
       className='sm:w-[360px] w-full cursor-pointer'
+      onClick={() => router.push(`/blog/${blog._id}`)}
     >
       <Tilt
         options={{
@@ -33,10 +38,11 @@ const ProjectCard: FC<ProjectCardProps> = ({ project, index }) => {
       >
         <div className="relative w-full h-[230px]">
           {/* Work image */}
-          {(project.images && (project.images.length > 0 ))
+          {blog.image
             ? <Image
-              src={project.images[0]}
-              alt={project.name}
+              src={blog.image}
+              alt={blog.title}
+              fill
               priority={true}
               className="w-full h-full object-cover rounded-md"
             />
@@ -46,70 +52,33 @@ const ProjectCard: FC<ProjectCardProps> = ({ project, index }) => {
               </svg>
             </div>
           }
-
-          <div className="absolute inset-0 flex justify-end m-3 card-img_hover">
-
-            {/* Live Site */}
-            {project.liveSiteLink && <Tooltip
-              content="Live Preview"
-            >
-              <div
-                onClick={() => window.open(project.liveSiteLink, "_blank", "noreferrer")}
-                className="black-gradient w-10 h-10 rounded-full flex justify-center items-center cursor-pointer"
-              >
-                <Image
-                  src={preview}
-                  alt="Live Site"
-                  title="Live Site"
-                  className="w-2/3 h-2/3 object-contain"
-                />
-              </div>
-            </Tooltip>}
-            
-
-            {/* Github */}
-            {project.sourceCodeLink && <Tooltip
-              content="View Source Code"
-            >
-              <div
-                onClick={() => window.open(project.sourceCodeLink, "_blank", "noreferrer")}
-                className="black-gradient w-10 h-10 rounded-full flex justify-center items-center cursor-pointer ml-2"
-              >
-                <Image
-                  src={github}
-                  alt="Github"
-                  title="Github"
-                  className="w-1/2 h-1/2 object-contain"
-                />
-              </div>
-            </Tooltip>}
-
-          </div>
         </div>
 
         {/* Work Info */}
-        <div className="mt-5">
-          <h3 className="text-white font-bold text-[24px]">{project.name}</h3>
-          <p className="mt-2 text-secondary text-[14px]">{project.description}</p>
+        <div className="mt-5 mb-10">
+          <h3 className="text-white font-bold text-[24px]">{blog.title}</h3>
+          <p className="mt-2 text-secondary text-[14px]">
+            {blog.paragraph.length > 150 ? blog.paragraph.slice(0, 150) + " ..." : blog.paragraph}
+          </p>
         </div>
 
         {/* Work Tag */}
-        <div className="mt-4 flex flex-wrap gap-2 mb-10">
-          {project.tags.map((tag: any, index: number) => (
+        {/* <div className="mt-4 flex flex-wrap gap-2 mb-10">
+          {blog.tags.map((tag: any, index: number) => (
             <p key={index + tag.name} className={`text-[14px] ${tag.color}`}>
               #{tag.name}
             </p>
           ))}
-        </div>
+        </div> */}
 
         <div className="flex items-center gap-1 justify-end absolute bottom-4 right-4 opacity-80">
           {/* <SvgIcon type={ICON_TYPE.CLOCK_OUTLINE} color="rgb(254 240 138)" size={18}/> */}
           <Clock size={14} color='rgb(254 240 138)'/>
-          <p className="text-yellow-200 text-[12px]">{formatDate(project.date)}</p>
+          <p className="text-yellow-200 text-[12px]">{formatDate(blog.createDate)}</p>
         </div>
       </Tilt>
     </motion.div>
   )
 }
 
-export default ProjectCard;
+export default BlogCard;

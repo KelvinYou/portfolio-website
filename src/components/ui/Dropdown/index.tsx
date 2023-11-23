@@ -9,8 +9,8 @@ const Dropdown: FC<DropdownProps> = ({ trigger, children }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen);
+  const openDropdown = () => {
+    setIsOpen(true);
   };
 
   const closeDropdown = () => {
@@ -35,7 +35,7 @@ const Dropdown: FC<DropdownProps> = ({ trigger, children }) => {
 
   return (
     <div className="relative" ref={dropdownRef}>
-      <div className="" onClick={toggleDropdown}>
+      <div className="" onClick={openDropdown} onMouseEnter={openDropdown}>
         {trigger}
       </div>
       {isOpen && (

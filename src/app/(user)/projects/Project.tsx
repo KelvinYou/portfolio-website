@@ -73,7 +73,7 @@ const Project: FC = () => {
 
 
       {/* Project Card */}
-        <div className="mt-10 flex flex-wrap gap-7">
+      <div className="mt-10 flex flex-wrap gap-7">
         {projects
           .filter((project) => {
             if (projectCategory === 'all') return true;
@@ -83,6 +83,7 @@ const Project: FC = () => {
             <ProjectCard 
               key={`project-${index}`} 
               project={project}
+              index={index}
             />
           ))}
       </div>
