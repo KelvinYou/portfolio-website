@@ -18,7 +18,7 @@ import Link from 'next/link';
 import "./Experience.scss";
 import SelectableButtonGroup from '@/components/SelectableButtonGroup';
 import { ChevronsRight } from 'lucide-react';
-import HighlightText from '@/components/HighlightedText';
+import HighlightText from '@/components/common/HighlightedText';
 import { formatDate } from '@/utils/dateUtil';
 
 // Experience Card
@@ -138,8 +138,6 @@ const ExperienceCard: FC<any> = ({ experience }) => {
 
 // Education Card
 const EducationCard: FC<any> = ({ education }) => {
-  console.log("education: ", education)
-  console.log("education.universityUrl: ", education.universityUrl)
 
   return (
     <VerticalTimelineElement

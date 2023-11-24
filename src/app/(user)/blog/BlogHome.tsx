@@ -6,7 +6,7 @@ import { motion } from 'framer-motion'
 import React from 'react'
 import blogs from "@/data/blogs.json";
 import BlogCard from './BlogCard';
-import { Blog, BlogPage } from '@/types/blog';
+import { BlogPage } from '@/types/blog';
 
 const BlogHome = () => {
   // Example data

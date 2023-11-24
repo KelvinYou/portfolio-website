@@ -2,31 +2,25 @@
 
 import { projects } from '@/constants/data'
 import SectionWrapper from '@/hoc/SectionWrapper'
-import { Blog, BlogPage } from '@/types/blog'
+import { BlogPage, Header, Paragraph } from '@/types/blog'
 import { textVariant } from '@/utils/motion'
 import { motion } from 'framer-motion'
 import React, { FC } from 'react'
-import Image
- from 'next/image'
+import Image from 'next/image'
 import { useTheme } from 'next-themes'
 import Link from 'next/link'
 import { Calendar, ChevronsLeft } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import BlogParagraph from '@/components/blog/elements/BlogParagraph'
+import BlogHeader from '@/components/blog/elements/BlogHeader'
+import TagButton from '@/components/tag/TagButton'
+import { isHeaderContent, isParagraphContent } from '@/components/blog/config/checkType'
+import BlogElementRenderer from '@/components/blog/BlogElementRenderer'
+import { formatDate } from '@/utils/dateUtil'
 
 interface BlogDetailProps {
   blogDetail: BlogPage;
 }
-
-const TagButton = ({ href = "#0", text }: { href?: string; text: string }) => {
-  return (
-    <a
-      href={href}
-      className="bg-gray-light mb-3 mr-3 inline-flex items-center justify-center rounded-sm px-4 py-2 text-sm text-black duration-300 hover:bg-primary hover:text-white dark:bg-[#2C303B] dark:text-white dark:hover:bg-primary"
-    >
-      {text}
-    </a>
-  );
-};
 
 const NewsLatterBox = () => {
   const { theme } = useTheme();
@@ -345,7 +339,7 @@ const RelatedPost = ({
     <div className="flex items-center lg:block xl:flex">
       <div className="mr-5 lg:mb-3 xl:mb-0">
         <div className="relative h-[60px] w-[70px] overflow-hidden rounded-md sm:h-[75px] sm:w-[85px]">
-          <Image src={image} alt={title} fill />
+          <Image src={image} alt={title} fill sizes="100%" />
         </div>
       </div>
       <div className="w-full">
@@ -373,6 +367,9 @@ const ProjectDetail: FC<BlogDetailProps> = (props) => {
     image,
     paragraph,
     elements,
+    tags,
+    createDate,
+    modifyDate,
   } = blogDetail;
 
   return (
@@ -417,6 +414,8 @@ const ProjectDetail: FC<BlogDetailProps> = (props) => {
                         src={author[0].image}
                         alt="author"
                         fill
+                        sizes='100%'
+                        style={{objectFit:"cover"}}
                       />}
                     </div>
                   </div>
@@ -431,7 +430,7 @@ const ProjectDetail: FC<BlogDetailProps> = (props) => {
                     <Calendar size={14} />
 
                     <span className='ml-1'>
-                      12 Jan 2024
+                      {formatDate(createDate, 'long')}
                     </span>
                     
                   </p>
@@ -486,23 +485,14 @@ const ProjectDetail: FC<BlogDetailProps> = (props) => {
                       src={image}
                       alt="image"
                       fill
+                      sizes="100%"
                       className="h-full w-full object-cover object-center"
                     />
                   </div>
                 </div>
               }
               
-              {elements.map((element, index) => {
-                if (element.type === "paragraph") {
-                  return (
-                    <p 
-                    className="mb-8 text-base font-medium leading-relaxed text-body-color sm:text-lg sm:leading-relaxed lg:text-base lg:leading-relaxed xl:text-lg xl:leading-relaxed"
-                    >
-                      {element.content.text}
-                    </p>
-                  )
-                }
-              })}
+              <BlogElementRenderer elements={elements} />
 
               <p className="mb-10 text-base font-medium leading-relaxed text-body-color sm:text-lg sm:leading-relaxed lg:text-base lg:leading-relaxed xl:text-lg xl:leading-relaxed">
                 Semper auctor neque vitae tempus quam pellentesque nec.
@@ -695,9 +685,12 @@ const ProjectDetail: FC<BlogDetailProps> = (props) => {
                     Tags :
                   </h4>
                   <div className="flex items-center">
-                    <TagButton text="Design" />
-                    <TagButton text="Development" />
-                    <TagButton text="Info" />
+                    {tags.map((tag, index) => (
+                      <TagButton 
+                        key={index}
+                        text={tag}
+                      />
+                    ))}
                   </div>
                 </div>
                 <div className="mb-5">

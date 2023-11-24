@@ -2,7 +2,7 @@
 
 import React, { FC, useState, ChangeEvent } from 'react';
 import projects from "@/data/projects.json";
-import { Project } from '@/types/data';
+import { Project } from '@/types/project';
 
 interface ProjectDetailProps {
   id: string;
@@ -58,7 +58,7 @@ const ProjectDetail: FC<ProjectDetailProps> = (props) => {
 
   const handleSaveChanges = () => {
     // Implement logic to save changes (e.g., send data to a server)
-    console.log("Saving changes:", formData);
+    // console.log("Saving changes:", formData);
     handleToggleEdit(); // Disable editing after saving changes
   };
 

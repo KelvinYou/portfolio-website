@@ -1,15 +1,13 @@
 "use client";
 
 import Image from 'next/image';
-import { preview, github } from "@/assets";
-import Tooltip from "@/components/ui/Tooltip";
 import { formatDate } from "@/utils/dateUtil";
 import { fadeIn } from "@/utils/motion";
 import { motion } from "framer-motion";
 import { Clock } from "lucide-react";
 import { Tilt } from "react-tilt";
 import { FC } from 'react';
-import { Blog, BlogPage } from '@/types/blog';
+import { BlogPage } from '@/types/blog';
 import { useRouter } from 'next/navigation';
 
 interface BlogCardProps {
@@ -43,6 +41,7 @@ const BlogCard: FC<BlogCardProps> = ({ blog, index }) => {
               src={blog.image}
               alt={blog.title}
               fill
+              sizes="100%"
               priority={true}
               className="w-full h-full object-cover rounded-md"
             />
@@ -57,7 +56,7 @@ const BlogCard: FC<BlogCardProps> = ({ blog, index }) => {
         {/* Work Info */}
         <div className="mt-5 mb-10">
           <h3 className="text-white font-bold text-[24px]">{blog.title}</h3>
-          <p className="mt-2 text-secondary text-[14px]">
+          <p className="mt-2 text-secondary text-[14px] text-justify">
             {blog.paragraph.length > 150 ? blog.paragraph.slice(0, 150) + " ..." : blog.paragraph}
           </p>
         </div>

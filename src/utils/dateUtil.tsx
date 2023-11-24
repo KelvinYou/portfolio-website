@@ -57,8 +57,7 @@ const parseDateTimeComponents = (inputDateTime: string): DateTimeComponents | nu
   return { year, month, day, hour, minute, second };
 };
 
-
-export const formatDate = (inputDate: string): string => {
+export const formatDate = (inputDate: string, format: 'short' | 'long' = 'short'): string => {
   // Parse date components
   const dateComponents = parseDateComponents(inputDate);
 
@@ -78,6 +77,9 @@ export const formatDate = (inputDate: string): string => {
   // Construct the desired date string
   const formattedDate = `${monthAbbreviation} ${year}`;
 
-  return formattedDate;
+  if (format === 'long') {
+    return `${day} ${monthAbbreviation} ${year}`;
+  } else {
+    return `${monthAbbreviation} ${year}`;
+  }
 };
-

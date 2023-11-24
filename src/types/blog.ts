@@ -11,59 +11,59 @@ type BlogElementType =
   | "quote" | "code" | "video" | "table" | "audio" | "image" | "link" | "divider";
 
 // Define the BlogElement which can take any form out of the defined types
-interface BlogElement {
+export interface BlogElement {
   // type: BlogElementType;
   type: string;
   content: Header | Paragraph | string | Image | string[] | Quote | Code | Video | Audio | Table | Link | Divider; 
 }; // string for paragraph, Image for image, ListItem array for lists
 
-interface Header {
+export interface Header {
   text: string;
   level: number;
 }
 
-interface Paragraph {
+export interface Paragraph {
   text: string;
   keywords: string[];
 }
 
-interface Quote {
+export interface Quote {
   quote: string;
   author: string;
 }
 
-interface Code {
+export interface Code {
   code: string;
   language: string;
 }
 
-interface Video {
+export interface Video {
   url: string;
   caption: string;
 }
 
-interface Table {
+export interface Table {
   headers: string[];
   rows: string[][];
 }
 
-interface Audio {
+export interface Audio {
   url: string;
   caption: string;
 }
 
 // Define the Image type
-interface Image {
+export interface Image {
   url: string;
   alt: string;
 }
 
-interface Link {
+export interface Link {
   url: string;
   text: string;
 }
 
-interface Divider {
+export interface Divider {
   // type: 'dashed' | 'solid';
   type: string;
   color: string;
