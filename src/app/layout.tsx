@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     icon: '/logo.png',
   },
   openGraph: {
-    images: '/hero-bg/benz.jpg',
+    images: '/images/common/profile_pic.jpg',
   },
 }
 

@@ -99,7 +99,7 @@
         "contribution": 1
       }
     ],
-    "tags": ["creative"],
+    "tags": ["portfolio"],
     "createDate": "2023-11-23",
     "modifyDate": "2023-11-23"
   },
@@ -140,6 +140,15 @@
           "Consectetur adipiscing elit in voluptate velit.",
           "Consectetur adipiscing elit in voluptate velit."
         ]
+      },
+      {
+        "type": "quote",
+        "content": {
+          "quote": "Testing. I never said anythings. Testing. I never said anythings. Testing. I never said anythings. ",
+          "author": {
+            "name": "Kelvin You"
+          }
+        }
       }
 
     ],

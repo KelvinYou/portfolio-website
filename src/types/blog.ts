@@ -1,4 +1,4 @@
-type Author = {
+export type Author = {
   name: string;
   image?: string;
   designation?: string;
@@ -29,7 +29,7 @@ export interface Paragraph {
 
 export interface Quote {
   quote: string;
-  author: string;
+  author: Author;
 }
 
 export interface Code {
