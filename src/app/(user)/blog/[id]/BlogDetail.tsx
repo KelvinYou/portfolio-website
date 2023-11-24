@@ -14,6 +14,7 @@ import { formatDate } from '@/utils/dateUtil'
 import SharePost from '@/components/blog/SharePost'
 import RelatedPosts from '@/components/blog/RelatedPosts'
 import NewsLatterBox from '@/components/blog/NewsLatterBox'
+import ScrollToTop from '@/components/ScrollToTop'
 
 interface BlogDetailProps {
   blogDetail: BlogPage;
@@ -65,10 +66,10 @@ const ProjectDetail: FC<BlogDetailProps> = (props) => {
       <div className="-mx-4 flex flex-wrap mt-10">
         <div className="w-full px-4 lg:w-8/12">
           <div>
-            <h1 className="mb-8 text-3xl font-bold leading-tight text-black dark:text-white sm:text-4xl sm:leading-tight">
+            <h1 className="mb-8 text-3xl font-bold leading-tight text-white sm:text-4xl sm:leading-tight">
               {title}
             </h1>
-            <div className="mb-10 flex flex-wrap items-center justify-between border-b border-body-color border-opacity-10 pb-4 dark:border-white dark:border-opacity-10">
+            <div className="mb-10 flex flex-wrap items-center justify-between border-b pb-4 border-white border-opacity-10">
               <div className="flex flex-wrap items-center">
                 <div className="mb-5 mr-10 flex items-center">
                   <div className="mr-4">
@@ -184,12 +185,12 @@ const ProjectDetail: FC<BlogDetailProps> = (props) => {
           </div>
         </div>
         <div className="w-full px-4 lg:w-4/12">
-          <div className="shadow-three dark:bg-gray-dark mb-10 mt-12 rounded-sm bg-white p-6 dark:shadow-none lg:mt-0">
+          <div className=" bg-gray-dark mb-10 mt-12 rounded-sm  p-6 shadow-none lg:mt-0">
             <div className="flex items-center justify-between">
               <input
                 type="text"
                 placeholder="Search here..."
-                className="border-stroke dark:text-body-color-dark dark:shadow-two mr-4 w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
+                className="border-stroke text-body-color-dark mr-4 w-full rounded-sm border px-6 py-3 text-base outline-none transition-all duration-300  border-transparent bg-[#2C303B] focus:border-primary focus:shadow-none"
               />
               <button
                 aria-label="search button"
@@ -213,8 +214,8 @@ const ProjectDetail: FC<BlogDetailProps> = (props) => {
           
           <RelatedPosts relatedBlogIds={relatedBlogIds} />
 
-          <div className="shadow-three dark:bg-gray-dark mb-10 rounded-sm bg-white dark:shadow-none">
-            <h3 className="border-b border-body-color border-opacity-10 px-8 py-4 text-lg font-semibold text-black dark:border-white dark:border-opacity-10 dark:text-white">
+          <div className="bg-gray-dark mb-10 rounded-sm  shadow-none">
+            <h3 className="border-b px-8 py-4 text-lg font-semibold border-white border-opacity-10 text-white">
               Popular Category
             </h3>
             <ul className="px-8 py-6">
@@ -260,8 +261,8 @@ const ProjectDetail: FC<BlogDetailProps> = (props) => {
               </li>
             </ul>
           </div>
-          <div className="shadow-three dark:bg-gray-dark mb-10 rounded-sm bg-white dark:shadow-none">
-            <h3 className="border-b border-body-color border-opacity-10 px-8 py-4 text-lg font-semibold text-black dark:border-white dark:border-opacity-10 dark:text-white">
+          <div className="bg-gray-dark mb-10 rounded-sm shadow-none">
+            <h3 className="border-b  px-8 py-4 text-lg font-semibold  border-white border-opacity-10 text-white">
               Popular Tags
             </h3>
             <div className="flex flex-wrap px-8 py-6">
@@ -276,6 +277,8 @@ const ProjectDetail: FC<BlogDetailProps> = (props) => {
           <NewsLatterBox />
         </div>
       </div>
+
+      <ScrollToTop />
     </SectionWrapper>
   )
 }
