@@ -77,6 +77,7 @@ export type BlogPage = {
   image?: string;
   elements: BlogElement[];
   author: Author[];
+  relatedBlogIds: string[],
   tags: string[];
   createDate: string;
   modifyDate: string;

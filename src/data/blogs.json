@@ -99,6 +99,7 @@
         "contribution": 1
       }
     ],
+    "relatedBlogIds": [],
     "tags": ["portfolio"],
     "createDate": "2023-11-23",
     "modifyDate": "2023-11-23"
@@ -155,12 +156,14 @@
     "author": [
       {
         "name": "Kelvin You",
-        "image": "/images/blog/author-01.png",
+        "image": "/images/common/profile_pic.jpg",
         "designation": "Software Engineer",
         "contribution": 1
       }
     ],
+    "relatedBlogIds": ["1"],
     "tags": [
+      "testing",
       "creative", 
       "blockchain", 
       "web3"
