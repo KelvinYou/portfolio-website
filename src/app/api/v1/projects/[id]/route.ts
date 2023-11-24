@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import fs from "fs/promises";
 import path from "path";
-import { Project } from "@/types/data";
+import { Project } from "@/types/project";
 
 const dataFolderPath = path.resolve("src/data");
 const projectsFilePath = path.join(dataFolderPath, "projects.json");
