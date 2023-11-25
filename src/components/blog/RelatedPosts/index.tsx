@@ -3,6 +3,7 @@ import RelatedBlogCard from './RelatedBlogCard'
 import { BlogPage } from '@/types/blog';
 
 import blogs from "@/data/blogs.json";
+import { useRouter } from 'next/navigation';
 
 interface RelatedPostsProps {
   relatedBlogIds: string[];
@@ -12,10 +13,12 @@ const RelatedPosts: FC<RelatedPostsProps> = (props) => {
   const { relatedBlogIds } = props;
 
   const relatedBlogs: BlogPage[] = blogs.filter((blog) => relatedBlogIds.includes(blog._id));
+  
+  const router = useRouter();
 
   return (
-    <div className="shadow-three dark:bg-gray-dark mb-10 rounded-sm bg-white dark:shadow-none">
-      <h3 className="border-b border-body-color border-opacity-10 px-8 py-4 text-lg font-semibold text-black dark:border-white dark:border-opacity-10 dark:text-white">
+    <div className="bg-gray-dark mb-10 rounded-sm shadow-none">
+      <h3 className="border-b  px-8 py-4 text-lg font-semibold  border-white border-opacity-10 text-white">
         Related Posts
       </h3>
       {relatedBlogs.length === 0 ? (
@@ -23,9 +26,13 @@ const RelatedPosts: FC<RelatedPostsProps> = (props) => {
           No related post ...
         </p>
       ) : (
-        <ul className="px-8">
+        <ul className="">
           {relatedBlogs.map((blog, index) => (
-            <li key={index} className="pt-6 border-b border-body-color border-opacity-10 pb-6 dark:border-white dark:border-opacity-10">
+            <li 
+              key={index} 
+              className="py-6 px-8 border-b border-white border-opacity-10 cursor-pointer"
+              onClick={() => router.push(`/blog/${blog._id}`)}
+            >
               <RelatedBlogCard
                 blog={blog}
               />

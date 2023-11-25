@@ -35,7 +35,7 @@ const Hero: FC = () => {
                   strings: [
                     "Software Engineer",
                     "Full Stack Developer",
-                    "UI/UX Designer",
+                    "Flutter Development",
                     "Software Consultant",
                     "Tech Blogger",
                   ],

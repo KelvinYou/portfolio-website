@@ -16,6 +16,7 @@ const RelatedBlogCard: FC<RelatedBlogCardProps> = ({ blog }) => {
     createDate
   } = blog;
 
+
   return (
     <div className="flex items-center lg:block xl:flex">
       <div className="mr-5 lg:mb-3 xl:mb-0">
@@ -31,12 +32,11 @@ const RelatedBlogCard: FC<RelatedBlogCardProps> = ({ blog }) => {
       </div>
       <div className="w-full">
         <h5>
-          <Link
-            href={`/blog/${_id}`}
-            className="mb-[6px] block text-base font-medium leading-snug text-black hover:text-primary dark:text-white dark:hover:text-primary"
+          <span
+            className="mb-[6px] block text-base font-medium leading-snug text-white"
           >
             {title}
-          </Link>
+          </span>
         </h5>
         <p className="text-xs font-medium text-body-color">{formatDate(createDate)}</p>
       </div>

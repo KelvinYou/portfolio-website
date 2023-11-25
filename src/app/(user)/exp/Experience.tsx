@@ -141,7 +141,10 @@ const EducationCard: FC<any> = ({ education }) => {
 
   return (
     <VerticalTimelineElement
-      contentStyle={{ background: "#102230", color: "#fff" }}
+      contentStyle={{ 
+        background: "#102230", 
+        color: "#fff", 
+      }}
       contentArrowStyle={{ borderRight: "7px solid #232631" }}
       date={education.date}
       iconStyle={{ background: education.iconBg }}
@@ -170,6 +173,7 @@ const EducationCard: FC<any> = ({ education }) => {
       {/* Title */}
       <div>
         <h3 className="text-white text-[24px] font-bold">{education.title}</h3>
+
         {education.universityUrl ? <Link 
         href={education.universityUrl}
         target='_blank'
@@ -187,8 +191,16 @@ const EducationCard: FC<any> = ({ education }) => {
         >
           {education.universityName}
         </p>}
-        
-        
+
+      
+
+        <span
+          className="inline-flex items-center justify-center rounded-full bg-tertiary px-2.5 py-0.5 text-on-primary mt-5"
+        >
+          {/* <p className="text-sm"> */}
+            CGPA: {education.cgpa}
+          {/* </p> */}
+        </span>
       </div>
 
       {education.description && <div className="mt-5 text-justify">

@@ -16,7 +16,7 @@ import {
 
 export const services = [
   {
-    title: "Web App Development", // freelancer
+    title: "Full Stack Developer", // freelancer
     icon: web,
   },
   {
@@ -24,11 +24,11 @@ export const services = [
     icon: mobile,
   },
   {
-    title: "Blockchain App Development",
+    title: "Software Consultant",
     icon: backend,
   },
   {
-    title: "Software Consultant",
+    title: "Tech Blogger",
     icon: creator,
   },
 ];
@@ -341,7 +341,7 @@ export const educations = [
     date: "May 2019 - Jun 2021",
     startDate: "2019-5-28",
     endDate: "2021-5-31",
-    cgpa: "3.7200",
+    cgpa: "3.7439",
     description: "",
     points: [
       {

@@ -9,9 +9,9 @@ interface ShareButtonProps {
 const ShareButton: FC<ShareButtonProps> = ({ label, icon, onClick }) => (
   <a
     aria-label={label}
-    className="bg-gray-light dark:bg-gray-dark mb-3 inline-flex h-9 w-9 items-center 
-    justify-center rounded-sm text-body-color duration-300 hover:bg-primary 
-    hover:text-white dark:hover:bg-on-primary sm:ml-3 cursor-pointer"
+    className=" bg-gray-dark mb-3 inline-flex h-9 w-9 items-center 
+    justify-center rounded-sm text-body-color duration-300 
+    hover:text-white hover:bg-on-primary cursor-pointer"
     onClick={onClick}
   >
     {icon}
