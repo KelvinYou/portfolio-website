@@ -93,12 +93,22 @@ const ProjectDetail: FC<BlogDetailProps> = (props) => {
                 </div>
                 <div className="mb-5 flex items-center">
                   <p className="mr-5 flex items-center text-base font-medium text-body-color">
-                    <Calendar size={14} />
+                    <span className='ml-3 grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-1'>
+                      <span className='flex items-center'>
+                        <Calendar size={14} />
 
-                    <span className='ml-1'>
-                      {formatDate(createDate, 'long')}
+                        <span className='ml-1'>{formatDate(createDate, 'long')}</span>
+                        <span className='ml-1 text-sm text-on-primary'>created</span>
+                      </span>
+
+                      <span className='flex items-center'>
+                        <Calendar size={14} />
+
+                        <span className='ml-1'>{formatDate(modifyDate, 'long')}</span>
+                        <span className='ml-1 text-sm text-on-primary'>last modify</span>
+                      </span>
                     </span>
-                    
+
                   </p>
                   {/* <p className="mr-5 flex items-center text-base font-medium text-body-color">
                     <span className="mr-3">
