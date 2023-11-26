@@ -195,7 +195,7 @@ const EducationCard: FC<any> = ({ education }) => {
       
 
         <span
-          className="inline-flex items-center justify-center rounded-full bg-tertiary px-2.5 py-0.5 text-on-primary mt-5"
+          className="text-sm inline-flex items-center justify-center rounded-full bg-tertiary px-2.5 py-0.5 text-on-primary mt-5"
         >
           {/* <p className="text-sm"> */}
             CGPA: {education.cgpa}

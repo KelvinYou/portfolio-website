@@ -19,7 +19,7 @@ const HighlightText: React.FC<HighlightTextProps> = ({ text, highlightedTexts, c
     <>
       {parts.map((part, index) => (
         highlightedTexts.includes(part) ? (
-          <span key={index} className={`text-on-primary font-bold ${className}`} >
+          <span key={index} className={`text-on-primary ${className}`} >
             {part}
           </span>
         ) : (

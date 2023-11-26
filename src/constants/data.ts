@@ -16,7 +16,7 @@ import {
 
 export const services = [
   {
-    title: "Full Stack Developer", // freelancer
+    title: "Full Stack Developer",
     icon: web,
   },
   {

@@ -3,8 +3,8 @@
     "_id": "1",
     "title": "Why I Created My Personal Website",
     "paragraph":
-      "As a technophile and an advocate for professional self-expression, I've always known the importance of having a space that could function as a portfolio, a testament to my journey, a place to share my thoughts, and a platform that represents who I am as an individual. Today, I'm thrilled to welcome you to my own personal triumph - my website.",
-    "image": "/images/blog/blog-01.jpg",
+      "As a tech enthusiast and advocate for professional self-expression, I've always known the importance of having a space that serves as a portfolio, a witness to my journey, a place to share my ideas, and a platform to represent myself. Today, I'm thrilled to welcome you to my own personal triumph - my website.",
+    "image": "/images/blog/1/main.jpeg",
     "elements": [
       {
         "type": "header",
