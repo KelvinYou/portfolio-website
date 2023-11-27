@@ -13,8 +13,8 @@ const Github = () => {
     >
       {/* Title */}
       <motion.div
-        initial="hidden"
-        animate="show"
+        // initial="hidden"
+        // animate="show"
         variants={textVariant()}
         className="mt-[100px]"
       >
