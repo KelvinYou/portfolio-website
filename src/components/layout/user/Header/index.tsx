@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { menuData } from "@/constants/menu";
 import { careerData, personalData } from "@/constants/data";
 import { logo } from "@/assets";
@@ -39,17 +39,36 @@ const Header = () => {
   };
 
   const usePathName = usePathname();
+  
+  const navbarRef = useRef<HTMLDivElement | null>(null); // Define the type explicitly
+
+  useEffect(() => {
+    // Event listener to close the navbar when clicking outside of it
+    const handleClickOutside = (event: MouseEvent) => {
+      if (navbarRef.current && !navbarRef.current.contains(event.target as Node)) {
+        setNavbarOpen(false);
+      }
+    };
+
+    // Attach the event listener to the document
+    document.addEventListener("click", handleClickOutside);
+
+    // Cleanup: Remove the event listener when the component unmounts
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [navbarRef]);
 
   return (
     <>
       <header
         className={`sm:px-16 px-6 left-0 top-0 z-40 flex w-full items-center bg-gradient-to-b from-primary to-transparent backdrop-blur-lg ${
           sticky
-            ? "shadow-sticky-dark fixed z-[9999] !bg-opacity-80 shadow-sticky backdrop-blur-sm transition"
+            ? "fixed z-[9999] shadow-sticky backdrop-blur-sm transition"
             : "absolute bg-transparent"
         }`}
       >
-        <div className="w-full">
+        <div className="w-full" ref={navbarRef}>
           <div className="relative -mx-4 flex items-center justify-between">
             <div className="w-[300px]  px-4 xl:mr-12">
               <Link
@@ -121,7 +140,7 @@ const Header = () => {
                           <>
                             <p
                               onClick={() => handleSubmenu(index)}
-                              className="flex cursor-pointer items-center justify-between py-2 text-base text-dark text-white/70 group-hover:text-white 
+                              className="flex cursor-pointer items-center justify-between py-2 text-base text-dark text-white/70 group-hover:text-on-primary 
                               lg:mr-0 lg:inline-flex lg:px-0 lg:py-6"
                             >
                               {menuItem.title}
@@ -149,7 +168,7 @@ const Header = () => {
                                   onClick={() => handleSubmenu(-1)}
                                   target={submenuItem.newTab ? "_blank" : "_self"}
                                   key={index}
-                                  className="block rounded py-2.5 text-sm  text-white/70 hover:text-white lg:px-3"
+                                  className="block rounded py-2.5 text-sm  text-white/70 hover:text-on-primary lg:px-3"
                                 >
                                   {submenuItem.title}
                                   {submenuItem.newTab && 
@@ -167,6 +186,10 @@ const Header = () => {
                     ))}
                   </ul>
                 </nav>
+              </div>
+
+              <div className="text-white  hidden lg:block">
+                我好🐂啊
               </div>
             </div>
           </div>

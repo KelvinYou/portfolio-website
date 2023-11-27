@@ -3,27 +3,27 @@
     "_id": "1",
     "title": "Why I Created My Personal Website",
     "paragraph":
-      "As a tech enthusiast and advocate for professional self-expression, I've always known the importance of having a space that serves as a portfolio, a witness to my journey, a place to share my ideas, and a platform to represent myself. Today, I'm thrilled to welcome you to my own personal triumph - my website.",
+      "As a tech enthusiast and advocate for professional self-expression, I've always known the importance of having a space that serves as a portfolio, a witness to my journey, a place to share my ideas, and a platform to represent myself. Today, I'm thrilled to welcome you to my own personal triumph - my personal website.",
     "image": "/images/blog/1/main.jpeg",
     "elements": [
       {
         "type": "header",
         "content": {
-          "text": "A Professional Portal",
+          "text": "About: A Professional Portal",
           "level": 3
         }
       },
       {
         "type": "paragraph",
         "content": {
-          "text": "In this fast-paced world, having a digital presence is crucial, particularly for those of us in the tech industry. With my website, I've created a professional portal that showcases not just who I am but what I do and how I can contribute value. From my experiences in software development to my pioneering adventures in AI, you'll find all delightful details here.",
+          "text": "In this fast-paced world, having a digital presence is crucial, especially for those of us in the tech industry. With my website, I have created a professional portal that not only showcases who I am, but also what I do and how I contribute value. From my experience in software development to my pioneering adventures in completed projects, you will find here all the delightful details.",
           "keywords": []
         }
       },
       {
         "type": "header",
         "content": {
-          "text": "My Experiences",
+          "text": "Experiences: My Work Experience and Education",
           "level": 3
         }
       },
@@ -37,7 +37,7 @@
       {
         "type": "header",
         "content": {
-          "text": "Educational Endeavors",
+          "text": "Educations: My Study Journey",
           "level": 3
         }
       },

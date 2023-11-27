@@ -24,7 +24,6 @@ export default function RootLayout({
         {/* <Navbar /> */}
         <Header />
 
-
         <div className='pt-20 relative'>
 
           <div>

@@ -44,8 +44,8 @@ const AboutMe: FC = () => {
     >
       {/* Title */}
       <motion.div
-        initial="hidden"
-        animate="show"
+        // initial="hidden"
+        // animate="show"
         variants={textVariant()}
         className="mt-[100px]"
       >
@@ -59,8 +59,8 @@ const AboutMe: FC = () => {
 
       {/* Body */}
       <motion.div
-        initial="hidden"
-        animate="show"
+        // initial="hidden"
+        // animate="show"
         variants={fadeIn("", "", 0.1, 1)}
       >
         {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-4">

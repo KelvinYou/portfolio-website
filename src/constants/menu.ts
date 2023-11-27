@@ -29,9 +29,9 @@ export const navLinks: MainMenu[] = [
     icon: "Home",
   },
   {
-    id: "experiences",
+    id: "experience",
     title: "Experiences",
-    link: EXPERIENCES_PATH,
+    link: "/#experience",
     subMenu: [
       {
         title: "All",
@@ -50,7 +50,7 @@ export const navLinks: MainMenu[] = [
   {
     id: "projects",
     title: "Projects",
-    link: PROJECTS_PATH,
+    link: "/#project",
   },
   // {
   //   id: "resume",
@@ -80,7 +80,7 @@ export const menuData: Menu[] = [
       {
         id: "about",
         title: "About",
-        path: HOME_PATH,
+        path: "/#hero",
         newTab: false,
       },
       {
