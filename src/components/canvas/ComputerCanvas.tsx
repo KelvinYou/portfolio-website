@@ -87,7 +87,7 @@ const ComputerCanvas = () => {
   // Memoize the Computer component
   const MemoizedComputer = useMemo(() => <Computer1 isMobile={isMobile} />, [isMobile]);
 
-  if (isMobile) return null;
+  // if (isMobile) return null;
   return (
     <Canvas
       frameloop="demand"

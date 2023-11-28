@@ -16,9 +16,10 @@ export default function Home() {
 
       <Experience />
 
-      <Github />
 
       <Project />
+      
+      <Github />
 
     </main>
   )

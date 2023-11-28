@@ -13,32 +13,31 @@ const Github = () => {
     >
       {/* Title */}
       <motion.div
-        // initial="hidden"
-        // animate="show"
+        initial="hidden"
+        animate="show"
         variants={textVariant()}
         className="mt-[100px]"
       >
         <p className="sm:text-[18px] text-[14px] text-secondary uppercase tracking-wider">
           Day I Code
         </p>
-        <h2 className="text-white font-black md:text-[60px] sm:text-[50px] xs:text-[40px] text-[30px]">
+        {/* <h2 className="text-white font-black md:text-[60px] sm:text-[50px] xs:text-[40px] text-[30px]">
           Github Calendar.
-        </h2>
+        </h2> */}
       </motion.div>
 
-      <div className="w-full flex">
+      {/* <div className="w-full flex">
         <motion.p
-          // initial="hidden"
-          // animate="show"
+          initial="hidden"
+          animate="show"
           variants={fadeIn("", "", 0.1, 1)}
           className="mt-3 text-secondary text-[17px] max-w-3xl leading-[30px]"
         >
-          {/* Explanation: */}
           GitHub Calendar is a visual representation of my daily coding activity. 
         </motion.p>
-      </div>
+      </div> */}
 
-      <div className="text-white mt-20">
+      <div className="text-white mt-10">
         <GitHubCalendar
           username="KelvinYou"
           blockSize={15}

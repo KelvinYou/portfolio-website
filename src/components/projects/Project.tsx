@@ -73,20 +73,23 @@ const Project: FC = () => {
 
 
       {/* Project Card */}
-      <div className="mt-10 flex flex-wrap gap-7">
-        {projects
-          .filter((project) => {
-            if (projectCategory === 'all') return true;
-            return project.projectCategory === projectCategory;
-          })
-          .map((project, index: number) => (
-            <ProjectCard 
-              key={`project-${index}`} 
-              project={project}
-              index={index}
-            />
-          ))}
+      <div className='mt-10 min-h-[1000px]'>
+        <div className="flex flex-wrap gap-7 ">
+          {projects
+            .filter((project) => {
+              if (projectCategory === 'all') return true;
+              return project.projectCategory === projectCategory;
+            })
+            .map((project, index: number) => (
+              <ProjectCard 
+                key={`project-${index}`} 
+                project={project}
+                index={index}
+              />
+            ))}
+        </div>
       </div>
+
     </SectionWrapper>
   )
 }

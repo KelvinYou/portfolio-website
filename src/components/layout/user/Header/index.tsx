@@ -4,14 +4,10 @@ import Link from "next/link";
 import { useParams, usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { menuData } from "@/constants/menu";
-import { careerData, personalData, socialMedia } from "@/constants/data";
+import { personalData } from "@/constants/data";
 import { logo } from "@/assets";
-import { ExternalLink, Github, Instagram, Linkedin } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 import SocialMediaButtons from "@/components/SocialMediaButtons";
-
-
-
-
 
 const Header = () => {
   // Navbar toggle
@@ -208,7 +204,7 @@ const Header = () => {
                           </>
                         )}
                         <div className={`bg-gradient-to-r from-[#33bbcf] to-[#7de7eb] 
-                          h-1 rounded ${pathname === menuItem.path ? "w-full" : "w-0"} transition-width 
+                          h-1 rounded ${pathname === menuItem.path ? "lg:w-full w-0" : "w-0"} transition-width 
                           ease-in-out duration-200`}></div>
                       </li>
                     ))}

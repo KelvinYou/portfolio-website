@@ -9,6 +9,7 @@ import { fadeIn, textVariant } from "../../utils/motion";
 import { SectionWrapper } from "../../hoc";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import HighlightText from "@/components/common/HighlightedText";
 
 // Service Card
 const ServiceCard = ({ index, title, icon }: { index: any, title: any, icon: any }) => {
@@ -40,7 +41,7 @@ const ServiceCard = ({ index, title, icon }: { index: any, title: any, icon: any
 const AboutMe: FC = () => {
   return (
     <SectionWrapper
-      idName='about me'
+      idName='about-me'
     >
       {/* Title */}
       <motion.div
@@ -145,8 +146,13 @@ const AboutMe: FC = () => {
 
 
         <p className="empty-4 text-gray-300 text-[17px] max-w-3xl leading-[30px] text-justify">
-
-        I've been coding since 2019 with 4 years of experience. I'm also passionate about blockchain, investing and chess.
+          <HighlightText
+            highlightedTexts={[
+              '4 years',
+              'blockchain, investing and chess'
+            ]}
+            text="I've been coding since 2019 with 4 years of experience. I'm also passionate about blockchain, investing and chess."
+          />
 
           {/* I have developed in the field of software development for 4 years, 
           eagerly immersed in the exploration of cutting-edge trends such as 
