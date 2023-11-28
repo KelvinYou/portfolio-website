@@ -12,6 +12,7 @@ module.exports = {
         primary: "#051016",
         secondary: "#a6b2c3",
         tertiary: "#102230",
+        'tertiary-active': "#0c1b26",
         'on-primary': '#7de7eb',
         'on-secondary': '#d9f0ff',
         "body-color": "#afb7c4",

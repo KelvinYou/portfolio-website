@@ -168,7 +168,7 @@ const Header = () => {
                                   onClick={() => handleSubmenu(-1)}
                                   target={submenuItem.newTab ? "_blank" : "_self"}
                                   key={index}
-                                  className="block rounded py-2.5 text-sm  text-white/70 hover:text-on-primary lg:px-3"
+                                  className="rounded py-2.5 text-sm  text-white/70 hover:text-on-primary lg:px-3 flex items-center hover:bg-tertiary-active"
                                 >
                                   {submenuItem.title}
                                   {submenuItem.newTab && 

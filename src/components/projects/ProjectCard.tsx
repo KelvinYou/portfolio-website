@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 
 import Image from 'next/image';
 import { preview, github } from "@/assets";
@@ -18,8 +18,8 @@ interface ProjectCardProps {
 const ProjectCard: FC<ProjectCardProps> = ({ project, index }) => {
   return (
     <motion.div 
-      // initial="hidden"
-      // animate="show"
+      initial="hidden"
+      animate="show"
       variants={fadeIn("up", "spring", index * 0.1, 0.75)} 
       className='sm:w-[360px] w-full cursor-pointer'
     >

@@ -104,11 +104,19 @@ export const menuData: Menu[] = [
     newTab: false,
   },
   {
-    id: "space",
-    title: "Space",
-    path: SPACE_LINK,
-    newTab: true,
+    id: "other",
+    title: "Others",
+    newTab: false,
+    submenu: [
+      {
+        id: "space",
+        title: "Space",
+        path: SPACE_LINK,
+        newTab: true,
+      },
+    ]
   },
+
   // {
   //   id: 33,
   //   title: "Blog",
