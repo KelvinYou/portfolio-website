@@ -115,7 +115,7 @@ const Header = () => {
                       : "invisible top-[120%] opacity-0"
                   }`}
                 >
-                  <ul className="block lg:flex lg:space-x-12">
+                  <ul className="block lg:flex lg:gap-10">
                     {menuData.map((menuItem, index) => (
                       <li key={index} className="group relative">
                         {menuItem.path ? (
@@ -124,8 +124,8 @@ const Header = () => {
                             target={menuItem.newTab ? "_blank" : "_self"}
                             className={`flex items-center py-2 text-base lg:mr-0 lg:inline-flex lg:px-0 lg:py-6 ${
                               usePathName === menuItem.path
-                                ? " text-white"
-                                : "text-dark text-white/70 hover:text-on-primary"
+                                ? " text-on-primary"
+                                : "text-dark text-white/70 hover:text-white"
                             }`}
                           >
                             {menuItem.title} 
@@ -140,7 +140,7 @@ const Header = () => {
                           <>
                             <p
                               onClick={() => handleSubmenu(index)}
-                              className="flex cursor-pointer items-center justify-between py-2 text-base text-dark text-white/70 group-hover:text-on-primary 
+                              className="flex cursor-pointer items-center justify-between py-2 text-base text-dark text-white/70 group-hover:text-white 
                               lg:mr-0 lg:inline-flex lg:px-0 lg:py-6"
                             >
                               {menuItem.title}
@@ -168,7 +168,7 @@ const Header = () => {
                                   onClick={() => handleSubmenu(-1)}
                                   target={submenuItem.newTab ? "_blank" : "_self"}
                                   key={index}
-                                  className="rounded py-2.5 text-sm  text-white/70 hover:text-on-primary lg:px-3 flex items-center hover:bg-tertiary-active"
+                                  className="rounded py-2.5 text-sm  text-white/70 hover:text-white lg:px-3 flex items-center hover:bg-tertiary-active"
                                 >
                                   {submenuItem.title}
                                   {submenuItem.newTab && 
