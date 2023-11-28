@@ -35,13 +35,6 @@
         }
       },
       {
-        "type": "header",
-        "content": {
-          "text": "Educations: My Study Journey",
-          "level": 3
-        }
-      },
-      {
         "type": "paragraph",
         "content": {
           "text": "Education has been the bedrock of my professional journey. I wouldn't be where I am today without the academic disciplines I've undertaken, and the knowledge I've gained from them. In my “Education” section, I take you through these academic quests that have helped me build the technical skillset I possess today.",
@@ -51,7 +44,7 @@
       {
         "type": "header",
         "content": {
-          "text": "Projects Pavilion",
+          "text": "Projects: Showcases My Skills and Experience",
           "level": 3
         }
       },

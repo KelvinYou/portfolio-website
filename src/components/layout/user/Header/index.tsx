@@ -74,13 +74,13 @@ const Header = () => {
   return (
     <>
       <header
-        className={`sm:px-16 px-6 left-0 top-0 z-40 flex w-full items-center bg-gradient-to-b from-primary to-transparent backdrop-blur-lg ${
+        className={`sm:px-16 px-6  left-0 top-0 z-30 flex w-full items-center bg-gradient-to-b from-primary to-primary/50 backdrop-blur-lg ${
           sticky
-            ? "fixed z-[9999] shadow-sticky backdrop-blur-sm transition"
+            ? "fixed transition"
             : "absolute bg-transparent"
         }`}
       >
-        <div className="w-full" ref={navbarRef}>
+        <div className="w-full max-w-7xl mx-auto" ref={navbarRef}>
           <div className="relative -mx-4 flex items-center justify-between">
             <div className="w-[300px]  px-4 xl:mr-12">
               <Link
@@ -121,7 +121,8 @@ const Header = () => {
                 </button>
                 <nav
                   id="navbarCollapse"
-                  className={`navbar absolute right-0 z-30 w-[250px] rounded border-[.5px] px-4 py-4 duration-300 border-body-color/20 bg-tertiary lg:visible lg:static lg:w-auto lg:border-none lg:!bg-transparent lg:p-0 lg:opacity-100 ${
+                  className={`navbar absolute right-0 z-30 w-[250px] rounded border-[.5px] px-4 py-4 duration-300 border-body-color/20 
+                  bg-tertiary lg:visible lg:static lg:w-auto lg:border-none lg:!bg-transparent lg:p-0 lg:opacity-100 ${
                     navbarOpen
                       ? "visibility top-full opacity-100"
                       : "invisible top-[120%] opacity-0"
@@ -131,7 +132,8 @@ const Header = () => {
                     {menuData.map((menuItem, index) => (
                       <li key={index} className="group relative">
                         {!menuItem.submenu ? (
-                          menuItem.path && <Link
+                          menuItem.path && <>
+                          <Link
                             href={menuItem.path}
                             onClick={() => setNavbarOpen(false)}
                             target={menuItem.newTab ? "_blank" : "_self"}
@@ -149,6 +151,7 @@ const Header = () => {
                             />
                             }
                           </Link>
+                          </>
                         ) : (
                           <>
                             <p
@@ -172,6 +175,7 @@ const Header = () => {
                                 </svg>
                               </span>
                             </p>
+
                             <div
                               className={`submenu relative left-0 top-full rounded-sm transition-[top] duration-300 group-hover:opacity-100 
                               bg-tertiary lg:invisible lg:absolute lg:top-[110%] lg:block lg:w-[250px] lg:p-2 lg:opacity-0 lg:shadow-lg 
@@ -200,8 +204,12 @@ const Header = () => {
                                 </Link>
                               ))}
                             </div>
+
                           </>
                         )}
+                        <div className={`bg-gradient-to-r from-[#33bbcf] to-[#7de7eb] 
+                          h-1 rounded ${pathname === menuItem.path ? "w-full" : "w-0"} transition-width 
+                          ease-in-out duration-200`}></div>
                       </li>
                     ))}
                   </ul>

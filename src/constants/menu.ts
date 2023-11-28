@@ -109,6 +109,16 @@ export const menuData: Menu[] = [
     newTab: false,
     submenu: [
       {
+        id: "resume",
+        title: "Resume",
+        path: RESUME_LINK,
+      },
+      {
+        id: "growth-journey",
+        title: "Growth Journey",
+        path: "/growth-journey",
+      },
+      {
         id: "space",
         title: "Space",
         path: SPACE_LINK,

@@ -24,7 +24,7 @@ export default function RootLayout({
         {/* <Navbar /> */}
         <Header />
 
-        <div className='relative'>
+        <div className='relative '>
 
           <div>
             {children}

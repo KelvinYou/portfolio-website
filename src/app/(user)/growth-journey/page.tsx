@@ -1,5 +1,5 @@
 import React from 'react'
-import ResumeHome from './ResumeHome'
+import ResumeHome from './GrowthJourneyHome'
 import ComingSoon from '@/components/ComingSoon'
 
 const ResumePage = () => {
@@ -7,7 +7,7 @@ const ResumePage = () => {
     <>
       {/* <ResumeHome /> */}
 
-      <ComingSoon title='Resume'/>
+      <ComingSoon title='Growth Journey' />
     </>
   )
 }

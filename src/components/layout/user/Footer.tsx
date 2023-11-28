@@ -10,9 +10,6 @@ const Footer: React.FC = () => (
       <SocialMediaButtons />
     </div>
 
-    <div className='px-10'>
-      <hr className='text-on-body'/>
-    </div>
     <div className="w-full p-4 text-center text-white">
       © 2023 Copyright: {" "}
       <a className="text-white" href="">
