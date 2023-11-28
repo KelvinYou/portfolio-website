@@ -70,10 +70,10 @@ const Header = () => {
   return (
     <>
       <header
-        className={`sm:px-16 px-6  left-0 top-0 z-30 flex w-full items-center bg-gradient-to-b from-primary to-primary/50 backdrop-blur-lg ${
+        className={`sm:px-16 px-6  left-0 top-0 z-30 flex w-full items-center bg-gradient-to-b from-primary backdrop-blur-lg ${
           sticky
-            ? "fixed transition"
-            : "absolute bg-transparent"
+            ? "fixed transition to-primary/50"
+            : "absolute to-transparent"
         }`}
       >
         <div className="w-full max-w-7xl mx-auto" ref={navbarRef}>

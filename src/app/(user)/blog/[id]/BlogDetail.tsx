@@ -65,6 +65,7 @@ const ProjectDetail: FC<BlogDetailProps> = (props) => {
         </button>
         
       </div>
+      
       <div className="-mx-4 flex flex-wrap mt-10">
         <div className="w-full px-4 lg:w-8/12">
           <div>

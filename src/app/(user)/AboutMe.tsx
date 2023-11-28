@@ -48,7 +48,7 @@ const AboutMe: FC = () => {
         // initial="hidden"
         // animate="show"
         variants={textVariant()}
-        className="mt-[100px]"
+        className=""
       >
         <p className="sm:text-[18px] text-[14px] text-secondary uppercase tracking-wider">
           Introduction

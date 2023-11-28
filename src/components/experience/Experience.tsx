@@ -192,15 +192,14 @@ const EducationCard: FC<any> = ({ education }) => {
           {education.universityName}
         </p>}
 
-      
-
-        <span
-          className="text-sm inline-flex items-center justify-center rounded-full bg-tertiary px-2.5 py-0.5 text-on-primary mt-5"
+        <div
+          className="text-sm inline-flex items-center justify-center rounded-md bg-gray-700 px-4 py-0.5
+           text-secondary mt-2"
         >
           {/* <p className="text-sm"> */}
             CGPA: {education.cgpa}
           {/* </p> */}
-        </span>
+        </div>
       </div>
 
       {education.description && <div className="mt-5 text-justify">

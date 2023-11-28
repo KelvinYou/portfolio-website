@@ -1,5 +1,6 @@
 "use client";
 
+import { EXPERIENCES_PATH } from '@/constants/routes';
 import { SectionWrapper } from '@/hoc'
 import { textVariant } from '@/utils/motion'
 import { motion } from 'framer-motion'
@@ -26,7 +27,7 @@ const ExpDetail = ({ expDetail }: { expDetail: any }) => {
 
         <div>
           <button
-            onClick={() => router.back()}
+            onClick={() => router.push(EXPERIENCES_PATH)}
             className='group relative inline-flex items-center overflow-hidden rounded bg-on-primary px-8 py-3 text-primary focus:outline-none focus:ring'
           >
             <span className="absolute -start-full transition-all group-hover:start-4">

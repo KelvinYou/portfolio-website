@@ -289,7 +289,7 @@ export const workExperiences = [
 export const educations = [
   {
     id: "degree",
-    title: "Bachelor (Hons) of Software Engineering",
+    title: "Bachelor of Software Engineering (Honours)",
     universityName: "Tunku Abdul Rahman University of Management and Technology",
     universityUrl: "https://tarc.edu.my/",
     icon: tarumt,

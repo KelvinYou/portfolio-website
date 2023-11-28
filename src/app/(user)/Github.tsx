@@ -1,12 +1,26 @@
 "use client"
 
+import SelectableButtonGroup from "@/components/SelectableButtonGroup";
 import SectionWrapper from "@/hoc/SectionWrapper";
 import { fadeIn, textVariant } from "@/utils/motion";
 import { motion } from "framer-motion";
-import React from "react";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
 import GitHubCalendar from "react-github-calendar";
 
 const Github = () => {
+  const [projectCategory, setProjectCategory] = useState("github");
+
+  const handleOptionChange = (selectedOption: string) => {
+    // Do something with the selected option, such as updating state
+    setProjectCategory(selectedOption);
+  };
+  
+  const options = [
+    { id: 'github', label: 'Github' },
+    { id: 'github_3d', label: 'Github 3D' },
+  ];
+
   return (
     <SectionWrapper
       idName='github'
@@ -36,18 +50,42 @@ const Github = () => {
           GitHub Calendar is a visual representation of my daily coding activity. 
         </motion.p>
       </div> */}
-
-      <div className="text-white mt-10">
-        <GitHubCalendar
-          username="KelvinYou"
-          blockSize={15}
-          blockMargin={5}
-          // year={2023}
-          style={{ width: "max-content", margin: "auto" }}
-          colorScheme='dark'
-          fontSize={16}
+      <motion.div 
+        initial="hidden"
+        animate="show"
+        variants={fadeIn("", "", 0.1, 1)}
+        className='flex items-center justify-center mt-10'
+      >
+        <SelectableButtonGroup
+          options={options}
+          onOptionChange={handleOptionChange}
         />
+      </motion.div>
+
+      <div className="mt-10">
+        <div 
+          className={`text-white mt-10 ${projectCategory === "github" ? "block" : "hidden"}`}
+        >
+          <GitHubCalendar
+            username="KelvinYou"
+            blockSize={15}
+            blockMargin={5}
+            // year={2023}
+            style={{ width: "max-content", margin: "auto" }}
+            colorScheme='dark'
+            fontSize={16}
+          />
+        </div> 
+        
+        <div 
+          className={`max-w-5xl mx-auto ${projectCategory === "github_3d" ? "block" : "hidden"}`} 
+        >
+          <img 
+            src="https://raw.githubusercontent.com/KelvinYou/KelvinYou/main/profile-3d-contrib/profile-night-rainbow.svg" 
+          />
+        </div>
       </div>
+
     </SectionWrapper>
   );
 }

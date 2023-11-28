@@ -51,7 +51,7 @@
       {
         "type": "paragraph",
         "content": {
-          "text": "In the \"Projects\" section, I have amassed my trials, triumphs, and transformations. You'll find an array of projects that I've persevered on, each unique and challenging in their own ways. From mitigating real-world problems to creating innovative solutions, this section presents the tangible testament of my capabilities.",
+          "text": "In the \"Projects\" section, I have amassed my trials, triumphs, and transformations. It reflects my abilities to solve complex problems, work with different technologies, and manage projects effectively.",
           "keywords": []
         }
       },
@@ -95,7 +95,7 @@
     "relatedBlogIds": [],
     "tags": ["portfolio"],
     "createDate": "2023-11-23",
-    "modifyDate": "2023-11-23"
+    "modifyDate": "2023-11-28"
   },
   {
     "_id": "2",
@@ -162,6 +162,6 @@
       "web3"
     ],
     "createDate": "2023-11-23",
-    "modifyDate": "2023-11-23"
+    "modifyDate": "2023-11-24"
   }
 ]
