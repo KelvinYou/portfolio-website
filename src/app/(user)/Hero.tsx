@@ -9,7 +9,7 @@ import Typewriter from "typewriter-effect";
 
 const Hero: FC = () => {
   return (
-    <div className="bg-hero-pattern bg-cover bg-no-repeat bg-center mt-[-80px]" id="hero">
+    <div className="bg-hero-pattern bg-cover bg-no-repeat bg-center mt-[-80px]" id="about">
       <section className="relative w-full h-screen mx-auto">
         <div
           className={`sm:px-16 px-6 absolute inset-0 top-[120px] max-w-7xl mx-auto flex flex-row items-start gap-5`}

@@ -15,6 +15,8 @@ module.exports = {
         'tertiary-active': "#0c1b26",
         'on-primary': '#7de7eb',
         'on-secondary': '#d9f0ff',
+        'on-body': '#afb7c4',
+        "on-body-dark": "#959CB1",
         "body-color": "#afb7c4",
         "body-color-dark": "#959CB1",
         "gray-dark": "#1E232E",

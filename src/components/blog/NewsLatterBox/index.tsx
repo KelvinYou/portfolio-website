@@ -12,7 +12,7 @@ const NewsLatterBox = () => {
       <h3 className="mb-4 text-2xl font-bold leading-tight text-white">
         Subscribe to receive future updates
       </h3>
-      <p className="mb-11 border-b  pb-11 text-base leading-relaxed text-body-color border-white border-opacity-25">
+      <p className="mb-11 border-b  pb-11 text-base leading-relaxed text-on-body border-white border-opacity-25">
         Subscribe me to receive future updates ❤️️
       </p>
       <div>
@@ -20,20 +20,20 @@ const NewsLatterBox = () => {
           type="text"
           name="name"
           placeholder="Enter your name"
-          className="border-stroke text-body-color-dark shadow-two mb-4 w-full rounded-sm border  px-6 py-3 text-base outline-none border-transparent bg-[#2C303B] focus:border-primary focus:shadow-none"
+          className="border-stroke text-on-body-dark shadow-two mb-4 w-full rounded-sm border  px-6 py-3 text-base outline-none border-transparent bg-[#2C303B] focus:border-primary focus:shadow-none"
         />
         <input
           type="email"
           name="email"
           placeholder="Enter your email"
-          className="border-stroke text-body-color-dark shadow-two mb-4 w-full rounded-sm border px-6 py-3 text-base outline-none  border-transparent bg-[#2C303B] focus:border-primary focus:shadow-none"
+          className="border-stroke text-on-body-dark shadow-two mb-4 w-full rounded-sm border px-6 py-3 text-base outline-none  border-transparent bg-[#2C303B] focus:border-primary focus:shadow-none"
         />
         <input
           type="submit"
           value="Subscribe"
           className="shadow-submit shadow-submit-dark mb-5 flex w-full cursor-pointer items-center justify-center rounded-sm bg-primary px-9 py-4 text-base font-medium text-white duration-300 hover:bg-primary/90"
         />
-        <p className="text-body-color-dark text-center text-base leading-relaxed">
+        <p className="text-on-body-dark text-center text-base leading-relaxed">
           No spam guaranteed, So please don’t send any spam mail.
         </p>
       </div>

@@ -1,12 +1,17 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { menuData } from "@/constants/menu";
-import { careerData, personalData } from "@/constants/data";
+import { careerData, personalData, socialMedia } from "@/constants/data";
 import { logo } from "@/assets";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, Github, Instagram, Linkedin } from "lucide-react";
+import SocialMediaButtons from "@/components/SocialMediaButtons";
+
+
+
+
 
 const Header = () => {
   // Navbar toggle
@@ -38,8 +43,15 @@ const Header = () => {
     }
   };
 
-  const usePathName = usePathname();
-  
+  const pathname = usePathname();
+  const params = useParams();
+
+  const [currentHash, setCurrentHash] = useState<string>("");
+
+  useEffect(() => {
+    setCurrentHash(pathname + window.location.hash);
+  }, [params]);
+
   const navbarRef = useRef<HTMLDivElement | null>(null); // Define the type explicitly
 
   useEffect(() => {
@@ -109,7 +121,7 @@ const Header = () => {
                 </button>
                 <nav
                   id="navbarCollapse"
-                  className={`navbar absolute right-0 z-30 w-[250px] rounded border-[.5px]  px-6 py-4 duration-300 border-body-color/20 bg-tertiary lg:visible lg:static lg:w-auto lg:border-none lg:!bg-transparent lg:p-0 lg:opacity-100 ${
+                  className={`navbar absolute right-0 z-30 w-[250px] rounded border-[.5px] px-4 py-4 duration-300 border-body-color/20 bg-tertiary lg:visible lg:static lg:w-auto lg:border-none lg:!bg-transparent lg:p-0 lg:opacity-100 ${
                     navbarOpen
                       ? "visibility top-full opacity-100"
                       : "invisible top-[120%] opacity-0"
@@ -118,12 +130,13 @@ const Header = () => {
                   <ul className="block lg:flex lg:gap-10">
                     {menuData.map((menuItem, index) => (
                       <li key={index} className="group relative">
-                        {menuItem.path ? (
-                          <Link
+                        {!menuItem.submenu ? (
+                          menuItem.path && <Link
                             href={menuItem.path}
+                            onClick={() => setNavbarOpen(false)}
                             target={menuItem.newTab ? "_blank" : "_self"}
-                            className={`flex items-center py-2 text-base lg:mr-0 lg:inline-flex lg:px-0 lg:py-6 ${
-                              usePathName === menuItem.path
+                            className={`flex items-center py-2 px-2 text-base lg:mr-0 lg:inline-flex lg:px-0 lg:py-6 ${
+                              pathname === menuItem.path
                                 ? " text-on-primary"
                                 : "text-dark text-white/70 hover:text-white"
                             }`}
@@ -140,11 +153,15 @@ const Header = () => {
                           <>
                             <p
                               onClick={() => handleSubmenu(index)}
-                              className="flex cursor-pointer items-center justify-between py-2 text-base text-dark text-white/70 group-hover:text-white 
-                              lg:mr-0 lg:inline-flex lg:px-0 lg:py-6"
+                              className={`flex cursor-pointer items-center justify-between py-2 px-2 text-base text-dark
+                              lg:mr-0 lg:inline-flex lg:px-0 lg:py-6 ${
+                                pathname === menuItem.path
+                                  ? " text-on-primary"
+                                  : "text-dark text-white/70 group-hover:text-white"
+                              }`}
                             >
                               {menuItem.title}
-                              <span className="pl-3">
+                              <span className="">
                                 <svg width="25" height="24" viewBox="0 0 25 24">
                                   <path
                                     fillRule="evenodd"
@@ -157,7 +174,7 @@ const Header = () => {
                             </p>
                             <div
                               className={`submenu relative left-0 top-full rounded-sm transition-[top] duration-300 group-hover:opacity-100 
-                              bg-tertiary lg:invisible lg:absolute lg:top-[110%] lg:block lg:w-[250px] lg:p-4 lg:opacity-0 lg:shadow-lg 
+                              bg-tertiary lg:invisible lg:absolute lg:top-[110%] lg:block lg:w-[250px] lg:p-2 lg:opacity-0 lg:shadow-lg 
                               lg:group-hover:visible lg:group-hover:top-full ${
                                 openIndex === index ? "block" : "hidden"
                               }`}
@@ -165,10 +182,13 @@ const Header = () => {
                               {menuItem.submenu && menuItem.submenu.map((submenuItem, index) => (
                                 submenuItem.path && <Link
                                   href={submenuItem.path}
-                                  onClick={() => handleSubmenu(-1)}
+                                  onClick={() => setNavbarOpen(false)}
                                   target={submenuItem.newTab ? "_blank" : "_self"}
                                   key={index}
-                                  className="rounded py-2.5 text-sm  text-white/70 hover:text-white lg:px-3 flex items-center hover:bg-tertiary-active"
+                                  className={`rounded py-2.5 text-sm px-5 flex 
+                                  justify-between items-center hover:bg-tertiary-active ${
+                                    submenuItem.path === currentHash ? 
+                                    "text-on-primary" : "text-white/70 hover:text-white"}`}
                                 >
                                   {submenuItem.title}
                                   {submenuItem.newTab && 
@@ -188,8 +208,8 @@ const Header = () => {
                 </nav>
               </div>
 
-              <div className="text-white  hidden lg:block">
-                我好🐂啊
+              <div className="hidden lg:block">
+                <SocialMediaButtons />
               </div>
             </div>
           </div>
