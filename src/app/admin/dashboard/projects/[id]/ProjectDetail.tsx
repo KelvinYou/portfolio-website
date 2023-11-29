@@ -11,7 +11,7 @@ interface ProjectDetailProps {
 const ProjectDetail: FC<ProjectDetailProps> = (props) => {
   const { id } = props;
   const [editable, setEditable] = useState(false);
-  const [formData, setFormData] = useState<Project | undefined>(projects.find((project) => project.id === id));
+  const [formData, setFormData] = useState<Project | undefined>(projects.find((project) => project._id === id));
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -26,18 +26,18 @@ const ProjectDetail: FC<ProjectDetailProps> = (props) => {
     });
   };
 
-  const handleTagsChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    setFormData((prevFormData) => {
-      if (!prevFormData) {
-        return prevFormData; // return early if prevFormData is undefined
-      }
-      return {
-        ...prevFormData,
-        tags: value !== "" ? value.split(',').map((tag) => tag.trim()) : [], // split input by commas and trim whitespace
-      };
-    });
-  };
+  // const handleTagsChange = (e: ChangeEvent<HTMLInputElement>) => {
+  //   const { value } = e.target;
+  //   setFormData((prevFormData) => {
+  //     if (!prevFormData) {
+  //       return prevFormData; // return early if prevFormData is undefined
+  //     }
+  //     return {
+  //       ...prevFormData,
+  //       tags: value !== "" ? value.split(',').map((tag) => tag.trim()) : [], // split input by commas and trim whitespace
+  //     };
+  //   });
+  // };
 
   const handlePlatformsChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
@@ -186,7 +186,7 @@ const ProjectDetail: FC<ProjectDetailProps> = (props) => {
 
           <form action="#">
             <div className="p-6">
-              <div className="w-full xl:w-1/2">
+              {/* <div className="w-full xl:w-1/2">
                 <label className="mb-2.5 block text-black dark:text-white">
                   Tags
                 </label>
@@ -197,7 +197,7 @@ const ProjectDetail: FC<ProjectDetailProps> = (props) => {
                   disabled={!editable}
                   className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-not-allowed disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                 />
-              </div>
+              </div> */}
 
               <div className="w-full xl:w-1/2">
                 <label className="mb-2.5 block text-black dark:text-white">

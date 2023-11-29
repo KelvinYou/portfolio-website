@@ -134,7 +134,7 @@ export const PATCH = async (request: NextRequest) => {
     const { id, newData } = await request.json();
 
     // Find the index of the project with the specified ID
-    const projectIndex = projects.findIndex(project => project.id === id);
+    const projectIndex = projects.findIndex(project => project._id === id);
 
     // If the project with the specified ID is not found, return a 404 Not Found response
     if (projectIndex === -1) {

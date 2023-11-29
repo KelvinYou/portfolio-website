@@ -34,14 +34,14 @@ const Projects = () => {
           <tbody className="divide-y divide-gray-200">
 
             {projects.map((project: Project) => (
-              <tr key={project.id}>
-                <td className='whitespace-nowrap px-4 py-2 text-gray-700'>{project.id}</td>
+              <tr key={project._id}>
+                <td className='whitespace-nowrap px-4 py-2 text-gray-700'>{project._id}</td>
                 <td className='whitespace-nowrap px-4 py-2 text-gray-700'>{project.name}</td>
                 <td className=''>
                   {project.images && project.images.length > 0  && <>
                     <Image
                       src={project.images[0]}
-                      alt={project.id}
+                      alt={project._id}
                     >
 
                     </Image>
@@ -51,7 +51,7 @@ const Projects = () => {
                 <td className='whitespace-nowrap px-4 py-2 text-gray-700'>{project.date}</td>
                 <td className="whitespace-nowrap px-4 py-2">
                   <Link
-                    href={`/admin/dashboard/projects/${project.id}`}
+                    href={`/admin/dashboard/projects/${project._id}`}
                     className="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700"
                   >
                     View
