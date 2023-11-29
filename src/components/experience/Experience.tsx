@@ -293,8 +293,8 @@ const Experience: FC = () => {
     >
       {/* Title */}
       <motion.div
-        // initial="hidden"
-        // animate="show"
+        initial="hidden"
+        animate="show"
         variants={textVariant()}
       >
       {/* <motion.div> */}
@@ -307,8 +307,8 @@ const Experience: FC = () => {
       </motion.div>
       
       <motion.div 
-        // initial="hidden"
-        // animate="show"
+        initial="hidden"
+        animate="show"
         variants={fadeIn("", "", 0.1, 1)}
         className='flex items-center justify-center mt-20'
       >
