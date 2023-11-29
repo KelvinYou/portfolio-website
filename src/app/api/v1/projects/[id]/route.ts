@@ -22,7 +22,7 @@ export const GET = async (request: NextRequest) => {
     const projects: Project[] = JSON.parse(existingProjects);
 
     // Find the project with the specified ID
-    const project = projects.find((p) => p.id === projectId);
+    const project = projects.find((p) => p._id === projectId);
 
     // If the project with the specified ID is not found, return a 404 Not Found response
     if (!project) {
