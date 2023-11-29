@@ -310,12 +310,13 @@ const Experience: FC = () => {
 
       <SectionWrapper
         idName='render-experiences'
+        
       > 
         <motion.div 
           initial="hidden"
           animate="show"
           variants={fadeIn("", "", 0.1, 1)}
-          className='flex items-center justify-center mt-20'
+          className='flex items-center justify-center -mt-20'
         >
           <SelectableButtonGroup
             options={options}
