@@ -1,5 +1,5 @@
 "use client";
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import Image from 'next/image';
 import {
   VerticalTimeline,
@@ -261,7 +261,12 @@ const EducationCard: FC<any> = ({ education }) => {
 
 const Experience: FC = () => {
   const searchParams = useSearchParams()
-  const [experienceCategory, setExperienceCategory] = useState(searchParams.get('category') ?? "all");
+  // const [experienceCategory, setExperienceCategory] = useState(searchParams.get('category') ?? "all");
+  const [experienceCategory, setExperienceCategory] = useState("all");
+
+  useEffect(() => {
+    setExperienceCategory("all")
+  },[]);
   
   const handleOptionChange = (selectedOption: string) => {
     // Do something with the selected option, such as updating state
@@ -288,8 +293,8 @@ const Experience: FC = () => {
     >
       {/* Title */}
       <motion.div
-        initial="hidden"
-        animate="show"
+        // initial="hidden"
+        // animate="show"
         variants={textVariant()}
       >
       {/* <motion.div> */}
@@ -302,8 +307,8 @@ const Experience: FC = () => {
       </motion.div>
       
       <motion.div 
-        initial="hidden"
-        animate="show"
+        // initial="hidden"
+        // animate="show"
         variants={fadeIn("", "", 0.1, 1)}
         className='flex items-center justify-center mt-20'
       >
