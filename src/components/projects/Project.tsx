@@ -1,7 +1,7 @@
 "use client";
 
 import SelectableButtonGroup from '@/components/SelectableButtonGroup';
-import { projects } from '@/constants/data';
+import projects from '@/data/projects.json';
 import { SectionWrapper } from '@/hoc'
 import { fadeIn, textVariant } from '@/utils/motion'
 import { motion } from 'framer-motion'

@@ -22,7 +22,7 @@ const RelatedPosts: FC<RelatedPostsProps> = (props) => {
         Related Posts
       </h3>
       {relatedBlogs.length === 0 ? (
-        <p className='p-8 text-body-color'>
+        <p className='p-8 text-on-body'>
           No related post ...
         </p>
       ) : (

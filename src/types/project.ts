@@ -1,10 +1,10 @@
 
 
 export interface Project {
-  id: string;
+  _id: string;
   name: string;
   description: string;
-  tags?: string[];
+  tags?: { name: string; color: string; }[];
   images?: string[];
   liveSiteLink?: string;
   sourceCodeLink?: string;

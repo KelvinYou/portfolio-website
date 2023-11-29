@@ -2,22 +2,17 @@
 
 import { projects } from '@/constants/data'
 import SectionWrapper from '@/hoc/SectionWrapper'
+import { Project } from '@/types/project'
 import { textVariant } from '@/utils/motion'
 import { motion } from 'framer-motion'
 import React, { FC } from 'react'
 
 interface ProjectDetailProps {
-  id: string,
+  projectDetail: Project,
 }
 
-const ProjectDetail: FC<ProjectDetailProps> = (props) => {
-  const { id } = props;
-  const projectDetail = projects.find((project) => project.id === parseInt(id));
-
-  if (!projectDetail) {
-    return <div>Project not found</div>;
-  }
-
+const ProjectDetail: FC<ProjectDetailProps> = ({ projectDetail }) => {
+  
   const {
     name,
     description,

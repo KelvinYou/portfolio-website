@@ -9,19 +9,24 @@ import { motion } from "framer-motion";
 import { Clock } from "lucide-react";
 import { Tilt } from "react-tilt";
 import { FC } from 'react';
+import { useRouter } from 'next/navigation';
+import { Project } from '@/types/project';
 
 interface ProjectCardProps {
-  project: any;
+  project: Project;
   index: number;
 }
 
 const ProjectCard: FC<ProjectCardProps> = ({ project, index }) => {
+  const router = useRouter();
+
   return (
     <motion.div 
       initial="hidden"
       animate="show"
       variants={fadeIn("up", "spring", index * 0.1, 0.75)} 
       className='sm:w-[360px] w-full cursor-pointer'
+      onClick={() => router.push(`/projects/${project._id}`)}
     >
       <Tilt
         options={{
@@ -38,6 +43,8 @@ const ProjectCard: FC<ProjectCardProps> = ({ project, index }) => {
               src={project.images[0]}
               alt={project.name}
               priority={true}
+              fill
+              sizes='cover'
               className="w-full h-full object-cover rounded-md"
             />
             : <div className="w-full h-full object-cover rounded-md flex items-center justify-center bg-gray-300 dark:bg-gray-700">
@@ -95,7 +102,7 @@ const ProjectCard: FC<ProjectCardProps> = ({ project, index }) => {
 
         {/* Work Tag */}
         <div className="mt-4 flex flex-wrap gap-2 mb-10">
-          {project.tags.map((tag: any, index: number) => (
+          {project.tags && project.tags.map((tag: any, index: number) => (
             <p key={index + tag.name} className={`text-[14px] ${tag.color}`}>
               #{tag.name}
             </p>
