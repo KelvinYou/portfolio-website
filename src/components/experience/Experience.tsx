@@ -1,5 +1,5 @@
 "use client";
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import Image from 'next/image';
 import {
   VerticalTimeline,
@@ -261,7 +261,12 @@ const EducationCard: FC<any> = ({ education }) => {
 
 const Experience: FC = () => {
   const searchParams = useSearchParams()
-  const [experienceCategory, setExperienceCategory] = useState(searchParams.get('category') ?? "all");
+  // const [experienceCategory, setExperienceCategory] = useState(searchParams.get('category') ?? "all");
+  const [experienceCategory, setExperienceCategory] = useState("all");
+
+  useEffect(() => {
+    setExperienceCategory("all")
+  },[]);
   
   const handleOptionChange = (selectedOption: string) => {
     // Do something with the selected option, such as updating state
@@ -283,60 +288,67 @@ const Experience: FC = () => {
   ];
 
   return (
-    <SectionWrapper
-      idName='experience'
-    >
-      {/* Title */}
-      <motion.div
-        initial="hidden"
-        animate="show"
-        variants={textVariant()}
+    <>
+      <SectionWrapper
+        idName='experience'
       >
-      {/* <motion.div> */}
-        <p className="sm:text-[18px] text-[14px] text-secondary uppercase tracking-wider">
-          What I have done so far
-        </p>
-        <h2 className="text-white font-black md:text-[60px] sm:text-[50px] xs:text-[40px] text-[30px]">
-          { "Work Experience and Education."}
-        </h2>
-      </motion.div>
-      
-      <motion.div 
-        initial="hidden"
-        animate="show"
-        variants={fadeIn("", "", 0.1, 1)}
-        className='flex items-center justify-center mt-20'
-      >
-        <SelectableButtonGroup
-          options={options}
-          onOptionChange={handleOptionChange}
-        />
-      </motion.div>
+        {/* Title */}
+        <motion.div
+          // initial="hidden"
+          // animate="show"
+          variants={textVariant()}
+        >
+        {/* <motion.div> */}
+          <p className="sm:text-[18px] text-[14px] text-secondary uppercase tracking-wider">
+            What I have done so far
+          </p>
+          <h2 className="text-white font-black md:text-[60px] sm:text-[50px] xs:text-[40px] text-[30px]">
+            { "Work Experience and Education."}
+          </h2>
+        </motion.div>
+      </SectionWrapper>
 
-      {/* Experience Card */}
-      <div className="empty-20 flex flex-col mt-10">
-        <VerticalTimeline>
-          {sortedExperiences
-            .filter((experience) => {
-              if (experienceCategory === 'all') return true;
-              return experience.experienceCategory === experienceCategory;
-            })
-            .map((experience, i) => {
-              if (experience.experienceCategory === "education") {
-                return (
-                  <EducationCard key={i} education={experience} />
-                )
-              } else {
-                return (
-                  <ExperienceCard key={i} experience={experience} />
-                )
+      <SectionWrapper
+        idName='render-experiences'
+        
+      > 
+        <motion.div 
+          initial="hidden"
+          animate="show"
+          variants={fadeIn("", "", 0.1, 1)}
+          className='flex items-center justify-center -mt-20'
+        >
+          <SelectableButtonGroup
+            options={options}
+            onOptionChange={handleOptionChange}
+          />
+        </motion.div>
+
+        {/* Experience Card */}
+        <div className="empty-20 flex flex-col mt-10">
+          <VerticalTimeline>
+            {sortedExperiences
+              .filter((experience) => {
+                if (experienceCategory === 'all') return true;
+                return experience.experienceCategory === experienceCategory;
+              })
+              .map((experience, i) => {
+                if (experience.experienceCategory === "education") {
+                  return (
+                    <EducationCard key={i} education={experience} />
+                  )
+                } else {
+                  return (
+                    <ExperienceCard key={i} experience={experience} />
+                  )
+                }
               }
-            }
 
-            )}
-        </VerticalTimeline>
-      </div>
-    </SectionWrapper>
+              )}
+          </VerticalTimeline>
+        </div>
+      </SectionWrapper>
+    </>
   );
 }
 
