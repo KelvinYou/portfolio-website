@@ -1,10 +1,11 @@
 import React from 'react';
-import { isParagraphContent, isHeaderContent, isListContent, isQuoteContent } from './config/checkType';
+import { isParagraphContent, isHeaderContent, isListContent, isQuoteContent, isImageContent } from './config/checkType';
 import BlogHeader from './elements/BlogHeader';
 import BlogParagraph from './elements/BlogParagraph';
 import { BlogElement } from '@/types/blog';
 import BlogList from './elements/BlogList';
 import BlogQuote from './elements/BlogQuote';
+import BlogImage from './elements/BlogImage';
 
 interface BlogElementRendererProps {
   elements: BlogElement[];
@@ -33,6 +34,10 @@ const BlogElementRenderer: React.FC<BlogElementRendererProps> = ({ elements }) =
         } else if (element.type === "quote" && isQuoteContent(element.content)) {
           return (
             <BlogQuote key={index} content={element.content} />
+          );
+        } else if (element.type === "image" && isImageContent(element.content)) {
+          return (
+            <BlogImage key={index} content={element.content} />
           );
         } else {
           return null;

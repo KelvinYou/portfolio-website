@@ -1,4 +1,4 @@
-import { Author, Header, Paragraph, Quote } from "@/types/blog"
+import { Author, Header, Paragraph, Quote, Image } from "@/types/blog"
 
 // Type guard function to check if the content is of type Paragraph
 export function isParagraphContent(content: any): content is Paragraph {
@@ -31,5 +31,13 @@ export function isAuthor(author: any): author is Author {
     (typeof author.image === 'string' || author.image === undefined) && // Optional property check
     (typeof author.designation === 'string' || author.designation === undefined) && // Optional property check
     (typeof author.contribution === 'number' || author.contribution === undefined) // Optional property check
+  );
+}
+
+export function isImageContent(content: any): content is Image {
+  return (
+    typeof content === 'object' &&
+    'url' in content &&
+    'alt' in content
   );
 }

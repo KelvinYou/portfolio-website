@@ -1,3 +1,4 @@
+import { BlogElement } from "./blog";
 
 
 export interface Project {
@@ -6,6 +7,7 @@ export interface Project {
   description: string;
   tags?: { name: string; color: string; }[];
   images?: string[];
+  elements?: BlogElement[];
   liveSiteLink?: string;
   sourceCodeLink?: string;
   platforms?: string[];

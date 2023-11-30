@@ -8,6 +8,22 @@
     "liveSiteLink": "https://kelvinyou.vercel.app/",
     "platforms": ["Web"],
     "projectCategory": "side_project",
+    "elements": [
+      {
+        "type": "image",
+        "content": {
+          "url": "/images/projects/portfolio/home.png",
+          "alt": "home"
+        }
+      },
+      {
+        "type": "paragraph",
+        "content": {
+          "text": "A self-introduction website. The place full of my love.",
+          "keywords": []
+        }
+      }
+    ],
     "tags": [
       {
         "name": "NextJS",
@@ -24,12 +40,21 @@
   {
     "_id": "2",
     "name": "Travel Guide",
-    "description": "Mobile application created using Flutter with dart as programming language",
+    "description": "",
     "date": "2022-12-17",
     "images": [],
     "sourceCodeLink": "https://github.com/KelvinYou/fyp_tour_guide_app",
     "platforms": ["Android", "iOS"],
     "projectCategory": "school_project",
+    "elements": [
+      {
+        "type": "paragraph",
+        "content": {
+          "text": "Mobile application created using Flutter with dart as programming language",
+          "keywords": []
+        }
+      }
+    ],
     "tags": [
       {
         "name": "Flutter",
@@ -52,6 +77,22 @@
     "liveSiteLink": "https://restaurant-landing-kelvinyou.vercel.app/",
     "sourceCodeLink": "https://github.com/KelvinYou/react-selflearn/tree/main/react-restaurant-landing",    "platforms": ["Web"],
     "projectCategory": "side_project",
+    "elements": [
+      {
+        "type": "image",
+        "content": {
+          "url": "/images/projects/restaurant-landing/1.png",
+          "alt": "home"
+        }
+      },
+      {
+        "type": "paragraph",
+        "content": {
+          "text": "Just to build an UI refer from Figma",
+          "keywords": []
+        }
+      }
+    ],
     "tags": [
       {
         "name": "ReactJS",
@@ -73,6 +114,15 @@
     "images": [],
     "sourceCodeLink": "https://github.com/KelvinYou/amm-assignment",    
     "projectCategory": "school_project",
+    "elements": [
+      {
+        "type": "paragraph",
+        "content": {
+          "text": "An assignment from Blockchain course which to build a liquidity pool using smart contract",
+          "keywords": []
+        }
+      }
+    ],
     "tags": [
       {
         "name": "ReactJS",
@@ -95,6 +145,22 @@
     "sourceCodeLink": "https://github.com/KelvinYou/dspc-assignment",    
     "platforms": [],
     "projectCategory": "school_project",
+    "elements": [
+      {
+        "type": "image",
+        "content": {
+          "url": "/images/projects/portfolio/home.png",
+          "alt": "home"
+        }
+      },
+      {
+        "type": "paragraph",
+        "content": {
+          "text": "A self-introduction website. The place full of my love.",
+          "keywords": []
+        }
+      }
+    ],
     "tags": [
       {
         "name": "Python",
@@ -113,6 +179,22 @@
     "sourceCodeLink": "https://github.com/KelvinYou/dsa-assignment",    
     "platforms": ["Command Line"],
     "projectCategory": "school_project",
+    "elements": [
+      {
+        "type": "image",
+        "content": {
+          "url": "/images/projects/portfolio/home.png",
+          "alt": "home"
+        }
+      },
+      {
+        "type": "paragraph",
+        "content": {
+          "text": "A self-introduction website. The place full of my love.",
+          "keywords": []
+        }
+      }
+    ],
     "tags": [
       {
         "name": "Java",

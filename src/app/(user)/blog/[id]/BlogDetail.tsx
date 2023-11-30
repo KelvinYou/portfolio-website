@@ -22,8 +22,7 @@ interface BlogDetailProps {
   blogDetail: BlogPage;
 }
 
-const ProjectDetail: FC<BlogDetailProps> = (props) => {
-  const { blogDetail } = props;
+const ProjectDetail: FC<BlogDetailProps> = ({ blogDetail }) => {
   const router = useRouter();
 
   const {
@@ -40,7 +39,7 @@ const ProjectDetail: FC<BlogDetailProps> = (props) => {
 
   return (
     <SectionWrapper
-      idName='project'
+      idName='blog'
     >
       {/* Title */}
       <motion.div
