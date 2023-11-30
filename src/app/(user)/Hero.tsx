@@ -2,9 +2,8 @@
 
 import React, { FC } from "react";
 // import { motion } from "framer-motion";
-import ComputerCanvas from "@/components/canvas/ComputerCanvas";
 
-import { careerData, personalData } from "@/constants/data";
+import { personalData } from "@/constants/data";
 import Typewriter from "typewriter-effect";
 import { motion } from "framer-motion";
 
@@ -43,6 +42,7 @@ const Hero: FC = () => {
                   autoStart: true,
                   loop: true,
                   deleteSpeed: 50,
+                  
                 }}
               />
             </div>
