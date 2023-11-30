@@ -10,11 +10,7 @@ import ProjectCard from './ProjectCard';
 
 
 const Project: FC = () => {
-  const [projectCategory, setProjectCategory] = useState("");
-
-  useEffect(() => {
-    setProjectCategory("all");
-  }, []);
+  const [projectCategory, setProjectCategory] = useState("all");
 
   const handleOptionChange = (selectedOption: string) => {
     // Do something with the selected option, such as updating state

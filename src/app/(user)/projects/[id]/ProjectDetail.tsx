@@ -9,6 +9,7 @@ import { formatDate } from '@/utils/dateUtil'
 import { textVariant } from '@/utils/motion'
 import { motion } from 'framer-motion'
 import { Calendar, ChevronsLeft } from 'lucide-react'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React, { FC } from 'react'
 
@@ -28,6 +29,7 @@ const ProjectDetail: FC<ProjectDetailProps> = ({ projectDetail }) => {
     liveSiteLink,
     sourceCodeLink,
     platforms,
+    includedApps,
     date,
   } = projectDetail;
 
@@ -96,15 +98,73 @@ const ProjectDetail: FC<ProjectDetailProps> = ({ projectDetail }) => {
 
         {/* Right Column */}
         <div className="w-full px-4 lg:w-4/12">
-          <div className="bg-gray-dark mb-10 rounded-sm  shadow-none">
-            <h3 className="border-b px-8 py-4 text-lg font-semibold border-white border-opacity-10 text-white">
-              Err.. No Idea
-            </h3>
-            <p className='px-8 py-6 text-body-color'>
-              If I only showed a few paragraphs, it would feel too spacey here.
-              Please give me some suggestions what should I put here.
-            </p>
-          </div>
+          {includedApps && includedApps.length !== 0 && 
+            <div className="bg-gray-dark mb-10 rounded-sm  shadow-none">
+              <h3 className="border-b px-8 py-4 text-lg font-semibold border-white border-opacity-10 text-white">
+                Apps
+              </h3>
+
+              <ul className="">
+                {includedApps?.map((app, index) => {
+                  const {
+                    title,
+                    techStacks,
+                    liveSiteLink,
+                    sourceCodeLink,
+                    platforms,
+                    date
+                  } = app;
+
+                  return (
+                    <li
+                      key={index} 
+                      className="py-6 px-8 border-b border-white border-opacity-10"
+                    >
+                      <div className="w-full">
+                        <h5>
+                          <span
+                            className="mb-[6px] block text-base font-medium leading-snug text-white"
+                          >
+                            {title}
+                          </span>
+                        </h5>
+                        <p className="text-xs font-medium text-body-color">{formatDate(date)}</p>
+
+                        <div className='mt-4 grid grid-cols-2 gap-4'>
+                          {sourceCodeLink && (
+                            <Link
+                              href={sourceCodeLink}
+                              target='_blank'
+                              className='group relative inline-flex items-center overflow-hidden rounded bg-on-primary py-2 text-primary'
+                            >
+                              <span className="text-sm font-medium transition-all mx-auto">
+                                Code
+                              </span>
+                            </Link>
+                          )}
+
+                          {liveSiteLink && (
+                            <Link
+                              href={liveSiteLink}
+                              target='_blank'
+                              className='group relative inline-flex items-center overflow-hidden rounded bg-on-primary py-2 text-primary'
+                            >
+                              <span className="text-sm font-medium transition-all mx-auto">
+                                Demo
+                              </span>
+                            </Link>
+                          )}
+                        </div>
+
+
+
+                      </div>
+                    </li>
+                  )
+                })}
+              </ul>
+            </div>
+          }
         </div>
 
 

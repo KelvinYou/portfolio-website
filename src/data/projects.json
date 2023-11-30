@@ -7,6 +7,16 @@
     "images": ["/images/projects/portfolio/home.png"],
     "liveSiteLink": "https://kelvinyou.vercel.app/",
     "platforms": ["Web"],
+    "includedApps": [
+      {
+        "_id": "1",
+        "title": "Portfolio Web App",
+        "techStacks": ["3", "2"],
+        "liveSiteLink": "https://kelvinyou.vercel.app/",
+        "platforms": ["Web"],
+        "date": "2023-11-02"
+      }
+    ],
     "projectCategory": "side_project",
     "elements": [
       {
@@ -40,7 +50,7 @@
   {
     "_id": "2",
     "name": "Travel Guide",
-    "description": "",
+    "description": "Mobile application created using Flutter with dart as programming language",
     "date": "2022-12-17",
     "images": [],
     "sourceCodeLink": "https://github.com/KelvinYou/fyp_tour_guide_app",
@@ -147,16 +157,9 @@
     "projectCategory": "school_project",
     "elements": [
       {
-        "type": "image",
-        "content": {
-          "url": "/images/projects/portfolio/home.png",
-          "alt": "home"
-        }
-      },
-      {
         "type": "paragraph",
         "content": {
-          "text": "A self-introduction website. The place full of my love.",
+          "text": "An assignment for the Distributed Systems and Parallel Computing course, Detecting edges in images. We also use tools like Threading, Dask, Classified, etc. to speed up the process",
           "keywords": []
         }
       }
@@ -181,16 +184,9 @@
     "projectCategory": "school_project",
     "elements": [
       {
-        "type": "image",
-        "content": {
-          "url": "/images/projects/portfolio/home.png",
-          "alt": "home"
-        }
-      },
-      {
         "type": "paragraph",
         "content": {
-          "text": "A self-introduction website. The place full of my love.",
+          "text": "An assignment for the Data Structures and Algorithms course, create adt using doubly linked list",
           "keywords": []
         }
       }

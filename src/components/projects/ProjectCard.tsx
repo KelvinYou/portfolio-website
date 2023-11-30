@@ -22,8 +22,8 @@ const ProjectCard: FC<ProjectCardProps> = ({ project, index }) => {
 
   return (
     <motion.div 
-      // initial="hidden"
-      // animate="show"
+      initial="hidden"
+      animate="show"
       variants={fadeIn("up", "spring", index * 0.1, 0.75)} 
       className='sm:w-[360px] w-full cursor-pointer'
       onClick={() => router.push(`/projects/${project._id}`)}
