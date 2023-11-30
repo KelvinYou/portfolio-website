@@ -1,5 +1,5 @@
 "use client";
-import React, { FC, ReactNode } from "react";
+import React, { FC, ReactNode, useEffect, useState } from "react";
 import { motion, Variants } from "framer-motion";
 
 import { staggerContainer } from "../utils/motion";
@@ -11,6 +11,12 @@ interface SectionWrapperProps {
 
 const SectionWrapper: FC<SectionWrapperProps> = ({ idName, children }) => {
   const containerVariants: Variants = staggerContainer();
+
+  const [ mount, setMount ] = useState<boolean>(false);
+
+  useEffect(() => {
+    setMount(true);
+  }, []);
 
   return (
     <motion.section
