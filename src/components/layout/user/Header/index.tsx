@@ -209,6 +209,11 @@ const Header = () => {
                       </li>
                     ))}
                   </ul>
+
+                  <div className="lg:hidden mt-8 border-t-[1px] border-secondary pt-2 mx-3">
+
+                    <SocialMediaButtons />
+                  </div>
                 </nav>
               </div>
 
