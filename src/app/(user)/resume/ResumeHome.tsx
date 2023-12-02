@@ -1,11 +1,23 @@
 "use client";
 
 import { SectionWrapper } from '@/hoc'
+import getBrowserAndOSInfo, { BrowserInfo } from '@/utils/deviceInfoUtil';
 import { textVariant } from '@/utils/motion'
 import { motion } from 'framer-motion'
-import React from 'react'
+import { Download } from 'lucide-react';
+import React, { useEffect, useState } from 'react'
 
 const ResumeHome = () => {
+  const [browserInfo, setBrowserInfo] = useState<BrowserInfo>({ browser: 'Loading...', os: 'Loading...' });
+
+  useEffect(() => {
+    setBrowserInfo(getBrowserAndOSInfo());
+  }, []);
+
+  useEffect(() => {
+    console.log("browserInfo: ", browserInfo);
+  }, [browserInfo]);
+  
   return (
     <SectionWrapper
       idName='project'
@@ -24,7 +36,15 @@ const ResumeHome = () => {
         </h2>
       </motion.div>
 
-      
+      <div className='mt-4 mx-auto w-fit'>
+        <button 
+          className='rounded-md px-6 py-3 text-md bg-on-primary text-primary 
+          shadow-sm flex gap-2 items-center'
+        >
+          Download
+          <Download size={16} />
+        </button>
+      </div>
     </SectionWrapper>
   )
 }

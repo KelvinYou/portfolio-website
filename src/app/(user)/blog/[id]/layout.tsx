@@ -11,8 +11,8 @@ export async function generateMetadata({ params }: { params: { id: string} }) {
   }
 
   return {
-    title: `Kelvin You | ${blogDetail.title}`,
-    // description: blogDetail.paragraph,
+    title: `${blogDetail.title}`,
+    description: `${blogDetail.paragraph} by ${blogDetail.author[0].name}`,
     keywords: `blog, ${blogDetail.tags.join(",")}`,
     openGraph: {
       images: blogDetail.image,

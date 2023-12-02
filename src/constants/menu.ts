@@ -119,6 +119,11 @@ export const menuData: Menu[] = [
         path: "/growth-journey",
       },
       {
+        id: "contact",
+        title: "Contact",
+        path: "/contact",
+      },
+      {
         id: "space",
         title: "Space",
         path: SPACE_LINK,
