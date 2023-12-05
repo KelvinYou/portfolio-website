@@ -13,18 +13,18 @@ import { ServicePackage } from '@/types/services';
 import CustomButton from '../ui/CustomButton';
 import BaseButton from '../ui/BaseButton';
 
-interface ProjectCardProps {
+interface ServicePackageCardProps {
   service: ServicePackage;
   index: number;
 }
 
-const ServiceCard: FC<ProjectCardProps> = ({ service, index }) => {
+const ServiceCard: FC<ServicePackageCardProps> = ({ service, index }) => {
   const router = useRouter();
 
   const shareToWhatsApp = (servicePackage: string) => {
 
     const text = `Hi Kelvin, I would like to know more about this ${servicePackage}`;
-    window.open(`https://wa.me/?text=${text}`, '_blank');
+    window.open(`https://wa.me/+60183732752?text=${text}`, '_blank');
   };
 
   return (
