@@ -92,7 +92,7 @@ const ExperienceCard: FC<any> = ({ experience }) => {
         }, i: number) => (
           <li
             key={`experience-point-${i}`}
-            className="text-white-100 text-[14px] pl-1 tracking-wider text-justify"
+            className="text-white-100 text-[14px] pl-1 tracking-wider"
           >
             <HighlightText 
               text={point.value}
@@ -202,7 +202,7 @@ const EducationCard: FC<any> = ({ education }) => {
         </div>
       </div>
 
-      {education.description && <div className="mt-5 text-justify">
+      {education.description && <div className="mt-5">
           {education.description}
         </div>
       }
@@ -215,7 +215,7 @@ const EducationCard: FC<any> = ({ education }) => {
         }, i: number) => (
           <li
             key={`experience-point-${i}`}
-            className="text-white-100 text-[14px] pl-1 tracking-wider text-justify font-light"
+            className="text-white-100 text-[14px] pl-1 tracking-wider font-light"
           >
             <HighlightText 
               text={point.value}

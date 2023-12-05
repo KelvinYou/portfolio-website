@@ -1,0 +1,62 @@
+[
+  {
+    "_id": "basic",
+    "title": "Basic Package",
+    "startFromPrice": 1999,
+    "description": "For teams building apps for many public & private users",
+    "detailsTitle": "Features include:",
+    "details": [
+      "Static Website Development:",
+      "- Up to 5 pages",
+      "- Responsive design for mobile and tablet",
+      "Contact Form Integration:",
+      "- Allow visitors to easily get in touch",
+      "Basic SEO Optimization:",
+      "- Meta tags, keyword optimization",
+      "1 Round of Revisions:",
+      "- Feedback and adjustments"
+    ]
+  },
+  {
+    "_id": "standard",
+    "title": "Standard Package",
+    "startFromPrice": 2999,
+    "description": "For teams building apps for many public & private users",
+    "tag": "Recommended",
+    "detailsTitle": "Everything in Starter, plus:",
+    "details": [
+      "Dynamic Website Development:",
+      "- Content Management System (CMS)",
+      "- Blog or News section",
+      "Responsive Design and Cross-browser Compatibility:",
+      "- Ensuring a consistent experience across devices",
+      "Contact Form with Email Notification:",
+      "- Stay informed about user inquiries",
+      "Basic SEO + Google Analytics Integration:",
+      "- Improve online visibility and track website performance",
+      "2 Rounds of Revisions:",
+      "- Additional refinement based on feedback"
+    ]
+  },
+  {
+    "_id": "customize",
+    "title": "Customize",
+    "startFromPrice": 0,
+    "description": "For teams building apps for many public & private users",
+    "detailsTitle": "",
+    "details": [
+      "Full-Featured Web and Mobile App:",
+      "- Custom development for both web and mobile platforms",
+      "E-commerce Functionality:",
+      "- Product listings, shopping cart, and checkout",
+      "User Authentication and Authorization:",
+      "- Secure access to specific content or features",
+      "Advanced SEO + Social Media Integration:",
+      "- Boost online presence and user engagement",
+      "3 Rounds of Revisions:",
+      "- Comprehensive refinement for a polished final product",
+      "Priority Support:",
+      "- Fast-track response for urgent issues"
+    ]
+  }
+]

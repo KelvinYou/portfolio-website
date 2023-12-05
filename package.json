@@ -1,6 +1,6 @@
 {
   "name": "kelvin-you-portfolio",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -16,6 +16,7 @@
     "@types/react-dom": "18.2.14",
     "autoprefixer": "10.4.16",
     "dotenv": "^16.3.1",
+    "firebase": "^10.7.0",
     "framer-motion": "^10.16.4",
     "fs-extra": "^11.1.1",
     "lucide-react": "^0.292.0",
