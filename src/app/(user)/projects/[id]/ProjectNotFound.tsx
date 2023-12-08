@@ -14,6 +14,21 @@ const ProjectNotFound = () => {
     <SectionWrapper
       idName='ProjectNotFound'
     >
+      <div>
+        <button
+          onClick={() => router.push('/#project')}
+          className='group relative inline-flex items-center overflow-hidden rounded bg-on-primary px-8 py-3 text-primary focus:outline-none focus:ring'
+        >
+          <span className="absolute -start-full transition-all group-hover:start-4">
+            <ChevronsLeft />
+          </span>
+
+          <span className="text-sm font-medium transition-all group-hover:ms-4">
+            Back to Projects
+          </span>
+        </button>
+      </div>
+      
       {/* Title */}
       <motion.div
         initial="hidden"
@@ -21,23 +36,6 @@ const ProjectNotFound = () => {
         variants={textVariant()}
         className=''
       >
-
-        <div>
-          <button
-            onClick={() => router.push('/blog')}
-            className='group relative inline-flex items-center overflow-hidden rounded bg-on-primary px-8 py-3 text-primary focus:outline-none focus:ring'
-          >
-            <span className="absolute -start-full transition-all group-hover:start-4">
-              <ChevronsLeft />
-            </span>
-
-            <span className="text-sm font-medium transition-all group-hover:ms-4">
-              Back to Blogs
-            </span>
-                      
-          </button>
-          
-        </div>
 
         <p className="mt-10 sm:text-[18px] text-[14px] text-secondary uppercase tracking-wider">
           Blog Not Found

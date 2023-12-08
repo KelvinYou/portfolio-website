@@ -1,10 +1,14 @@
+"use client";
+
 import React from 'react'
-import projects from "@/data/projects.json";
 import { Project } from '@/types/project';
 import Image from 'next/image';
 import Link from 'next/link';
+import { getProjects } from '@/services/projectService';
 
 const Projects = () => {
+  const projects = getProjects();
+  
   return (
     <div>
       <div>

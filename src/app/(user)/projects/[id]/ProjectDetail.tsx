@@ -4,14 +4,16 @@ import ZoomableImage from '@/components/ZoomableImage'
 import BlogElementRenderer from '@/components/blog/BlogElementRenderer'
 import { projects } from '@/constants/data'
 import SectionWrapper from '@/hoc/SectionWrapper'
+import { getProjectsByIds } from '@/services/projectService'
 import { Project } from '@/types/project'
 import { formatDate } from '@/utils/dateUtil'
 import { textVariant } from '@/utils/motion'
 import { motion } from 'framer-motion'
-import { Calendar, ChevronsLeft } from 'lucide-react'
+import { Calendar, ChevronsLeft, Github } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React, { FC } from 'react'
+import Image from "next/image";
 
 interface ProjectDetailProps {
   projectDetail: Project,
@@ -29,9 +31,11 @@ const ProjectDetail: FC<ProjectDetailProps> = ({ projectDetail }) => {
     liveSiteLink,
     sourceCodeLink,
     platforms,
-    includedApps,
+    relatedProjectIds,
     date,
   } = projectDetail;
+
+  const relatedProjects = getProjectsByIds(relatedProjectIds || []);
 
   return (
     <SectionWrapper
@@ -57,9 +61,7 @@ const ProjectDetail: FC<ProjectDetailProps> = ({ projectDetail }) => {
           <span className="text-sm font-medium transition-all group-hover:ms-4">
             Back to Projects
           </span>
-                    
         </button>
-        
       </div>
 
       <div className="-mx-4 flex flex-wrap mt-10">
@@ -88,6 +90,7 @@ const ProjectDetail: FC<ProjectDetailProps> = ({ projectDetail }) => {
               </div>
             </div>
 
+
             <div>
               {elements && <BlogElementRenderer elements={elements} />}
 
@@ -98,66 +101,94 @@ const ProjectDetail: FC<ProjectDetailProps> = ({ projectDetail }) => {
 
         {/* Right Column */}
         <div className="w-full px-4 lg:w-4/12">
-          {includedApps && includedApps.length !== 0 && 
+          <div className="bg-gray-dark mb-10 rounded-sm  shadow-none px-8 py-4 ">
+            <div className='grid grid-cols-[calc(100%-56px),40px] gap-4'>
+              <div>
+                {liveSiteLink && (
+                  <Link
+                    href={liveSiteLink}
+                    target='_blank'
+                    className='w-full h-full group relative inline-flex items-center overflow-hidden rounded bg-on-primary py-2 text-primary'
+                  >
+                    <span className="text-sm font-medium transition-all mx-auto">
+                      Live Preview
+                    </span>
+                  </Link>
+                )}
+              </div>
+
+              <div>
+                {sourceCodeLink && (
+                  <Link
+                    href={"as"}
+                    target='_blank'
+                    className='w-full  group relative inline-flex items-center overflow-hidden rounded bg-gray-dark hover:bg-primary py-2 text-on-body hover:text-white'
+                  >
+                    <span className="text-sm font-medium transition-all mx-auto">
+                      <Github />
+                    </span>
+                  </Link>
+                )}
+              </div>
+            </div>
+          </div>
+          
+
+          {relatedProjects && relatedProjects.length !== 0 && 
             <div className="bg-gray-dark mb-10 rounded-sm  shadow-none">
               <h3 className="border-b px-8 py-4 text-lg font-semibold border-white border-opacity-10 text-white">
-                Apps
+                Related Projects
               </h3>
 
               <ul className="">
-                {includedApps?.map((app, index) => {
+                {relatedProjects?.map((app, index) => {
                   const {
-                    title,
-                    techStacks,
+                    _id,
+                    name,
                     liveSiteLink,
                     sourceCodeLink,
                     platforms,
+                    images,
                     date
                   } = app;
 
                   return (
                     <li
                       key={index} 
-                      className="py-6 px-8 border-b border-white border-opacity-10"
+                      className="py-6 px-8 border-b border-white border-opacity-10 cursor-pointer"
+                      onClick={() => router.push(`/projects/${_id}`)}
                     >
-                      <div className="w-full">
-                        <h5>
-                          <span
-                            className="mb-[6px] block text-base font-medium leading-snug text-white"
-                          >
-                            {title}
-                          </span>
-                        </h5>
-                        <p className="text-xs font-medium text-body-color">{formatDate(date)}</p>
-
-                        <div className='mt-4 grid grid-cols-2 gap-4'>
-                          {sourceCodeLink && (
-                            <Link
-                              href={sourceCodeLink}
-                              target='_blank'
-                              className='group relative inline-flex items-center overflow-hidden rounded bg-on-primary py-2 text-primary'
-                            >
-                              <span className="text-sm font-medium transition-all mx-auto">
-                                Code
-                              </span>
-                            </Link>
-                          )}
-
-                          {liveSiteLink && (
-                            <Link
-                              href={liveSiteLink}
-                              target='_blank'
-                              className='group relative inline-flex items-center overflow-hidden rounded bg-on-primary py-2 text-primary'
-                            >
-                              <span className="text-sm font-medium transition-all mx-auto">
-                                Demo
-                              </span>
-                            </Link>
-                          )}
+                      <div className="flex items-center lg:block xl:flex">
+                        <div className="mr-5 lg:mb-3 xl:mb-0">
+                          <div className="relative h-[60px] w-[70px] overflow-hidden rounded-md sm:h-[75px] sm:w-[85px]">
+                            {(images && images.length > 0) ? 
+                              <Image 
+                                src={images[0]} 
+                                alt={name}
+                                fill 
+                                sizes="100%"
+                                className="h-full w-full object-cover object-center"
+                              /> 
+                              :
+                              <div className="w-full h-full object-cover rounded-md flex items-center justify-center bg-gray-300 dark:bg-gray-700">
+                                <svg className="w-10 h-10 text-gray-200 dark:text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
+                                  <path d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z"/>
+                                </svg>
+                              </div>
+                            }
+                            
+                          </div>
                         </div>
-
-
-
+                        <div className="w-full">
+                          <h5>
+                            <span
+                              className="mb-[6px] block text-base font-medium leading-snug text-white"
+                            >
+                              {name}
+                            </span>
+                          </h5>
+                          <p className="text-xs font-medium text-body-color">{formatDate(date)}</p>
+                        </div>
                       </div>
                     </li>
                   )

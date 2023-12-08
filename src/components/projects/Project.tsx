@@ -1,19 +1,18 @@
 "use client";
 
 import SelectableButtonGroup from '@/components/SelectableButtonGroup';
-import projects from '@/data/projects.json';
 import { SectionWrapper } from '@/hoc'
 import { fadeIn, textVariant } from '@/utils/motion'
 import { motion } from 'framer-motion'
 import React, { FC, useEffect, useState } from 'react'
 import ProjectCard from './ProjectCard';
+import { getProjects } from '@/services/projectService';
 
 
 const Project: FC = () => {
   const [projectCategory, setProjectCategory] = useState("all");
 
   const handleOptionChange = (selectedOption: string) => {
-    // Do something with the selected option, such as updating state
     setProjectCategory(selectedOption);
   };
   
@@ -75,7 +74,7 @@ const Project: FC = () => {
       {/* Project Card */}
       <div className='mt-10 min-h-[1000px]'>
         <div className="flex flex-wrap gap-7 ">
-          {projects
+          {getProjects()
             .filter((project) => {
               if (projectCategory === 'all') return true;
               return project.projectCategory === projectCategory;

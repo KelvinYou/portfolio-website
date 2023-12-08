@@ -1,8 +1,8 @@
 "use client"
 
 import React, { FC, useState, ChangeEvent } from 'react';
-import projects from "@/data/projects.json";
 import { Project } from '@/types/project';
+import { getProjectById } from '@/services/projectService';
 
 interface ProjectDetailProps {
   id: string;
@@ -11,7 +11,7 @@ interface ProjectDetailProps {
 const ProjectDetail: FC<ProjectDetailProps> = (props) => {
   const { id } = props;
   const [editable, setEditable] = useState(false);
-  const [formData, setFormData] = useState<Project | undefined>(projects.find((project) => project._id === id));
+  const [formData, setFormData] = useState<Project | null>(getProjectById(id));
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;

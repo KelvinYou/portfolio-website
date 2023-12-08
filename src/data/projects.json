@@ -7,16 +7,6 @@
     "images": ["/images/projects/portfolio/home.png"],
     "liveSiteLink": "https://kelvinyou.vercel.app/",
     "platforms": ["Web"],
-    "includedApps": [
-      {
-        "_id": "1",
-        "title": "Portfolio Web App",
-        "techStacks": ["3", "2"],
-        "liveSiteLink": "https://kelvinyou.vercel.app/",
-        "platforms": ["Web"],
-        "date": "2023-11-02"
-      }
-    ],
     "projectCategory": "side_project",
     "elements": [
       {
@@ -34,6 +24,9 @@
         }
       }
     ],
+    "techStacks": [
+      "", ""
+    ],
     "tags": [
       {
         "name": "NextJS",
@@ -44,12 +37,13 @@
         "color": "blue-text-gradient"
       }
     ],
+
     "createDate": "2023-11-14T05:21:35.384Z",
     "modifyDate": "2023-11-14T05:21:35.384Z"
   },
   {
     "_id": "2",
-    "name": "Travel Guide",
+    "name": "Travel Guide: Tourist App",
     "description": "Mobile application created using Flutter with dart as programming language",
     "date": "2022-12-17",
     "images": [],

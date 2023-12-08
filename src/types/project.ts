@@ -1,27 +1,16 @@
 import { BlogElement } from "./blog";
 
-export type AppType = {
-  _id: string;
-  title: string;
-  techStacks: string[];
-  liveSiteLink?: string;
-  sourceCodeLink?: string;
-  platforms?: string[];
-  date: string;
-  createDate?: string;
-  modifyDate?: string;
-}
-
 export interface Project {
   _id: string;
   name: string;
   description: string;
+  techStacks?: string[];
   tags?: { name: string; color: string; }[];
   images?: string[];
   elements?: BlogElement[];
   liveSiteLink?: string;
   sourceCodeLink?: string;
-  includedApps?: AppType[];
+  relatedProjectIds?: string[],
   platforms?: string[];
   date: string;
   projectCategory?: string;
