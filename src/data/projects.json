@@ -49,6 +49,7 @@
     "images": [],
     "sourceCodeLink": "https://github.com/KelvinYou/fyp_tour_guide_app",
     "platforms": ["Android", "iOS"],
+    "relatedProjectIds": ["7"],
     "projectCategory": "school_project",
     "elements": [
       {
@@ -189,6 +190,38 @@
       {
         "name": "Java",
         "color": "pink-text-gradient"
+      }
+    ],
+    "createDate": "2023-11-14T05:21:35.384Z",
+    "modifyDate": "2023-11-14T05:21:35.384Z"
+  },
+  {
+    "_id": "7",
+    "name": "Travel Guide: Admin App",
+    "description": "Mobile application created using Flutter with dart as programming language",
+    "date": "2022-12-17",
+    "images": [],
+    "sourceCodeLink": "https://github.com/KelvinYou/fyp_admin_app",
+    "platforms": ["Android", "iOS"],
+    "relatedProjectIds": ["2"],
+    "projectCategory": "school_project",
+    "elements": [
+      {
+        "type": "paragraph",
+        "content": {
+          "text": "Mobile application created using Flutter with dart as programming language",
+          "keywords": []
+        }
+      }
+    ],
+    "tags": [
+      {
+        "name": "Flutter",
+        "color": "blue-text-gradient"
+      },
+      {
+        "name": "Firebase",
+        "color": "orange-text-gradient"
       }
     ],
     "createDate": "2023-11-14T05:21:35.384Z",

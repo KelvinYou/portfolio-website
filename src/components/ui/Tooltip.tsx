@@ -13,7 +13,7 @@ export default function Tooltip({
   children,
   width = "150px"
 }: TooltipProps) {
-  const [showTooltip, setShowTooltip] = useState(true);
+  const [showTooltip, setShowTooltip] = useState(false);
 
   const handleToggleTooltip = () => {
     setShowTooltip(!showTooltip);

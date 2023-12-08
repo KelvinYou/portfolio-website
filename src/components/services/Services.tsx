@@ -4,7 +4,7 @@ import SectionWrapper from '@/hoc/SectionWrapper'
 import { textVariant } from '@/utils/motion'
 import { motion } from 'framer-motion'
 import React, { FC } from 'react'
-import PageTitle from '../PageTitle'
+import PageTitle from '@/components/PageTitle'
 
 import services from "@/data/servicePackages.json";
 import ServicePackageCard from './ServicePackageCard'
@@ -15,7 +15,7 @@ const Services: FC = () => {
       idName='services'
     >
       <PageTitle 
-        title='Services'
+        title='Services.'
         subtitle='What I can provide'
         description='Web & Mobile App Development'
       />
