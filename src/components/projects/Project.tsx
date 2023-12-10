@@ -27,6 +27,7 @@ const Project: FC = () => {
 
   const handleOptionChange = (selectedOption: string) => {
     setProjectCategory(selectedOption);
+    setCurrentPage(1);
   };
   
   const options = [
@@ -50,17 +51,12 @@ const Project: FC = () => {
     }
   
     return (
-      <ul className="flex space-x-2">
+      <ul className="flex space-x-2 my-10">
         {pageNumbers.map((number) => (
-          <li key={number}>
-            <button
-              className={`${
-                currentPage === number ? 'bg-blue-500 text-white' : 'bg-gray-300'
-              } px-4 py-2 rounded`}
-              onClick={() => setCurrentPage(number)}
-            >
-              {number}
-            </button>
+          <li key={number} className={`${
+            currentPage === number ? 'bg-on-primary text-primary' : 'bg-gray-dark text-on-body'
+          } px-4 py-2 rounded cursor-pointer`} onClick={() => setCurrentPage(number)}>
+            {number}
           </li>
         ))}
       </ul>
@@ -79,17 +75,6 @@ const Project: FC = () => {
         real-world examples of my work. It reflects my ability to solve complex problems, work with different technologies,
         and manage projects effectively. '
       />
-      {/* About */}
-      <div className="w-full flex">
-        <motion.p
-          initial="hidden"
-          animate="show"
-          variants={fadeIn("", "", 0.1, 1)}
-          className="mt-3 text-secondary text-[17px] max-w-3xl leading-[30px]"
-        >
-
-        </motion.p>
-      </div>
 
       <motion.div 
         initial="hidden"
@@ -103,6 +88,13 @@ const Project: FC = () => {
         />
       </motion.div>
 
+      <motion.div  
+        initial="hidden"
+        animate="show"
+        variants={fadeIn("", "", 0.1, 1)}
+        className='mx-auto w-fit'>
+        {renderPaginationLinks()}
+      </motion.div >
 
       {/* Project Card */}
       <div className='mt-10 min-h-[1000px]'>
@@ -116,7 +108,8 @@ const Project: FC = () => {
             ))}
         </div>
       </div>
-      {renderPaginationLinks()}
+      
+
     </SectionWrapper>
   )
 }

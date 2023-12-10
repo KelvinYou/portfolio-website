@@ -114,9 +114,9 @@ export const menuData: Menu[] = [
         path: RESUME_LINK,
       },
       {
-        id: "growth-journey",
-        title: "Growth Journey",
-        path: "/growth-journey",
+        id: "co-cu",
+        title: "Co Curricular",
+        path: "/co-cu",
       },
       {
         id: "services",

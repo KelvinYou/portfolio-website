@@ -1,13 +1,13 @@
 import React from 'react'
-import ResumeHome from './GrowthJourneyHome'
+import CocuHome from './CocuHome'
 import ComingSoon from '@/components/ComingSoon'
 
 const ResumePage = () => {
   return (
     <>
-      {/* <ResumeHome /> */}
+      {/* <CocuHome /> */}
 
-      <ComingSoon title='Growth Journey' />
+      <ComingSoon title='Cocu' />
     </>
   )
 }
