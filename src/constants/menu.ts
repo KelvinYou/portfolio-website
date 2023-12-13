@@ -35,15 +35,15 @@ export const navLinks: MainMenu[] = [
     subMenu: [
       {
         title: "All",
-        link: "/exp",
+        link: "/experience",
       },
       {
         title: "Works",
-        link: "/exp?category=work",
+        link: "/experience?category=work",
       },
       {
         title: "Educations",
-        link: "/exp?category=education",
+        link: "/experience?category=education",
       },
     ]
   },

@@ -5,10 +5,8 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 // import { styles } from "../styles";
 import { languages, services } from '@/constants/data';
-import { fadeIn, textVariant } from "../../utils/motion";
-import { SectionWrapper } from "../../hoc";
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { fadeIn, textVariant } from "@/utils/motion";
+import { SectionWrapper } from "@/hoc";
 import HighlightText from "@/components/common/HighlightedText";
 
 // Service Card

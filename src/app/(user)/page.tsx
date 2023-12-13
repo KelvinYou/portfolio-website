@@ -1,9 +1,8 @@
-import Image from 'next/image'
-import Hero from './Hero'
-import AboutMe from './AboutMe'
-import Github from './Github'
-import Project from '@/components/projects/Project'
-import Experience from '@/components/experience/Experience'
+import Hero from './_components/Hero'
+import AboutMe from './_components/AboutMe'
+import Github from './_components/Github'
+import Project from './_components/Project'
+import Experience from './_components/Experience'
 import "@/styles/index.scss";
 
 
@@ -15,7 +14,6 @@ export default function Home() {
       <AboutMe />
 
       <Experience />
-
 
       <Project />
       
