@@ -119,6 +119,11 @@ export const menuData: Menu[] = [
         path: "/co-cu",
       },
       {
+        id: "notes",
+        title: "Notes",
+        path: "/notes",
+      },
+      {
         id: "services",
         title: "Services",
         path: "/services",
