@@ -1,10 +1,10 @@
 import React from 'react'
-import Project from '../_components/Project'
+import AllProject from './AllProject'
 
 const Page = () => {
   return (
     <>
-      <Project />
+      <AllProject />
     </>
   )
 }

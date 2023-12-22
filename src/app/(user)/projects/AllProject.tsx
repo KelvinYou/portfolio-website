@@ -9,19 +9,27 @@ import { getProjects } from '@/services/projectService';
 import PageTitle from '@/components/PageTitle'
 import Link from 'next/link';
 import { ChevronRight } from 'lucide-react';
-import ProjectCard from '../../projects/_components/ProjectCard';
+import ProjectCard from './_components/ProjectCard';
 
-const Project: FC = () => {
+const AllProject: FC = () => {
   const [projectCategory, setProjectCategory] = useState("all");
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const projectsPerPage = 6;
+
+  const indexOfLastProject = currentPage * projectsPerPage;
+  const indexOfFirstProject = indexOfLastProject - projectsPerPage;
 
   const currentProjects = getProjects()
     .filter((project) => {
       if (projectCategory === 'all') return true;
       return project.projectCategory === projectCategory;
-    });
+    })
+    .slice(indexOfFirstProject, indexOfLastProject);
 
   const handleOptionChange = (selectedOption: string) => {
     setProjectCategory(selectedOption);
+    setCurrentPage(1);
   };
   
   const options = [
@@ -30,6 +38,32 @@ const Project: FC = () => {
     { id: 'industrial_project', label: 'Industrial Projects' },
     { id: 'school_project', label: 'School Projects' },
   ];
+
+  const renderPaginationLinks = () => {
+    const pageNumbers = [];
+    const totalProjects = getProjects()
+      .filter((project) => {
+        if (projectCategory === 'all') return true;
+        return project.projectCategory === projectCategory;
+      })
+      .length;
+  
+    for (let i = 1; i <= Math.ceil(totalProjects / projectsPerPage); i++) {
+      pageNumbers.push(i);
+    }
+  
+    return (
+      <ul className="flex space-x-2 my-10">
+        {pageNumbers.map((number) => (
+          <li key={number} className={`${
+            currentPage === number ? 'bg-on-primary text-primary' : 'bg-gray-dark text-on-body'
+          } px-4 py-2 rounded cursor-pointer`} onClick={() => setCurrentPage(number)}>
+            {number}
+          </li>
+        ))}
+      </ul>
+    );
+  };
 
   
   return (
@@ -54,22 +88,20 @@ const Project: FC = () => {
           options={options}
           onOptionChange={handleOptionChange}
         />
-        <Link
-          href="/projects"
-          className='text-white flex items-center '
-        >
-          <span>
-            All
-          </span>
-
-          <ChevronRight />
-        </Link>
       </motion.div>
 
+      <motion.div  
+        initial="hidden"
+        animate="show"
+        variants={fadeIn("", "", 0.1, 1)}
+        className='mx-auto w-fit'>
+        {renderPaginationLinks()}
+      </motion.div >
+
       {/* Project Card */}
-      <div className='mt-10 min-h-[500px]'>
+      <div className='mt-10 min-h-[1000px]'>
         <div className="flex flex-wrap gap-7 ">
-          {currentProjects.slice(0, 3).map((project, index: number) => (
+          {currentProjects.map((project, index: number) => (
             <ProjectCard 
               key={`project-${index}`} 
               project={project}
@@ -84,4 +116,4 @@ const Project: FC = () => {
   )
 }
 
-export default Project
+export default AllProject
