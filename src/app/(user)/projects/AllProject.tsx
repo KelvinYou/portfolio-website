@@ -39,6 +39,12 @@ const AllProject: FC = () => {
     { id: 'school_project', label: 'School Projects' },
   ];
 
+  const allProjects = getProjects()
+    .filter((project) => {
+      if (projectCategory === 'all') return true;
+      return project.projectCategory === projectCategory;
+    })
+
   const renderPaginationLinks = () => {
     const pageNumbers = [];
     const totalProjects = getProjects()
@@ -65,7 +71,8 @@ const AllProject: FC = () => {
     );
   };
 
-  
+
+
   return (
     <SectionWrapper
       idName='project'
@@ -90,18 +97,18 @@ const AllProject: FC = () => {
         />
       </motion.div>
 
-      <motion.div  
+      {/* <motion.div  
         initial="hidden"
         animate="show"
         variants={fadeIn("", "", 0.1, 1)}
         className='mx-auto w-fit'>
         {renderPaginationLinks()}
-      </motion.div >
+      </motion.div > */}
 
       {/* Project Card */}
       <div className='mt-10 min-h-[1000px]'>
         <div className="flex flex-wrap gap-7 ">
-          {currentProjects.map((project, index: number) => (
+          {allProjects.map((project, index: number) => (
             <ProjectCard 
               key={`project-${index}`} 
               project={project}

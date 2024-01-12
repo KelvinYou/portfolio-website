@@ -123,11 +123,11 @@ export const menuData: Menu[] = [
         title: "Notes",
         path: "/notes",
       },
-      {
-        id: "services",
-        title: "Services",
-        path: "/services",
-      },
+      // {
+      //   id: "services",
+      //   title: "Services",
+      //   path: "/services",
+      // },
       {
         id: "space",
         title: "Space",

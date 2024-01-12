@@ -1,5 +1,4 @@
 import Navbar from '@/components/layout/user/Navbar'
-import './../globals.css'
 import type { Metadata } from 'next'
 import { Poppins, Encode_Sans } from 'next/font/google'
 import Footer from '@/components/layout/user/Footer'
