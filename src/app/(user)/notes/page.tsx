@@ -6,6 +6,8 @@ const NotesPage = () => {
   const folderId = '1_jjbyduSZj8KaCC9n91a-VhLxWn0O0TM';
 
   const embeddedGoogleDriveUrl = `https://drive.google.com/embeddedfolderview?id=${folderId}`;
+  
+  const techNotesUrl = `https://kelvinyou-notes.vercel.app/docs/tech-notes/intro`;
 
   return (
     <SectionWrapper
@@ -27,8 +29,14 @@ const NotesPage = () => {
           allowFullScreen
         ></iframe>
       </div>
-
     </SectionWrapper>
+    // <div className='bg-white mt-[100px]'>
+    //   <iframe
+    //     src={techNotesUrl}
+    //     className='w-[100%] h-[100vh]'
+    //     allowFullScreen
+    //   ></iframe>
+    // </div>
   )
 }
 

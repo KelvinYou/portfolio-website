@@ -121,7 +121,8 @@ export const menuData: Menu[] = [
       {
         id: "notes",
         title: "Notes",
-        path: "/notes",
+        path: "https://kelvinyou-notes.vercel.app/docs/tech-notes/intro",
+        newTab: true,
       },
       // {
       //   id: "services",
