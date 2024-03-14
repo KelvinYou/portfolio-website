@@ -63,26 +63,65 @@ export const personalData = {
   }, ... socialMedia],
 };
 
-export const strengths = [
-  {
-    name: "Self-taught Person",
-    description: "Powered by Internet: Youtube, Github, Leetcode, etc",
-  },
-  {
-    name: "Love to Code",
-    description: "Love exploring more best practice, problem solving, clean code, code structure",
-  },
-  {
-    name: "Problem Solving",
-    description: "Can solve problem on time and love to provide idea to colleague due to the problems they faced",
-  }
-];
-
 export const careerData = {
   role: "Software Engineer",
-  startCoding: "2018-12-20",
+  startCoding: "2019-1-1",
   desc: "I develop Web, Mobile and Blockchain App."
 };
+
+
+
+// New Data
+
+const personalInfo = {
+  nickname: "Kelvin You",
+  fullName: "Kelvin You Kok Eng",
+  location: "Kuala Lumpur, Malaysia",
+  email: "ykekelvin0220@gmail.com",
+  phone: "+(60) 18 373-2752",
+  birthDate: "2001-02-20",
+  gender: "Male",
+  portfolio: "https://kelvinyou.vercel.app/",
+  github: "https://github.com/KelvinYou",
+  linkedin: "https://www.linkedin.com/in/kelvinyou2001/",
+}
+
+const summary = "Experienced software engineer with [CALCULATED_EXPERIENCE] years of experience in developing and maintaining web applications. Skilled in agile methodologies and continuous integration/deployment."
+
+const skills = {
+  "languages": ["TypeScript", "JavaScript", "Java", "Go"],
+  "webTechnologies": ["Next.js", "React", "Express", "Node.js"],
+  "mobileTechnologies": ["React Native", "Flutter"],
+  "databases": ["MongoDB", "PostgreSQL", "MySQL"],
+  "tools": ["Git", "Docker", "Jenkins", "Postman", "Jira", "BitBucket", "Firebase"],
+}
+
+const experiences1 = ""
+
+const education = ""
+
+const certifications = ""
+
+const projects1 = ""
+
+const strengths = [
+  {
+    name: "Continuous Learning and Self-Development",
+    description: "Proactively seeking knowledge through online resources like YouTube tutorials, GitHub repositories, LeetCode challenges, and industry blogs. Committed to staying up-to-date with the latest technologies and best practices in software development."
+  },
+  {
+    name: "Passion for Clean Code and Best Practices",
+    description: "Driven by a deep passion for writing clean, maintainable, and efficient code. Continuously exploring and adopting industry-standard best practices for code structure, design patterns, and software architecture."
+  },
+  {
+    name: "Analytical Problem-Solving Skills",
+    description: "Adept at breaking down complex problems into smaller, manageable components. Able to analyze issues from multiple perspectives and provide innovative solutions. Skilled in identifying potential roadblocks and proactively mitigating risks."
+  },
+  {
+    name: "Collaborative Mindset",
+    description: "Embracing a collaborative approach to problem-solving. Actively sharing knowledge and ideas with colleagues, and encouraging open discussions to find the best solutions. Committed to fostering a positive team environment and supporting others' growth."
+  }
+];
 
 export const languages = [
   {
@@ -101,19 +140,6 @@ export const languages = [
     readAndWrite: 0.8,
   },
 ]
-
-const techStack = {
-  projectManagement: ['Jira'],
-  frontend: ['React', 'NextJS'],
-  backend: ['NodeJS', 'Express'],
-  database: ['MongoDB', 'PostgreSQL'],
-  mobile: ['Flutter'],
-  versionControl: ['Git', 'Bitbucket'],
-  cloud: ['Firebase'],
-  // devOps: ['Docker', 'Jenkins'],
-  languages: ['JavaScript', 'TypeScript'],
-  tools: ['VS Code', 'Postman'],
-};
 
 // Experiences
 export const workExperiences = [
