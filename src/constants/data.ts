@@ -145,7 +145,7 @@ export const languages = [
 export const workExperiences = [
   {
     id: "6",
-    title: "Frontend Web Developer",
+    title: "Frontend Developer (Outsourced to Tencent)",
     companyName: "Beyondsoft (Malaysia) Sdn. Bhd.",
     companyUrl: "https://www.beyondsoft.com/",
     icon: beyondsoft,
@@ -154,10 +154,48 @@ export const workExperiences = [
     startDate: "2023-8-7",
     endDate: null,
     points: [
+      {
+        value: "Developed and maintain user interfaces for Tencent's web & mobile apps using React."
+      },
+      {
+        value: "Collaborated closely with Tencent's development team to understand project requirements and implement designs according to specifications.",
+      },
+      {
+        value: "Optimized web applications for performance, cross-browser compatibility, and responsive design.",
+      },
+      {
+        value: "Implemented features and functionality based on user requirements and feedback.",
+      },
+      {
+        value: "Participated in code reviews and ensured adherence to best practices and coding standards.",
+      },
+      {
+        value: "Utilized version control systems (Git) for collaborative development and code management.",
+      },
+    ],
+    job_descriptions: [
+      "Developed and maintained user interfaces for Tencent's web applications using HTML, CSS, JavaScript, and relevant front-end frameworks/libraries (e.g., React, Angular, Vue.js).",
+      "Collaborated closely with Tencent's development team to understand project requirements and implement designs according to specifications.",
+      "Optimized web applications for performance, cross-browser compatibility, and responsive design.",
+      "Implemented features and functionality based on user requirements and feedback.",
+      "Participated in code reviews and ensured adherence to best practices and coding standards.",
+      "Utilized version control systems (Git) for collaborative development and code management.",
+    ],
+    key_achievements: [
+      "Developed and launched a new user interface for [Project Name], resulting in [X% increase in user engagement/conversion rate/other quantifiable metric].",
+      "Optimized the front-end performance of [Project Name], reducing page load times by [X%] and improving overall user experience.",
+      "Implemented accessibility features in [Project Name] to enhance usability for users with disabilities.",
+      "Contributed to the development and deployment of [Project Name], a mission-critical application for Tencent's [Department/Service].",
     ],
     techStacks: [
-      "ReactJS",
+      "React",
+      "Typescript",
       "Git",
+      "Webpack",
+      "Scrum methodologies",
+      "Cross-browser compatibility",
+      "Responsive design",
+      "Accessibility",
     ],
     experienceCategory: "work"
   },
@@ -190,6 +228,21 @@ export const workExperiences = [
           "performance"
         ],
       },
+    ],
+    // TODO: update below references.
+    job_descriptions: [
+      "Revitalized and advanced Java-based projects by integrating innovative features and implementing a thorough testing regimen.",
+      "Proficiently mastered debugging techniques, conducted efficient web resource searches, simplify application deployment processes, ensuring optimal project performance.",
+      "Collaborated closely with cross-functional teams to gather requirements, design solutions, and implement features aligned with project goals and user needs.",
+      "Conducted code reviews and provided constructive feedback to ensure adherence to coding standards, maintainability, and scalability of the codebase.",
+      "Utilized version control systems (TortoiseSVN) to manage code changes, facilitate collaboration, and maintain a stable development environment.",
+      "Gained hands-on experience with Java frameworks and technologies, including JavaServer Pages (JSP), Tomcat, Firebase, Oracle SQL, XML, Linux, and Jasper.",
+      "Demonstrated a strong commitment to continuous learning by actively participating in knowledge-sharing sessions and staying up-to-date with the latest industry trends and best practices."
+    ],
+    key_achievements: [
+      "Integrated innovative features and implemented rigorous testing methodologies, resulting in improved application performance and reliability.",
+      "Resolved complex issues through efficient web resource searches and debugging techniques, ensuring seamless application deployment processes.",
+      "Adhered to industry best practices during project development, contributing to overall project success."
     ],
     techStacks: [
       "Java",
@@ -250,6 +303,21 @@ export const workExperiences = [
           "built APIs",
         ],
       },
+    ],
+    // TODO: update below references.
+    job_descriptions: [
+      "Revitalized the project's frontend using ReactJS to enhance maintenance, modernization, and dynamic website capabilities, ensuring a seamless user experience.",
+      "Developed a cutting-edge blockchain application utilizing ReactJS and Solidity, integrating smart contracts with MetaMask for secure and streamlined cryptocurrency transactions.",
+      "Explored Laravel's router functionality, Model-View-Controller (MVC) architecture, Object-Relational Mapping (ORM), events, listeners, and data seeding techniques for efficient database testing and management.",
+      "Implemented key functionalities such as user authentication, real-time exchange rate fetching, dynamic UI updates, and built APIs for seamless Create, Read, Update, and Delete (CRUD) operations on transactions.",
+      "Utilized version control systems (Git) to manage code changes, facilitate collaboration, and maintain a stable development environment."
+    ],
+    key_achievements: [
+      "Successfully integrated ReactJS with Solidity and MetaMask, enabling secure and seamless blockchain-based transactions within the application.",
+      "Leveraged Laravel's powerful features, including routing, MVC architecture, ORM, events, listeners, and data seeding, to streamline database management and testing processes.",
+      "Implemented real-time exchange rate fetching and dynamic UI updates, enhancing the application's responsiveness and user experience.",
+      "Developed robust APIs for CRUD operations on transactions, ensuring efficient data management and retrieval.",
+      "Contributed to the modernization and maintenance of the project's frontend by incorporating ReactJS, improving code organization, and enhancing overall functionality."
     ],
     techStacks: [
       "Laravel PHP",

@@ -7,8 +7,6 @@ const NotesPage = () => {
 
   const embeddedGoogleDriveUrl = `https://drive.google.com/embeddedfolderview?id=${folderId}`;
   
-  const techNotesUrl = `https://kelvinyou-notes.vercel.app/docs/tech-notes/intro`;
-
   return (
     <SectionWrapper
       idName='notes'

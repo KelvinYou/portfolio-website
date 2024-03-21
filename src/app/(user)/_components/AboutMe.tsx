@@ -146,10 +146,10 @@ const AboutMe: FC = () => {
         <p className="empty-4 text-gray-300 text-[17px] max-w-3xl leading-[30px] text-justify">
           <HighlightText
             highlightedTexts={[
-              '4 years',
+              '1 year',
               'blockchain, investing and chess'
             ]}
-            text="I've been coding since 2019 with 4 years of experience. I'm also passionate about blockchain, investing and chess."
+            text="I've been coding since 2019 with 1 year of experience. I'm also passionate about blockchain, investing and chess."
           />
 
           {/* I have developed in the field of software development for 4 years, 
@@ -179,11 +179,11 @@ const AboutMe: FC = () => {
       </motion.div> */}
 
       {/* Service Card */}
-      <div className="mt-20 flex flex-wrap gap-10">
+      {/* <div className="mt-20 flex flex-wrap gap-10">
         {services.map((service: any, i: number) => (
           <ServiceCard key={service.title} index={i} {...service} />
         ))}
-      </div>
+      </div> */}
     </SectionWrapper>
   );
 };

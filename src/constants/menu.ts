@@ -108,20 +108,20 @@ export const menuData: Menu[] = [
     title: "Others",
     newTab: false,
     submenu: [
-      {
-        id: "resume",
-        title: "Resume",
-        path: RESUME_LINK,
-      },
-      {
-        id: "co-cu",
-        title: "Co Curricular",
-        path: "/co-cu",
-      },
+      // {
+      //   id: "resume",
+      //   title: "Resume",
+      //   path: RESUME_LINK,
+      // },
+      // {
+      //   id: "co-cu",
+      //   title: "Co Curricular",
+      //   path: "/co-cu",
+      // },
       {
         id: "notes",
         title: "Notes",
-        path: "https://kelvinyou-notes.vercel.app/docs/tech-notes/intro",
+        path: "https://kelvinyou-notes.vercel.app/docs/tech-notes/",
         newTab: true,
       },
       // {

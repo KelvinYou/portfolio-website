@@ -6,10 +6,10 @@ import Services from '@/components/services/Services'
 const ContactPage = () => {
   return (
     <>
-      <Services />
+      {/* <Services /> */}
       {/* <ContactHome /> */}
 
-      {/* <ComingSoon title='Services'/> */}
+      <ComingSoon title='Services'/>
     </>
   )
 }
