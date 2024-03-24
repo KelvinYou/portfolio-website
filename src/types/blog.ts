@@ -69,7 +69,6 @@ export interface Divider {
   color: string;
 }
 
-// Define the Blog page type
 export type BlogPage = {
   _id: string;
   title: string;

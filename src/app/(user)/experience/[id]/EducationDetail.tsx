@@ -2,14 +2,16 @@
 
 import { EXPERIENCES_PATH } from '@/constants/routes';
 import { SectionWrapper } from '@/hoc'
-import { textVariant } from '@/utils/motion'
-import { motion } from 'framer-motion'
-import { Calendar, ChevronsLeft } from 'lucide-react';
-import Link from 'next/link';
+import { Calendar, ChevronsLeft, Download } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import React from 'react'
 import Image from 'next/image';
 import { formatDate } from '@/utils/dateUtil';
+import BlogElementRenderer from '@/components/blog/BlogElementRenderer';
+import { getDurationString } from '@/utils/common';
+import SideCard from '@/components/SideCard';
+import BackButton from '@/components/BackButton';
+import Link from 'next/link';
 
 const EducationDetail = ({ educationDetail }: { educationDetail: any }) => {
   const router = useRouter();
@@ -20,29 +22,32 @@ const EducationDetail = ({ educationDetail }: { educationDetail: any }) => {
     icon,
     startDate,
     endDate,
+    elements,
+    documents = [],
+    points,
+    cgpa,
+    techStacks
   } = educationDetail;
+
+  const duration = getDurationString(startDate, endDate);
+
+  const formattedPoints = {
+    type: "unordered_list",
+    content: points.map((item: any) => item.value)
+  };
+
+  const articleElement = [formattedPoints, ...elements || []];
 
   return (
     <SectionWrapper
       idName='educationDetail'
     >
       
-        <div>
-          <button
-            onClick={() => router.push(EXPERIENCES_PATH)}
-            className='group relative inline-flex items-center overflow-hidden rounded bg-on-primary px-8 py-3 text-primary focus:outline-none focus:ring'
-          >
-            <span className="absolute -start-full transition-all group-hover:start-4">
-              <ChevronsLeft />
-            </span>
-
-            <span className="text-sm font-medium transition-all group-hover:ms-4">
-              Back to Experiences
-            </span>
-                      
-          </button>
-          
-        </div>
+      <BackButton
+        text='Back To Experiences'
+        path={EXPERIENCES_PATH}
+      />
+        
 
         <div className="-mx-4 flex flex-wrap mt-10">
 
@@ -81,6 +86,20 @@ const EducationDetail = ({ educationDetail }: { educationDetail: any }) => {
 
                           <span className='ml-2'>{formatDate(startDate, 'long') + " - " + formatDate(endDate, 'long')}</span>
                         </span>
+
+                        <span className='flex items-center justify-center'>
+                          <span className='ml-2'>{duration}</span>
+                        </span>
+                      </span>
+                    </p>
+                  </div>
+
+                  <div className="mb-5 flex items-center">
+                    <p className="mr-5 flex items-center text-base font-medium text-body-color">
+                      <span className='ml-3 grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-1'>
+                        <span className='flex items-center justify-center'>
+                          <span className='ml-2'>CGPA: {cgpa}</span>
+                        </span>
                       </span>
 
                     </p>
@@ -88,27 +107,60 @@ const EducationDetail = ({ educationDetail }: { educationDetail: any }) => {
                 </div>
               </div>
 
-              <div>
-                
-              </div>
+              <BlogElementRenderer elements={articleElement} />
             </div>
           </div>
 
-          <div className="w-full px-4 lg:w-4/12">
-            <div className="bg-gray-dark mb-10 rounded-sm  shadow-none">
-              <h3 className="border-b px-8 py-4 text-lg font-semibold border-white border-opacity-10 text-white">
-                Err.. No Idea
-              </h3>
-              <p className='px-8 py-6 text-body-color'>
-                If I only showed a few paragraphs, it would feel too spacey here.
-                Please give me some suggestions what should I put here.
-              </p>
-            </div>
+          <div className='w-full px-4 lg:w-4/12'>
+            {documents.length > 0 && 
+              <SideCard
+                header={'Documents'}
+                body={
+                  <div className=''>
+                    {documents.map((document: any, index: number) => {
+                      return (
+                        <Link 
+                          key={index}
+                          href={document.href} 
+                          className='text-body-color hover:text-white'
+                          target='_blank'
+                        >
+                          <span className='flex gap-2'>
+                            {document.name} <Download size={20}/>
+                          </span>
+                          
+                        </Link>
+                      )
+
+                    })}
+
+                  </div>
+                }
+              />
+            }
+
+
+            <SideCard
+              header={'Tech Stacks'}
+              body={
+                <ul className='list-inside list-disc text-body-color'>
+                  {techStacks.map((techStack: string, index: number) => {
+                    return (
+                      <li
+                        key={index}
+                        className="mb-2 text-base font-medium text-body-color sm:text-lg lg:text-base xl:text-lg"
+                      >
+                        {techStack}
+                      </li>
+                    )
+                  })}
+                </ul>
+              }
+            />
           </div>
+
+
         </div>
-
-
-      
     </SectionWrapper>
   )
 }

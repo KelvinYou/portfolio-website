@@ -98,7 +98,6 @@ const ExperienceCard: FC<any> = ({ experience }) => {
               text={point.value}
               highlightedTexts={point.highlightedTexts} 
             />
-            {/* {point} */}
           </li>
         ))}
       </ul>
@@ -238,7 +237,7 @@ const EducationCard: FC<any> = ({ education }) => {
         ))}
       </div> */}
 
-      {/* <div className='mt-6'>
+      <div className='mt-6'>
         <Link
           className=" group relative inline-flex items-center overflow-hidden rounded bg-on-primary px-8 py-3 text-black focus:outline-none focus:ring"
           href={`/experience/${education.id}`}
@@ -252,7 +251,7 @@ const EducationCard: FC<any> = ({ education }) => {
             Find Out More
           </span>
         </Link>
-      </div> */}
+      </div>
 
       {/* <CustomButton>More</CustomButton> */}
     </VerticalTimelineElement>

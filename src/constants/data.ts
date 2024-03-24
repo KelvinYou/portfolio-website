@@ -411,19 +411,33 @@ export const educations = [
           "Data Science"
         ],
       },
-      
-      
     ],
     techStacks: [
       "Java",
+      "Flutter",
       "C++",
       "TypeScript",
       "ReactJS",
       "Linux",
       "Python",
-      "Git"
+      "Git",
     ],
     experienceCategory: "education",
+    elements: [
+      {
+        "type": "image",
+        "content": {
+          "url": "/images/educations/graduate_stage_photo.jpg",
+          "alt": "home"
+        }
+      },
+    ],
+    documents: [
+      {
+        href: "/pdf/educations/Kelvin-Degree-Transcript.pdf",
+        name: "Transcript"
+      }
+    ]
   },
   {
     id: "diploma",
@@ -448,15 +462,22 @@ export const educations = [
       },
     ],
     techStacks: [
+      "C lang",
       "Java",
       "C++",
-      "TypeScript",
-      "ReactJS",
+      "html",
+      "css",
+      "JavaScript",
       "Linux",
-      "Python",
       "Git"
     ],
     experienceCategory: "education",
+    documents: [
+      {
+        href: "/pdf/educations/Kelvin-Diploma-Transcript.pdf",
+        name: "Transcript"
+      }
+    ]
   },
 ]
 

@@ -11,7 +11,7 @@ interface BlogElementRendererProps {
   elements: BlogElement[];
 }
 
-const BlogElementRenderer: React.FC<BlogElementRendererProps> = ({ elements }) => {
+const BlogElementRenderer: React.FC<BlogElementRendererProps> = ({ elements = [] }) => {
   return (
     <div>
       {elements.map((element, index) => {
