@@ -434,9 +434,13 @@ export const educations = [
     ],
     documents: [
       {
+        href: "/pdf/educations/RW210526623.pdf",
+        name: "Certificate"
+      },
+      {
         href: "/pdf/educations/Kelvin-Degree-Transcript.pdf",
         name: "Transcript"
-      }
+      },
     ]
   },
   {
