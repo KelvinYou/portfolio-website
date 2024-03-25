@@ -1,9 +1,7 @@
-"use client";
 
 import { EXPERIENCES_PATH } from '@/constants/routes';
 import { SectionWrapper } from '@/hoc'
 import { Calendar, ChevronsLeft, Download } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 import React from 'react'
 import Image from 'next/image';
 import { formatDate } from '@/utils/dateUtil';
@@ -14,8 +12,6 @@ import BackButton from '@/components/BackButton';
 import Link from 'next/link';
 
 const EducationDetail = ({ educationDetail }: { educationDetail: any }) => {
-  const router = useRouter();
-
   const {
     universityName,
     title,
@@ -125,7 +121,7 @@ const EducationDetail = ({ educationDetail }: { educationDetail: any }) => {
                           className='text-body-color hover:text-white'
                           target='_blank'
                         >
-                          <span className='flex gap-2'>
+                          <span className='flex gap-2 mb-4'>
                             {document.name} <Download size={20}/>
                           </span>
                           
@@ -148,7 +144,7 @@ const EducationDetail = ({ educationDetail }: { educationDetail: any }) => {
                     return (
                       <li
                         key={index}
-                        className="mb-2 text-base font-medium text-body-color sm:text-lg lg:text-base xl:text-lg"
+                        className="text-base font-medium text-body-color sm:text-lg lg:text-base xl:text-lg"
                       >
                         {techStack}
                       </li>

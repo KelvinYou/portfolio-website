@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 interface SideCardProps {
   header?: React.ReactNode | string;
@@ -23,12 +23,12 @@ const SideCard: React.FC<SideCardProps> = ({ header, body }) => {
           </>
         }
 
-        <p className='px-8 py-6 text-body-color'>
+        <div className='px-8 py-6 text-body-color'>
           {body}
-        </p>
+        </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SideCard
+export default SideCard;

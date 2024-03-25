@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import React from 'react'
 
 interface BackButtonProps {
-  path: string;
+  path?: string;
   text: string;
 }
 
@@ -14,7 +14,11 @@ const BackButton: React.FC<BackButtonProps> = ({ path, text }) => {
   
   return (
     <button
-      onClick={() => router.push(path)}
+      onClick={() => {
+        path ? 
+        router.push(path) 
+        : router.back()
+      }}
       className='group relative inline-flex items-center overflow-hidden rounded bg-on-primary px-8 py-3 text-primary focus:outline-none focus:ring'
     >
       <span className="absolute -start-full transition-all group-hover:start-4">
