@@ -13,7 +13,7 @@ import "react-vertical-timeline-component/style.min.css";
 import { SectionWrapper } from '@/hoc';
 import { fadeIn, textVariant } from "@/utils/motion";
 import { combinedExperiences, educations, workExperiences } from "@/constants/data";
-import { useSearchParams } from 'next/navigation';
+// import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 
 import "./Experience.scss";
@@ -258,7 +258,7 @@ const EducationCard: FC<any> = ({ education }) => {
 };
 
 const Experience: FC = () => {
-  const searchParams = useSearchParams()
+  // const searchParams = useSearchParams()
   // const [experienceCategory, setExperienceCategory] = useState(searchParams.get('category') ?? "all");
   const [experienceCategory, setExperienceCategory] = useState("all");
 
