@@ -1,3 +1,5 @@
+import { Duration } from "date-fns/types";
+
 export function calculateExperience(experiences: any) {
   let totalMonths = 0;
   for (const exp of experiences) {

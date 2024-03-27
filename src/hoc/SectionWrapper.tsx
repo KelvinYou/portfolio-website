@@ -7,7 +7,7 @@ import { fadeIn, staggerContainer, textVariant } from "@/utils/motion";
 
 interface SectionWrapperProps {
   idName: string;
-  children: ReactNode;
+  children?: ReactNode;
   title?: string;
   subtitle?: string;
   description?: string;
