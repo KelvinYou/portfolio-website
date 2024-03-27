@@ -1,18 +1,18 @@
 "use client";
 
-import SelectableButtonGroup from '@/components/SelectableButtonGroup';
 import { SectionWrapper } from '@/hoc'
 import { fadeIn, textVariant } from '@/utils/motion'
 import { motion } from 'framer-motion'
 import React, { FC, useEffect, useState } from 'react'
 import { getProjects } from '@/services/projectService';
-import PageTitle from '@/components/PageTitle'
-import Link from 'next/link';
-import { ChevronRight } from 'lucide-react';
+import { ChevronsRight } from 'lucide-react';
 import ProjectCard from '../../projects/_components/ProjectCard';
+import BaseButton from '@/components/ui/BaseButton';
+import { useRouter } from 'next/navigation';
 
 const Project: FC = () => {
   const [projectCategory, setProjectCategory] = useState("all");
+  const router = useRouter();
 
   const currentProjects = getProjects()
     .filter((project) => {
@@ -35,36 +35,12 @@ const Project: FC = () => {
   return (
     <SectionWrapper
       idName='project'
+      title='Projects.'
+      subtitle='My work'
+      description='Following projects showcases my skills and experience through
+      real-world examples of my work. It reflects my ability to solve complex problems, work with different technologies,
+      and manage projects effectively. '
     >
-      <PageTitle 
-        title='Projects.'
-        subtitle='My work'
-        description='Following projects showcases my skills and experience through
-        real-world examples of my work. It reflects my ability to solve complex problems, work with different technologies,
-        and manage projects effectively. '
-      />
-
-      <motion.div 
-        initial="hidden"
-        animate="show"
-        variants={fadeIn("", "", 0.1, 1)}
-        className='flex justify-between mt-20'
-      >
-        <SelectableButtonGroup
-          options={options}
-          onOptionChange={handleOptionChange}
-        />
-        <Link
-          href="/projects"
-          className='text-white flex items-center '
-        >
-          <span>
-            All
-          </span>
-
-          <ChevronRight />
-        </Link>
-      </motion.div>
 
       {/* Project Card */}
       <div className='mt-10 min-h-[500px]'>
@@ -78,7 +54,26 @@ const Project: FC = () => {
           ))}
         </div>
       </div>
-      
+
+      <motion.div 
+        initial="hidden"
+        animate="show"
+        variants={fadeIn("", "", 0.1, 1)}
+        className='mb-5'
+      >
+        <BaseButton
+          className='group relative inline-flex items-center overflow-hidden rounded bg-on-primary px-8 py-3 text-black focus:outline-none focus:ring'
+          onClick={() => router.push('/projects')}
+        >      
+          <span className="absolute -end-full transition-all group-hover:end-4">
+            <ChevronsRight />
+          </span>
+
+          <span className="text-sm font-medium transition-all group-hover:me-4">
+            Show All Projects
+          </span>
+        </BaseButton>
+      </motion.div>
 
     </SectionWrapper>
   )

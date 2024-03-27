@@ -10,7 +10,6 @@ import { FC } from 'react';
 import { useRouter } from 'next/navigation';
 import { Project } from '@/types/project';
 import { ServicePackage } from '@/types/services';
-import CustomButton from '../ui/CustomButton';
 import BaseButton from '../ui/BaseButton';
 
 interface ServicePackageCardProps {

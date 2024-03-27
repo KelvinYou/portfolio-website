@@ -1,4 +1,5 @@
 "use client";
+
 import React, { FC, useEffect, useState } from 'react';
 import Image from 'next/image';
 import {
@@ -75,8 +76,6 @@ const ExperienceCard: FC<any> = ({ experience }) => {
         >
           {experience.companyName}
         </p>}
-        
-        
       </div>
 
       {/* {experience.description && <div className="mt-5 text-justify">
@@ -290,26 +289,13 @@ const Experience: FC = () => {
     <>
       <SectionWrapper
         idName='experience'
+        title="Work Experience and Education."
+        subtitle='What I have done so far'
       >
-        {/* Title */}
-        <motion.div
-          // initial="hidden"
-          // animate="show"
-          variants={textVariant()}
-        >
-        {/* <motion.div> */}
-          <p className="sm:text-[18px] text-[14px] text-secondary uppercase tracking-wider">
-            What I have done so far
-          </p>
-          <h2 className="text-white font-black md:text-[60px] sm:text-[50px] xs:text-[40px] text-[30px]">
-            { "Work Experience and Education."}
-          </h2>
-        </motion.div>
       </SectionWrapper>
 
       <SectionWrapper
         idName='render-experiences'
-        
       > 
         <motion.div 
           initial="hidden"

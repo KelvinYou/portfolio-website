@@ -201,7 +201,7 @@ export const workExperiences = [
   },
   {
     id: "5",
-    title: "Java Software Engineer Intern",
+    title: "Java Software Engineer (Intern)",
     companyName: "Finexus International Sdn. Bhd.",
     companyUrl: "https://www.finexusgroup.com/",
     icon: finexus,
@@ -259,7 +259,7 @@ export const workExperiences = [
   },
   {
     id: "3",
-    title: "Software Engineer Intern",
+    title: "Software Engineer (Intern)",
     companyName: "Techtics Blockchain PLT",
     companyUrl: "https://www.techtics.io/",
     icon: techtics,

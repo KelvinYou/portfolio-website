@@ -5,9 +5,9 @@ import ComingSoon from '@/components/ComingSoon'
 const ResumePage = () => {
   return (
     <>
-      {/* <ResumeHome /> */}
+      <ResumeHome />
 
-      <ComingSoon title='Resume'/>
+      {/* <ComingSoon title='Resume'/> */}
     </>
   )
 }

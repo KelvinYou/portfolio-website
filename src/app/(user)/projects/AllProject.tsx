@@ -10,6 +10,7 @@ import PageTitle from '@/components/PageTitle'
 import Link from 'next/link';
 import { ChevronRight } from 'lucide-react';
 import ProjectCard from './_components/ProjectCard';
+import BackButton from '@/components/BackButton';
 
 const AllProject: FC = () => {
   const [projectCategory, setProjectCategory] = useState("all");
@@ -76,15 +77,18 @@ const AllProject: FC = () => {
   return (
     <SectionWrapper
       idName='project'
+
     >
-      <PageTitle 
+      <BackButton
+        text='Back To Home'
+      />
+      <PageTitle
         title='Projects.'
         subtitle='My work'
         description='Following projects showcases my skills and experience through
         real-world examples of my work. It reflects my ability to solve complex problems, work with different technologies,
         and manage projects effectively. '
       />
-
       <motion.div 
         initial="hidden"
         animate="show"
