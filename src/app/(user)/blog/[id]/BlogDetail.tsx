@@ -11,12 +11,12 @@ import { useRouter } from 'next/navigation'
 import TagButton from '@/components/tag/TagButton'
 import BlogElementRenderer from '@/components/blog/BlogElementRenderer'
 import { formatDate } from '@/utils/dateUtil'
-import SharePost from '@/components/blog/SharePost'
 import RelatedPosts from '@/components/blog/RelatedPosts'
 import NewsLatterBox from '@/components/blog/NewsLatterBox'
 import ScrollToTop from '@/components/ScrollToTop'
 import SearchBox from '@/components/blog/SearchBox'
 import ZoomableImage from '@/components/ZoomableImage'
+import SharePost from '@/components/SharePost'
 
 interface BlogDetailProps {
   blogDetail: BlogPage;
@@ -36,6 +36,8 @@ const ProjectDetail: FC<BlogDetailProps> = ({ blogDetail }) => {
     createDate,
     modifyDate,
   } = blogDetail;
+
+  const defaultUrl = typeof window !== 'undefined' ? window.location.href : '';
 
   return (
     <SectionWrapper
@@ -169,7 +171,7 @@ const ProjectDetail: FC<BlogDetailProps> = ({ blogDetail }) => {
               <div className="items-center justify-between sm:flex">
                 <div className="mb-5">
                   <h4 className="mb-3 text-sm font-medium text-body-color">
-                    Tags :
+                    Tags:
                   </h4>
                   <div className="flex items-center">
                     {tags.map((tag, index) => (
@@ -180,14 +182,25 @@ const ProjectDetail: FC<BlogDetailProps> = ({ blogDetail }) => {
                     ))}
                   </div>
                 </div>
-                <div className="mb-5">
-                  <h5 className="mb-3 text-sm font-medium text-body-color sm:text-right">
-                    Share this post :
-                  </h5>
-                  <div className="flex items-center gap-2">
-                    <SharePost />
-                  </div>
-                </div>
+
+                <SharePost 
+                  defaultUrl={defaultUrl}
+                  defaultText={'Check out this awesome blog!!'}
+                  shareItems={[
+                    {
+                      name: 'linkedin',
+                      label: "Share On Linkedin",
+                    },
+                    {
+                      name: 'facebook',
+                      label: "Share On Facebook",
+                    },
+                    {
+                      name: 'whatsapp',
+                      label: "Share On WhatsApp",
+                    },
+                  ]}
+                />
               </div>
             </div>
           </div>

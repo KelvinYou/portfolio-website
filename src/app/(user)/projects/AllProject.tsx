@@ -79,16 +79,26 @@ const AllProject: FC = () => {
       idName='project'
 
     >
-      <BackButton
-        text='Back To Home'
-      />
+      <motion.div 
+        initial="hidden"
+        animate="show"
+        variants={fadeIn("", "", 0.1, 1)}
+        className=''
+      >
+        <BackButton
+          text='Back To Home'
+        />
+      </motion.div>
+
       <PageTitle
         title='Projects.'
         subtitle='My work'
         description='Following projects showcases my skills and experience through
         real-world examples of my work. It reflects my ability to solve complex problems, work with different technologies,
         and manage projects effectively. '
+        className="mt-10"
       />
+
       <motion.div 
         initial="hidden"
         animate="show"

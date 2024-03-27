@@ -19,29 +19,21 @@ const ShareButton: FC<ShareButtonProps> = ({ label, icon, onClick }) => (
 );
 
 const SharePost: FC = () => {
-  // const url = window.location.href;
-  // // const url = "https://kelvinyou.vercel.app/";
-  // const encodedUrl = encodeURIComponent(url);
-
   const text = "Check out this awesome blog!";
 
   const shareToLinkedIn = () => {
     const url = window.location.href;
-    // const url = "https://kelvinyou.vercel.app/";
     const encodedUrl = encodeURIComponent(url);
     window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`, '_blank');
   };
 
   const shareToWhatsApp = () => {
     const url = window.location.href;
-    // const url = "https://kelvinyou.vercel.app/";
-    const encodedUrl = encodeURIComponent(url);
     window.open(`https://wa.me/?text=${text} \n ${url}`, '_blank');
   };
 
   const shareToFacebook = () => {
     const url = window.location.href;
-    // const url = "https://kelvinyou.vercel.app/";
     const encodedUrl = encodeURIComponent(url);
     window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`, '_blank');
   };

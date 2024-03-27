@@ -8,15 +8,17 @@ interface PageTitleProps {
   title: string;
   subtitle?: string;
   description?: string;
+  className?: string;
 }
 
-const PageTitle: FC<PageTitleProps> = ({ title, subtitle, description }) => {
+const PageTitle: FC<PageTitleProps> = ({ title, subtitle, description, className }) => {
   return (
     <>
       <motion.div
         initial="hidden"
         animate="show"
         variants={textVariant()}
+        className={className}
       >
         {subtitle && <p className="sm:text-[18px] text-[14px] text-secondary uppercase tracking-wider">
           {subtitle}
