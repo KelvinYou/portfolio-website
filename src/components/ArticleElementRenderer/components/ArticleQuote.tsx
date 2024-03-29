@@ -1,11 +1,11 @@
 import { Quote } from '@/types/blog';
 import React from 'react'
 
-interface BlogQuoteProps {
+interface ArticleQuoteProps {
   content: Quote;
 }
 
-const BlogQuote: React.FC<BlogQuoteProps> = ({ content }) => {
+const ArticleQuote: React.FC<ArticleQuoteProps> = ({ content }) => {
   return (
     // <div>
     //   <blockquote>
@@ -171,4 +171,4 @@ const BlogQuote: React.FC<BlogQuoteProps> = ({ content }) => {
   );
 };
 
-export default BlogQuote;
+export default ArticleQuote;

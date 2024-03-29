@@ -9,13 +9,13 @@ import Image from 'next/image'
 import { Calendar, ChevronsLeft } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import TagButton from '@/components/tag/TagButton'
-import BlogElementRenderer from '@/components/blog/BlogElementRenderer'
+import ArticleElementRenderer from '@/components/ArticleElementRenderer'
 import { formatDate } from '@/utils/dateUtil'
 import RelatedPosts from '@/components/blog/RelatedPosts'
 import NewsLatterBox from '@/components/blog/NewsLatterBox'
 import ScrollToTop from '@/components/ScrollToTop'
 import SearchBox from '@/components/blog/SearchBox'
-import ZoomableImage from '@/components/ZoomableImage'
+import ZoomableImage from '@/components/ScalableImage'
 import SharePost from '@/components/SharePost'
 
 interface BlogDetailProps {
@@ -166,7 +166,7 @@ const ProjectDetail: FC<BlogDetailProps> = ({ blogDetail }) => {
                 </div>
               }
               
-              <BlogElementRenderer elements={elements} />
+              <ArticleElementRenderer elements={elements} />
 
               <div className="items-center justify-between sm:flex">
                 <div className="mb-5">

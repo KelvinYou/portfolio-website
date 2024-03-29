@@ -4,7 +4,7 @@ import { Minimize2, MinusCircle, PlusCircle } from 'lucide-react';
 import Image from 'next/image';
 import React, { useState, useRef, useEffect } from 'react';
 
-const ZoomableImage = ({ image }: { image: string }) => {
+const ScalableImage = ({ image }: { image: string }) => {
   const [isZoomed, setIsZoomed] = useState(false);
   const [zoomLevel, setZoomLevel] = useState(80);
 
@@ -106,4 +106,4 @@ const ZoomableImage = ({ image }: { image: string }) => {
   );
 };
 
-export default ZoomableImage;
+export default ScalableImage;

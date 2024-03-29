@@ -1,13 +1,13 @@
-import ZoomableImage from '@/components/ZoomableImage'
+import ScalableImage from '@/components/ScalableImage'
 import { Image } from '@/types/blog'
 import React from 'react'
 
-const BlogImage = ({ content }: { content: Image }) => {
+const ArticleImage = ({ content }: { content: Image }) => {
   const { alt, url } = content;
   return (
     <div className="mb-10 w-full h-full overflow-hidden rounded">
       <div className="relative w-full ">
-        <ZoomableImage
+        <ScalableImage
           image={url}
         />
       </div>
@@ -15,4 +15,4 @@ const BlogImage = ({ content }: { content: Image }) => {
   )
 }
 
-export default BlogImage
+export default ArticleImage

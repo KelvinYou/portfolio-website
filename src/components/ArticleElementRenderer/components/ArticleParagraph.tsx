@@ -1,6 +1,6 @@
 import { Paragraph } from "@/types/blog"
 
-const BlogParagraph = ({ content } : { content: Paragraph }) => {
+const ArticleParagraph = ({ content } : { content: Paragraph }) => {
   return (
     <p 
       className="mb-8 text-base font-medium leading-relaxed text-body-color sm:text-lg
@@ -11,4 +11,4 @@ const BlogParagraph = ({ content } : { content: Paragraph }) => {
   )
 }
 
-export default BlogParagraph;
+export default ArticleParagraph;

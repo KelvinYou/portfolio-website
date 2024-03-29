@@ -1,11 +1,11 @@
 import React from 'react';
 
-interface BlogListProps {
+interface ArticleListProps {
   content: string[];
   ordered?: boolean; // New prop to indicate whether it's an ordered list
 }
 
-const BlogList: React.FC<BlogListProps> = ({ content, ordered = false }) => {
+const ArticleList: React.FC<ArticleListProps> = ({ content, ordered = false }) => {
   const ListComponent = ordered ? 'ol' : 'ul';
 
   return (
@@ -22,4 +22,4 @@ const BlogList: React.FC<BlogListProps> = ({ content, ordered = false }) => {
   );
 };
 
-export default BlogList;
+export default ArticleList;

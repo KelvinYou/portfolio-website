@@ -5,7 +5,7 @@ import { Calendar, ChevronsLeft, Download } from 'lucide-react';
 import React from 'react'
 import Image from 'next/image';
 import { formatDate } from '@/utils/dateUtil';
-import BlogElementRenderer from '@/components/blog/BlogElementRenderer';
+import ArticleElementRenderer from '@/components/ArticleElementRenderer';
 import { getDurationString } from '@/utils/common';
 import SideCard from '@/components/SideCard';
 import BackButton from '@/components/BackButton';
@@ -103,7 +103,7 @@ const EducationDetail = ({ educationDetail }: { educationDetail: any }) => {
                 </div>
               </div>
 
-              <BlogElementRenderer elements={articleElement} />
+              <ArticleElementRenderer elements={articleElement} />
             </div>
           </div>
 

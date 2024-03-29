@@ -1,7 +1,7 @@
 "use client"
 
-import ZoomableImage from '@/components/ZoomableImage'
-import BlogElementRenderer from '@/components/blog/BlogElementRenderer'
+import ZoomableImage from '@/components/ScalableImage'
+import ArticleElementRenderer from '@/components/ArticleElementRenderer'
 import { projects } from '@/constants/data'
 import SectionWrapper from '@/hoc/SectionWrapper'
 import { getProjectsByIds } from '@/services/projectService'
@@ -92,7 +92,7 @@ const ProjectDetail: FC<ProjectDetailProps> = ({ projectDetail }) => {
 
 
             <div>
-              {elements && <BlogElementRenderer elements={elements} />}
+              {elements && <ArticleElementRenderer elements={elements} />}
 
             </div>
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { Header } from "@/types/blog";
 
-const BlogHeader = ({ content }: { content: Header }) => {
+const ArticleHeader = ({ content }: { content: Header }) => {
   const { text, level } = content;
 
   // Map level to the corresponding HTML heading tag
@@ -16,4 +16,4 @@ const BlogHeader = ({ content }: { content: Header }) => {
   );
 };
 
-export default BlogHeader;
+export default ArticleHeader;
