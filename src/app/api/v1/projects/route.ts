@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import fs from "fs/promises";
 import path from "path";
-import { Project } from "@/types/project";
+import { ProjectType } from "@/types/project";
 
 const dataFolderPath = path.resolve("src/data");
 const projectsFilePath = path.join(dataFolderPath, "projects.json");
@@ -13,7 +13,7 @@ export const GET = async (_request: NextRequest) => {
 
     // Read the projects from the JSON file
     const existingProjects = await fs.readFile(projectsFilePath, "utf-8");
-    const projects: Project[] = JSON.parse(existingProjects);
+    const projects: ProjectType[] = JSON.parse(existingProjects);
 
     // Return a success response with the projects data
     return new NextResponse(
@@ -50,7 +50,7 @@ export const POST = async (request: NextRequest) => {
     await ensureFileExists(projectsFilePath, "[]");
 
     // Parse the incoming JSON data from the request body
-    const newProject: Project = await request.json();
+    const newProject: ProjectType = await request.json();
 
     // Check for mandatory fields
     const mandatoryFields = ["name", "description", "date"];
@@ -69,12 +69,12 @@ export const POST = async (request: NextRequest) => {
     }
 
     // Remove unnecessary fields
-    const validKeys: Array<keyof Project> = Object.keys(newProject) as Array<keyof Project>;
+    const validKeys: Array<keyof ProjectType> = Object.keys(newProject) as Array<keyof ProjectType>;
     const sanitizedProject: any = Object.fromEntries(validKeys.map(key => [key, newProject[key]]));
 
     // Read the existing projects from the JSON file
     const existingProjects = await fs.readFile(projectsFilePath, "utf-8");
-    const projects: Project[] = JSON.parse(existingProjects);
+    const projects: ProjectType[] = JSON.parse(existingProjects);
 
     // Generate a new project ID (you might want to use a more robust method)
     const projectId = Date.now().toString();
@@ -82,7 +82,7 @@ export const POST = async (request: NextRequest) => {
     const currentDate = new Date().toISOString();
 
     // Create the new project object
-    const projectToAdd: Project = {
+    const projectToAdd: ProjectType = {
       id: projectId,
       createDate: currentDate,
       modifyDate: currentDate,
@@ -128,7 +128,7 @@ export const PATCH = async (request: NextRequest) => {
 
     // Read the projects from the JSON file
     const existingProjects = await fs.readFile(projectsFilePath, "utf-8");
-    const projects: Project[] = JSON.parse(existingProjects);
+    const projects: ProjectType[] = JSON.parse(existingProjects);
 
     // Get the project ID and new data from the request body
     const { id, newData } = await request.json();

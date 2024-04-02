@@ -9,7 +9,7 @@ const isString = (value: React.ReactNode | string): value is string => {
   return typeof value === 'string';
 };
 
-const SideCard: React.FC<SideCardProps> = ({ header, body }) => {
+const ArticleSideCard: React.FC<SideCardProps> = ({ header, body }) => {
   return (
     <div className="w-full">
       <div className="bg-gray-dark mb-10 rounded-sm shadow-none">
@@ -31,4 +31,4 @@ const SideCard: React.FC<SideCardProps> = ({ header, body }) => {
   );
 };
 
-export default SideCard;
+export default ArticleSideCard;

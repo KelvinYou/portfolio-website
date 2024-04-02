@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import fs from "fs/promises";
 import path from "path";
-import { Project } from "@/types/project";
+import { ProjectType } from "@/types/project";
 
 const dataFolderPath = path.resolve("src/data");
 const projectsFilePath = path.join(dataFolderPath, "projects.json");
@@ -19,7 +19,7 @@ export const GET = async (request: NextRequest) => {
 
     // Read the projects from the JSON file
     const existingProjects = await fs.readFile(projectsFilePath, "utf-8");
-    const projects: Project[] = JSON.parse(existingProjects);
+    const projects: ProjectType[] = JSON.parse(existingProjects);
 
     // Find the project with the specified ID
     const project = projects.find((p) => p._id === projectId);

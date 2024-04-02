@@ -1,23 +1,16 @@
 "use client";
 
 import { SectionWrapper } from '@/hoc'
-import getBrowserAndOSInfo, { BrowserInfo } from '@/utils/deviceInfoUtil';
+import useBrowserAndOSInfo from '@/hooks/useBrowserAndOsInfo';
+import { getBrowserAndOSInfo, BrowserInfo } from '@/utils/deviceInfoUtil';
 import { textVariant } from '@/utils/motion'
 import { motion } from 'framer-motion'
 import { Download } from 'lucide-react';
 import React, { useEffect, useState } from 'react'
 
 const ResumeHome = () => {
-  const [browserInfo, setBrowserInfo] = useState<BrowserInfo>({ browser: 'Loading...', os: 'Loading...' });
+  const browserInfo = useBrowserAndOSInfo();
 
-  useEffect(() => {
-    setBrowserInfo(getBrowserAndOSInfo());
-  }, []);
-
-  useEffect(() => {
-    console.log("browserInfo: ", browserInfo);
-  }, [browserInfo]);
-  
   return (
     <SectionWrapper
       idName='project'

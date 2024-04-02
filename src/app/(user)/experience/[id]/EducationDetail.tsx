@@ -7,7 +7,7 @@ import Image from 'next/image';
 import { formatDate } from '@/utils/dateUtil';
 import ArticleElementRenderer from '@/components/ArticleElementRenderer';
 import { getDurationString } from '@/utils/common';
-import SideCard from '@/components/SideCard';
+import ArticleSideCard from '@/components/ArticleSideCard';
 import BackButton from '@/components/BackButton';
 import Link from 'next/link';
 
@@ -109,7 +109,7 @@ const EducationDetail = ({ educationDetail }: { educationDetail: any }) => {
 
           <div className='w-full px-4 lg:w-4/12'>
             {documents.length > 0 && 
-              <SideCard
+              <ArticleSideCard
                 header={'Documents'}
                 body={
                   <div className=''>
@@ -136,7 +136,7 @@ const EducationDetail = ({ educationDetail }: { educationDetail: any }) => {
             }
 
 
-            <SideCard
+            <ArticleSideCard
               header={'Tech Stacks'}
               body={
                 <ul className='list-inside list-disc text-body-color'>

@@ -274,7 +274,7 @@ const ProjectDetail: FC<BlogDetailProps> = ({ blogDetail }) => {
             </div>
           </div>
 
-          <NewsLatterBox />
+          {/* <NewsLatterBox /> */}
         </div>
       </div>
 

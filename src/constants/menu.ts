@@ -108,11 +108,11 @@ export const menuData: Menu[] = [
     title: "Others",
     newTab: false,
     submenu: [
-      // {
-      //   id: "resume",
-      //   title: "Resume",
-      //   path: RESUME_LINK,
-      // },
+      {
+        id: "resume",
+        title: "Resume",
+        path: RESUME_LINK,
+      },
       // {
       //   id: "co-cu",
       //   title: "Co Curricular",

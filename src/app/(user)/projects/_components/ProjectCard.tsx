@@ -10,10 +10,10 @@ import { Clock } from "lucide-react";
 import { Tilt } from "react-tilt";
 import { FC } from 'react';
 import { useRouter } from 'next/navigation';
-import { Project } from '@/types/project';
+import { ProjectType } from '@/types/project';
 
 interface ProjectCardProps {
-  project: Project;
+  project: ProjectType;
   index: number;
 }
 

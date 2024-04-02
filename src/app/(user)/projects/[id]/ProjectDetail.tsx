@@ -1,11 +1,11 @@
 "use client"
 
-import ZoomableImage from '@/components/ScalableImage'
+import ScalableImage from '@/components/ScalableImage'
 import ArticleElementRenderer from '@/components/ArticleElementRenderer'
 import { projects } from '@/constants/data'
 import SectionWrapper from '@/hoc/SectionWrapper'
 import { getProjectsByIds } from '@/services/projectService'
-import { Project } from '@/types/project'
+import { ProjectType } from '@/types/project'
 import { formatDate } from '@/utils/dateUtil'
 import { textVariant } from '@/utils/motion'
 import { motion } from 'framer-motion'
@@ -16,7 +16,7 @@ import React, { FC } from 'react'
 import Image from "next/image";
 
 interface ProjectDetailProps {
-  projectDetail: Project,
+  projectDetail: ProjectType,
 }
 
 const ProjectDetail: FC<ProjectDetailProps> = ({ projectDetail }) => {
@@ -120,9 +120,9 @@ const ProjectDetail: FC<ProjectDetailProps> = ({ projectDetail }) => {
               <div>
                 {sourceCodeLink && (
                   <Link
-                    href={"as"}
+                    href={sourceCodeLink}
                     target='_blank'
-                    className='w-full  group relative inline-flex items-center overflow-hidden rounded bg-gray-dark hover:bg-primary py-2 text-on-body hover:text-white'
+                    className='w-full group relative inline-flex items-center overflow-hidden rounded bg-gray-dark hover:bg-primary py-2 text-on-body hover:text-white'
                   >
                     <span className="text-sm font-medium transition-all mx-auto">
                       <Github />

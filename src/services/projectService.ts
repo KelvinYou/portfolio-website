@@ -1,5 +1,5 @@
 import projects from '@/data/projects.json';
-import { Project } from '@/types/project';
+import { ProjectType } from '@/types/project';
 
 // Function to get all projects
 export const getProjects = () => {
@@ -24,7 +24,7 @@ export const getProjectById = (projectId: string) => {
   return project;
 };
 
-export const getProjectsByIds = (projectIds: string[]): Project[] => {
+export const getProjectsByIds = (projectIds: string[]): ProjectType[] => {
   try {
     const projects = getProjects();
 

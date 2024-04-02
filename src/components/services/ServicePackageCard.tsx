@@ -1,14 +1,8 @@
-import Image from 'next/image';
-import { preview, github } from "@/assets";
-import Tooltip from "@/components/ui/Tooltip";
-import { formatDate } from "@/utils/dateUtil";
 import { fadeIn } from "@/utils/motion";
 import { motion } from "framer-motion";
-import { Clock } from "lucide-react";
 import { Tilt } from "react-tilt";
 import { FC } from 'react';
 import { useRouter } from 'next/navigation';
-import { Project } from '@/types/project';
 import { ServicePackage } from '@/types/services';
 import BaseButton from '../ui/BaseButton';
 

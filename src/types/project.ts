@@ -1,6 +1,6 @@
 import { BlogElement } from "./blog";
 
-export interface Project {
+export type ProjectType = {
   _id: string;
   name: string;
   description: string;

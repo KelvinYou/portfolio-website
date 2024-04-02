@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react'
-import { Project } from '@/types/project';
+import { ProjectType } from '@/types/project';
 import Image from 'next/image';
 import Link from 'next/link';
 import { getProjects } from '@/services/projectService';
@@ -37,7 +37,7 @@ const Projects = () => {
 
           <tbody className="divide-y divide-gray-200">
 
-            {projects.map((project: Project) => (
+            {projects.map((project: ProjectType) => (
               <tr key={project._id}>
                 <td className='whitespace-nowrap px-4 py-2 text-gray-700'>{project._id}</td>
                 <td className='whitespace-nowrap px-4 py-2 text-gray-700'>{project.name}</td>

@@ -2,17 +2,15 @@
 
 import SelectableButtonGroup from '@/components/SelectableButtonGroup';
 import { SectionWrapper } from '@/hoc'
-import { fadeIn, textVariant } from '@/utils/motion'
+import { fadeIn } from '@/utils/motion'
 import { motion } from 'framer-motion'
-import React, { FC, useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { getProjects } from '@/services/projectService';
 import PageTitle from '@/components/PageTitle'
-import Link from 'next/link';
-import { ChevronRight } from 'lucide-react';
 import ProjectCard from './_components/ProjectCard';
 import BackButton from '@/components/BackButton';
 
-const AllProject: FC = () => {
+const AllProject: React.FC = () => {
   const [projectCategory, setProjectCategory] = useState("all");
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -121,7 +119,7 @@ const AllProject: FC = () => {
 
       {/* Project Card */}
       <div className='mt-10 min-h-[1000px]'>
-        <div className="flex flex-wrap gap-7 ">
+        <div className="flex flex-wrap gap-7">
           {allProjects.map((project, index: number) => (
             <ProjectCard 
               key={`project-${index}`} 

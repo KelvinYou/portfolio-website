@@ -22,7 +22,7 @@ const OS_MAP: Record<string, string> = {
   iphone: 'iOS',
 };
 
-const getBrowserAndOSInfo = (): BrowserInfo => {
+export const getBrowserAndOSInfo = (): BrowserInfo => {
   const userAgent = navigator.userAgent.toLowerCase(); // Convert to lowercase
   let browser: string = 'Unknown Browser';
   let os: string = 'Unknown OS';
@@ -41,5 +41,3 @@ const getBrowserAndOSInfo = (): BrowserInfo => {
 
   return { browser, os };
 };
-
-export default getBrowserAndOSInfo;
