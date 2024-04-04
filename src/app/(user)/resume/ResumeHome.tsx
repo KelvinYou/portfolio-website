@@ -7,6 +7,8 @@ import { textVariant } from '@/utils/motion'
 import { motion } from 'framer-motion'
 import { Download } from 'lucide-react';
 import React, { useEffect, useState } from 'react'
+import { PdfDownloader, PdfViewer } from '@/components/PdfRenderer';
+import ResumePdf from './ResumePdf';
 
 const ResumeHome = () => {
   const browserInfo = useBrowserAndOSInfo();
@@ -14,30 +16,32 @@ const ResumeHome = () => {
   return (
     <SectionWrapper
       idName='project'
+      title='Resume.'
+      subtitle='My public resume'
     >
-      {/* Title */}
-      <motion.div
-        initial="hidden"
-        animate="show"
-        variants={textVariant()}
-      >
-        <p className="sm:text-[18px] text-[14px] text-secondary uppercase tracking-wider">
-          My resume
-        </p>
-        <h2 className="text-white font-black md:text-[60px] sm:text-[50px] xs:text-[40px] text-[30px]">
-          Resume.
-        </h2>
-      </motion.div>
-
       <div className='mt-4 mx-auto w-fit'>
-        <button 
-          className='rounded-md px-6 py-3 text-md bg-on-primary text-primary 
-          shadow-sm flex gap-2 items-center'
+        <PdfDownloader
+          document={
+            <ResumePdf />
+          }
+          fileName={`Kelvin You - Public Resume ${Date.now()}`}
         >
-          Download
-          <Download size={16} />
-        </button>
+          <button 
+            className='rounded-md px-6 py-3 text-md bg-on-primary text-primary 
+            shadow-sm flex gap-2 items-center'
+          >
+            Download
+            <Download size={16} />
+          </button>
+        </PdfDownloader>
       </div>
+      
+      <div className=' h-[calc(100vh-400px)]'>
+        <PdfViewer>
+          <ResumePdf />
+        </PdfViewer>
+      </div>
+
     </SectionWrapper>
   )
 }
