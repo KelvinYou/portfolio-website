@@ -1,4 +1,4 @@
-import { careerData, coCurricular, educations, languages, personalInfo, skills, workExperiences } from "@/constants/data"
+import { careerData, coCurricular, educations, languages, personalInfo, skills, summary, workExperiences } from "@/constants/data"
 
 export const getResumeData = () => {
   return {
@@ -9,5 +9,6 @@ export const getResumeData = () => {
     coCurricular,
     allSkills: Object.values(skills).flat(),
     languages,
+    summary,
   }
 }

@@ -86,7 +86,7 @@ export const personalInfo = {
   linkedin: "https://www.linkedin.com/in/kelvinyou2001/",
 }
 
-const summary = "Experienced software engineer with [CALCULATED_EXPERIENCE] years of experience in developing and maintaining web applications. Skilled in agile methodologies and continuous integration/deployment."
+export const summary = "Experienced software engineer with [CALCULATED_EXPERIENCE] years of experience in developing and maintaining web applications. Skilled in agile methodologies and continuous integration/deployment."
 
 export const skills = {
   "languages": ["TypeScript", "JavaScript", "Java", "Go"],
@@ -99,8 +99,6 @@ export const skills = {
 const experiences1 = ""
 
 const education = ""
-
-const certifications = ""
 
 const projects1 = ""
 
@@ -506,125 +504,26 @@ export const commonEducation = [
   },
 ]
 
-export type ProjectType = typeof projects;
+export const certifications = [
+  {
+    id: '1',
+    name: 'CCNA: Introduction to Networks',
+    link: 'https://www.credly.com/badges/fa38eb0b-43b0-4a2a-bdc0-da2a334c8738?source=linked_in_profile',
+    issuedDate: '2021-6-20',
+  },
+  {
+    id: '2',
+    name: 'Html,Css,Js - The Digital Adda',
+    link: 'assets/pdf/TDA-html_css_js.pdf',
+    issuedDate: '2023-12-11',
+  },
+  {
+    id: '3',
+    name: 'ReactJS - The Digital Adda',
+    link: 'assets/pdf/TDA-reactjs.pdf',
+    issuedDate: '2023-12-12',
+  },
 
-export const projects = [
-  {
-    id: 1,
-    name: "My Portfolio",
-    description: 
-      "A self-introduction website. The place full of my love",
-    tags: [
-      {
-        name: "NextJS",
-        color: "blue-text-gradient",
-      },
-      {
-        name: "Tailwind CSS",
-        color: "blue-text-gradient",
-      },
-    ],
-    images: [portfolio],
-    liveSiteLink: "https://kelvinyou.vercel.app/",
-    platforms: ["Web"],
-    date: "2023-10-02",
-    projectCategory: "side_project",
-  },
-  {
-    id: 2,
-    name: "Travel Guide",
-    description: 
-      "Mobile application created using Flutter with dart as programming language",
-    tags: [
-      {
-        name: "Flutter",
-        color: "blue-text-gradient",
-      },
-      {
-        name: "Firebase",
-        color: "orange-text-gradient",
-      },
-    ],
-    images: [],
-    sourceCodeLink: "https://github.com/KelvinYou/fyp_tour_guide_app",
-    platforms: ["Android", "iOS"],
-    date: "2022-12-17",
-    projectCategory: "school_project",
-  },
-  {
-    name: "Restaurant Landing",
-    description: 
-      "Just to build an UI refer from Figma",
-    tags: [
-      {
-        name: "ReactJS",
-        color: "blue-text-gradient",
-      },
-      {
-        name: "Bootstrap",
-        color: "pink-text-gradient",
-      },
-    ],
-    images: [restaurantLanding],
-    liveSiteLink: "https://restaurant-landing-kelvinyou.vercel.app/",
-    sourceCodeLink: "https://github.com/KelvinYou/react-selflearn/tree/main/react-restaurant-landing",
-    platforms: ["Web"],
-    date: "2023-2-21",
-    projectCategory: "side_project",
-  },
-  {
-    id: 3,
-    name: "Automated Market-Making System",
-    description: 
-      "An assignment from Blockchain course which to build a liquidity pool using smart contract",
-    tags: [
-      {
-        name: "ReactJS",
-        color: "blue-text-gradient",
-      },
-      {
-        name: "Solidity",
-        color: "blue-text-gradient",
-      },
-    ],
-    images: [],
-    sourceCodeLink: "https://github.com/KelvinYou/amm-assignment",
-    platforms: ["Web"],
-    date: "2023-1-5",
-    projectCategory: "school_project",
-  },
-  {
-    name: "Edge Detection System",
-    description: 
-      "An assignment for the Distributed Systems and Parallel Computing course, Detecting edges in images. We also use tools like Threading, Dask, Classified, etc. to speed up the process",
-    tags: [
-      {
-        name: "Python",
-        color: "pink-text-gradient",
-      },
-    ],
-    images: [],
-    sourceCodeLink: "https://github.com/KelvinYou/dspc-assignment",
-    platforms: [],
-    date: "2022-9-23",
-    projectCategory: "school_project",
-  },
-  {
-    name: "Donation System",
-    description: 
-      "An assignment for the Data Structures and Algorithms course, create adt using doubly linked list",
-    tags: [
-      {
-        name: "Java",
-        color: "pink-text-gradient",
-      },
-    ],
-    images: [],
-    sourceCodeLink: "https://github.com/KelvinYou/dsa-assignment",
-    platforms: ["Command Line"],
-    date: "2022-9-9",
-    projectCategory: "school_project",
-  },
 ]
 
 export const coCurricular = [

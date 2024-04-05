@@ -1,14 +1,10 @@
 "use client"
 
-import ScalableImage from '@/components/ScalableImage'
 import ArticleElementRenderer from '@/components/ArticleElementRenderer'
-import { projects } from '@/constants/data'
 import SectionWrapper from '@/hoc/SectionWrapper'
 import { getProjectsByIds } from '@/services/projectService'
 import { ProjectType } from '@/types/project'
 import { formatDate } from '@/utils/dateUtil'
-import { textVariant } from '@/utils/motion'
-import { motion } from 'framer-motion'
 import { Calendar, ChevronsLeft, Github } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
