@@ -137,7 +137,7 @@ const Navbar: FC = () => {
         >
           <img src={logo.src} alt="Logo" className="w-9 h-9 object-contain" />
           <p className="text-white text-[18px] font-bold cursor-pointer flex">
-            {personalData.nickname}&nbsp;<span className="lg:block hidden">| {careerData.role}</span>
+            {personalData.nickname}&nbsp;<span className="lg:block hidden">| {careerData.title}</span>
           </p>
         </Link>
 

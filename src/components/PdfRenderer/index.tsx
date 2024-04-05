@@ -6,6 +6,7 @@ export const {
   G,
   Svg,
   View,
+  Font,
   Text,
   Link,
   Page,

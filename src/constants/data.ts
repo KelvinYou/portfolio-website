@@ -64,7 +64,7 @@ export const personalData = {
 };
 
 export const careerData = {
-  role: "Software Engineer",
+  title: "Software Engineer",
   startCoding: "2019-1-1",
   desc: "I develop Web, Mobile and Blockchain App."
 };
@@ -73,7 +73,7 @@ export const careerData = {
 
 // New Data
 
-const personalInfo = {
+export const personalInfo = {
   nickname: "Kelvin You",
   fullName: "Kelvin You Kok Eng",
   location: "Kuala Lumpur, Malaysia",
@@ -88,7 +88,7 @@ const personalInfo = {
 
 const summary = "Experienced software engineer with [CALCULATED_EXPERIENCE] years of experience in developing and maintaining web applications. Skilled in agile methodologies and continuous integration/deployment."
 
-const skills = {
+export const skills = {
   "languages": ["TypeScript", "JavaScript", "Java", "Go"],
   "webTechnologies": ["Next.js", "React", "Express", "Node.js"],
   "mobileTechnologies": ["React Native", "Flutter"],
@@ -131,12 +131,12 @@ export const languages = [
   },
   {
     name: "Malay",
-    speak: 0.7,
+    speak: 0.6,
     readAndWrite: 0.8,
   },
   {
     name: "English",
-    speak: 0.6,
+    speak: 0.5,
     readAndWrite: 0.8,
   },
 ]
@@ -630,16 +630,16 @@ export const projects = [
 export const coCurricular = [
   {
     title: "Chinese Language Society",
-    start_date: "2019-5-28",
-    end_date: "2023-7-31",
+    startDate: "2019-5-28",
+    endDate: "2023-7-31",
     school: "Tunku Abdul Rahman University of Management and Technology",
     schoolUrl: "https://tarc.edu.my/",
     description: "Made friends and established connections with them, Learnt communication skills",
   },
   {
     title: "Chess Club",
-    start_date: "2019-5-28",
-    end_date: "2023-7-31",
+    startDate: "2019-5-28",
+    endDate: "2023-7-31",
     school: "Tunku Abdul Rahman University of Management and Technology",
     schoolUrl: "https://tarc.edu.my/",
     description: "Learnt how to solve chess tactics, Learnt time management.",
