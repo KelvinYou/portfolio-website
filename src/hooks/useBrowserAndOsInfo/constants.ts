@@ -25,3 +25,7 @@ export const OS_MAP: { [key: string]: string } = {
   'netbsd': 'NetBSD',
   // Add other operating systems as needed
 };
+
+export const MOBILE_OS_KEY = [
+  'iphone', 'ipad', 'ipod', 'android', 'linux', 'blackberry'
+]

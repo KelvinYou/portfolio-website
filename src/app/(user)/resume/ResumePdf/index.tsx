@@ -139,10 +139,13 @@ const ResumePdf: React.FC = () => {
   const resumeData = getResumeData();
 
   return (
-    <Document title={`Resume | Kelvin`}>
+    <Document title={`${resumeData.nickname} | ${resumeData.title}`}>
       <Page size="A4">
         <View style={styles.row}>
           <View style={styles.leftColumn}>
+            <View 
+              style={{ height: 78 }}
+            />
             <Section title={'Contact'}>
               <ContactBar iconSrc='assets/images/resume/location.png' value={resumeData.location} />
               <ContactBar iconSrc='assets/images/resume/phone.png' value={resumeData.phone} />
@@ -256,7 +259,7 @@ const ResumePdf: React.FC = () => {
               ))}
             </Section>
 
-            <Section title={'Co-curricular Activities'}>
+            {/* <Section title={'Co-curricular Activities'}>
             {resumeData.coCurricular.map((cocuricular, index) => (
                 <View key={index} style={{ marginBottom: 10 }}>
                   <Text style={styles.workRole}>{cocuricular.title}</Text>
@@ -282,7 +285,7 @@ const ResumePdf: React.FC = () => {
                   </View>
                 </View>
               ))}
-            </Section>
+            </Section> */}
           </View>
         </View>
         
