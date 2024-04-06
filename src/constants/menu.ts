@@ -110,7 +110,7 @@ export const menuData: Menu[] = [
     submenu: [
       {
         id: "resume",
-        title: "Resume",
+        title: "Public Resume",
         path: RESUME_LINK,
       },
       // {

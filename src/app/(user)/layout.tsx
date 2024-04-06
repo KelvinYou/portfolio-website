@@ -19,22 +19,19 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={`${poppins.className} bg-primary`}>
-        {/* <Navbar /> */}
-        <Header />
+    <div  className={`${poppins.className} bg-primary`}>
+      {/* <Navbar /> */}
+      <Header />
 
-        <div className='relative '>
+      <div className='relative '>
 
-          <div>
-            {children}
-            <Footer />
-          </div>
-          
-          <ComputerView />
-
+        <div>
+          {children}
+          <Footer />
         </div>
-      </body>
-    </html>
+        <ComputerView />
+
+      </div>
+    </div>
   )
 }

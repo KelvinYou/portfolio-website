@@ -86,7 +86,7 @@ export const personalInfo = {
   linkedin: "https://www.linkedin.com/in/kelvinyou2001/",
 }
 
-export const summary = "Experienced software engineer with [CALCULATED_EXPERIENCE] years of experience in developing and maintaining web applications. Skilled in agile methodologies and continuous integration/deployment."
+export const summary = "Experienced software engineer with [CALCULATED_EXPERIENCE] years of experience in developing and maintaining web applications. Skilled in agile methodologies and CI/CD."
 
 export const skills = {
   "languages": ["TypeScript", "JavaScript", "Java", "Go"],

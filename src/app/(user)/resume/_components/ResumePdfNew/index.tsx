@@ -3,8 +3,8 @@
 import React from 'react'
 import * as ReactPDF from '@/components/PdfRenderer';
 import { styles } from './styles';
-import { personalInfo } from '@/constants/data';
 import { getResumeData } from '@/services/resumeService';
+import { calculateExperience } from '@/utils/common';
 
 const {
   G,
@@ -79,7 +79,7 @@ export const formatDate = (inputDate: string): string => {
 const DateRange = ({startAt, endAt}: {startAt: string, endAt?: string | null}) => {
   
   const startFormatted = formatDate(startAt);
-  const endFormatted = endAt ? formatDate(endAt) : 'Today';
+  const endFormatted = endAt ? formatDate(endAt) : 'Present';
   
   const dateRange = `${startFormatted} - ${endFormatted}`;
 
@@ -90,7 +90,7 @@ const DateRange = ({startAt, endAt}: {startAt: string, endAt?: string | null}) =
 
 const Section = ({title, isLeft = false, children}: {title: string, isLeft?: boolean, children: React.ReactNode}) => {
   return (
-    <>
+    <View style={{ marginBottom: '10px' }}>
       <Text style={[styles.title, 
         { color: isLeft ? "grey": "grey" }]}>
         {title}
@@ -99,7 +99,7 @@ const Section = ({title, isLeft = false, children}: {title: string, isLeft?: boo
         style={[styles.separator]}
       />
       {children}
-    </>
+    </View>
   )
 }
 
@@ -135,58 +135,39 @@ const ScoreBar = ({name, score}: {name: string, score: number}) => {
   )
 }
 
-const ResumePdf: React.FC = () => {
+const ResumePdfNew: React.FC = () => {
   const resumeData = getResumeData();
+
+  const totalExperiences = calculateExperience(resumeData.workExperiences);
+
+  const formattedSummary = resumeData.summary.replace('[CALCULATED_EXPERIENCE]', totalExperiences);
 
   return (
     <Document title={`${resumeData.nickname} | ${resumeData.title}`}>
       <Page size="A4">
+        <View style={styles.headerWrapper}>
+          <Text style={styles.fullName}>{resumeData.fullName}</Text>
+          <Text style={styles.role}>{resumeData.title}</Text>
+
+          <View style={styles.contactListWrapper}>
+            <ContactBar iconSrc='assets/images/resume/new/phone.png' value={resumeData.phone} />
+            <ContactBar iconSrc='assets/images/resume/new/email.png' value={resumeData.email} />
+            <ContactBar iconSrc='assets/images/resume/new/person.png' value={resumeData.portfolio} />
+            <ContactBar iconSrc='assets/images/resume/new/linkedin.png' value={resumeData.linkedin} />
+            <ContactBar iconSrc='assets/images/resume/new/github.png' value={resumeData.github} />
+
+
+            <ContactBar iconSrc='assets/images/resume/new/location.png' value={resumeData.location} />
+          </View>
+        </View>
+
         <View style={styles.row}>
           <View style={styles.leftColumn}>
-            <View 
-              style={{ height: 78 }}
-            />
-            <Section title={'Contact'}>
-              <ContactBar iconSrc='assets/images/resume/location.png' value={resumeData.location} />
-              <ContactBar iconSrc='assets/images/resume/phone.png' value={resumeData.phone} />
-              <ContactBar iconSrc='assets/images/resume/mail.png' value={resumeData.email} />
-              <ContactBar iconSrc='assets/images/resume/person.png' value={resumeData.portfolio} />
+            <Section title={'Summary'}>
+              <Text style={styles.summary}>
+                {formattedSummary}
+              </Text>
             </Section>
-
-            <Section title={'Skills'}>
-              <View style={styles.skillsWrapper}>
-                {resumeData.allSkills.map((skill, index) => {
-                  return (
-                    <Text key={index} style={styles.skills}>
-                      {skill}
-                    </Text>
-                  )
-                })}
-              </View>
-            </Section>
-
-            <Section title={'Languages'}>
-              <View style={styles.skillsWrapper}>
-                {resumeData.languages.map((language, index) => {
-                  const score = (language.speak + language.readAndWrite) / 2 * 5;
-
-                  return (
-                    <ScoreBar 
-                      key={index + language.name}
-                      name={language.name} 
-                      score={score}
-                    />
-                  )
-                })}
-              </View>
-            </Section>
-          </View>
-
-
-          <View style={styles.rightColumn}>
-            <Text style={styles.fullName}>{resumeData.fullName}</Text>
-            <Text style={styles.role}>{resumeData.title}</Text>
-
             <Section title={'Work Experiences'}>
               {resumeData.workExperiences.map((workExp, index) => (
                 <View key={index} style={{ marginBottom: 10 }}>
@@ -246,46 +227,58 @@ const ResumePdf: React.FC = () => {
                     </Text>
                   }
 
-                  {education.points.slice(0, 2).map((point, index) => (
+                  {/* {education.points.slice(0, 2).map((point, index) => (
                     <View key={index} style={styles.pointsWrapper}>
                       <Text style={styles.pointsDot}>•</Text>
                       <Text style={styles.workDescription}>
                         {point.value}
                       </Text>
                     </View>
-                  ))}
-                  <Text style={styles.workDescription}>{education.description}</Text>
+                  ))} */}
+                  {/* <Text style={styles.workDescription}>{education.description}</Text> */}
                 </View>
               ))}
             </Section>
+          </View>
+          <View style={styles.rightColumn}>
+            {/* <Section title={'Contact'}>
 
-            {/* <Section title={'Co-curricular Activities'}>
-            {resumeData.coCurricular.map((cocuricular, index) => (
-                <View key={index} style={{ marginBottom: 10 }}>
-                  <Text style={styles.workRole}>{cocuricular.title}</Text>
-                    {cocuricular.schoolUrl ?
-                    <Link style={styles.workCompanyName} src={cocuricular.schoolUrl}>
-                      <Text style={styles.workCompanyName}>
-                        {cocuricular.school}
-                      </Text>
-                    </Link>
-                    :
-                    <Text style={styles.workCompanyName}>
-                      {cocuricular.school}
-                    </Text>
-                  }
-
-                  <DateRange startAt={cocuricular.startDate} endAt={cocuricular.endDate} />
-                  
-                  <View style={styles.pointsWrapper}>
-                    <Text style={styles.pointsDot}>•</Text>
-                    <Text style={styles.workDescription}>
-                      {cocuricular.description}
-                    </Text>
-                  </View>
-                </View>
-              ))}
             </Section> */}
+
+            <Section title={'Skills'}>
+              <View style={styles.skillsWrapper}>
+                {resumeData.allSkills.map((skill, index) => {
+                  return (
+                    <Text key={index} style={styles.skills}>
+                      {skill}
+                    </Text>
+                  )
+                })}
+              </View>
+            </Section>
+
+            <Section title={'Languages'}>
+              <View style={styles.skillsWrapper}>
+                {resumeData.languages.map((language, index) => {
+                  const score = (language.speak + language.readAndWrite) / 2 * 5;
+
+                  return (
+                    <ScoreBar 
+                      key={index + language.name}
+                      name={language.name} 
+                      score={score}
+                    />
+                  )
+                })}
+              </View>
+            </Section>
+
+            <View  style={{ height: 160 }}/>
+            <Section title={'More Info'}>
+              <Text style={styles.moreInfoText}>{resumeData.portfolio}</Text>
+              <Image src="assets/images/resume/new/personal-website-qr.png" style={styles.moreInfoQr} />
+            </Section>
+
           </View>
         </View>
         
@@ -295,4 +288,4 @@ const ResumePdf: React.FC = () => {
   )
 }
 
-export default ResumePdf
+export default ResumePdfNew

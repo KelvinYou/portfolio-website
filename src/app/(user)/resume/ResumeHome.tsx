@@ -2,14 +2,22 @@
 
 import { SectionWrapper } from '@/hoc'
 import useBrowserAndOSInfo from '@/hooks/useBrowserAndOsInfo';
-import { Download } from 'lucide-react';
+import { Download, Link as LinkIcon } from 'lucide-react';
 import React, { useEffect, useState } from 'react'
 import { PdfDownloader, PdfViewer } from '@/components/PdfRenderer';
-import ResumePdf from './ResumePdf';
+import ResumePdf from './_components/ResumePdf';
+import ResumePdfNew from './_components/ResumePdfNew';
 import { MOBILE_OS_KEY } from '@/hooks/useBrowserAndOsInfo/constants';
+import Link from 'next/link';
+import { motion } from "framer-motion";
+import { fadeIn, textVariant } from "@/utils/motion";
 
 const ResumeHome = () => {
   const browserInfo = useBrowserAndOSInfo();
+  const isMobile = MOBILE_OS_KEY.includes(browserInfo.os.key);
+
+  // const ResumeElement = ResumePdf;
+  const ResumeElement = ResumePdfNew;
 
   return (
     <SectionWrapper
@@ -18,7 +26,7 @@ const ResumeHome = () => {
       subtitle='My public resume'
     >
 
-      {MOBILE_OS_KEY.includes(browserInfo.os.key) && 
+      {isMobile && 
         <div role="alert" className="rounded border-s-4 border-[#e6a700] bg-[#4d3800] p-4 mt-4">
           <div className="flex items-center gap-2 text-[#e6a700]">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5">
@@ -37,24 +45,44 @@ const ResumeHome = () => {
           </p>
         </div>
       }
-
-      <PdfDownloader
-        document={
-          <ResumePdf />
-        }
-        fileName={`Kelvin You - Public Resume ${Date.now()}`}
-        className='mt-4 mx-auto w-fit rounded-md px-6 py-3 text-md bg-on-primary text-primary 
-        shadow-sm flex gap-2 items-center'
+      <motion.div 
+        className='flex w-full justify-center gap-x-2'
+        variants={fadeIn("", "", 0.1, 1)}
       >
-        Download Resume
-        <Download size={16} />
-      </PdfDownloader>
+        {!isMobile && 
+          <Link 
+            className='mt-4 w-fit rounded-md px-6 py-3 text-md bg-[rgb(53,53,53)] text-white 
+            shadow-sm flex gap-2 items-center'
+            href={'full-resume'}
+            target='_blank'
+          >
+            Open it on Full Screen
+            <LinkIcon size={16}/>  
+          </Link>
+        }
 
-      <div className='mt-4 h-[calc(100vh-400px)] min-h-[300px]'>
+        <PdfDownloader
+          document={
+            <ResumeElement />
+          }
+          fileName={`Kelvin You - Public Resume ${Date.now()}`}
+          className='mt-4 w-fit rounded-md px-6 py-3 text-md bg-on-primary text-primary 
+          shadow-sm flex gap-2 items-center'
+        >
+          Download Resume
+          <Download size={16} />
+        </PdfDownloader>
+      </motion.div>
+
+
+      <motion.div 
+        className='mt-4 h-[calc(100vh-400px)] min-h-[300px]'
+        variants={fadeIn("", "", 0.1, 1)}
+      >
         <PdfViewer>
-          <ResumePdf />
+          <ResumeElement />
         </PdfViewer>
-      </div>
+      </motion.div>
 
     </SectionWrapper>
   )
