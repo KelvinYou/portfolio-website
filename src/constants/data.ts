@@ -13,6 +13,7 @@ import {
   portfolio,
   restaurantLanding,
 } from "@/assets";
+import { calculateExperience } from "@/utils/common";
 
 export const services = [
   {
@@ -85,8 +86,6 @@ export const personalInfo = {
   github: "https://github.com/KelvinYou",
   linkedin: "https://www.linkedin.com/in/kelvinyou2001/",
 }
-
-export const summary = "Experienced software engineer with [CALCULATED_EXPERIENCE] years of experience in developing and maintaining web applications. Skilled in agile methodologies and CI/CD."
 
 export const skills = {
   "languages": ["TypeScript", "JavaScript", "Java", "Go"],
@@ -377,6 +376,9 @@ export const workExperiences = [
     experienceCategory: "work",
   },
 ];
+
+export const totalExperiences = calculateExperience(workExperiences);
+export const summary = `Experienced software engineer with ${totalExperiences} of experience in developing and maintaining web applications. Skilled in agile methodologies and CI/CD. I'm also passionate about blockchain, investing and chess.`;
 
 export const educations = [
   {

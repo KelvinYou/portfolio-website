@@ -4,10 +4,11 @@ import { Tilt } from "react-tilt";
 import { motion } from "framer-motion";
 import Image from "next/image";
 // import { styles } from "../styles";
-import { languages, services } from '@/constants/data';
+import { languages, services, summary, totalExperiences } from '@/constants/data';
 import { fadeIn, textVariant } from "@/utils/motion";
 import { SectionWrapper } from "@/hoc";
 import HighlightText from "@/components/common/HighlightedText";
+import { calculateExperience } from "@/utils/common";
 
 // Service Card
 const ServiceCard = ({ index, title, icon }: { index: any, title: any, icon: any }) => {
@@ -37,6 +38,7 @@ const ServiceCard = ({ index, title, icon }: { index: any, title: any, icon: any
 
 // About
 const AboutMe: FC = () => {
+
   return (
     <SectionWrapper
       idName='about-me'
@@ -134,10 +136,10 @@ const AboutMe: FC = () => {
         <p className="empty-4 text-gray-300 text-[17px] max-w-3xl leading-[30px] text-justify">
           <HighlightText
             highlightedTexts={[
-              '1 year',
+              totalExperiences,
               'blockchain, investing and chess'
             ]}
-            text="I've been coding since 2019 with 1 year of experience. I'm also passionate about blockchain, investing and chess."
+            text={summary}
           />
 
           {/* I have developed in the field of software development for 4 years, 

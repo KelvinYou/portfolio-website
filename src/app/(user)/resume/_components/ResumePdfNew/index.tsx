@@ -138,10 +138,6 @@ const ScoreBar = ({name, score}: {name: string, score: number}) => {
 const ResumePdfNew: React.FC = () => {
   const resumeData = getResumeData();
 
-  const totalExperiences = calculateExperience(resumeData.workExperiences);
-
-  const formattedSummary = resumeData.summary.replace('[CALCULATED_EXPERIENCE]', totalExperiences);
-
   return (
     <Document title={`${resumeData.nickname} | ${resumeData.title}`}>
       <Page size="A4">
@@ -155,8 +151,6 @@ const ResumePdfNew: React.FC = () => {
             <ContactBar iconSrc='assets/images/resume/new/person.png' value={resumeData.portfolio} />
             <ContactBar iconSrc='assets/images/resume/new/linkedin.png' value={resumeData.linkedin} />
             <ContactBar iconSrc='assets/images/resume/new/github.png' value={resumeData.github} />
-
-
             <ContactBar iconSrc='assets/images/resume/new/location.png' value={resumeData.location} />
           </View>
         </View>
@@ -165,7 +159,7 @@ const ResumePdfNew: React.FC = () => {
           <View style={styles.leftColumn}>
             <Section title={'Summary'}>
               <Text style={styles.summary}>
-                {formattedSummary}
+                {resumeData.summary}
               </Text>
             </Section>
             <Section title={'Work Experiences'}>
