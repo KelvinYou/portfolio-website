@@ -1,26 +1,20 @@
 "use client";
 
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC } from 'react';
 import Image from 'next/image';
 import {
   VerticalTimeline,
   VerticalTimelineElement,
 } from "react-vertical-timeline-component";
-import { motion } from "framer-motion";
 
 import "react-vertical-timeline-component/style.min.css";
 
 import { SectionWrapper } from '@/hoc';
-import { fadeIn, textVariant } from "@/utils/motion";
-import { combinedExperiences, educations, workExperiences } from "@/constants/data";
-// import { useSearchParams } from 'next/navigation';
+import { educations } from "@/constants/data";
 import Link from 'next/link';
 
-import "./Educations.scss";
-import SelectableButtonGroup from '@/components/SelectableButtonGroup';
 import { ChevronsRight } from 'lucide-react';
 import HighlightText from '@/components/common/HighlightedText';
-import { formatDate } from '@/utils/dateUtil';
 
 const EducationCard: FC<any> = ({ education }) => {
 
