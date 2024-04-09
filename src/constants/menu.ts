@@ -90,6 +90,12 @@ export const menuData: Menu[] = [
         newTab: false,
       },
       {
+        id: "educations",
+        title: "Educations",
+        path: "/#educations",
+        newTab: false,
+      },
+      {
         id: "project",
         title: "Projects",
         path: "/#project",

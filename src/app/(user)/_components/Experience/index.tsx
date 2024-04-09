@@ -266,12 +266,11 @@ const Experience: FC = () => {
     setExperienceCategory("all")
   },[]);
   
-  const handleOptionChange = (selectedOption: string) => {
-    // Do something with the selected option, such as updating state
-    setExperienceCategory(selectedOption);
-  };
+  // const handleOptionChange = (selectedOption: string) => {
+  //   setExperienceCategory(selectedOption);
+  // };
   
-  const sortedExperiences = combinedExperiences.slice().sort((a, b) => {
+  const sortedExperiences = workExperiences.slice().sort((a, b) => {
     const startDateA = a.startDate;
     const startDateB = b.startDate;
 
@@ -297,7 +296,7 @@ const Experience: FC = () => {
       <SectionWrapper
         idName='render-experiences'
       > 
-        <motion.div 
+        {/* <motion.div 
           initial="hidden"
           animate="show"
           variants={fadeIn("", "", 0.1, 1)}
@@ -307,7 +306,7 @@ const Experience: FC = () => {
             options={options}
             onOptionChange={handleOptionChange}
           />
-        </motion.div>
+        </motion.div> */}
 
         {/* Experience Card */}
         <div className="empty-20 flex flex-col mt-10">

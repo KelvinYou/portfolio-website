@@ -19,7 +19,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <div  className={`${poppins.className} bg-primary`}>
+    <div  className={`${poppins.className} bg-primary min-h-[100vh]`}>
       {/* <Navbar /> */}
       <Header />
 

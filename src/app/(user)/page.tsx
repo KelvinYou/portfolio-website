@@ -3,8 +3,9 @@ import AboutMe from './_components/AboutMe'
 import Github from './_components/Github'
 import Project from './_components/Project'
 import Experience from './_components/Experience'
-import "@/styles/index.scss";
+import Educations from './_components/Educations'
 
+import "@/styles/index.scss";
 
 export default function Home() {
   return (
@@ -15,8 +16,10 @@ export default function Home() {
 
       <Experience />
 
+      <Educations />
+
       <Project />
-      
+
       <Github />
 
     </main>

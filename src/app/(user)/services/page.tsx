@@ -7,9 +7,9 @@ const ContactPage = () => {
   return (
     <>
       {/* <Services /> */}
-      {/* <ContactHome /> */}
+      <ContactHome />
 
-      <ComingSoon title='Services'/>
+      {/* <ComingSoon title='Services'/> */}
     </>
   )
 }

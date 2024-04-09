@@ -43,10 +43,10 @@ export const socialMedia = [
     name: "LinkedIn",
     link: "https://www.linkedin.com/in/kelvinyou2001/",
   },
-  {
-    name: "Instagram",
-    link: "https://www.instagram.com/kelvinyou0220/",
-  },
+  // {
+  //   name: "Instagram",
+  //   link: "https://www.instagram.com/kelvinyou0220/",
+  // },
 ]
 export type PersonalDataType = typeof personalData;
 
@@ -378,7 +378,8 @@ export const workExperiences = [
 ];
 
 export const totalExperiences = calculateExperience(workExperiences);
-export const summary = `Experienced software engineer with ${totalExperiences} of experience in developing and maintaining web applications. Skilled in agile methodologies and CI/CD. I'm also passionate about blockchain, investing and chess.`;
+
+export const summary = `Experienced software engineer with ${totalExperiences} of experience in developing and maintaining web applications. Skilled in agile methodologies and CI/CD. I'm an INTP-T, nerd. I'm also passionate about blockchain, investing and chess.`;
 
 export const educations = [
   {
