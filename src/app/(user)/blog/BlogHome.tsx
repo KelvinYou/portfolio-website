@@ -60,8 +60,7 @@ const BlogHome = () => {
           ))}
       </div> */}
 
-      <div className="w-full max-w-6xl mx-auto px-4 md:px-6 py-24">
-        <Spotlight className="max-w-sm mx-auto grid gap-6 lg:grid-cols-3 items-start lg:max-w-none group">
+        <Spotlight className="max-w-sm mx-auto grid gap-6 lg:grid-cols-3 items-start lg:max-w-none group w-full px-4 md:px-6 py-24">
           {/* Card #1 */}
           {blogs.map((blog: BlogPage, index) => {
             return (
@@ -136,7 +135,6 @@ const BlogHome = () => {
             ) 
           })}
         </Spotlight>
-      </div>
     </SectionWrapper>
   )
 }
