@@ -147,8 +147,8 @@ export const workExperiences = [
     companyUrl: "https://www.beyondsoft.com/",
     icon: beyondsoft,
     iconBg: "#FFF",
-    date: "Aug 2023 - Today",
-    startDate: "2023-8-7",
+    date: "Aug 2023 - Present",
+    startDate: "2023-7-31",
     endDate: null,
     points: [
       {

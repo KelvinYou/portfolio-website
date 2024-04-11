@@ -78,7 +78,7 @@ export const formatDate = (inputDate: string): string => {
 const DateRange = ({startAt, endAt}: {startAt: string, endAt?: string | null}) => {
   
   const startFormatted = formatDate(startAt);
-  const endFormatted = endAt ? formatDate(endAt) : 'Today';
+  const endFormatted = endAt ? formatDate(endAt) : 'Present';
   
   const dateRange = `${startFormatted} - ${endFormatted}`;
 

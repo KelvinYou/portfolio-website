@@ -26,7 +26,7 @@ import { formatDate } from '@/utils/dateUtil';
 const ExperienceCard: FC<any> = ({ experience }) => {
 
   const formattedStartDate = formatDate(experience.startDate);
-  const formattedEndDate = experience.endDate ? formatDate(experience.endDate) : "Today";
+  const formattedEndDate = experience.endDate ? formatDate(experience.endDate) : "Present";
 
   return (
     <VerticalTimelineElement
