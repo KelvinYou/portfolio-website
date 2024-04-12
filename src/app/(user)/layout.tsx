@@ -19,14 +19,17 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <div  className={`${poppins.className} bg-primary min-h-[100vh]`}>
+    <div  className={`${poppins.className} bg-primary`}>
       {/* <Navbar /> */}
       <Header />
 
-      <div className='relative '>
+      <div className='flex flex-col min-h-[100vh]'>
 
-        <div>
-          {children}
+        <div className='flex-grow'>
+          <div className='h-full'>
+            {children}
+
+          </div>
           <Footer />
         </div>
         <ComputerView />

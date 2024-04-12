@@ -152,22 +152,45 @@ export const workExperiences = [
     endDate: null,
     points: [
       {
-        value: "Developed and maintain user interfaces for Tencent's web & mobile apps using React."
+        value: "Developed and maintain user interfaces for Tencent's web & mobile apps using React.",
+        highlightedTexts: [
+          "Developed and maintain",
+          "React",
+        ]
       },
       {
         value: "Collaborated closely with Tencent's development team to understand project requirements and implement designs according to specifications.",
+        highlightedTexts: [
+          "Collaborated closely",
+        ]
       },
       {
         value: "Optimized web applications for performance, cross-browser compatibility, and responsive design.",
+        highlightedTexts: [
+          "performance",
+          "cross-browser compatibility",
+          "responsive design",
+        ]
       },
       {
         value: "Implemented features and functionality based on user requirements and feedback.",
+        highlightedTexts: [
+          "features and functionality",
+        ]
       },
       {
         value: "Participated in code reviews and ensured adherence to best practices and coding standards.",
+        highlightedTexts: [
+          "code reviews",
+          "best practices and coding standards",
+        ]
       },
       {
         value: "Utilized version control systems (Git) for collaborative development and code management.",
+        highlightedTexts: [
+          "Git",
+          "best practices and coding standards",
+        ]
       },
     ],
     job_descriptions: [
@@ -509,22 +532,22 @@ export const commonEducation = [
 
 export const certifications = [
   {
-    id: '1',
     name: 'CCNA: Introduction to Networks',
     link: 'https://www.credly.com/badges/fa38eb0b-43b0-4a2a-bdc0-da2a334c8738?source=linked_in_profile',
-    issuedDate: '2021-6-20',
+    issuingOrganization: 'CISCO',
+    issueDate: '2021-6-20',
   },
   {
-    id: '2',
-    name: 'Html,Css,Js - The Digital Adda',
+    name: 'HTML, CSS, and Javascript for Web Developers',
     link: 'assets/pdf/TDA-html_css_js.pdf',
-    issuedDate: '2023-12-11',
+    issuingOrganization: 'The Digital Adda',
+    issueDate: '2023-12-11',
   },
   {
-    id: '3',
-    name: 'ReactJS - The Digital Adda',
+    name: 'ReactJS - Certification Program',
     link: 'assets/pdf/TDA-reactjs.pdf',
-    issuedDate: '2023-12-12',
+    issuingOrganization: 'The Digital Adda',
+    issueDate: '2023-12-12',
   },
 
 ]

@@ -13,7 +13,7 @@ interface ArticleElementRendererProps {
 
 const ArticleElementRenderer: React.FC<ArticleElementRendererProps> = ({ elements = [] }) => {
   return (
-    <div>
+    <article>
       {elements.map((element, index) => {
         if (element.type === "paragraph" && isParagraphContent(element.content)) {
           return (
@@ -43,7 +43,7 @@ const ArticleElementRenderer: React.FC<ArticleElementRendererProps> = ({ element
           return null;
         }
       })}
-    </div>
+    </article>
   )
 }
 
