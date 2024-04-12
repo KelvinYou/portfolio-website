@@ -3,15 +3,16 @@
 import { BlogPage } from '@/types/blog'
 import { fadeIn } from '@/utils/motion'
 import { motion } from 'framer-motion'
-import router from 'next/router'
 import React from 'react'
 import { Tilt } from 'react-tilt'
 import { Clock } from 'lucide-react';
 import Spotlight, { SpotlightCard } from '../Spotlight'
 import Image from 'next/image';
 import { formatDate } from '@/utils/dateUtil';
+import { useRouter } from 'next/navigation';
 
 const SpotlightGrid = ({ blogs }: { blogs: BlogPage[] }) => {
+  const router = useRouter();
   
   return (
     <Spotlight className="max-w-sm mx-auto grid gap-6 lg:grid-cols-3 items-start lg:max-w-none group w-full px-4 md:px-6 py-12">
