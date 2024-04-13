@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+
 interface DateComponents {
   year: number;
   month: number;
@@ -57,29 +59,18 @@ const parseDateTimeComponents = (inputDateTime: string): DateTimeComponents | nu
   return { year, month, day, hour, minute, second };
 };
 
-export const formatDate = (inputDate: string, format: 'short' | 'long' = 'short'): string => {
-  // Parse date components
-  const dateComponents = parseDateComponents(inputDate);
-
-  if (!dateComponents) {
-    return 'Invalid Date';
+export const formatDate = (dateString: string, format: string = 'MMM YYYY') => {
+  // Check if dateString is a valid date string
+  if (!dayjs(dateString).isValid()) {
+    throw new Error('Invalid date');
   }
 
-  // Destructure date components
-  const { year, month, day } = dateComponents;
-
-  // Construct a Date object
-  const date = new Date(year, month - 1, day);
-
-  // Ensure the month is formatted as a three-letter abbreviation
-  const monthAbbreviation = new Intl.DateTimeFormat('en-US', { month: 'short' }).format(date);
-
-  // Construct the desired date string
-  const formattedDate = `${monthAbbreviation} ${year}`;
-
-  if (format === 'long') {
-    return `${day} ${monthAbbreviation} ${year}`;
-  } else {
-    return `${monthAbbreviation} ${year}`;
+  // Check if format is a string and not empty
+  if (typeof format !== 'string' || format.trim() === '') {
+    throw new Error('Invalid format');
   }
+
+  // Parse the date string and format it
+  const parsedDate = dayjs(dateString);
+  return parsedDate.format(format);
 };

@@ -89,9 +89,8 @@ export const personalInfo = {
 
 export const skills = {
   "languages": ["TypeScript", "JavaScript", "Java", "Go"],
-  "webTechnologies": ["Next.js", "React", "Express", "Node.js"],
-  "mobileTechnologies": ["React Native", "Flutter"],
-  "databases": ["MongoDB", "PostgreSQL", "MySQL"],
+  "frameworks": ["Next.js", "React", "Express", "Node.js", "React Native", "Flutter"],
+  "databases": ["PostgreSQL", "MySQL", "MongoDB"],
   "tools": ["Git", "Docker", "Jenkins", "Postman", "Jira", "BitBucket", "Firebase"],
 }
 
@@ -142,7 +141,7 @@ export const languages = [
 export const workExperiences = [
   {
     id: "6",
-    title: "Frontend Developer (Outsourced to Tencent)",
+    title: "Frontend Developer",
     companyName: "Beyondsoft (Malaysia) Sdn. Bhd.",
     companyUrl: "https://www.beyondsoft.com/",
     icon: beyondsoft,
@@ -544,7 +543,7 @@ export const certifications = [
     issueDate: '2023-12-11',
   },
   {
-    name: 'ReactJS - Certification Program',
+    name: 'ReactJS',
     link: 'assets/pdf/TDA-reactjs.pdf',
     issuingOrganization: 'The Digital Adda',
     issueDate: '2023-12-12',
