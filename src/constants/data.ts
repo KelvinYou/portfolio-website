@@ -529,6 +529,8 @@ export const commonEducation = [
   },
 ]
 
+export const domainPath = "https://kelvinyou.vercel.app/";
+
 export const certifications = [
   {
     name: 'CCNA: Introduction to Networks',
@@ -538,13 +540,13 @@ export const certifications = [
   },
   {
     name: 'HTML, CSS, and Javascript for Web Developers',
-    link: 'assets/pdf/TDA-html_css_js.pdf',
+    link: `${domainPath}assets/pdf/TDA-html_css_js.pdf`,
     issuingOrganization: 'The Digital Adda',
     issueDate: '2023-12-11',
   },
   {
     name: 'ReactJS',
-    link: 'assets/pdf/TDA-reactjs.pdf',
+    link: `${domainPath}assets/pdf/TDA-reactjs.pdf`,
     issuingOrganization: 'The Digital Adda',
     issueDate: '2023-12-12',
   },
