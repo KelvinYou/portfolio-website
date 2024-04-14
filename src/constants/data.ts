@@ -151,16 +151,10 @@ export const workExperiences = [
     endDate: null,
     points: [
       {
-        value: "Developed and maintain user interfaces for Tencent's web & mobile apps using React.",
+        value: "Developed and maintain user interfaces for web & mobile apps using ReactJS.",
         highlightedTexts: [
           "Developed and maintain",
           "React",
-        ]
-      },
-      {
-        value: "Collaborated closely with Tencent's development team to understand project requirements and implement designs according to specifications.",
-        highlightedTexts: [
-          "Collaborated closely",
         ]
       },
       {
@@ -169,6 +163,12 @@ export const workExperiences = [
           "performance",
           "cross-browser compatibility",
           "responsive design",
+        ]
+      },
+      {
+        value: "Collaborated closely with Tencent's development team to understand project requirements and implement designs according to specifications.",
+        highlightedTexts: [
+          "Collaborated closely",
         ]
       },
       {
@@ -231,7 +231,7 @@ export const workExperiences = [
     description: "Finexus International Sdn Bhd is a dynamic and innovative technology company specializing in financial solutions.",
     points: [
       {
-        value: "Revitalized and advanced Java-based projects by integrating innovative features and implementing a thorough testing regimen. ",
+        value: "Revitalized and advanced Java-based projects by integrating innovative features and implementing a thorough testing regimen.",
         highlightedTexts: [
           "Java-based",
           "features",

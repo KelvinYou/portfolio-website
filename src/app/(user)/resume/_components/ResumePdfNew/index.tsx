@@ -296,7 +296,18 @@ const ResumePdfNew: React.FC = () => {
                       <Text style={styles.workCompanyName}>{formatDate(project.date)}</Text>
                     </View>
 
-                    <Text style={styles.workCompanyName}>{project.description}</Text>
+                    {project.points.map((point, index) => {
+                      return (
+                        <View key={index} style={styles.pointsWrapper}>
+                          <Text style={styles.pointsDot}>•</Text>
+                          <Text style={styles.workDescription}>
+                            {point.value}
+                          </Text>
+                        </View>
+                      )
+                    })}
+
+
                     <View style={styles.tagWrapper}>
                       {project.tags.map((tag, index) => {
                         return (

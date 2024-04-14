@@ -24,8 +24,17 @@
         }
       }
     ],
+    "points": [
+      {
+        "value": "Become a portfolio that best represents myself"
+      },
+      {
+        "value": "Try out all the usability of front-end design with Tailwind CSS"
+      }
+    ],
     "techStacks": [
-      "", ""
+      "NextJS", 
+      "Tailwind CSS"
     ],
     "tags": [
       {
@@ -60,6 +69,11 @@
         }
       }
     ],
+    "points": [
+      {
+        "value": "Mobile application created using Flutter with dart as programming language"
+      }
+    ],
     "tags": [
       {
         "name": "Flutter",
@@ -76,7 +90,7 @@
   {
     "_id": "3",
     "name": "Restaurant Landing",
-    "description": "Just to build an UI refer from Figma",
+    "description": "Build the landing page UI using ReactJS and Bootstrap",
     "date": "2023-2-21",
     "images": ["/images/projects/restaurant-landing/1.png"],
     "liveSiteLink": "https://restaurant-landing-kelvinyou.vercel.app/",
@@ -93,9 +107,14 @@
       {
         "type": "paragraph",
         "content": {
-          "text": "Just to build an UI refer from Figma",
+          "text": "Build the landing page UI using ReactJS and Bootstrap",
           "keywords": []
         }
+      }
+    ],
+    "points": [
+      {
+        "value": "Build the landing page UI using ReactJS and Bootstrap"
       }
     ],
     "tags": [
@@ -126,6 +145,11 @@
           "text": "An assignment from Blockchain course which to build a liquidity pool using smart contract",
           "keywords": []
         }
+      }
+    ],
+    "points": [
+      {
+        "value": "An assignment from Blockchain course which to build a liquidity pool using smart contract"
       }
     ],
     "tags": [
@@ -159,6 +183,11 @@
         }
       }
     ],
+    "points": [
+      {
+        "value": "An assignment for the Distributed Systems and Parallel Computing course, Detecting edges in images. We also use tools like Threading, Dask, Classified, etc. to speed up the process"
+      }
+    ],
     "tags": [
       {
         "name": "Python",
@@ -184,6 +213,11 @@
           "text": "An assignment for the Data Structures and Algorithms course, create adt using doubly linked list",
           "keywords": []
         }
+      }
+    ],
+    "points": [
+      {
+        "value": "An assignment for the Data Structures and Algorithms course, create adt using doubly linked list"
       }
     ],
     "tags": [
@@ -212,6 +246,11 @@
           "text": "Mobile application created using Flutter with dart as programming language",
           "keywords": []
         }
+      }
+    ],
+    "points": [
+      {
+        "value": "Mobile application created using Flutter with dart as programming language"
       }
     ],
     "tags": [

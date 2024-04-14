@@ -243,13 +243,13 @@ export const styles = StyleSheet.create({
     width: 100
   },
   tagWrapper: {
-    marginTop: 4,
+    marginTop: 8,
     display: 'flex',
     flexDirection: 'row',
     gap: 2,
   },
   tag: {
-    backgroundColor: 'lightgrey',
+    backgroundColor: '#ebebeb',
     color: colorMap.common,
     fontSize: 8,
     fontFamily: 'Quicksand',
