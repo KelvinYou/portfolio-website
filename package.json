@@ -18,7 +18,7 @@
     "autoprefixer": "10.4.19",
     "date-fns": "^3.6.0",
     "dotenv": "16.4.5",
-    "firebase": "10.9.0",
+    "firebase": "^10.11.0",
     "framer-motion": "11.0.22",
     "fs-extra": "11.2.0",
     "lucide-react": "0.363.0",
@@ -35,10 +35,22 @@
     "sharp": "^0.33.3",
     "tailwindcss": "3.4.1",
     "three": "0.162.0",
-    "typescript": "5.4.3",
     "typewriter-effect": "^2.21.0"
   },
   "devDependencies": {
-    "@types/react-vertical-timeline-component": "3.3.6"
+    "@eslint/eslintrc": "^3.0.2",
+    "@eslint/js": "^9.0.0",
+    "@types/react-vertical-timeline-component": "3.3.6",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "eslint": "^8.57.0",
+    "eslint-config-standard-with-typescript": "^43.0.1",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-n": "^16.6.2",
+    "eslint-plugin-next": "^0.0.0",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-react": "^7.34.1",
+    "globals": "^15.0.0",
+    "typescript": "^5.4.5",
+    "typescript-eslint": "^7.7.0"
   }
 }
