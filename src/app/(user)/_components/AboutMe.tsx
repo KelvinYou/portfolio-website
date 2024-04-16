@@ -4,11 +4,13 @@ import { Tilt } from "react-tilt";
 import { motion } from "framer-motion";
 import Image from "next/image";
 // import { styles } from "../styles";
-import { languages, services, summary, totalExperiences } from '@/constants/data';
+import { certifications, languages, services, skills, summary, totalExperiences } from '@/constants/data';
 import { fadeIn, textVariant } from "@/utils/motion";
 import { SectionWrapper } from "@/hoc";
 import HighlightText from "@/components/common/HighlightedText";
 import { calculateExperience } from "@/utils/common";
+import { capitalizeFirstLetter } from "@/utils/textUtils";
+import { formatDate } from "@/utils/dateUtil";
 
 // Service Card
 const ServiceCard = ({ index, title, icon }: { index: any, title: any, icon: any }) => {
@@ -82,27 +84,50 @@ const AboutMe: FC = () => {
           </div>
 
         </div> */}
-        {/* <ul className="text-gray-300 max-w-3xl">
 
-          <li>
-            <span>
-              Name:
-            </span>
+        
 
-            <span>
-              Kelvin
-            </span>
-          </li>
 
-          <li>
-            <span>
-              Start Coding:
-            </span>
+        <p className="empty-4 text-gray-300 text-[17px] max-w-3xl leading-[30px] text-justify">
+          <HighlightText
+            highlightedTexts={[
+              totalExperiences,
+              'blockchain, investing and chess'
+            ]}
+            text={summary}
+          />
 
-            <span>
-              2018
-            </span>
-          </li>
+        </p>
+        
+        {/* <div className="mt-5 text-gray-300">
+
+          Skills
+
+          {Object.entries(skills).map(([category, items], index) => {
+            return (
+              <div key={index}>
+                {capitalizeFirstLetter(category)}:
+                {items.join(', ')}
+              </div>
+            )
+          })}
+        </div>
+
+        <div className="mt-5 text-gray-300">
+          Certs
+
+          {certifications.map((cert, index) => {
+            return (
+              <div key={index}>
+                {cert.name}
+                {cert.issuingOrganization}
+                {formatDate(cert.issueDate)}
+              </div>
+            )}
+          )}
+        </div>
+        
+        <ul className="text-gray-300 max-w-3xl">
 
           <li>
             <span>Language: </span>
@@ -130,28 +155,7 @@ const AboutMe: FC = () => {
           </li>
           
         </ul> */}
-        
 
-
-        <p className="empty-4 text-gray-300 text-[17px] max-w-3xl leading-[30px] text-justify">
-          <HighlightText
-            highlightedTexts={[
-              totalExperiences,
-              'blockchain, investing and chess'
-            ]}
-            text={summary}
-          />
-
-          {/* I have developed in the field of software development for 4 years, 
-          eagerly immersed in the exploration of cutting-edge trends such as 
-          <span className="text-on-primary font-bold"> blockchain (web3) technology </span> 
-          . With my proficiency, I can leverage the power of the 
-          <span className="text-on-primary font-bold"> NodeJS framework (ReactJS, NextJS, ExpressJS) </span> 
-          and leverage 
-          <span className="text-on-primary font-bold"> Flutter </span> 
-          proficiently to build hybrid apps that transcend the traditional boundaries 
-          of the Android and iOS platforms. */}
-        </p>
       </motion.div>
 
       {/* <motion.div

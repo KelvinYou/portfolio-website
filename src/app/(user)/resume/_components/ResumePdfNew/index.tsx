@@ -7,6 +7,7 @@ import { getResumeData } from '@/services/resumeService';
 import { getDurationString } from '@/utils/common';
 import { formatDate } from '@/utils/dateUtil';
 import dayjs from 'dayjs';
+import { capitalizeFirstLetter } from '@/utils/textUtils';
 
 const {
   G,
@@ -214,7 +215,7 @@ const ResumePdfNew: React.FC = () => {
                 {Object.entries(resumeData.skills).map(([category, items]) => (
                   <View key={category} style={styles.skillsWrapper}>
                     <Text style={styles.skillTitle}>
-                      {category.charAt(0).toUpperCase() + category.slice(1)}:
+                      {capitalizeFirstLetter(category)}:
                     </Text>
                     <Text style={styles.skillItem}>
                       {items.join(', ')}

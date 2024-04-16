@@ -54,3 +54,5 @@ export const formatNumberAsAbbreviation = (input: string | number): string => {
 
   return number.toFixed(3).replace(/\.0+$|(\.[0-9]*[1-9])0+$/, '$1') + ' ' + abbreviations[index];
 }
+
+export const capitalizeFirstLetter = (string: string): string => string.charAt(0).toUpperCase() + string.slice(1);
