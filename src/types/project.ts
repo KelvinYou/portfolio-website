@@ -5,6 +5,9 @@ export type ProjectType = {
   name: string;
   description: string;
   techStacks?: string[];
+  points: {
+    value: string
+  }[];
   tags?: { name: string; color: string; }[];
   images?: string[];
   elements?: BlogElement[];

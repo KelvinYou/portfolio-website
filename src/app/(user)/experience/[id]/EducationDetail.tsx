@@ -80,7 +80,7 @@ const EducationDetail = ({ educationDetail }: { educationDetail: any }) => {
                         <span className='flex items-center justify-center'>
                           <Calendar size={14} className='mb-0.5'/>
 
-                          <span className='ml-2'>{formatDate(startDate, 'long') + " - " + formatDate(endDate, 'long')}</span>
+                          <span className='ml-2'>{formatDate(startDate, 'DD MMM YYYY') + " - " + formatDate(endDate, 'DD MMM YYYY')}</span>
                         </span>
 
                         <span className='flex items-center justify-center'>

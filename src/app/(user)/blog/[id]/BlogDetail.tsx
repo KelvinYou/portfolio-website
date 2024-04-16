@@ -99,14 +99,14 @@ const ProjectDetail: FC<BlogDetailProps> = ({ blogDetail }) => {
                       <span className='flex items-center'>
                         <Calendar size={14} />
 
-                        <span className='ml-1'>{formatDate(createDate, 'long')}</span>
+                        <span className='ml-1'>{formatDate(createDate, 'DD MMM YYYY')}</span>
                         <span className='ml-1 text-sm text-on-primary'>Published</span>
                       </span>
 
                       <span className='flex items-center'>
                         <Calendar size={14} />
 
-                        <span className='ml-1'>{formatDate(modifyDate, 'long')}</span>
+                        <span className='ml-1'>{formatDate(modifyDate, 'DD MMM YYYY')}</span>
                         <span className='ml-1 text-sm text-on-primary'>Modified</span>
                       </span>
                     </span>

@@ -4,6 +4,7 @@ import React from 'react'
 import * as ReactPDF from '@/components/PdfRenderer';
 import { styles } from './styles';
 import { getResumeData } from '@/services/resumeService';
+import { formatDate } from '@/utils/dateUtil';
 
 const {
   G,
@@ -49,30 +50,6 @@ const parseDateComponents = (inputDate: string): DateComponents | null => {
   }
 
   return { year, month, day };
-};
-
-
-export const formatDate = (inputDate: string): string => {
-  // Parse date components
-  const dateComponents = parseDateComponents(inputDate);
-
-  if (!dateComponents) {
-    return 'Invalid Date';
-  }
-
-  // Destructure date components
-  const { year, month, day } = dateComponents;
-
-  // Construct a Date object
-  const date = new Date(year, month - 1, day);
-
-  // Ensure the month is formatted as a three-letter abbreviation
-  const monthAbbreviation = new Intl.DateTimeFormat('en-US', { month: 'short' }).format(date);
-
-  // Construct the desired date string
-  const formattedDate = `${monthAbbreviation} ${year}`;
-
-  return formattedDate;
 };
 
 const DateRange = ({startAt, endAt}: {startAt: string, endAt?: string | null}) => {

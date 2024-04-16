@@ -23,7 +23,7 @@ export function calculateDuration(startDate: string, endDate: string): Duration 
   const endMonth = endDateParts[1];
 
   let years = endYear - startYear;
-  let months = endMonth - startMonth;
+  let months = endMonth - startMonth + 1; // Calculated from the starting month
 
   if (months < 0) {
       years--;

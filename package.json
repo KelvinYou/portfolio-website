@@ -17,6 +17,7 @@
     "@types/react-dom": "18.2.22",
     "autoprefixer": "10.4.19",
     "date-fns": "^3.6.0",
+    "dayjs": "^1.11.10",
     "dotenv": "16.4.5",
     "firebase": "^10.11.0",
     "framer-motion": "11.0.22",

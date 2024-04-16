@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState, ReactNode } from 'react';
+import React, { useState, ReactNode, HTMLAttributes } from 'react';
 
-interface TooltipProps {
+interface TooltipProps extends Omit<HTMLAttributes<HTMLDivElement>, 'content'> {
   content: ReactNode | string;
   children: ReactNode;
   width?: string;
@@ -11,7 +11,8 @@ interface TooltipProps {
 export default function Tooltip({ 
   content, 
   children,
-  width = "150px"
+  width = "150px",
+  ...restProps
 }: TooltipProps) {
   const [showTooltip, setShowTooltip] = useState(false);
 
@@ -34,6 +35,7 @@ export default function Tooltip({
         onClick={handleToggleTooltip}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        {...restProps}
       >
         {children}
       </div>

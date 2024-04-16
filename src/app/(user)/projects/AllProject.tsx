@@ -9,6 +9,10 @@ import { getProjects } from '@/services/projectService';
 import PageTitle from '@/components/PageTitle'
 import ProjectCard from './_components/ProjectCard';
 import BackButton from '@/components/BackButton';
+import SpotlightGrid, { SpotlightGridType } from '@/components/SpotlightGrid';
+import { ProjectType } from '@/types/project';
+import { github, preview } from '@/assets';
+import { createProjectItem } from '@/utils/projectUtil';
 
 const AllProject: React.FC = () => {
   const [projectCategory, setProjectCategory] = useState("all");
@@ -16,61 +20,66 @@ const AllProject: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const projectsPerPage = 6;
 
-  const indexOfLastProject = currentPage * projectsPerPage;
-  const indexOfFirstProject = indexOfLastProject - projectsPerPage;
-
-  const currentProjects = getProjects()
-    .filter((project) => {
-      if (projectCategory === 'all') return true;
-      return project.projectCategory === projectCategory;
-    })
-    .slice(indexOfFirstProject, indexOfLastProject);
-
   const handleOptionChange = (selectedOption: string) => {
     setProjectCategory(selectedOption);
     setCurrentPage(1);
   };
   
-  const options = [
-    { id: 'all', label: 'All' },
-    { id: 'side_project', label: 'Side Projects' },
-    { id: 'industrial_project', label: 'Industrial Projects' },
-    { id: 'school_project', label: 'School Projects' },
-  ];
+  const totalProjects = getProjects()
 
+
+  const projectTypeMap: {
+    [key: string]: string;
+  } = {
+    all: 'All',
+    side_project: 'Side Projects',
+    school_project: 'School Projects'
+  }
+  
+  const options = Object.keys(projectTypeMap).map(key => ({
+    id: key,
+    label: projectTypeMap[key]
+  }));
+
+  const countItem = Object.keys(projectTypeMap).map(key => {
+    let count = 0;
+
+    if (key === 'all') {
+      count = totalProjects.length
+    } else {
+      count = totalProjects.filter(project => project.projectCategory === key).length;
+    }
+
+    return ({
+      id: key,
+      label: projectTypeMap[key],
+      count
+    })
+  });
+
+  const highlightedTexts: string[] = [];
+
+  const totalCount = countItem.find(item => item.id === 'all')?.count || 0;
+  highlightedTexts.push(totalCount.toString());
+  const categoryCounts = countItem
+    .filter(item => item.id !== 'all')
+    .map(item => {
+      highlightedTexts.push(item.count.toString())
+      return( `${item.count} ${item.label}` )
+    })
+    .join(', ');
+  
+  const totalProjectsText = totalCount === 1 ? 'project' : 'projects';
+  const sentence = `In total, there are ${totalCount} ${totalProjectsText}. Of these, ${categoryCounts}.`;
+  
   const allProjects = getProjects()
     .filter((project) => {
       if (projectCategory === 'all') return true;
       return project.projectCategory === projectCategory;
     })
 
-  const renderPaginationLinks = () => {
-    const pageNumbers = [];
-    const totalProjects = getProjects()
-      .filter((project) => {
-        if (projectCategory === 'all') return true;
-        return project.projectCategory === projectCategory;
-      })
-      .length;
-  
-    for (let i = 1; i <= Math.ceil(totalProjects / projectsPerPage); i++) {
-      pageNumbers.push(i);
-    }
-  
-    return (
-      <ul className="flex space-x-2 my-10">
-        {pageNumbers.map((number) => (
-          <li key={number} className={`${
-            currentPage === number ? 'bg-on-primary text-primary' : 'bg-gray-dark text-on-body'
-          } px-4 py-2 rounded cursor-pointer`} onClick={() => setCurrentPage(number)}>
-            {number}
-          </li>
-        ))}
-      </ul>
-    );
-  };
-
-
+  const projectItems: SpotlightGridType[] = allProjects
+    .map(createProjectItem);
 
   return (
     <SectionWrapper
@@ -91,9 +100,13 @@ const AllProject: React.FC = () => {
       <PageTitle
         title='Projects.'
         subtitle='My work'
-        description='Following projects showcases my skills and experience through
-        real-world examples of my work. It reflects my ability to solve complex problems, work with different technologies,
-        and manage projects effectively. '
+        description={[
+          `Following projects showcases my skills and experience through
+          real-world examples of my work. It reflects my ability to solve complex problems, work with different technologies,
+          and manage projects effectively.`, 
+          `${sentence}`
+        ]}
+        highLightedTexts={highlightedTexts}
         className="mt-10"
       />
 
@@ -118,7 +131,7 @@ const AllProject: React.FC = () => {
       </motion.div > */}
 
       {/* Project Card */}
-      <div className='mt-10 min-h-[1000px]'>
+      {/* <div className='mt-10 min-h-[1000px]'>
         <div className="flex flex-wrap gap-7">
           {allProjects.map((project, index: number) => (
             <ProjectCard 
@@ -128,9 +141,9 @@ const AllProject: React.FC = () => {
             />
           ))}
         </div>
-      </div>
+      </div> */}
       
-
+      <SpotlightGrid items={projectItems} />
     </SectionWrapper>
   )
 }

@@ -5,19 +5,26 @@ import { fadeIn, textVariant } from '@/utils/motion'
 import { motion } from 'framer-motion'
 import React from 'react'
 import blogs from "@/data/blogs.json";
-import BlogCard from './BlogCard';
-import { BlogPage } from '@/types/blog';
-import Spotlight, { SpotlightCard } from '@/components/Spotlight';
-import Image from 'next/image';
-import { Clock } from 'lucide-react';
-import { formatDate } from '@/utils/dateUtil';
-import Link from 'next/link';
-import { Tilt } from 'react-tilt';
-import { useRouter } from 'next/navigation';
 import SpotlightGrid from '@/components/SpotlightGrid';
 
 const BlogHome = () => {
-  const router = useRouter();
+  const blogItems: any = [];
+
+  blogs.forEach((blog) => {
+    const title = blog.title;
+    const content = blog.paragraph;
+    const link = `/blog/${blog._id}`;
+    const image = blog.image;
+    const date = blog.createDate;
+
+    blogItems.push({
+      title,
+      content,
+      link,
+      image,
+      date
+    })
+  })
   
   return (
     <SectionWrapper
@@ -61,7 +68,7 @@ const BlogHome = () => {
           ))}
       </div> */}
 
-        <SpotlightGrid blogs={blogs} />
+        <SpotlightGrid items={blogItems} />
     </SectionWrapper>
   )
 }

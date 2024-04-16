@@ -4,7 +4,9 @@ import React from 'react'
 import * as ReactPDF from '@/components/PdfRenderer';
 import { styles } from './styles';
 import { getResumeData } from '@/services/resumeService';
-import { calculateExperience } from '@/utils/common';
+import { getDurationString } from '@/utils/common';
+import { formatDate } from '@/utils/dateUtil';
+import dayjs from 'dayjs';
 
 const {
   G,
@@ -41,41 +43,6 @@ interface DateComponents {
   day: number;
 }
 
-const parseDateComponents = (inputDate: string): DateComponents | null => {
-  const [year, month, day] = inputDate.split('-').map(Number);
-
-  // Check if the date components are valid
-  if (isNaN(year) || isNaN(month) || isNaN(day)) {
-    return null;
-  }
-
-  return { year, month, day };
-};
-
-
-export const formatDate = (inputDate: string): string => {
-  // Parse date components
-  const dateComponents = parseDateComponents(inputDate);
-
-  if (!dateComponents) {
-    return 'Invalid Date';
-  }
-
-  // Destructure date components
-  const { year, month, day } = dateComponents;
-
-  // Construct a Date object
-  const date = new Date(year, month - 1, day);
-
-  // Ensure the month is formatted as a three-letter abbreviation
-  const monthAbbreviation = new Intl.DateTimeFormat('en-US', { month: 'short' }).format(date);
-
-  // Construct the desired date string
-  const formattedDate = `${monthAbbreviation} ${year}`;
-
-  return formattedDate;
-};
-
 const DateRange = ({startAt, endAt}: {startAt: string, endAt?: string | null}) => {
   
   const startFormatted = formatDate(startAt);
@@ -83,14 +50,27 @@ const DateRange = ({startAt, endAt}: {startAt: string, endAt?: string | null}) =
   
   const dateRange = `${startFormatted} - ${endFormatted}`;
 
+  const duration = getDurationString(startAt, endAt || dayjs(Date.now()).format('YYYY-MM-DD'));
+
   return (
-    <Text style={styles.workDuration}>({dateRange})</Text>
+    <Text style={styles.workDuration}>{dateRange} {`• ${duration}`}</Text>
   )
 }
 
-const Section = ({title, isLeft = false, children}: {title: string, isLeft?: boolean, children: React.ReactNode}) => {
+type SectionType = {
+  title: string;
+  isLeft?: boolean;
+  children?: React.ReactNode;
+  style?: ReactPDF.Style;
+}
+
+const Section = ({title, isLeft = false, children, style}: SectionType) => {
+
   return (
-    <View style={{ marginBottom: '10px' }}>
+    <View style={[
+      { marginBottom: '10px' }, 
+      {...(style)}
+    ]}>
       <Text style={[styles.title, 
         { color: isLeft ? "grey": "grey" }]}>
         {title}
@@ -126,11 +106,78 @@ const ScoreBar = ({name, score}: {name: string, score: number}) => {
       <View style={styles.scoreView}>
         {Array.from({ length: 5 }).map((_, index) => (
           index <= score - 1? 
-          <View key={index} style={[styles.scoreItem, {backgroundColor: "lightgrey"}]} />
-          : 
           <View key={index} style={[styles.scoreItem, {backgroundColor: "grey"}]} />
+          : 
+          <View key={index} style={[styles.scoreItem, {backgroundColor: "lightgrey"}]} />
         ))}
       </View>
+    </View>
+  )
+}
+
+type ExperienceContentType = {
+  title: string;
+  industryName: string;
+  industryUrl?: string;
+  points: {
+    highlightedTexts?: string[],
+    value: string,
+  }[];
+  cgpa?: string;
+  startDate: string;
+  endDate: string | null;
+}
+
+const ExperienceContent = ({ 
+  title,
+  industryName,
+  industryUrl,
+  points,
+  cgpa,
+  startDate,
+  endDate
+}: ExperienceContentType) => {
+  const startFormatted = formatDate(startDate);
+  const endFormatted = endDate ? formatDate(endDate) : 'Present';
+  
+  const dateRange = `${startFormatted} - ${endFormatted}`;
+
+  const duration = getDurationString(startDate, endDate || dayjs(Date.now()).format('YYYY-MM-DD'));
+
+  return (
+    <View style={{ marginBottom: 15 }}>
+      <Text style={styles.workRole}>{title}</Text>
+
+      <View style={styles.workSecondRow}>
+        {industryUrl ?
+          <Link style={[styles.workCompanyName, { textDecoration: "underline" }]} src={industryUrl}>
+            <Text>
+              {industryName}
+            </Text>
+          </Link>
+          :
+          <Text style={styles.workCompanyName}>
+            {industryName}
+          </Text>
+        }
+        <Text style={styles.workDuration}>{dateRange} {`• ${duration}`}</Text>
+      </View>
+
+      {cgpa && 
+        <Text style={styles.educationCgpa}>
+          CGPA: {cgpa}
+        </Text>
+      }
+
+      {points.map((point, index) => (
+        <View key={index} style={styles.pointsWrapper}>
+          <Text style={styles.pointsDot}>•</Text>
+          <Text style={styles.workDescription}>
+            {point.value}
+          </Text>
+        </View>
+
+      ))}
     </View>
   )
 }
@@ -162,118 +209,170 @@ const ResumePdfNew: React.FC = () => {
                 {resumeData.summary}
               </Text>
             </Section>
-            <Section title={'Work Experiences'}>
-              {resumeData.workExperiences.map((workExp, index) => (
-                <View key={index} style={{ marginBottom: 10 }}>
-                  <Text style={styles.workRole}>{workExp.title}</Text>
-
-                  <View style={styles.workSecondRow}>
-                    {workExp.companyUrl ?
-                      <Link style={styles.workCompanyName} src={workExp.companyUrl}>
-                        <Text style={styles.workCompanyName}>
-                          {workExp.companyName}
-                        </Text>
-                      </Link>
-                      :
-                      <Text style={styles.workCompanyName}>
-                        {workExp.companyName}
-                      </Text>
-                    }
-                    <DateRange startAt={workExp.startDate} endAt={workExp.endDate} />
-                  </View>
-                  
-                  {workExp.points.slice(0, 2).map((point, index) => (
-                    <View key={index} style={styles.pointsWrapper}>
-                      <Text style={styles.pointsDot}>•</Text>
-                      <Text style={styles.workDescription}>
-                        {point.value}
-                      </Text>
-                    </View>
-
-                  ))}
-                  
-                </View>
-              ))}
-            </Section>
-
-            <Section title={'Educations'}>
-              {resumeData.educations.map((education, index) => (
-                <View key={index} style={{ marginBottom: 10 }}>
-                  <Text style={styles.workRole}>{education.title}</Text>
-
-                  {education.universityUrl ?
-                    <Link style={styles.workCompanyName} src={education.universityUrl}>
-                      <Text style={styles.workCompanyName}>
-                        {education.universityName}
-                      </Text>
-                    </Link>
-                    :
-                    <Text style={styles.workCompanyName}>
-                      {education.universityName}
-                    </Text>
-                  }
-                    
-                  <DateRange startAt={education.startDate} endAt={education.endDate} />
-
-                  {education.cgpa && 
-                    <Text style={styles.workCompanyName}>
-                      CGPA: {education.cgpa}
-                    </Text>
-                  }
-
-                  {/* {education.points.slice(0, 2).map((point, index) => (
-                    <View key={index} style={styles.pointsWrapper}>
-                      <Text style={styles.pointsDot}>•</Text>
-                      <Text style={styles.workDescription}>
-                        {point.value}
-                      </Text>
-                    </View>
-                  ))} */}
-                  {/* <Text style={styles.workDescription}>{education.description}</Text> */}
-                </View>
-              ))}
-            </Section>
-          </View>
-          <View style={styles.rightColumn}>
-            {/* <Section title={'Contact'}>
-
-            </Section> */}
-
             <Section title={'Skills'}>
-              <View style={styles.skillsWrapper}>
-                {resumeData.allSkills.map((skill, index) => {
-                  return (
-                    <Text key={index} style={styles.skills}>
-                      {skill}
+              <View>
+                {Object.entries(resumeData.skills).map(([category, items]) => (
+                  <View key={category} style={styles.skillsWrapper}>
+                    <Text style={styles.skillTitle}>
+                      {category.charAt(0).toUpperCase() + category.slice(1)}:
                     </Text>
-                  )
-                })}
+                    <Text style={styles.skillItem}>
+                      {items.join(', ')}
+                    </Text>
+                  </View>
+                ))}
               </View>
             </Section>
+            <Section title={'Work Experiences'}>
+              {resumeData.workExperiences.map((workExp, index) => {
 
-            <Section title={'Languages'}>
-              <View style={styles.skillsWrapper}>
-                {resumeData.languages.map((language, index) => {
-                  const score = (language.speak + language.readAndWrite) / 2 * 5;
+                return (
+                  <ExperienceContent
+                    key={index + workExp.startDate}
+                    title={workExp.title}
+                    industryName={workExp.companyName}
+                    industryUrl={workExp.companyUrl}
+                    points={workExp.points}
+                    startDate={workExp.startDate}
+                    endDate={workExp.endDate}
+                  />
+                )
+              })}
+            </Section>
 
+            <Section title={'Educations'} style={{ marginTop: 30 }}>
+              {resumeData.educations.map((education, index) => {
+
+                return (
+                  <ExperienceContent
+                    key={index + education.startDate}
+                    title={education.title}
+                    industryName={education.universityName}
+                    industryUrl={education.universityUrl}
+                    points={education.points}
+                    cgpa={education.cgpa}
+                    startDate={education.startDate}
+                    endDate={education.endDate}
+                  />
+                )
+              })}
+            </Section>
+
+            <Section title={'Projects'}>
+              {resumeData.projects.slice(0, 3).map((project, index) => {
+                return (
+                  <View key={index} style={{ marginBottom: 10 }}>
+                    <View style={{
+                      display: 'flex',
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                    }}>
+                      <View
+                        style={{
+                          display: 'flex',
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                          gap: 4,
+                        }}
+                      >
+                        <Text style={styles.workRole}>{project.name}</Text>
+
+
+                        {project.sourceCodeLink && 
+                          <Link src={project.sourceCodeLink}>
+                            <Image src='assets/images/resume/new/github.png' style={styles.projectIcon}/>
+                          </Link>
+                        }
+
+                        {project.liveSiteLink && 
+                          <Link src={project.liveSiteLink}>
+                            <Image src='assets/images/resume/new/eye.png' style={styles.projectIcon}/>
+                          </Link>
+                        }
+                        
+                      </View>
+
+                      <Text style={styles.workCompanyName}>{formatDate(project.date)}</Text>
+                    </View>
+
+                    {project.points.map((point, index) => {
+                      return (
+                        <View key={index} style={styles.pointsWrapper}>
+                          <Text style={styles.pointsDot}>•</Text>
+                          <Text style={styles.workDescription}>
+                            {point.value}
+                          </Text>
+                        </View>
+                      )
+                    })}
+
+
+                    <View style={styles.tagWrapper}>
+                      {project.tags.map((tag, index) => {
+                        return (
+                          <Text key={index} style={styles.tag}>
+                            {tag.name}
+                          </Text>
+                        )
+                      })}
+                    </View>
+                  </View>
+                )
+              })}
+            </Section>
+
+            <View style={{
+              display: 'flex',
+              flexDirection: 'row',
+
+            }}>
+              <Section title={'Languages'}  style={{ width: '30%' }}>
+                <View style={{ width: '100%' }}>
+                  {resumeData.languages.map((language, index) => {
+                    const score = (language.speak + language.readAndWrite) / 2 * 5;
+
+                    return (
+                      <ScoreBar 
+                        key={index + language.name}
+                        name={language.name} 
+                        score={score}
+                      />
+                    )
+                  })}
+                </View>
+              </Section>
+
+              <Section title={'Certifications'} style={{ width: '70%', paddingLeft: 20 }}>
+                {resumeData.certifications.map((cert, index) => {
                   return (
-                    <ScoreBar 
-                      key={index + language.name}
-                      name={language.name} 
-                      score={score}
-                    />
+                    <Link key={index} src={cert.link} style={{ textDecoration: 'none' }}>
+                      <View style={styles.certificationWrapper}>
+                        <Text style={styles.certificationTitle}>{cert.name}</Text>
+                        <View style={{ 
+                          display: 'flex', 
+                          flexDirection: 'row',
+                          justifyContent: 'space-between',
+                        }}>
+                          <Text>{cert.issuingOrganization}</Text>
+                          <Text>{formatDate(cert.issueDate)}</Text>
+                        </View>
+                      </View>
+                    </Link>
+
                   )
                 })}
-              </View>
-            </Section>
+              </Section>
+            </View>
 
-            <View  style={{ height: 160 }}/>
+
+
             <Section title={'More Info'}>
               <Text style={styles.moreInfoText}>{resumeData.portfolio}</Text>
               <Image src="assets/images/resume/new/personal-website-qr.png" style={styles.moreInfoQr} />
             </Section>
-
           </View>
+
         </View>
         
 

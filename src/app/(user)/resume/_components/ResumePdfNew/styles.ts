@@ -14,6 +14,12 @@ Font.register({
   ],
 })
 
+const colorMap = {
+  primary: '#33bbcf',
+  common: 'black',
+  secondary: '#323b4c',
+}
+
 export const styles = StyleSheet.create({
   page: {
     backgroundColor: 'white',
@@ -22,7 +28,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   headerWrapper: {
-    padding: '30px 20px 20px 20px'
+    padding: '30px 30px 10px 30px'
   },
   contactListWrapper: { 
     display: 'flex', 
@@ -42,9 +48,9 @@ export const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: 'Quicksand',
     fontWeight: 'bold',
-    color: '#323b4c',
-    marginTop: 4,
-    marginBottom: 10,
+    marginTop: 2,
+    marginBottom: 6,
+    color: colorMap.primary,
   },
   text: {
     fontSize: 36,
@@ -52,13 +58,11 @@ export const styles = StyleSheet.create({
   },
   row: {
     flexDirection: 'row',
-    padding: '0 20px',
+    padding: '0 30px',
   },
   leftColumn: {
     flexGrow: 1,
-    width: '70%',
     height: '100%',
-    paddingRight: 20,
   },
   summary: {
     fontSize: 10,
@@ -70,7 +74,7 @@ export const styles = StyleSheet.create({
     borderRadius: '10px',
     width: '30%',
     height: '100%',
-    backgroundColor: "#323b4c",
+    backgroundColor: colorMap.secondary,
   },
   title: {
     fontSize: 9,
@@ -89,7 +93,15 @@ export const styles = StyleSheet.create({
     fontSize: 10,
     marginRight: 5,
     textDecoration: "none",
-    color: "#323b4c",
+    color: colorMap.secondary,
+    fontFamily: 'Quicksand',
+    fontWeight: 'bold',
+  },
+  educationCgpa: {
+    fontSize: 10,
+    marginRight: 5,
+    textDecoration: "none",
+    color: colorMap.secondary,
     fontFamily: 'Quicksand',
     fontWeight: 'bold',
   },
@@ -98,14 +110,17 @@ export const styles = StyleSheet.create({
     fontFamily: 'Quicksand',
     fontWeight: 'bold',
     marginBottom: 3,
+    color: colorMap.primary,
   },
   workSecondRow: {
     display: 'flex',
     flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   workDuration: {
     fontSize: 10,
-    color: "#323b4c",
+    color: colorMap.secondary,
+    fontWeight: 'bold',
     fontFamily: 'Quicksand',
   },
   pointsWrapper: {
@@ -148,7 +163,7 @@ export const styles = StyleSheet.create({
     paddingBottom: 3,
   },
   scoreName: {
-    color: "white",
+    color: colorMap.common,
     fontSize: 10,
     fontFamily: 'Quicksand',
   },
@@ -189,26 +204,61 @@ export const styles = StyleSheet.create({
     textDecoration: 'none'
   },
   scoreNameContainer: {
-    width: 120,
   },
   skillsWrapper: {
+    fontSize: 10,
+    color: colorMap.common,
     display: 'flex',
     flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 2,
+    marginBottom: 2,
+    fontFamily: 'Quicksand',
   },
-  skills: {
+  skillTitle: {
+    fontWeight: 'bold',
+    width: 70,
+  },
+  skillItem: {
+    color: colorMap.secondary,
+  },
+  certificationWrapper: {
     fontSize: 10,
-    color: 'lightgrey',
-    padding: '1px 5px',
-    backgroundColor: '#212a3b'
+    color: colorMap.common,
+    marginBottom: 10,
+    fontFamily: 'Quicksand',
+    width: '100%',
+  },
+  certificationTitle: {
+    fontSize: 10,
+    fontWeight: 'bold',
+    color: colorMap.secondary,
   },
   moreInfoText: {
     fontSize: 10,
-    color: 'lightgrey',
+    color: colorMap.common,
     marginBottom: 5
   },
   moreInfoQr: {
     padding: '4px 10px',
-  }
+    height: 100,
+    width: 100
+  },
+  tagWrapper: {
+    marginTop: 8,
+    display: 'flex',
+    flexDirection: 'row',
+    gap: 2,
+  },
+  tag: {
+    backgroundColor: '#ebebeb',
+    color: colorMap.common,
+    fontSize: 8,
+    fontFamily: 'Quicksand',
+    padding: '1px 3px',
+    borderRadius: 2,
+  },
+  projectIcon: {
+    width: 12,
+    height: 12,
+    marginBottom: 3,
+  },
 });

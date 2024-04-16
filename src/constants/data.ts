@@ -89,9 +89,8 @@ export const personalInfo = {
 
 export const skills = {
   "languages": ["TypeScript", "JavaScript", "Java", "Go"],
-  "webTechnologies": ["Next.js", "React", "Express", "Node.js"],
-  "mobileTechnologies": ["React Native", "Flutter"],
-  "databases": ["MongoDB", "PostgreSQL", "MySQL"],
+  "frameworks": ["Next.js", "React", "Express", "Node.js", "React Native", "Flutter"],
+  "databases": ["PostgreSQL", "MySQL", "MongoDB"],
   "tools": ["Git", "Docker", "Jenkins", "Postman", "Jira", "BitBucket", "Firebase"],
 }
 
@@ -142,7 +141,7 @@ export const languages = [
 export const workExperiences = [
   {
     id: "6",
-    title: "Frontend Developer (Outsourced to Tencent)",
+    title: "Frontend Developer",
     companyName: "Beyondsoft (Malaysia) Sdn. Bhd.",
     companyUrl: "https://www.beyondsoft.com/",
     icon: beyondsoft,
@@ -152,16 +151,10 @@ export const workExperiences = [
     endDate: null,
     points: [
       {
-        value: "Developed and maintain user interfaces for Tencent's web & mobile apps using React.",
+        value: "Developed and maintain user interfaces for web & mobile apps using ReactJS.",
         highlightedTexts: [
           "Developed and maintain",
           "React",
-        ]
-      },
-      {
-        value: "Collaborated closely with Tencent's development team to understand project requirements and implement designs according to specifications.",
-        highlightedTexts: [
-          "Collaborated closely",
         ]
       },
       {
@@ -170,6 +163,12 @@ export const workExperiences = [
           "performance",
           "cross-browser compatibility",
           "responsive design",
+        ]
+      },
+      {
+        value: "Collaborated closely with Tencent's development team to understand project requirements and implement designs according to specifications.",
+        highlightedTexts: [
+          "Collaborated closely",
         ]
       },
       {
@@ -232,7 +231,7 @@ export const workExperiences = [
     description: "Finexus International Sdn Bhd is a dynamic and innovative technology company specializing in financial solutions.",
     points: [
       {
-        value: "Revitalized and advanced Java-based projects by integrating innovative features and implementing a thorough testing regimen. ",
+        value: "Revitalized and advanced Java-based projects by integrating innovative features and implementing a thorough testing regimen.",
         highlightedTexts: [
           "Java-based",
           "features",
@@ -530,6 +529,8 @@ export const commonEducation = [
   },
 ]
 
+export const domainPath = "https://kelvinyou.vercel.app/";
+
 export const certifications = [
   {
     name: 'CCNA: Introduction to Networks',
@@ -539,13 +540,13 @@ export const certifications = [
   },
   {
     name: 'HTML, CSS, and Javascript for Web Developers',
-    link: 'assets/pdf/TDA-html_css_js.pdf',
+    link: `${domainPath}assets/pdf/TDA-html_css_js.pdf`,
     issuingOrganization: 'The Digital Adda',
     issueDate: '2023-12-11',
   },
   {
-    name: 'ReactJS - Certification Program',
-    link: 'assets/pdf/TDA-reactjs.pdf',
+    name: 'ReactJS',
+    link: `${domainPath}assets/pdf/TDA-reactjs.pdf`,
     issuingOrganization: 'The Digital Adda',
     issueDate: '2023-12-12',
   },

@@ -76,7 +76,7 @@ const ProjectDetail: FC<ProjectDetailProps> = ({ projectDetail }) => {
                       <span className='flex items-center'>
                         <Calendar size={14} className='mb-1' />
 
-                        <span className='ml-1'>{formatDate(date, 'long')}</span>
+                        <span className='ml-1'>{formatDate(date, 'DD MMM YYYY')}</span>
                       </span>
 
                     </span>
