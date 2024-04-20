@@ -154,7 +154,7 @@ export const workExperiences = [
         value: "Developed and maintain user interfaces for web & mobile apps using ReactJS.",
         highlightedTexts: [
           "Developed and maintain",
-          "React",
+          "ReactJS",
         ]
       },
       {
