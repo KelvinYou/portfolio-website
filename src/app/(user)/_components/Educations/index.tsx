@@ -15,6 +15,8 @@ import Link from 'next/link';
 
 import { ChevronsRight } from 'lucide-react';
 import HighlightText from '@/components/common/HighlightedText';
+import VerticalTimelineRenderer, { VerticalTimelineElementType } from '@/components/VerticalTimelineRenderer';
+import { formatDate } from '@/utils/dateUtil';
 
 const EducationCard: FC<any> = ({ education }) => {
 
@@ -146,6 +148,36 @@ const Educations = () => {
     return startDateB.localeCompare(startDateA);
   });
 
+  const formattedEducations: VerticalTimelineElementType[] = sortedEducations.map((education, index) => {
+    const title = education.title;
+    const icon = education.icon;
+    const iconBackgroundColor = education.iconBg;
+    const subtitle = education.universityName;
+    const subtitleLink = education.universityUrl;
+    const points = education.points;
+    const date = `${formatDate(education.startDate)} - ${education.endDate ? formatDate(education.endDate) : "Present"}`;
+    const subContainer = (
+      <div
+        className="text-sm inline-flex items-center justify-center rounded-md bg-gray-700 px-4 py-0.5
+        text-secondary mt-2"
+      >
+        CGPA: {education.cgpa}
+      </div>
+    );
+    const link = `/experience/${education.id}`;
+
+    return {
+      title,
+      icon,
+      iconBackgroundColor,
+      subtitle,
+      subtitleLink,
+      subContainer,
+      points,
+      date,
+      link,
+    }
+  });
 
   return (
     <>
@@ -160,16 +192,19 @@ const Educations = () => {
         idName='render-educations'
       > 
         <div className="empty-20 flex flex-col mt-10">
-          <VerticalTimeline>
-            {sortedEducations
-              .map((experience, i) => {
+          {/* <VerticalTimeline>
+            {
+              sortedEducations.map((experience, i) => {
                 return (
                   <EducationCard key={i} education={experience} />
                 )
-              }
+              })
+            }
+          </VerticalTimeline> */}
 
-              )}
-          </VerticalTimeline>
+          <VerticalTimelineRenderer
+            elements={formattedEducations}
+          />
         </div>
       </SectionWrapper>
     </>

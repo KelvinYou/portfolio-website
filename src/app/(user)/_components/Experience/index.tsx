@@ -21,6 +21,7 @@ import SelectableButtonGroup from '@/components/SelectableButtonGroup';
 import { ChevronsRight } from 'lucide-react';
 import HighlightText from '@/components/common/HighlightedText';
 import { formatDate } from '@/utils/dateUtil';
+import VerticalTimelineRenderer, { VerticalTimelineElementType } from '@/components/VerticalTimelineRenderer';
 
 // Experience Card
 const ExperienceCard: FC<any> = ({ experience }) => {
@@ -101,14 +102,13 @@ const ExperienceCard: FC<any> = ({ experience }) => {
         ))}
       </ul>
 
-      <div className="mt-5 flex flex-wrap">
+      <div className="mt-5 flex flex-wrap gap-2">
         {experience.techStacks.map((techStack: string, index: number) => (
           <div 
             key={index}
-            className={`text-sm font-medium mr-2 rounded 
-            ${index % 2 === 0 ? 'blue-text-gradient' : 'orange-text-gradient'}`}
+            className={`text-sm font-medium rounded bg-gray-700 px-2 py-1`}
           >
-            #{techStack}
+            {techStack}
           </div>
         ))}
       </div>
@@ -277,6 +277,31 @@ const Experience: FC = () => {
     return startDateB.localeCompare(startDateA);
   });
 
+  const formattedExperiences: VerticalTimelineElementType[] = sortedExperiences.map((experience, index) => {
+    const title = experience.title;
+    const icon = experience.icon;
+    const iconBackgroundColor = experience.iconBg;
+    const subtitle = experience.companyName;
+    const subtitleLink = experience.companyUrl;
+    const points = experience.points;
+    const tags = experience.techStacks;
+    const date = `${formatDate(experience.startDate)} - ${experience.endDate ? formatDate(experience.endDate) : "Present"}`;
+    const link = `/experience/${experience.id}`;
+
+    return {
+      title,
+      icon,
+      iconBackgroundColor,
+      subtitle,
+      subtitleLink,
+      points,
+      tags,
+      date,
+      // link,
+    }
+  });
+
+
 
   const options = [
     { id: 'all', label: 'All' },
@@ -310,7 +335,7 @@ const Experience: FC = () => {
 
         {/* Experience Card */}
         <div className="empty-20 flex flex-col mt-10">
-          <VerticalTimeline>
+          {/* <VerticalTimeline>
             {sortedExperiences
               .filter((experience) => {
                 if (experienceCategory === 'all') return true;
@@ -329,7 +354,11 @@ const Experience: FC = () => {
               }
 
               )}
-          </VerticalTimeline>
+          </VerticalTimeline> */}
+
+          <VerticalTimelineRenderer 
+            elements={formattedExperiences}
+          />
         </div>
       </SectionWrapper>
     </>
