@@ -128,21 +128,23 @@ const VerticalTimelineRenderer: React.FC<VerticalTimelineRendererProps> = ({ ele
               </div>
               }
 
-              {element.link &&
-                <Link
-                  className="mt-6 group relative inline-flex items-center overflow-hidden rounded bg-on-primary px-8 py-3 text-black focus:outline-none focus:ring"
-                  href={element.link}
-                >
-                  
-                  <span className="absolute -end-full transition-all group-hover:end-4">
-                    <ChevronsRight />
-                  </span>
+              <div>
+                {element.link &&
+                  <Link
+                    className="mt-6 group relative inline-flex items-center overflow-hidden rounded bg-on-primary px-8 py-3 text-black focus:outline-none focus:ring"
+                    href={element.link}
+                  >
+                    
+                    <span className="absolute -end-full transition-all group-hover:end-4">
+                      <ChevronsRight />
+                    </span>
 
-                  <span className="text-sm font-medium transition-all group-hover:me-4">
-                    Find Out More
-                  </span>
-                </Link>
-              }
+                    <span className="text-sm font-medium transition-all group-hover:me-4">
+                      Find Out More
+                    </span>
+                  </Link>
+                }
+              </div>
             </VerticalTimelineElement>
           )
         })

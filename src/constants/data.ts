@@ -208,13 +208,14 @@ export const workExperiences = [
     ],
     techStacks: [
       "React",
+      "React Native",
       "Typescript",
       "Git",
       "Webpack",
+      "REST APIs",
       "Scrum methodologies",
       "Cross-browser compatibility",
       "Responsive design",
-      "Accessibility",
     ],
     experienceCategory: "work"
   },
@@ -268,11 +269,14 @@ export const workExperiences = [
       "Firebase",
       "Oracle SQL",
       "XML",
+      "Servlets",
       "JavaServer Pages (JSP)",
       "Tomcat",
       "Linux",
+      "Shell Scripting",
       "Jasper",
       "TortoiseSVN",
+      "SOAP"
     ],
     experienceCategory: "work"
   },
@@ -570,4 +574,162 @@ export const coCurricular = [
     schoolUrl: "https://tarc.edu.my/",
     description: "Learnt how to solve chess tactics, Learnt time management.",
   },
+]
+
+type ActivityType = {
+  title: string;
+  description: string;
+  startDate: string;
+  endDate: string;
+}
+
+export const activities: ActivityType[] = [
+  // Template
+  // {
+  //   title: '',
+  //   description: '',
+  //   startDate: '',
+  //   endDate: '',
+  // },
+
+  // During Secondary School
+
+
+  // During Diploma
+
+
+  // During Degree (not completed)
+  {
+    title: 'Member, Bursa Young Investor Club, Academic Year 2021/22',
+    description: '',
+    startDate: '2021-6-1',
+    endDate: '2022-5-31',
+  },
+  {
+    title: 'Member, Chess Club, Academic Year 2021/22',
+    description: '',
+    startDate: '2021-6-1',
+    endDate: '2022-5-31',
+  },
+  {
+    title: 'Member, Chinese Language Society, Academic Year 2021/22',
+    description: '',
+    startDate: '2021-6-1',
+    endDate: '2022-5-31',
+  },
+  {
+    title: 'Member, Green Society, Academic Year 2021/22',
+    description: '',
+    startDate: '2021-6-1',
+    endDate: '2022-5-31',
+  },
+  {
+    title: 'Member, Swimming Club, Academic Year 2021/22',
+    description: '',
+    startDate: '2021-6-1',
+    endDate: '2022-5-31',
+  },
+  {
+    title: 'Dynamic Class Online Sport Day, Academic Year 2021/22',
+    description: '神马团康运动会',
+    startDate: '2021-9-11',
+    endDate: '2021-9-11',
+  },
+  {
+    title: 'Talk: Pave Your Way To Financial Freedom, Academic Year 2021/22',
+    description: '',
+    startDate: '2022-1-8',
+    endDate: '2022-1-8',
+  },
+  {
+    title: 'Member, Chinese Language Society, Academic Year 2022/23',
+    description: '',
+    startDate: '2022-6-1',
+    endDate: '2023-5-31',
+  },
+  {
+    title: 'Member, Green Society, Academic Year 2022/23',
+    description: '',
+    startDate: '2022-6-1',
+    endDate: '2023-5-31',
+  },
+  {
+    title: 'Organising Committee Member, Checkmate Adventure, Academic Year 2022/23',
+    description: '',
+    startDate: '2022-6-1',
+    endDate: '2023-5-31',
+  },
+  {
+    title: 'Organising Secretary, Xiang Qi Tournament 2022, Academic Year 2022/23',
+    description: '',
+    startDate: '2022-6-1',
+    endDate: '2023-5-31',
+  },
+  {
+    title: 'Chess Weekly Training, Academic Year 2022/23',
+    description: '',
+    startDate: '2022-6-1',
+    endDate: '2023-5-31',
+  },
+  {
+    title: 'Chinese Language Society Dynamic Class Camp 2023, Academic Year 2022/23',
+    description: '',
+    startDate: '2023-1-1',
+    endDate: '2023-1-1',
+  },
+  {
+    title: 'Dynamic Class Sport Day, Academic Year 2022/23',
+    description: '神马团康运动会',
+    startDate: '2023-1-1',
+    endDate: '2023-1-1',
+  },
+  {
+    title: 'Erat Cup Ns Chinese Chess Tournament, Academic Year 2022/23',
+    description: '',
+    startDate: '2023-1-1',
+    endDate: '2023-1-1',
+  },
+  {
+    title: 'How Iot And Ai Are Fused With Current Technology, Academic Year 2022/23',
+    description: '',
+    startDate: '2023-1-1',
+    endDate: '2023-1-1',
+  },
+  {
+    title: 'Investment Workshop By Investingnote, Academic Year 2022/23',
+    description: '',
+    startDate: '2023-1-1',
+    endDate: '2023-1-1',
+  },
+  {
+    title: 'Paradigm Shift: Use of Art Drawing House-Tree-Person For Detainees Under Prevention of Crime Act, Academic Year 2022/23',
+    description: '',
+    startDate: '2023-1-1',
+    endDate: '2023-1-1',
+  },
+  {
+    title: 'Shaftsbury Square Chess Competition 2023, Academic Year 2022/23',
+    description: '',
+    startDate: '2023-1-1',
+    endDate: '2023-1-1',
+  },
+  {
+    title: 'TAR UC X Senheng Talent Development Program, Academic Year 2022/23',
+    description: '',
+    startDate: '2023-1-1',
+    endDate: '2023-1-1',
+  },
+  {
+    title: 'Tarcian Run 2022, Academic Year 2022/23',
+    description: '',
+    startDate: '2023-1-1',
+    endDate: '2023-1-1',
+  },
+  // After Graduated
+  {
+    title: 'Rust Talk & Workshop - Parallel Programming April 2024',
+    description: 'Introduction to Parallel Programming in Rust as well as a simple hands-on example!',
+    startDate: '2024-4-20',
+    endDate: '2024-4-20',
+  }
 ]

@@ -4,13 +4,13 @@ import { SectionWrapper } from '@/hoc'
 import { fadeIn, textVariant } from '@/utils/motion'
 import { motion } from 'framer-motion'
 import React from 'react'
-import blogs from "@/data/blogs.json";
 import SpotlightGrid from '@/components/SpotlightGrid';
+import { getBlogs } from '@/services/blogService';
 
 const BlogHome = () => {
   const blogItems: any = [];
 
-  blogs.forEach((blog) => {
+  getBlogs().forEach((blog) => {
     const title = blog.title;
     const content = blog.paragraph;
     const link = `/blog/${blog._id}`;
@@ -68,7 +68,7 @@ const BlogHome = () => {
           ))}
       </div> */}
 
-        <SpotlightGrid items={blogItems} />
+      <SpotlightGrid items={blogItems} />
     </SectionWrapper>
   )
 }

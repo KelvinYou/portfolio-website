@@ -1,9 +1,9 @@
+import { getBlogs } from '@/services/blogService';
 import React from 'react'
-import blogs from "@/data/blogs.json";
 
 export async function generateMetadata({ params }: { params: { id: string} }) {
 
-  const blogDetail = blogs.find((blog) => blog._id === params.id);
+  const blogDetail = getBlogs().find((blog) => blog._id === params.id);
 
   if (!blogDetail) return {
     title: 'Kelvin You | Blog',

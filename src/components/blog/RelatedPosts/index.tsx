@@ -2,8 +2,8 @@ import React, { FC } from 'react'
 import RelatedBlogCard from './RelatedBlogCard'
 import { BlogPage } from '@/types/blog';
 
-import blogs from "@/data/blogs.json";
 import { useRouter } from 'next/navigation';
+import { getBlogs } from '@/services/blogService';
 
 interface RelatedPostsProps {
   relatedBlogIds: string[];
@@ -12,7 +12,7 @@ interface RelatedPostsProps {
 const RelatedPosts: FC<RelatedPostsProps> = (props) => {
   const { relatedBlogIds } = props;
 
-  const relatedBlogs: BlogPage[] = blogs.filter((blog) => relatedBlogIds.includes(blog._id));
+  const relatedBlogs: BlogPage[] = getBlogs().filter((blog) => relatedBlogIds.includes(blog._id));
   
   const router = useRouter();
 

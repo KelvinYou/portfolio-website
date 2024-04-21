@@ -10,7 +10,7 @@ export function calculateExperience(experiences: any) {
   }
   const totalYears = Math.floor(totalMonths / 12);
   const remainingMonths = totalMonths % 12;
-  return `${totalYears} year(s) and ${remainingMonths} month(s)`;
+  return `${totalYears} year${totalYears > 1 ? 's' : ''} and ${remainingMonths} month${remainingMonths > 1 ? 's' : ''}`;
 }
 
 export function calculateDuration(startDate: string, endDate: string): Duration {
