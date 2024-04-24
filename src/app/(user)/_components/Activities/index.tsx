@@ -2,19 +2,13 @@ import PageTitle from '@/components/PageTitle';
 import ProgressTimeline, { ProgressTimelineElementType } from '@/components/ProgressTimeline';
 import { activities, certifications } from '@/constants/data';
 import { SectionWrapper } from '@/hoc'
+import { sortByKey } from '@/utils/arrayUtils';
 import { formatDate } from '@/utils/dateUtil';
 import React from 'react'
 
 
 const Activities: React.FC = () => {
-  const sortedActivities = activities.sort((a, b) => {
-    const dateA = a.startDate;
-    const dateB = b.startDate;
-
-    return dateB.localeCompare(dateA);
-  });
-  
-  const formattedActivities: ProgressTimelineElementType[] = sortedActivities.map((activity) => {
+  const formattedActivities: ProgressTimelineElementType[] = sortByKey(activities, 'startDate', 'desc').map((activity) => {
     const title = activity.title;
     const description = activity.description;
     const date = formatDate(activity.startDate);

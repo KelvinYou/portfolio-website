@@ -1,19 +1,13 @@
 import ProgressTimeline, { ProgressTimelineElementType } from '@/components/ProgressTimeline';
 import { certifications } from '@/constants/data';
 import { SectionWrapper } from '@/hoc'
+import { sortByKey } from '@/utils/arrayUtils';
 import { formatDate } from '@/utils/dateUtil';
 import React from 'react'
 
 
 const Certificates: React.FC = () => {
-  const sortedCerts = certifications.sort((a, b) => {
-    const issueDateA = a.issueDate;
-    const issueDateB = b.issueDate;
-
-    return issueDateB.localeCompare(issueDateA);
-  });
-  
-  const formattedCerts: ProgressTimelineElementType[] = sortedCerts.map((cert) => {
+  const formattedCerts: ProgressTimelineElementType[] = sortByKey(certifications, 'issueDate', 'desc').map((cert) => {
     const title = cert.name;
     const description = cert.issuingOrganization;
     const date = formatDate(cert.issueDate);
