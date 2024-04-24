@@ -405,7 +405,7 @@ export const workExperiences = [
 
 export const totalExperiences = calculateExperience(workExperiences);
 
-export const summary = `Experienced software engineer with ${totalExperiences} of experience in developing and maintaining web applications. Skilled in agile methodologies and CI/CD. I'm an INTP-T, nerd. I'm also passionate about blockchain, investing and chess.`;
+export const summary = `Experienced software engineer with ${totalExperiences} of experience in developing and maintaining web applications (includes all internships). Skilled in agile methodologies and CI/CD. I'm an INTP-T, nerd. I'm also passionate about blockchain, investing and chess.`;
 
 export const educations = [
   {
