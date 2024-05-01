@@ -3,7 +3,7 @@ import ProgressTimeline, { ProgressTimelineElementType } from '@/components/Prog
 import { activities, certifications } from '@/constants/data';
 import { SectionWrapper } from '@/hoc'
 import { sortByKey } from '@/utils/arrayUtils';
-import { formatDate } from '@/utils/dateUtil';
+import { formatDate } from '@/utils/dateUtils';
 import React from 'react'
 
 

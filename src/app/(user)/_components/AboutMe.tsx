@@ -4,13 +4,10 @@ import { Tilt } from "react-tilt";
 import { motion } from "framer-motion";
 import Image from "next/image";
 // import { styles } from "../styles";
-import { certifications, languages, services, skills, summary, totalExperiences } from '@/constants/data';
+import { summary, totalExperiences } from '@/constants/data';
 import { fadeIn, textVariant } from "@/utils/motion";
 import { SectionWrapper } from "@/hoc";
 import HighlightText from "@/components/common/HighlightedText";
-import { calculateExperience } from "@/utils/common";
-import { capitalizeFirstLetter } from "@/utils/textUtils";
-import { formatDate } from "@/utils/dateUtil";
 
 // Service Card
 const ServiceCard = ({ index, title, icon }: { index: any, title: any, icon: any }) => {

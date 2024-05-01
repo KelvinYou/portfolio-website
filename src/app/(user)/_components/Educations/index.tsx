@@ -7,7 +7,7 @@ import { SectionWrapper } from '@/hoc';
 import { educations } from "@/constants/data";
 
 import VerticalTimelineRenderer, { VerticalTimelineElementType } from '@/components/VerticalTimelineRenderer';
-import { formatDate } from '@/utils/dateUtil';
+import { formatDate } from '@/utils/dateUtils';
 import { sortByKey } from '@/utils/arrayUtils';
 
 const Educations: React.FC = () => {

@@ -4,7 +4,7 @@ import React from 'react'
 import * as ReactPDF from '@/components/PdfRenderer';
 import { styles } from './styles';
 import { getResumeData } from '@/services/resumeService';
-import { formatDate } from '@/utils/dateUtil';
+import { formatDate } from '@/utils/dateUtils';
 
 const {
   G,

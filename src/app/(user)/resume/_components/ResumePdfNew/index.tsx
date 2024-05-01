@@ -4,8 +4,7 @@ import React from 'react'
 import * as ReactPDF from '@/components/PdfRenderer';
 import { styles } from './styles';
 import { getResumeData } from '@/services/resumeService';
-import { getDurationString } from '@/utils/common';
-import { formatDate } from '@/utils/dateUtil';
+import { calculateDurationString, formatDate } from '@/utils/dateUtils';
 import dayjs from 'dayjs';
 import { capitalizeFirstLetter } from '@/utils/textUtils';
 
@@ -37,26 +36,6 @@ const {
   PdfViewer,
   PdfDownloader
 } = ReactPDF;
-
-interface DateComponents {
-  year: number;
-  month: number;
-  day: number;
-}
-
-const DateRange = ({startAt, endAt}: {startAt: string, endAt?: string | null}) => {
-  
-  const startFormatted = formatDate(startAt);
-  const endFormatted = endAt ? formatDate(endAt) : 'Present';
-  
-  const dateRange = `${startFormatted} - ${endFormatted}`;
-
-  const duration = getDurationString(startAt, endAt || dayjs(Date.now()).format('YYYY-MM-DD'));
-
-  return (
-    <Text style={styles.workDuration}>{dateRange} {`• ${duration}`}</Text>
-  )
-}
 
 type SectionType = {
   title: string;
@@ -143,7 +122,7 @@ const ExperienceContent = ({
   
   const dateRange = `${startFormatted} - ${endFormatted}`;
 
-  const duration = getDurationString(startDate, endDate || dayjs(Date.now()).format('YYYY-MM-DD'));
+  const duration = calculateDurationString(startDate, endDate || dayjs(Date.now()).format('YYYY-MM-DD'));
 
   return (
     <View style={{ marginBottom: 15 }}>

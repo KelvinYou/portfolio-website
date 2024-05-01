@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { preview, github } from "@/assets";
 import Tooltip from "@/components/ui/Tooltip";
-import { formatDate } from "@/utils/dateUtil";
+import { formatDate } from "@/utils/dateUtils";
 import { fadeIn } from "@/utils/motion";
 import { motion } from "framer-motion";
 import { Clock } from "lucide-react";

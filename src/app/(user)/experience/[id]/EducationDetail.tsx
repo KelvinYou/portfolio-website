@@ -4,9 +4,8 @@ import { SectionWrapper } from '@/hoc'
 import { Calendar, ChevronsLeft, Download } from 'lucide-react';
 import React from 'react'
 import Image from 'next/image';
-import { formatDate } from '@/utils/dateUtil';
+import { calculateDurationString, formatDate } from '@/utils/dateUtils';
 import ArticleElementRenderer from '@/components/ArticleElementRenderer';
-import { getDurationString } from '@/utils/common';
 import ArticleSideCard from '@/components/ArticleSideCard';
 import BackButton from '@/components/BackButton';
 import Link from 'next/link';
@@ -25,7 +24,7 @@ const EducationDetail = ({ educationDetail }: { educationDetail: any }) => {
     techStacks
   } = educationDetail;
 
-  const duration = getDurationString(startDate, endDate);
+  const duration = calculateDurationString(startDate, endDate);
 
   const formattedPoints = {
     type: "unordered_list",

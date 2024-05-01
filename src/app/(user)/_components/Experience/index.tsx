@@ -7,7 +7,7 @@ import { SectionWrapper } from '@/hoc';
 import { workExperiences } from "@/constants/data";
 
 import "./Experience.scss";
-import { formatDate } from '@/utils/dateUtil';
+import { formatDate } from '@/utils/dateUtils';
 import VerticalTimelineRenderer, { VerticalTimelineElementType } from '@/components/VerticalTimelineRenderer';
 import { sortByKey } from '@/utils/arrayUtils';
 

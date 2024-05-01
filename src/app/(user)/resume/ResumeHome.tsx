@@ -3,14 +3,13 @@
 import { SectionWrapper } from '@/hoc'
 import useBrowserAndOSInfo from '@/hooks/useBrowserAndOsInfo';
 import { Download, Link as LinkIcon } from 'lucide-react';
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { PdfDownloader, PdfViewer } from '@/components/PdfRenderer';
-import ResumePdf from './_components/ResumePdf';
 import ResumePdfNew from './_components/ResumePdfNew';
 import { MOBILE_OS_KEY } from '@/hooks/useBrowserAndOsInfo/constants';
 import Link from 'next/link';
 import { motion } from "framer-motion";
-import { fadeIn, textVariant } from "@/utils/motion";
+import { fadeIn } from "@/utils/motion";
 
 const ResumeHome = () => {
   const browserInfo = useBrowserAndOSInfo();
@@ -76,7 +75,7 @@ const ResumeHome = () => {
 
 
       <motion.div 
-        className='mt-4 h-[calc(100vh-400px)] min-h-[300px]'
+        className='mt-4 h-[calc(100vh)] min-h-[300px]'
         variants={fadeIn("", "", 0.1, 1)}
       >
         <PdfViewer>

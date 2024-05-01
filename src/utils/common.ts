@@ -1,80 +1,72 @@
 import { Duration } from "date-fns/types";
+import { calculateDuration } from "./dateUtils";
+import dayjs from "dayjs";
 
 export function calculateExperience(experiences: any) {
   let totalMonths = 0;
+  let totalYears = 0;
   for (const exp of experiences) {
-    const startDate = new Date(exp.startDate);
-    const endDate = (!exp.endDate || exp.endDate === "Present") ? new Date() : new Date(exp.endDate);
-    const months = (endDate.getFullYear() - startDate.getFullYear()) * 12 + (endDate.getMonth() - startDate.getMonth());
+    const startDate = dayjs(exp.startDate).format("YYYY-M-D");
+    const endDate = dayjs((!exp.endDate || exp.endDate === "Present") ? new Date() : exp.endDate).format("YYYY-M-D");
+
+    const { years = 0, months = 0 } = calculateDuration(startDate, endDate);
+    // const months = (endDate.getFullYear() - startDate.getFullYear()) * 12 + (endDate.getMonth() - startDate.getMonth());
     totalMonths += months;
+    totalYears += years;
   }
-  const totalYears = Math.floor(totalMonths / 12);
+  totalYears += Math.floor(totalMonths / 12);
   const remainingMonths = totalMonths % 12;
   return `${totalYears} year${totalYears > 1 ? 's' : ''} and ${remainingMonths} month${remainingMonths > 1 ? 's' : ''}`;
 }
 
-export function calculateDuration(startDate: string, endDate: string): Duration {
-  const startDateParts = startDate.split('-').map(Number);
-  const endDateParts = endDate.split('-').map(Number);
+// export function calculateExperience(experiences: any) {
+//   let totalMonths = 0;
+//   for (const exp of experiences) {
+//     const startDate = new Date(exp.startDate);
+//     const endDate = (!exp.endDate || exp.endDate === "Present") ? new Date() : new Date(exp.endDate);
+//     const months = (endDate.getFullYear() - startDate.getFullYear()) * 12 + (endDate.getMonth() - startDate.getMonth());
+//     totalMonths += months;
+//   }
+//   const totalYears = Math.floor(totalMonths / 12);
+//   const remainingMonths = totalMonths % 12;
+//   return `${totalYears} year${totalYears > 1 ? 's' : ''} and ${remainingMonths} month${remainingMonths > 1 ? 's' : ''}`;
+// }
 
-  const startYear = startDateParts[0];
-  const startMonth = startDateParts[1];
-  const endYear = endDateParts[0];
-  const endMonth = endDateParts[1];
+// export function calculateDuration(startDate: string, endDate: string): Duration {
+//   const startDateParts = startDate.split('-').map(Number);
+//   const endDateParts = endDate.split('-').map(Number);
 
-  let years = endYear - startYear;
-  let months = endMonth - startMonth + 1; // Calculated from the starting month
+//   const startYear = startDateParts[0];
+//   const startMonth = startDateParts[1];
+//   const endYear = endDateParts[0];
+//   const endMonth = endDateParts[1];
 
-  if (months < 0) {
-      years--;
-      months += 12;
-  }
+//   let years = endYear - startYear;
+//   let months = endMonth - startMonth + 1; // Calculated from the starting month
 
-  if (years < 0) {
-      years = 0;
-  }
+//   if (months < 0) {
+//       years--;
+//       months += 12;
+//   }
 
-  return { years, months };
-}
+//   if (years < 0) {
+//       years = 0;
+//   }
 
-export function getDurationString(startDate: string, endDate: string): string {
-  const duration = calculateDuration(startDate, endDate);
+//   return { years, months };
+// }
 
-  if (duration.years && duration.years > 0) {
-      if (duration.months && duration.months > 0) {
-          return `${duration.years} years and ${duration.months} months`;
-      } else {
-          return `${duration.years} years`;
-      }
-  } else {
-      return `${duration.months} months`;
-  }
-}
+// export function getDurationString(startDate: string, endDate: string): string {
+//   const duration = calculateDuration(startDate, endDate);
 
-export function uniqueArray<T>(arr: Array<T>) {
-  return Array.from(new Set(arr));
-}
+//   if (duration.years && duration.years > 0) {
+//       if (duration.months && duration.months > 0) {
+//           return `${duration.years} years and ${duration.months} months`;
+//       } else {
+//           return `${duration.years} years`;
+//       }
+//   } else {
+//       return `${duration.months} months`;
+//   }
+// }
 
-// 对比两个数组是否相同
-export function compareArraysEqual<T>(arr1: Array<T>, arr2: Array<T>) {
-  // 两边随便谁不存在，都代表不相同
-  if (!arr1 || !arr2) {
-    return false;
-  }
-
-  arr1 = uniqueArray(arr1);
-  arr2 = uniqueArray(arr2);
-
-  // 如果长度不同，那肯定就不同
-  if (arr1.length !== arr2.length) {
-    return false;
-  }
-  // 排序后进行比较，保证所有元素是在同一个位置
-  arr1.sort();
-  arr2.sort();
-
-  return arr1.some((item, index) => {
-    let a2 = arr2[index];
-    return item === a2;
-  });
-}

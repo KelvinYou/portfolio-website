@@ -7,7 +7,7 @@ import { Tilt } from 'react-tilt'
 import { Clock } from 'lucide-react';
 import Spotlight, { SpotlightCard } from '../Spotlight'
 import Image, { StaticImageData } from 'next/image';
-import { formatDate } from '@/utils/dateUtil';
+import { formatDate } from '@/utils/dateUtils';
 import { useRouter } from 'next/navigation';
 import Tooltip from "@/components/ui/Tooltip";
 

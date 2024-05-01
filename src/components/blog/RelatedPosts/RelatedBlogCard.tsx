@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import React, { FC } from 'react'
 import { BlogPage } from '@/types/blog';
-import { formatDate } from '@/utils/dateUtil';
+import { formatDate } from '@/utils/dateUtils';
 
 interface RelatedBlogCardProps {
   blog: BlogPage;
