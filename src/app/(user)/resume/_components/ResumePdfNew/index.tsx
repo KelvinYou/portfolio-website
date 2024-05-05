@@ -3,10 +3,10 @@
 import React from 'react'
 import * as ReactPDF from '@/components/PdfRenderer';
 import { styles } from './styles';
-import { getResumeData } from '@/services/resumeService';
 import { calculateDurationString, formatDate } from '@/utils/dateUtils';
 import dayjs from 'dayjs';
 import { capitalizeFirstLetter } from '@/utils/textUtils';
+import { fetchResumeData } from './hooks';
 
 const {
   G,
@@ -163,7 +163,7 @@ const ExperienceContent = ({
 }
 
 const ResumePdfNew: React.FC = () => {
-  const resumeData = getResumeData();
+  const resumeData = fetchResumeData();
 
   return (
     <Document title={`${resumeData.nickname} | ${resumeData.title}`}>
