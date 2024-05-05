@@ -10,7 +10,7 @@ const Certificates: React.FC = () => {
   const formattedCerts: ProgressTimelineElementType[] = sortByKey(certifications, 'issueDate', 'desc').map((cert) => {
     const title = cert.name;
     const description = cert.issuingOrganization;
-    const date = formatDate(cert.issueDate);
+    const date = formatDate(cert.issueDate, 'D MMM YYYY');
     const link = cert.link;
 
     return {
@@ -27,13 +27,16 @@ const Certificates: React.FC = () => {
       idName='certificates'
       title='Cert.'
       subtitle='My certificates'
+      description={[
+        `I participated in a total of ${certifications.length} activities`
+      ]}
+      highLightedTexts={[`${certifications.length}`]}
     >
       <div className='mt-10'>
         <ProgressTimeline 
           elements={formattedCerts}
         />
       </div>
-
     </SectionWrapper>
   )
 }

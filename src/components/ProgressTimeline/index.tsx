@@ -3,7 +3,9 @@
 import { fadeIn, slideIn } from '@/utils/motion';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import React from 'react'
+import React, { useState } from 'react'
+import BaseButton from '../ui/BaseButton';
+import { ChevronDown } from 'lucide-react';
 
 export type ProgressTimelineElementType = {
   title: string;
@@ -25,14 +27,23 @@ function isValidPDFLink(link: any) {
 }
 
 const ProgressTimeline: React.FC<ProgressTimeLineProps> = ({ elements }) => {
+  const [showAll, setShowAll] = useState(false);
+  
+  const visibleElements = showAll ? elements : elements.slice(0, 3);
+
+  const handleShowMore = () => {
+    setShowAll(!showAll);
+  };
+
   return (
     // <motion.div 
-    <div 
-      className="space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-slate-300 before:to-transparent"
-      // variants={fadeIn("", "", 0.1, 1)}
-    >
-      {
-        elements.map((element, index) => {
+    <>
+
+      <div 
+        className="space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-slate-300 before:to-transparent"
+        // variants={fadeIn("", "", 0.1, 1)}
+      >
+        {visibleElements.map((element, index) => {
           return (
             // <motion.div 
             <div 
@@ -70,9 +81,27 @@ const ProgressTimeline: React.FC<ProgressTimeLineProps> = ({ elements }) => {
             // </motion.div>
           )
 
-        })
-      }
-    </div>
+        })}
+
+
+      </div>
+
+      {elements.length > 3 && (
+        <div className='flex justify-center'>
+          <BaseButton className='mt-4 py-2 px-8 text-sm' onClick={handleShowMore}>
+            <div className='flex'>
+              <span>
+                Show {showAll ? `Less` : `More`}
+              </span>
+              
+              <ChevronDown style={{ transform: showAll ? 'rotate(180deg)' : 'rotate(0deg)' }} />
+            </div>
+          </BaseButton>
+        </div>
+      )}
+
+    </>
+
     // </motion.div>
   )
 }

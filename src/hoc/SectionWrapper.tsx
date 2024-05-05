@@ -4,16 +4,18 @@ import React, { FC, ReactNode, useEffect, useState } from "react";
 import { motion, Variants } from "framer-motion";
 
 import { fadeIn, staggerContainer, textVariant } from "@/utils/motion";
+import HighlightText from "@/components/common/HighlightedText";
 
 interface SectionWrapperProps {
   idName: string;
   children?: ReactNode;
   title?: string;
   subtitle?: string;
-  description?: string;
+  description?: string | string[];
+  highLightedTexts?: string[];
 }
 
-const SectionWrapper: FC<SectionWrapperProps> = ({ idName, children, title, subtitle, description }) => {
+const SectionWrapper: FC<SectionWrapperProps> = ({ idName, children, title, subtitle, description, highLightedTexts }) => {
   const containerVariants: Variants = staggerContainer();
 
   const [ mount, setMount ] = useState<boolean>(false);
@@ -30,7 +32,7 @@ const SectionWrapper: FC<SectionWrapperProps> = ({ idName, children, title, subt
       viewport={{ once: true, amount: 0.25 }}
       className={`sm:px-16 px-6 sm:py-16 pb-10 pt-20 max-w-7xl mx-auto relative z-0`}
     >
-      <span className="hash-span" id={idName}>
+      <span className="hash-span w-0" id={idName}>
         &nbsp;
       </span>
       <div className="">
@@ -49,16 +51,40 @@ const SectionWrapper: FC<SectionWrapperProps> = ({ idName, children, title, subt
           
         </motion.div>
 
-        {description &&       
-          <div className="w-full flex">
-            <motion.p
-              initial="hidden"
-              animate="show"
-              variants={fadeIn("", "", 0.1, 1)}
-              className="mt-3 text-secondary text-[17px] max-w-3xl leading-[30px]"
-            >
-              {description}
-            </motion.p>
+        {description && 
+          <div className="w-full">
+            {typeof description === 'string' &&           
+              <motion.p
+                initial="hidden"
+                animate="show"
+                variants={fadeIn("", "", 0.1, 1)}
+                className="mt-3 text-secondary text-[17px] max-w-3xl leading-[30px]"
+              >
+                <HighlightText
+                  text={description}
+                  highlightedTexts={highLightedTexts}
+                />
+              </motion.p>
+            }
+
+            {(Array.isArray(description) && typeof description[0] === 'string') &&
+              description.map((desc, index) => {
+                return (
+                  <motion.p
+                    key={index}
+                    initial="hidden"
+                    animate="show"
+                    variants={fadeIn("", "", 0.1, 1)}
+                    className="mt-3 text-secondary text-[17px] max-w-3xl leading-[30px]"
+                  >
+                    <HighlightText
+                      text={desc}
+                      highlightedTexts={highLightedTexts}
+                    />
+                  </motion.p>
+                )
+              })
+            }
           </div>
         }
         {children}

@@ -101,6 +101,18 @@ export const menuData: Menu[] = [
         path: "/#project",
         newTab: false,
       },
+      {
+        id: "certificates",
+        title: "Certificates",
+        path: "/#certificates",
+        newTab: false,
+      },
+      {
+        id: "activities",
+        title: "Activities",
+        path: "/#activities",
+        newTab: false,
+      },
     ]
   },
   {

@@ -554,7 +554,13 @@ export const certifications = [
     issuingOrganization: 'The Digital Adda',
     issueDate: '2023-12-12',
   },
-
+  {
+    name: 'Rust Workshop 2024 - Parallel Programming',
+    link: 'https://credsverse.com/credentials/af37b752-6f6d-4f6d-9368-34f56c1242e5',
+    issuingOrganization: '',
+    issueDate: '2024-4-25',
+    pdf: `${domainPath}assets/pdf/rust-workshop-2024-parallel-programming.pdf`
+  }
 ]
 
 export const coCurricular = [
@@ -581,6 +587,7 @@ type ActivityType = {
   description: string;
   startDate: string;
   endDate: string;
+  tags?: string[];
 }
 
 export const activities: ActivityType[] = [
@@ -729,6 +736,7 @@ export const activities: ActivityType[] = [
   {
     title: 'Rust Talk & Workshop - Parallel Programming April 2024',
     description: 'Introduction to Parallel Programming in Rust as well as a simple hands-on example!',
+    tags: ['coding', 'rust'],
     startDate: '2024-4-20',
     endDate: '2024-4-20',
   }

@@ -23,17 +23,14 @@ const Activities: React.FC = () => {
   return (
     <SectionWrapper
       idName='activities'
+      title='Activities.'
+      subtitle='My Co-Curricular Activities'
+      description={[
+        'This section included all the talks / workshop / activities / services I participated',
+        `I participated in a total of ${activities.length} activities`
+      ]}
+      highLightedTexts={[`${activities.length}`]}
     >
-      <PageTitle
-        title='Activities.'
-        subtitle='My Co-Curricular Activities'
-        description={[
-          'This section included all the talks / workshop / activities / services I participated',
-          `I participated in a total of ${activities.length} activities`
-        ]}
-        highLightedTexts={[`${activities.length}`]}
-        className="mt-10"
-      />
       <div className='mt-10'>
         <ProgressTimeline 
           elements={formattedActivities}
