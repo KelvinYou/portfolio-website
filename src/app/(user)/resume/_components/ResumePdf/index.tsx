@@ -3,8 +3,8 @@
 import React from 'react'
 import * as ReactPDF from '@/components/PdfRenderer';
 import { styles } from './styles';
-import { getResumeData } from '@/services/resumeService';
 import { formatDate } from '@/utils/dateUtils';
+import { fetchResumeData } from '../ResumePdfNew/hooks';
 
 const {
   G,
@@ -112,7 +112,7 @@ const ScoreBar = ({name, score}: {name: string, score: number}) => {
 }
 
 const ResumePdf: React.FC = () => {
-  const resumeData = getResumeData();
+  const resumeData = fetchResumeData();
 
   return (
     <Document title={`${resumeData.nickname} | ${resumeData.title}`}>
