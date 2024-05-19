@@ -46,6 +46,19 @@
         "color": "blue-text-gradient"
       }
     ],
+    "references": [
+      {
+        "name": "HyperUI",
+        "description": "Blogs with mdx",
+        "link": "https://github.com/markmead/hyperui"
+      },
+      {
+        "name": "Developer Portfolio with Next JS and Framer Motion",
+        "description": "Modern UI with Framer Motion",
+        "link": "https://github.com/adrianhajdin/portfolio/tree/main"
+      }
+    ],
+    
 
     "createDate": "2023-11-14T05:21:35.384Z",
     "modifyDate": "2023-11-14T05:21:35.384Z"
