@@ -1,15 +1,9 @@
 import React from 'react'
-import BlogHome from './BlogHome'
-import SpotlightPage from '../_components/SpotlightPage'
 
-const BlogPage = () => {
+const BlogsPage: React.FC = async () => {
   return (
-    <>
-      <BlogHome />
-
-      {/* <SpotlightPage /> */}
-    </>
+    <div>BlogsPage</div>
   )
 }
 
-export default BlogPage
+export default BlogsPage
