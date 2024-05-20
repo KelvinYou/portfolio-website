@@ -1,8 +1,8 @@
 export const ogMeta = {
-  url: 'https://www.hyperui.dev/',
-  siteName: 'HyperUI',
+  url: 'https://kelvinyou.vercel.app/',
+  siteName: 'Kelvin You Portfolio',
   type: 'website',
-  images: ['https://www.hyperui.dev/og.jpg'],
+  images: ['https://kelvinyou.vercel.app/favicon/logo.png'],
 }
 
 export const twitterMeta = {
