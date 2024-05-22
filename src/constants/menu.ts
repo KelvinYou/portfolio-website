@@ -115,12 +115,12 @@ export const menuData: Menu[] = [
       },
     ]
   },
-  // {
-  //   id: "blog",
-  //   title: "Blogs",
-  //   path: "/blog",
-  //   newTab: false,
-  // },
+  {
+    id: "blog",
+    title: "Blogs",
+    path: "/blog",
+    newTab: false,
+  },
   {
     id: "other",
     title: "Others",

@@ -5,7 +5,7 @@ import Project from './_components/Project'
 import Experience from './_components/Experience'
 import Educations from './_components/Educations'
 
-import "@/styles/index.scss";
+import "@/styles/index.css";
 import Certificates from './_components/Certificates'
 import Activities from './_components/Activities'
 

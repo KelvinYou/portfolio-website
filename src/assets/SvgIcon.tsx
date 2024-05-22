@@ -1,5 +1,5 @@
 import React from 'react'
-import "@/styles/index.scss"
+import "@/styles/index.css"
 
 export const ICON_TYPE = {
   LOCATION_OUTLINE: "location_outline",

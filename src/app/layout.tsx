@@ -1,6 +1,5 @@
-import './globals.css'
 import type { Metadata } from 'next'
-import '@/styles/index.scss'
+import '@/styles/index.css'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://kelvinyou.vercel.app'),

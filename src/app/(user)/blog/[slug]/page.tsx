@@ -8,6 +8,7 @@ import { serialize } from 'next-mdx-remote/serialize'
 import matter from 'gray-matter'
 import rehypeExternalLinks from 'rehype-external-links'
 import remarkSlug from 'remark-slug'
+import BlogDetail from './BlogDetail'
 
 interface BlogPageType {
   params: {
@@ -66,13 +67,10 @@ async function getBlog(blogId: string) {
 }
 
 const BlogPage = async ({ params }: BlogPageType) => {
-  const { blogData, blogContent } = await getBlog(params.slug)
-
-  console.log("blogData: ", blogData);
-  console.log("blogContent: ", blogContent);
+  const { blogData, blogContent } = await getBlog(params.slug);
 
   return (
-    <div>BlogPage</div>
+    <BlogDetail blogData={blogData} blogContent={blogContent} />
   )
 }
 

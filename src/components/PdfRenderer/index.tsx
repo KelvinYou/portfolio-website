@@ -1,5 +1,4 @@
 import ReactPDF from '@react-pdf/renderer';
-import dynamic from 'next/dynamic';
 import { DynamicNoSSR } from './utils';
 
 export const {

@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { navLinks } from "@/constants";
 import { logo, menu, close } from "@/assets";
 import Link from 'next/link';
-import "@/styles/index.scss";
+import "@/styles/index.css";
 import { careerData, personalData } from '@/constants/data';
 import { MainMenu } from '@/constants/menu';
 import { ArrowBigDown, ChevronDown, ExternalLink } from 'lucide-react';

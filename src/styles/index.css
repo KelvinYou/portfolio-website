@@ -1,3 +1,33 @@
+@import './prism.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom Scroll Bar */
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #051016; 
+
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #7de7eb; 
+  border-radius: 3px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #a6b2c3; 
+}
+
 .black-gradient {
   background: #000000; /* fallback for old browsers */
   background: -webkit-linear-gradient(
@@ -12,9 +42,9 @@
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
-// html {
+/* // html {
 //   scroll-behavior: smooth;
-// }
+// } */
 
 .hash-span {
   margin-top: -100px;
