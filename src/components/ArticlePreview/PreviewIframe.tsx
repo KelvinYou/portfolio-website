@@ -6,7 +6,7 @@ export default function PreviewIframe({
   previewHeight = 'h-[400px] lg:h-[600px]',
   refIframe,
   previewDark,
-}) {
+}: any) {
   const iframeTheme = previewDark ? 'bg-gray-950' : 'bg-white'
 
   return (
