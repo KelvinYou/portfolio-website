@@ -56,10 +56,13 @@
         "name": "Developer Portfolio with Next JS and Framer Motion",
         "description": "Modern UI with Framer Motion",
         "link": "https://github.com/adrianhajdin/portfolio/tree/main"
+      },
+      {
+        "name": "Tailwind nextjs starter blog",
+        "description": "Blogs with MDX, with tags",
+        "link": "https://github.com/timlrx/tailwind-nextjs-starter-blog"
       }
     ],
-    
-
     "createDate": "2023-11-14T05:21:35.384Z",
     "modifyDate": "2023-11-14T05:21:35.384Z"
   },
