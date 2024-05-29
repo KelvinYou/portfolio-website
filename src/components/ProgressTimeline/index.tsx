@@ -88,13 +88,13 @@ const ProgressTimeline: React.FC<ProgressTimeLineProps> = ({ elements }) => {
 
       {elements.length > 3 && (
         <div className='flex justify-center'>
-          <BaseButton className='mt-4 py-2 px-8 text-sm' onClick={handleShowMore}>
-            <div className='flex'>
-              <span>
+          <BaseButton className='mt-4 py-2 px-1 text-sm' onClick={handleShowMore}>
+            <div className='flex justify-between'>
+              <span className='px-3'>
                 Show {showAll ? `Less` : `More`}
               </span>
               
-              <ChevronDown style={{ transform: showAll ? 'rotate(180deg)' : 'rotate(0deg)' }} />
+              <ChevronDown className='w-8 f-8' style={{ transform: showAll ? 'rotate(180deg)' : 'rotate(0deg)' }} />
             </div>
           </BaseButton>
         </div>
