@@ -1,10 +1,11 @@
 import React from 'react'
-import BlogHome from './BlogHome'
 
 import { ogMeta } from '@/constants/metadata';
 import { join } from 'path';
 import { promises as fs } from 'fs-extra'
 import matter from 'gray-matter';
+import SectionWrapper from '@/hoc/SectionWrapper';
+import SpotlightGrid from '@/components/SpotlightGrid';
 
 export const metadata = {
   title: 'Blog | Kelvin You',
@@ -17,7 +18,6 @@ export const metadata = {
   twitter: {
     title: 'Blog | Kelvin You',
     description: '.',
-    // ...twitterMeta,
   },
 }
 
@@ -53,7 +53,14 @@ const BlogsPage = async () => {
   const blogItems = await getBlogs();
 
   return (
-    <BlogHome blogItems={blogItems} />
+    <SectionWrapper
+      idName='blog'
+      title='Blog.'
+      subtitle='My blog'
+      description={'A collection to share my thoughts, explorations and experiences on a variety of topics that interest me'}
+    >
+      <SpotlightGrid items={blogItems} />
+    </SectionWrapper>
   )
 }
 

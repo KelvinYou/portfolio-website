@@ -1,3 +1,5 @@
+"use client"
+
 import React, { FC } from 'react'
 import RelatedBlogCard from './RelatedBlogCard'
 import { BlogPage } from '@/types/blog';

@@ -4,7 +4,7 @@ import Link from 'next/link';
 import React from 'react';
 
 const Footer: React.FC = () => (
-  <footer className="mt-[300px] bg-tertiary">
+  <footer className="mt-[200px] bg-tertiary">
     <div className="w-full text-center py-4">
       <SocialMediaButtons />
     </div>
