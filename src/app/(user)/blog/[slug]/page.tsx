@@ -9,6 +9,7 @@ import matter from 'gray-matter'
 import rehypeExternalLinks from 'rehype-external-links'
 import remarkSlug from 'remark-slug'
 import BlogDetail from './BlogDetail'
+import { blogsPath } from '@/services/blogService'
 
 interface BlogPageType {
   params: {
@@ -16,49 +17,47 @@ interface BlogPageType {
   }
 }
 
+export async function generateMetadata({ params }: BlogPageType) {
+  const { blogData } = await getBlog(params.slug)
 
-// export async function generateMetadata({ params }: BlogPageType) {
-//   const { blogData } = await getPost(params)
+  return {
+    title: `${blogData.title} | Kelvin You`,
+    description: blogData.description,
+    keywords: `blog, ${blogData?.tags?.join(",")}`,
+    openGraph: {
+      title: `${blogData.title} | Kelvin You`,
+      description: blogData.description,
+      ...ogMeta,
+    },
+    twitter: {
+      title: `${blogData.title} | Kelvin You`,
+      description: blogData.description,
+      // ...twitterMeta,
+    },
+  }
+}
 
-//   return {
-//     title: `${blogData.title} | HyperUI`,
-//     description: blogData.description,
-//     openGraph: {
-//       title: `${blogData.title} | HyperUI`,
-//       description: blogData.description,
-//       ...ogMeta,
-//     },
-//     twitter: {
-//       title: `${blogData.title} | HyperUI`,
-//       description: blogData.description,
-//       // ...twitterMeta,
-//     },
-//   }
-// }
-
-// export async function generateStaticParams() {
-//   return await fs.readdir(postsPath)
-// }
-
-const postsPath = join(process.cwd(), '/src/data/blogs')
+export async function generateStaticParams() {
+  return await fs.readdir(blogsPath)
+}
 
 async function getBlog(blogId: string) {
   try {
-    const postPath = join(postsPath, `${blogId}.mdx`)
+    const postPath = join(blogsPath, `${blogId}.mdx`)
     const postItem = await fs.readFile(postPath, 'utf-8')
 
-    const { content, data: frontmatter } = matter(postItem)
+    const { content, data: frontMatter } = matter(postItem)
 
     const mdxSource = await serialize(content, {
       mdxOptions: {
         remarkPlugins: [remarkSlug],
         rehypePlugins: [[rehypeExternalLinks, { target: '_blank' }]],
       },
-      scope: frontmatter,
+      scope: frontMatter,
     })
 
     return {
-      blogData: frontmatter,
+      blogData: frontMatter,
       blogContent: mdxSource,
     }
   } catch {
