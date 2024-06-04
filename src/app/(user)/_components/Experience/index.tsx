@@ -48,7 +48,7 @@ const Experience: React.FC = () => {
     <>
       <SectionWrapper
         idName='experience'
-        title="Work Experience and Education."
+        title="Work Experience and Education"
         subtitle='What I have done so far'
       >
       </SectionWrapper>

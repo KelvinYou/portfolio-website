@@ -46,7 +46,7 @@ const SectionWrapper: FC<SectionWrapperProps> = ({ idName, children, title, subt
           </p>}
 
           {title && <h2 className="text-white font-black md:text-[60px] sm:text-[50px] xs:text-[40px] text-[30px]">
-            {title}
+            {title}.
           </h2>}
           
         </motion.div>

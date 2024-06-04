@@ -79,7 +79,7 @@ const Project: FC = () => {
   return (
     <SectionWrapper
       idName='project'
-      title='Projects.'
+      title='Projects'
       subtitle='My work'
       description='Following projects showcases my skills and experience through
       real-world examples of my work. It reflects my ability to solve complex problems, work with different technologies,

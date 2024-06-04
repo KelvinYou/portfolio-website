@@ -23,7 +23,7 @@ const Activities: React.FC = () => {
   return (
     <SectionWrapper
       idName='activities'
-      title='Activities.'
+      title='Activities'
       subtitle='My Co-Curricular Activities'
       description={[
         'This section included all the talks / workshop / activities / services I participated',

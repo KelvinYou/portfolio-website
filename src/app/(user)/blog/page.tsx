@@ -55,7 +55,7 @@ const BlogsPage = async () => {
   return (
     <SectionWrapper
       idName='blog'
-      title='Blog.'
+      title='Blog'
       subtitle='My blog'
       description={'A collection to share my thoughts, explorations and experiences on a variety of topics that interest me'}
     >

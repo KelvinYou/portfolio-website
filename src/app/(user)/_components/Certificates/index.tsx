@@ -25,7 +25,7 @@ const Certificates: React.FC = () => {
   return (
     <SectionWrapper
       idName='certificates'
-      title='Cert.'
+      title='Cert'
       subtitle='My certificates'
       description={[
         `I participated in a total of ${certifications.length} activities`

@@ -21,7 +21,7 @@ const ResumeHome = () => {
   return (
     <SectionWrapper
       idName='project'
-      title='Resume.'
+      title='Resume'
       subtitle='My public resume'
     >
 

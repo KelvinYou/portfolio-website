@@ -1,56 +1,110 @@
-"use client";
-import React, { FC } from "react";
-import { Tilt } from "react-tilt";
+
+import React from "react";
+// import { Tilt } from "react-tilt";
 import { motion } from "framer-motion";
 import Image from "next/image";
 // import { styles } from "../styles";
-import { summary, totalExperiences } from '@/constants/data';
+import { languages, summary, totalExperiences } from '@/constants/data';
 import { fadeIn, textVariant } from "@/utils/motion";
 import { SectionWrapper } from "@/hoc";
 import HighlightText from "@/components/common/HighlightedText";
+import Accordion from "@/components/Accordion";
+import BaseCard from "@/components/ui/BaseCard";
 
 // Service Card
-const ServiceCard = ({ index, title, icon }: { index: any, title: any, icon: any }) => {
+// const ServiceCard = ({ index, title, icon }: { index: any, title: any, icon: any }) => {
+//   return (
+//     <Tilt className="xs:w-[250px] w-full">
+//       <motion.div
+//         variants={fadeIn("right", "spring", 0.5 * index, 0.75)}
+//         className="w-full green-pink-gradient p-[1px] rounded-[20px] shadow-card"
+//       >
+//         <div
+//           // options={{
+//           //   max: 45,
+//           //   scale: 1,
+//           //   speed: 450,
+//           // }}
+//           className="bg-tertiary rounded-[20px] py-5 px-12 min-h-[280px] flex justify-evenly items-center flex-col"
+//         >
+//           <Image src={icon} alt={title} className="w-16 h-16 object-contain" />
+//           <h3 className="text-white text-[20px] font-bold text-center">
+//             {title}
+//           </h3>
+//         </div>
+//       </motion.div>
+//     </Tilt>
+//   );
+// };
+
+const OccupyProportion = ({title, percentage}: {title: string, percentage: number}) => {
+
+  const levels = {
+    0: 'Novice',
+    20: 'Intermediate',
+    40: 'Advanced',
+    60: 'Superior',
+    90: 'Distinguished'
+  }
+
+  let level = 'Novice'; // Default to 'Novice' if percentage is below the first level
+  
+  for (const [minPercentage, levelName] of Object.entries(levels)) {
+    if (percentage >= Number(minPercentage)) {
+      level = levelName;
+    } else {
+      break;
+    }
+  }
+
+  const formatPercentage = (percentage: number): string => {
+    return percentage.toFixed(0) + "%";
+  }
+
   return (
-    <Tilt className="xs:w-[250px] w-full">
-      <motion.div
-        variants={fadeIn("right", "spring", 0.5 * index, 0.75)}
-        className="w-full green-pink-gradient p-[1px] rounded-[20px] shadow-card"
-      >
-        <div
-          // options={{
-          //   max: 45,
-          //   scale: 1,
-          //   speed: 450,
-          // }}
-          className="bg-tertiary rounded-[20px] py-5 px-12 min-h-[280px] flex justify-evenly items-center flex-col"
-        >
-          <Image src={icon} alt={title} className="w-16 h-16 object-contain" />
-          <h3 className="text-white text-[20px] font-bold text-center">
-            {title}
-          </h3>
+    <>
+      <span className="flex justify-between text-on-secondary mb-2">
+        <span>{title}</span>
+        <div className=" bg-slate-700 rounded-md font-light flex text-xs">
+          <span className="py-1 px-2">
+            {level} 
+          </span>
+
+          <div className="w-[1px] bg-gray-400"></div>
+
+          <span className="py-1 px-2">
+            {formatPercentage(percentage)}
+          </span>
         </div>
-      </motion.div>
-    </Tilt>
-  );
-};
+      </span>
+
+      <span>
+        <div className="max-w-80% bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+          <div className="bg-on-primary h-2.5 rounded-full" style={{width: `${formatPercentage(percentage)}`}}></div>
+        </div>
+      </span>
+    </>
+
+  )
+}
+
 
 // About
-const AboutMe: FC = () => {
+const AboutMe: React.FC = () => {
 
   return (
     <SectionWrapper
       idName='about-me'
-      title='Overview.'
+      title='Overview'
       subtitle='Introduction'
     >
 
       {/* Body */}
-      <motion.div
+      {/* <motion.div
         // initial="hidden"
         // animate="show"
         variants={fadeIn("", "", 0.1, 1)}
-      >
+      > */}
         {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-4">
           <div>
             <div className="h-[60px] font-bold text-lg text-on-primary flex flex-row justify-start items-start">
@@ -83,9 +137,7 @@ const AboutMe: FC = () => {
         </div> */}
 
         
-
-
-        <p className="empty-4 text-gray-300 text-[17px] max-w-3xl leading-[30px] text-justify">
+        <p className="empty-4 text-gray-300 text-[17px] max-w-3xl leading-[30px] text-justify mt-4">
           <HighlightText
             highlightedTexts={[
               totalExperiences,
@@ -122,38 +174,60 @@ const AboutMe: FC = () => {
               </div>
             )}
           )}
-        </div>
+        </div> */}
         
-        <ul className="text-gray-300 max-w-3xl">
+        <BaseCard
+          title={'Language'}
+          tooltip="Language Evaluation: Evaluated by my ability to speak, read, and write"
+          className="max-w-xl"
+        >
+          <ul>
+            {languages.map((language, index: number) => {
+              const readAndWritePercentage = language.readAndWrite * 100;
+              const speakPercentage = language.speak * 100;
+              const averagePercentage = (readAndWritePercentage + speakPercentage) / 2;
 
-          <li>
-            <span>Language: </span>
-            <span>
-              <ul>
-                {languages.map((language, index: number) => {
-                  const percentage = ((language.readAndWrite * 100) + (language.speak * 100)) / 2;
-                  const formattedPercentage = percentage.toFixed(0) + "%";
+              return (
+                <li key={language.name + index} className="mb-4">
+                  <div className="py-2">
+                    <OccupyProportion
+                      title={language.name}
+                      percentage={averagePercentage} 
+                    />
+                  </div>
 
-                  return (
-                    <li key={language.name + index} className="flex items-center gap-2">
-                      <span>{language.name}</span>
-                      <span>
-                        <div className="w-[300px] max-w-80% bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
-                          <div className="bg-on-primary h-2.5 rounded-full" style={{width: `${formattedPercentage}`}}></div>
-                        </div>
-                      </span>
-                      <div>{formattedPercentage}</div>
-                    </li>
-                  )
-                })}
-              </ul>
-            </span>
-            
-          </li>
-          
-        </ul> */}
+                  {/* <Accordion 
+                    title={
+                      <OccupyProportion
+                        title={language.name}
+                        percentage={averagePercentage} 
+                      />
+                    } 
+                    id={`faqs-${index}`} 
+                    active={false}
+                  >
+                    <div className="p-4">
+                      <OccupyProportion
+                        title={'Read and Write'}
+                        percentage={readAndWritePercentage} 
+                      />
+                    </div>
+                    <div className="p-4">
+                      <OccupyProportion
+                        title={'Speak'}
+                        percentage={speakPercentage} 
+                      />
+                    </div>
+                  </Accordion> */}
+                </li>
+              )
+            })}
+          </ul>
+        </BaseCard>
 
-      </motion.div>
+
+      {/* </motion.div> */}
+
 
       {/* <motion.div
         initial="hidden"
