@@ -17,6 +17,7 @@ export { default as mobile } from "./services/mobile.png";
 export { default as web } from "./services/web.png";
 
 // companies
+export { default as simpletruss } from "./companies/simpletruss.jpeg";
 export { default as beyondsoft } from "./companies/beyondsoft.jpeg";
 export { default as techtics } from "./companies/techtics.png";
 export { default as finexus } from "./companies/finexus.png";

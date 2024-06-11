@@ -12,6 +12,7 @@ import {
 
   portfolio,
   restaurantLanding,
+  simpletruss,
 } from "@/assets";
 import { calculateExperience } from "@/utils/common";
 
@@ -140,6 +141,17 @@ export const languages = [
 // Experiences
 export const workExperiences = [
   {
+    id: 'simpletruss',
+    title: 'Frontend Engineer',
+    companyName: 'SimpleTruss Sdn. Bhd.',
+    companyUrl: 'https://www.simpletruss.com/',
+    icon: simpletruss,
+    iconBg: '#FFF',
+    startDate: '2024-6-10',
+    endDate: null,
+    points: [],
+  },
+  {
     id: "6",
     title: "Frontend Developer",
     companyName: "Beyondsoft (Malaysia) Sdn. Bhd.",
@@ -148,7 +160,7 @@ export const workExperiences = [
     iconBg: "#FFF",
     date: "Aug 2023 - Present",
     startDate: "2023-7-31",
-    endDate: null,
+    endDate: '2024-6-7',
     points: [
       {
         value: "Developed and maintain user interfaces for web & mobile apps using ReactJS.",
