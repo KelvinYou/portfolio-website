@@ -1,4 +1,3 @@
-import Navbar from '@/components/layout/user/Navbar'
 import type { Metadata } from 'next'
 import { Poppins, Encode_Sans } from 'next/font/google'
 import Footer from '@/components/layout/user/Footer'
@@ -20,7 +19,6 @@ export default function RootLayout({
 }) {
   return (
     <div  className={`${poppins.className} bg-primary`}>
-      {/* <Navbar /> */}
       <Header />
 
       <div className='flex flex-col min-h-[100vh]'>

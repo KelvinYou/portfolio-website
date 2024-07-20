@@ -184,11 +184,11 @@ const ResumePdfNew: React.FC = () => {
 
         <View style={styles.row}>
           <View style={styles.leftColumn}>
-            <Section title={'Summary'}>
+            {/* <Section title={'Summary'}>
               <Text style={styles.summary}>
                 {resumeData.summary}
               </Text>
-            </Section>
+            </Section> */}
             <Section title={'Skills'}>
               <View>
                 {Object.entries(resumeData.skills).map(([category, items]) => (
@@ -220,7 +220,7 @@ const ResumePdfNew: React.FC = () => {
               })}
             </Section>
 
-            <Section title={'Educations'} style={{ marginTop: 30 }}>
+            <Section title={'Educations'} style={{ marginTop: 45 }}>
               {resumeData.educations.map((education, index) => {
 
                 return (
