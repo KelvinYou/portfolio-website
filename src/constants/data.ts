@@ -598,7 +598,7 @@ type ActivityType = {
   title: string;
   description: string;
   startDate: string;
-  endDate: string;
+  endDate?: string;
   tags?: string[];
 }
 
@@ -750,6 +750,5 @@ export const activities: ActivityType[] = [
     description: 'Introduction to Parallel Programming in Rust as well as a simple hands-on example!',
     tags: ['coding', 'rust'],
     startDate: '2024-4-20',
-    endDate: '2024-4-20',
   }
 ]
