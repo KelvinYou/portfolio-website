@@ -1,6 +1,6 @@
-import { 
-  experienceIcon, 
-  homeIcon 
+import {
+  experienceIcon,
+  homeIcon
 } from "@/assets";
 
 import { HOME_PATH, PROJECTS_PATH, RESUME_LINK, EXPERIENCES_PATH, SPACE_LINK } from "./routes";
