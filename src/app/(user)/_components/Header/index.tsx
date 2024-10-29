@@ -9,7 +9,7 @@ import { logo } from "@/assets";
 import { ExternalLink } from "lucide-react";
 import SocialMediaButtons from "@/components/SocialMediaButtons";
 
-const Header = () => {
+const Header: React.FC = () => {
   // Navbar toggle
   const [navbarOpen, setNavbarOpen] = useState(false);
   const navbarToggleHandler = () => {

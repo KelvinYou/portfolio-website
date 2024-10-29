@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 import { Poppins, Encode_Sans } from 'next/font/google'
-import Footer from '@/components/layout/user/Footer'
+import Footer from '@/app/(user)/_components/Footer'
 import ComputerView from './ComputerView'
-import Header from '@/components/layout/user/Header'
+import Header from '@/app/(user)/_components/Header'
 
 // const poppins = Poppins({ weight: "400", subsets: ['latin'] })
 const poppins = Encode_Sans({ weight: "400", subsets: ['latin'] })
