@@ -47,9 +47,7 @@ export default function Accordion({
         className={`grid text-sm text-slate-600 overflow-hidden transition-all duration-300 ease-in-out ${accordionOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}
       >
         <div className="overflow-hidden">
-          <p className="pb-3">
-            {children}
-          </p>
+          {children}
         </div>
       </div>
     </div>

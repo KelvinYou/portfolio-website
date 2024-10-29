@@ -18,7 +18,6 @@ const BaseCard = ({ title, tooltip, children, className, ...rest }: Props) => {
           content={tooltip}
           position='top-end'
         >
-
           <Info />
         </Tooltip>}
       </div>

@@ -189,14 +189,7 @@ const AboutMe: React.FC = () => {
 
               return (
                 <li key={language.name + index} className="mb-4">
-                  <div className="py-2">
-                    <OccupyProportion
-                      title={language.name}
-                      percentage={averagePercentage} 
-                    />
-                  </div>
-
-                  {/* <Accordion 
+                  <Accordion 
                     title={
                       <OccupyProportion
                         title={language.name}
@@ -218,7 +211,7 @@ const AboutMe: React.FC = () => {
                         percentage={speakPercentage} 
                       />
                     </div>
-                  </Accordion> */}
+                  </Accordion>
                 </li>
               )
             })}
