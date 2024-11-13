@@ -46,9 +46,10 @@ const ScalableImage = ({ image }: { image: string }) => {
 
   return (
     <>
-      <img
+      <Image
         src={image}
         alt="image"
+        fill
         onClick={toggleZoom}
         className="h-full w-full object-cover object-center cursor-zoom-in"
       />

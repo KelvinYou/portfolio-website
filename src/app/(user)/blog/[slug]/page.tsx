@@ -1,4 +1,5 @@
 import React, { Suspense } from 'react'
+import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { promises as fs } from 'fs-extra'
 import { ogMeta } from '@/constants/metadata'
@@ -78,7 +79,7 @@ const BlogPage = async ({ params }: BlogPageType) => {
   const {
     title,
     description,
-    image,
+    images,
     createdDate,
     updatedDate,
   } = blogData;
@@ -125,14 +126,32 @@ const BlogPage = async ({ params }: BlogPageType) => {
             <p className="mb-10 text-base font-medium leading-relaxed text-body-color sm:text-lg sm:leading-relaxed lg:text-base lg:leading-relaxed xl:text-lg xl:leading-relaxed text-justify">
               {description}
             </p>
-            {image && 
-              <div className="mb-10 w-full h-full overflow-hidden rounded">
-                <div className="relative aspect-[97/60] w-full sm:aspect-[97/44]">
-                  <ScalableImage
-                    image={image}
-                  />
+            {images?.length > 0 && 
+              <>
+                <div className="mb-10 w-full h-full overflow-hidden rounded">
+                  <div className="relative aspect-[97/60] w-full sm:aspect-[97/44]">
+                    <ScalableImage
+                      image={images[0]}
+                    />
+                  </div>
                 </div>
-              </div>
+
+                {/* <div className="flex gap-2">
+                  {images.length > 1 && images.map((image: string, index: string) => (
+                    <Image
+                      key={index}
+                      src={image}
+                      alt={index + image}
+                      // fill
+                      width={128}
+                      height={128}
+                      // onClick={}
+                    />
+                  ))}
+                </div> */}
+
+              </>
+
             }
             <div className='prose'>
               <Suspense fallback={<CanvasLoader />}>

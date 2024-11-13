@@ -38,7 +38,7 @@ async function getBlogs() {
         content: blogData.description,
         date: blogData.updatedDate,
         link: `blog/${blogSlug.replace('.mdx', '')}`,
-        image: blogData.image,
+        image: blogData?.images?.[0],
         slug: blogSlug.replace('.mdx', ''),
       }
     })
