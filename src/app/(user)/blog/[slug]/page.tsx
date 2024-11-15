@@ -19,6 +19,7 @@ import RelatedPosts from '@/components/blog/RelatedPosts'
 import CanvasLoader from '@/components/ui/CanvasLoader'
 import { Calendar } from 'lucide-react'
 import { formatDate } from '@/utils/dateUtils'
+import ImageVideoGallery from '@/components/ImageVideoGallery'
 
 interface BlogPageType {
   params: {
@@ -127,31 +128,9 @@ const BlogPage = async ({ params }: BlogPageType) => {
               {description}
             </p>
             {images?.length > 0 && 
-              <>
-                <div className="mb-10 w-full h-full overflow-hidden rounded">
-                  <div className="relative aspect-[97/60] w-full sm:aspect-[97/44]">
-                    <ScalableImage
-                      image={images[0]}
-                    />
-                  </div>
-                </div>
-
-                {/* <div className="flex gap-2">
-                  {images.length > 1 && images.map((image: string, index: string) => (
-                    <Image
-                      key={index}
-                      src={image}
-                      alt={index + image}
-                      // fill
-                      width={128}
-                      height={128}
-                      // onClick={}
-                    />
-                  ))}
-                </div> */}
-
-              </>
-
+              <ImageVideoGallery 
+                images={images.map((image: string, index: number) => ({ id: index.toString(), url: image }))}
+              />
             }
             <div className='prose'>
               <Suspense fallback={<CanvasLoader />}>
