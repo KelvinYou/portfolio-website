@@ -14,6 +14,7 @@ export type ProjectType = {
   liveSiteLink?: string;
   sourceCodeLink?: string;
   relatedProjectIds?: string[],
+  relatedBlogIds?: string[],
   platforms?: string[];
   date: string;
   projectCategory?: string;

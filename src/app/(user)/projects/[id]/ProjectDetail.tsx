@@ -28,6 +28,7 @@ const ProjectDetail: FC<ProjectDetailProps> = ({ projectDetail }) => {
     sourceCodeLink,
     platforms,
     relatedProjectIds,
+    relatedBlogIds,
     date,
   } = projectDetail;
 
@@ -62,37 +63,35 @@ const ProjectDetail: FC<ProjectDetailProps> = ({ projectDetail }) => {
 
       <div className="-mx-4 flex flex-wrap mt-10">
         <div className="w-full px-4 lg:w-8/12">
-          <div>
+          <h1 className="mb-8 text-3xl font-bold leading-tight text-white sm:text-4xl sm:leading-tight">
+            {name}
+          </h1>
 
-            <h1 className="mb-8 text-3xl font-bold leading-tight text-white sm:text-4xl sm:leading-tight">
-              {name}
-            </h1>
+          <div className="mb-10 flex flex-wrap items-center justify-between border-b pb-4 border-white border-opacity-10">
+            <div className="flex flex-wrap items-center">
+              <div className="mb-5 flex items-center">
+                <p className="mr-5 flex items-center text-base font-medium text-body-color">
+                  <span className='ml-3 grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-1'>
+                    <span className='flex items-center'>
+                      <Calendar size={14} className='mb-1' />
 
-            <div className="mb-10 flex flex-wrap items-center justify-between border-b pb-4 border-white border-opacity-10">
-              <div className="flex flex-wrap items-center">
-                <div className="mb-5 flex items-center">
-                  <p className="mr-5 flex items-center text-base font-medium text-body-color">
-                    <span className='ml-3 grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-1'>
-                      <span className='flex items-center'>
-                        <Calendar size={14} className='mb-1' />
-
-                        <span className='ml-1'>{formatDate(date, 'DD MMM YYYY')}</span>
-                      </span>
-
+                      <span className='ml-1'>{formatDate(date, 'DD MMM YYYY')}</span>
                     </span>
 
-                  </p>
-                </div>
+                  </span>
+
+                </p>
               </div>
             </div>
-
-
-            <div>
-              {elements && <ArticleElementRenderer elements={elements} />}
-
-            </div>
-
           </div>
+
+          <div>
+            {elements && <ArticleElementRenderer elements={elements} />}
+          </div>
+
+          {/* <div className='py-4 text-lg font-semibold text-white'>
+            Related Blogs
+          </div> */}
         </div>
 
         {/* Right Column */}

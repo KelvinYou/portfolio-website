@@ -21,11 +21,11 @@ const RelatedPosts: FC<RelatedPostsProps> = (props) => {
   return (
     <div className="bg-gray-dark mb-10 rounded-sm shadow-none">
       <h3 className="border-b  px-8 py-4 text-lg font-semibold  border-white border-opacity-10 text-white">
-        Related Posts
+        Related Blogs
       </h3>
       {relatedBlogs.length === 0 ? (
         <p className='p-8 text-on-body'>
-          No related post ...
+          No related blog ...
         </p>
       ) : (
         <ul className="">
