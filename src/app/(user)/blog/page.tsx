@@ -6,6 +6,8 @@ import { promises as fs } from 'fs-extra'
 import matter from 'gray-matter';
 import SectionWrapper from '@/hoc/SectionWrapper';
 import SpotlightGrid from '@/components/SpotlightGrid';
+import { sortByKey } from '@/utils/arrayUtils';
+import dayjs from 'dayjs';
 
 export const metadata = {
   title: 'Blog | Kelvin You',
@@ -36,7 +38,7 @@ async function getBlogs() {
       return {
         title: blogData.title,
         content: blogData.description,
-        date: blogData.updatedDate,
+        date: dayjs(blogData.updatedDate).format('YYYY-MM-DD'),
         link: `blog/${blogSlug.replace('.mdx', '')}`,
         image: blogData?.images?.[0],
         slug: blogSlug.replace('.mdx', ''),
@@ -44,9 +46,7 @@ async function getBlogs() {
     })
   )
 
-  return blogPosts.sort((blogA, blogB) => {
-    return blogB.date - blogA.date
-  })
+  return sortByKey(blogPosts, 'date', 'desc');
 }
 
 const BlogsPage = async () => {
