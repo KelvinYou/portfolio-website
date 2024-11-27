@@ -20,6 +20,7 @@ import CanvasLoader from '@/components/ui/CanvasLoader'
 import { Calendar } from 'lucide-react'
 import { formatDate } from '@/utils/dateUtils'
 import ImageVideoGallery from '@/components/ImageVideoGallery'
+import ViewCount from './_ViewCount'
 
 interface BlogPageType {
   params: {
@@ -92,7 +93,7 @@ const BlogPage = async ({ params }: BlogPageType) => {
       <BackButton path='/blog' text='Back to Blog' />
 
       <div className="-mx-4 flex flex-wrap mt-10">
-        <div className="w-full px-4 lg:w-8/12">
+        <div className="w-full px-4 lg:w-8/12 mb-10">
           <div>
             <h1 className="mb-8 text-3xl font-bold leading-tight text-white sm:text-4xl sm:leading-tight">
               {title}
@@ -138,6 +139,8 @@ const BlogPage = async ({ params }: BlogPageType) => {
               </Suspense>
             </div>
           </div>
+
+          <ViewCount slug={params.slug} />
         </div>
 
         <div className="w-full px-4 lg:w-4/12">
