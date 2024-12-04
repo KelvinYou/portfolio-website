@@ -149,7 +149,29 @@ export const workExperiences = [
     iconBg: '#FFF',
     startDate: '2024-6-10',
     endDate: null,
-    points: [],
+    points: [
+      {
+        value: 'Designed and implemented reusable React component libraries to streamline development processes and ensure UI consistency across projects.'
+      },
+      {
+        value: 'Collaborated with cross-functional teams to deliver responsive, mobile-first web app.'
+      },
+      {
+        value: 'Optimized frontend performance, reducing load times by implementing lazy loading and effective state management'
+      },
+      {
+        value: 'Developed and integrated APIs with frontend interfaces, ensuring seamless data flow'
+      }
+    ],
+    techStacks: [
+      'ReactJS',
+      'Apollo GraphQL',
+      'Material UI',
+      'Git',
+      'Typescript',
+      'Jest',
+      'Storybook'
+    ]
   },
   {
     id: "6",
