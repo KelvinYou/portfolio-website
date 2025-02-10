@@ -18,7 +18,7 @@ export type VerticalTimelineElementType = {
   date: string,
   points: {
     value: string;
-    highlightedTexts: string[];
+    highlightedTexts?: string[];
   }[];
   tags?: string[];
   link?: string;
@@ -99,7 +99,7 @@ const VerticalTimelineRenderer: React.FC<VerticalTimelineRendererProps> = ({ ele
                 {
                   element.points.map((point: { 
                     value: string, 
-                    highlightedTexts: string[] 
+                    highlightedTexts?: string[] 
                   }, i: number) => (
                     <li
                       key={`experience-point-${i}`}
@@ -107,7 +107,7 @@ const VerticalTimelineRenderer: React.FC<VerticalTimelineRendererProps> = ({ ele
                     >
                       <HighlightText 
                         text={point.value}
-                        highlightedTexts={point.highlightedTexts} 
+                        highlightedTexts={point?.highlightedTexts || []} 
                       />
                       {/* {point} */}
                     </li>

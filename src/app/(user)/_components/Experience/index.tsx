@@ -55,7 +55,7 @@ const Experience: React.FC = () => {
 
       <SectionWrapper
         idName='render-experiences'
-      > 
+      >
         {/* <motion.div 
           initial="hidden"
           animate="show"
@@ -91,7 +91,7 @@ const Experience: React.FC = () => {
               )}
           </VerticalTimeline> */}
 
-          <VerticalTimelineRenderer 
+          <VerticalTimelineRenderer
             elements={formattedExperiences}
           />
         </div>
