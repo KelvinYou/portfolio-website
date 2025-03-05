@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Image from "next/image";
 import { FileText, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -34,13 +33,13 @@ export function AboutSection() {
           >
             <div className="absolute inset-0 border border-primary/20 rounded-lg -m-1 z-10" />
             <div className="absolute -inset-0.5 bg-gradient-to-tr from-primary/20 to-secondary/20 rounded-lg blur-sm" />
-            <Image
-              src="/about-image.jpg"
+            {/* <Image
+              src=""
               alt="About Me"
               width={600}
               height={400}
               className="rounded-lg relative z-0 w-full h-auto"
-            />
+            /> */}
           </motion.div>
           
           <motion.div
