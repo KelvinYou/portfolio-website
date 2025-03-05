@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Briefcase, Calendar, ChevronDown, MapPin, ExternalLink, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import Image from "next/image";
 import { ResumeDownloadButton } from "@/components/resume/resume-download-button";
 
 // Animation variants
@@ -121,12 +120,12 @@ export function ExperiencesSection() {
                 <div className="p-6 sm:p-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                   <div className="flex items-center gap-4">
                     <div className="relative w-12 h-12 bg-muted/30 rounded-lg flex items-center justify-center overflow-hidden">
-                      <Image
+                      {/* <Image
                         src={exp.logo}
                         alt={`${exp.company} logo`}
                         fill
                         className="object-contain p-2"
-                      />
+                      /> */}
                     </div>
                     
                     <div>

@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Image from "next/image";
 import { Github, ArrowRight, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -73,12 +72,12 @@ export function ProjectsSection() {
             <motion.div key={index} variants={fadeIn}>
               <Card className="overflow-hidden border border-border/40 bg-muted/10 backdrop-blur-sm hover:shadow-lg transition-all duration-300 h-full flex flex-col">
                 <div className="relative h-48 overflow-hidden">
-                  <Image
+                  {/* <Image
                     src={project.image || "/project-placeholder.jpg"}
                     alt={project.title}
                     fill
                     className="object-cover transition-transform duration-300 hover:scale-105"
-                  />
+                  /> */}
                   <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
                 </div>
                 <CardHeader>

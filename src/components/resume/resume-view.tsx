@@ -1,7 +1,6 @@
 "use client";
 
 import { resumeData } from "@/data/resume-data";
-import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Briefcase, Calendar, MapPin, GraduationCap, Award, User } from "lucide-react";
 
@@ -43,12 +42,12 @@ export function ResumeView() {
         </div>
         <div className="hidden md:block">
           <div className="h-24 w-24 rounded-full border-4 border-primary/20 overflow-hidden relative bg-muted/30">
-            <Image 
+            {/* <Image 
               src="/your-photo.jpg" 
               alt={resumeData.name}
               fill
               className="object-cover"
-            />
+            /> */}
           </div>
         </div>
       </section>
