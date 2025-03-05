@@ -66,8 +66,15 @@ export function Navbar() {
   const [activeSection, setActiveSection] = useState("home");
   const [scrolled, setScrolled] = useState(false);
   const [windowWidth, setWindowWidth] = useState(0);
+  const [scrollDistance, setScrollDistance] = useState(1000);
+  const [isClient, setIsClient] = useState(false); // Track client-side rendering
   
   const { scrollY } = useScroll();
+  
+  // Track if we're on the client side
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
   
   // Track window size for responsive adjustments
   useEffect(() => {
@@ -89,12 +96,14 @@ export function Navbar() {
   // Track scroll position for navbar styling
   useMotionValueEvent(scrollY, "change", (latest) => {
     // Adjust the threshold based on screen size
-    const threshold = windowWidth < 640 ? 30 : 50;
+    const threshold = isClient && windowWidth < 640 ? 30 : 50;
     setScrolled(latest > threshold);
   });
   
   // Track active section based on scroll position
   useEffect(() => {
+    if (!isClient) return; // Skip if not client-side
+    
     const sections = navItems.map(item => item.href.replace('/#', ''));
     
     const handleScroll = () => {
@@ -121,10 +130,26 @@ export function Navbar() {
     
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [windowWidth]);
+  }, [windowWidth, isClient]);
+  
+  // Get the document height on the client side only
+  useEffect(() => {
+    if (!isClient) return; // Skip if not client-side
+    
+    const updateScrollDistance = () => {
+      setScrollDistance(
+        document.documentElement.scrollHeight - window.innerHeight
+      );
+    };
+    
+    updateScrollDistance();
+    window.addEventListener('resize', updateScrollDistance);
+    return () => window.removeEventListener('resize', updateScrollDistance);
+  }, [isClient]);
   
   // Calculate how many menu items to show based on screen width
   const getVisibleNavItems = () => {
+    if (!isClient) return navItems.slice(0, 3); // Default for SSR
     if (windowWidth < 1024) return navItems.slice(0, 3);
     if (windowWidth < 1280) return navItems.slice(0, 5);
     return navItems;
@@ -132,12 +157,19 @@ export function Navbar() {
   
   // Items to show in the "More" dropdown on larger screens
   const moreItems = () => {
+    if (!isClient) return navItems.slice(3); // Default for SSR
     if (windowWidth < 1024) return navItems.slice(3);
     if (windowWidth < 1280) return navItems.slice(5);
     return [];
   };
   
   const hasMoreItems = moreItems().length > 0;
+  
+  // Safe access to windowWidth
+  const isMobile = isClient && windowWidth < 640;
+  const isSmallScreen = isClient && windowWidth < 1024;
+  const isTinyScreen = isClient && windowWidth < 400;
+  const isVeryTinyScreen = isClient && windowWidth < 350;
   
   return (
     <>
@@ -203,7 +235,7 @@ export function Navbar() {
                           transition={{ type: "spring", stiffness: 400, damping: 17 }}
                         >
                           {item.icon}
-                          <span className={windowWidth < 1024 ? "hidden lg:inline" : ""}>
+                          <span className={isSmallScreen ? "hidden lg:inline" : ""}>
                             {item.name}
                           </span>
                         </motion.div>
@@ -261,13 +293,13 @@ export function Navbar() {
             </div>
             <div className="hidden md:flex">
               <Button 
-                size={scrolled ? "sm" : windowWidth < 1024 ? "sm" : "default"}
+                size={scrolled ? "sm" : isSmallScreen ? "sm" : "default"}
                 className="rounded-full text-xs sm:text-sm group"
                 asChild
               >
                 <Link href="/resume">
                   <FileText className="mr-1 sm:mr-2 h-3.5 w-3.5 sm:h-4 sm:w-4 group-hover:scale-110 transition-transform" />
-                  <span className={windowWidth < 1024 ? "hidden lg:inline" : ""}>View Resume</span>
+                  <span className={isSmallScreen ? "hidden lg:inline" : ""}>View Resume</span>
                 </Link>
               </Button>
             </div>
@@ -279,7 +311,7 @@ export function Navbar() {
               className="md:hidden text-foreground"
               onClick={() => setMobileMenuOpen(true)}
             >
-              <Menu size={windowWidth < 640 ? 16 : 20} />
+              <Menu size={isMobile ? 16 : 20} />
             </Button>
           </motion.div>
         </nav>
@@ -288,9 +320,7 @@ export function Navbar() {
         <motion.div 
           className="absolute bottom-0 left-0 right-0 h-[2px] bg-primary origin-left"
           style={{ 
-            scaleX: useTransform(scrollY, 
-              [0, document.documentElement.scrollHeight - window.innerHeight], 
-              [0, 1])
+            scaleX: useTransform(scrollY, [0, scrollDistance || 1000], [0, 1])
           }}
         />
       </header>
@@ -326,7 +356,7 @@ export function Navbar() {
                   size="icon" 
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  <X size={windowWidth < 640 ? 20 : 24} />
+                  <X size={isMobile ? 20 : 24} />
                 </Button>
               </div>
               
@@ -346,7 +376,7 @@ export function Navbar() {
               >
                 <div className={cn(
                   "space-y-3 sm:space-y-6",
-                  windowWidth < 400 ? "grid grid-cols-2 gap-2 space-y-0" : ""
+                  isTinyScreen ? "grid grid-cols-2 gap-2 space-y-0" : ""
                 )}>
                   {navItems.map((item) => (
                     <motion.div
@@ -360,7 +390,7 @@ export function Navbar() {
                         href={item.href}
                         className={cn(
                           "flex items-center rounded-lg transition-colors",
-                          windowWidth < 400 
+                          isTinyScreen 
                             ? "p-2 text-sm flex-col text-center gap-1" 
                             : "p-3 text-base sm:text-lg gap-2",
                           activeSection === item.href.replace('/#', '') ?
@@ -371,12 +401,12 @@ export function Navbar() {
                       >
                         <div className={cn(
                           "rounded-full bg-background flex items-center justify-center",
-                          windowWidth < 400 ? "w-8 h-8" : "w-10 h-10 mr-4"
+                          isTinyScreen ? "w-8 h-8" : "w-10 h-10 mr-4"
                         )}>
                           {item.icon}
                         </div>
                         <span>{item.name}</span>
-                        {windowWidth >= 400 && (
+                        {!isTinyScreen && (
                           <ChevronRight className="ml-auto h-5 w-5 text-muted-foreground" />
                         )}
                       </Link>
@@ -388,7 +418,7 @@ export function Navbar() {
               <div className="p-4 border-t border-border/30 flex items-center justify-between">
                 <ThemeToggle />
                 <Button 
-                  size={windowWidth < 400 ? "sm" : "default"}
+                  size={isTinyScreen ? "sm" : "default"}
                   className="rounded-full"
                   asChild
                 >
@@ -397,7 +427,7 @@ export function Navbar() {
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     <FileText className="mr-2 h-4 w-4" /> 
-                    <span className={windowWidth < 350 ? "sr-only" : ""}>View Resume</span>
+                    <span className={isVeryTinyScreen ? "sr-only" : ""}>View Resume</span>
                   </Link>
                 </Button>
               </div>

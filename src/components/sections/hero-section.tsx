@@ -250,7 +250,7 @@ export function HeroSection() {
                 }}
               >
                 <motion.div
-                  className="w-[380px] rounded-2xl border border-border/50 bg-background/50 backdrop-blur-xl p-6 shadow-xl"
+                  className="w-[380px] rounded-2xl border border-border/50 bg-background/50 backdrop-blur-xl p-6 shadow-xl dark:shadow-indigo-500/50"
                   style={{
                     transformStyle: "preserve-3d",
                     rotateX: cardRotateX,
