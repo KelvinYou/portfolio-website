@@ -1,1 +1,1 @@
- 
+declare module 'crypto-js'; 
