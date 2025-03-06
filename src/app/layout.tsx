@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Navbar } from "@/components/navbar";
 import { FooterSection } from "@/components/sections/footer-section";
+import { personalInfo } from "@/data";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,8 +17,14 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Kelvin You | Portfolio",
-  description: "Software Developer Portfolio showcasing projects and skills",
+  title: `${personalInfo.name} | ${personalInfo.title}`,
+  description: `${personalInfo.summary}`,
+  icons: {
+    icon: '/images/profile_pic.jpg',
+  },
+  openGraph: {
+    images: '/images/profile_pic.jpg',
+  },
 };
 
 export default function RootLayout({
