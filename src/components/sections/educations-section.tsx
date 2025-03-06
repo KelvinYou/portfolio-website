@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { School, Calendar, Award, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { educations } from "@/data";
 
 // Animation variants
 const fadeIn = {
@@ -19,37 +20,6 @@ const staggerContainer = {
     }
   }
 };
-
-// Example education data
-const educations = [
-  {
-    degree: "Master of Science in Computer Science",
-    institution: "Stanford University",
-    location: "Stanford, CA",
-    period: "2018 - 2020",
-    description: "Specialized in Artificial Intelligence and Machine Learning. Graduated with honors and completed thesis on 'Neural Network Optimization Techniques for Real-time Applications'.",
-    achievements: ["Dean's List (All Semesters)", "Best Graduate Research Award", "AI Research Scholarship"],
-    logo: "/stanford-logo.png" // You'll need to add these logo images to your public folder
-  },
-  {
-    degree: "Bachelor of Science in Software Engineering",
-    institution: "MIT",
-    location: "Cambridge, MA",
-    period: "2014 - 2018",
-    description: "Focused on software architecture and development methodologies. Participated in multiple hackathons and coding competitions, consistently placing in the top percentiles.",
-    achievements: ["Graduated Summa Cum Laude", "Innovation Award for Senior Project", "Coding Competition Winner (2017)"],
-    logo: "/mit-logo.png"
-  },
-  {
-    degree: "Professional Certification in UI/UX Design",
-    institution: "Designlab",
-    location: "Online",
-    period: "2017",
-    description: "Intensive 3-month certification focusing on user interface design principles, research methodologies, and prototyping techniques.",
-    achievements: ["Outstanding Final Project Award"],
-    logo: "/designlab-logo.png"
-  }
-];
 
 export function EducationsSection() {
   return (

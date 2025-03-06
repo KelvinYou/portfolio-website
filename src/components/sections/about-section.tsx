@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { FileText, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+// import Image from "next/image";
 
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
@@ -34,7 +35,7 @@ export function AboutSection() {
             <div className="absolute inset-0 border border-primary/20 rounded-lg -m-1 z-10" />
             <div className="absolute -inset-0.5 bg-gradient-to-tr from-primary/20 to-secondary/20 rounded-lg blur-sm" />
             {/* <Image
-              src=""
+              src="/images/about-me.jpg"
               alt="About Me"
               width={600}
               height={400}

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent, useTransform } from "framer-motion";
-import { Menu, X, ChevronRight, Home, User, Briefcase, Code, Sparkles, GraduationCap, Send, FileText } from "lucide-react";
+import { Menu, X, ChevronRight, Home, User, Briefcase, Code, Sparkles, GraduationCap, Send, FileText, Bookmark } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { 
   NavigationMenu,
@@ -30,6 +30,7 @@ const navItems = [
   { name: "Experience", href: "/#experience", icon: <Briefcase className="h-4 w-4" /> },
   { name: "Projects", href: "/#projects", icon: <Code className="h-4 w-4" /> },
   { name: "Skills", href: "/#skills", icon: <Sparkles className="h-4 w-4" /> },
+  { name: "Blog", href: "/blog", icon: <Bookmark className="h-4 w-4" /> },
   { name: "Contact", href: "/#contact", icon: <Send className="h-4 w-4" /> },
 ];
 
@@ -221,7 +222,7 @@ export function Navbar() {
               className="flex-shrink-0"
             >
               <Link 
-                href="#home" 
+                href="/" 
                 className="flex items-center gap-1 sm:gap-2"
                 onClick={() => setMobileMenuOpen(false)}
               >
@@ -416,7 +417,7 @@ export function Navbar() {
               <div className="flex flex-col h-full">
                 <div className="flex justify-between items-center p-4 border-b border-border/30">
                   <Link 
-                    href="#home" 
+                    href="/" 
                     className="flex items-center gap-2"
                     onClick={() => setMobileMenuOpen(false)}
                   >

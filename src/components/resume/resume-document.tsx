@@ -9,7 +9,7 @@ import {
   StyleSheet, 
   Font 
 } from '@react-pdf/renderer';
-import { resumeData } from "@/data/resume-data";
+import { resumeData } from "@/data";
 
 // Register fonts (optional but recommended for professional look)
 Font.register({

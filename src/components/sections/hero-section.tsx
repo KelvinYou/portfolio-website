@@ -9,7 +9,7 @@ import Link from "next/link";
 import { TypeAnimation } from 'react-type-animation';
 import { cn } from "@/lib/utils";
 import { useMotionValue } from "framer-motion";
-import { resumeData } from "@/data/resume-data";
+import { personalInfo } from "@/data";
 
 export function HeroSection() {
   const ref = useRef<HTMLDivElement>(null);
@@ -66,9 +66,9 @@ export function HeroSection() {
   );
 
   const socialIcons = [
-    { icon: <Github className="h-5 w-5" />, href: "https://github.com/yourusername", color: "hover:bg-zinc-800 dark:hover:bg-zinc-700" },
-    { icon: <Linkedin className="h-5 w-5" />, href: "https://linkedin.com/in/yourusername", color: "hover:bg-blue-600" },
-    { icon: <Mail className="h-5 w-5" />, href: "mailto:your.email@example.com", color: "hover:bg-red-500" },
+    { icon: <Github className="h-5 w-5" />, href: personalInfo.contact.github, color: "hover:bg-zinc-800 dark:hover:bg-zinc-700" },
+    { icon: <Linkedin className="h-5 w-5" />, href: personalInfo.contact.linkedin, color: "hover:bg-blue-600" },
+    { icon: <Mail className="h-5 w-5" />, href: `mailto:${personalInfo.contact.email}`, color: "hover:bg-red-500" },
     { icon: <FileText className="h-5 w-5" />, href: "/resume", color: "hover:bg-emerald-600" }
   ];
 
@@ -141,20 +141,28 @@ export function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.2 }}
             >
-              <span className="inline-block">
-                Hi, I&apos;m{" "}
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-indigo-500">
-                  {resumeData.name}
-                </span>
-              </span>
+              <motion.span 
+                className="inline-block bg-clip-text text-transparent bg-gradient-to-r from-primary via-indigo-500 to-primary"
+                animate={{
+                  backgroundPosition: ["0%", "100%", "0%"],
+                }}
+                transition={{
+                  duration: 5,
+                  repeat: Infinity,
+                  ease: "backInOut"
+                }}
+                style={{
+                  backgroundSize: "200% 100%"
+                }}
+              >
+                Hi, I&apos;m {personalInfo.name}
+              </motion.span>
               <br />
-              <span className="inline-block h-16 sm:h-20">
+              <span className="inline-block h-8 sm:h-12">
                 {isMounted && (
                   <TypeAnimation
                     sequence={[
-                      'Developer',
-                      1000,
-                      'Designer',
+                      'Full-Stack Developer',
                       1000,
                       'Problem Solver',
                       1000
@@ -162,7 +170,7 @@ export function HeroSection() {
                     wrapper="span"
                     speed={50}
                     repeat={Infinity}
-                    className="text-muted-foreground"
+                    className="text-muted-foreground text-[32px]"
                   />
                 )}
               </span>
@@ -270,12 +278,12 @@ export function HeroSection() {
                         style={{ transform: "translateZ(20px)" }}
                       >
                         <Avatar className="w-full h-full border-2 border-background">
-                          <AvatarImage src="/your-photo.jpg" alt="{resumeData.name}" />
+                          <AvatarImage src={personalInfo.profilePicture} alt={personalInfo.name} />
                           <AvatarFallback className="bg-muted">YN</AvatarFallback>
                         </Avatar>
                       </motion.div>
                       <div style={{ transform: "translateZ(30px)" }}>
-                        <h3 className="font-semibold">{resumeData.name}</h3>
+                        <h3 className="font-semibold">{personalInfo.name}</h3>
                         <p className="text-xs text-muted-foreground">Software Developer</p>
                       </div>
                     </div>

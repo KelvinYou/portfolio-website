@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Briefcase, Calendar, ChevronDown, MapPin, ExternalLink, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { experiences } from "@/data";
 
 // Animation variants
 const fadeIn = {
@@ -21,58 +22,6 @@ const staggerContainer = {
     }
   }
 };
-
-// Example experience data
-const experiences = [
-  {
-    title: "Senior Software Engineer",
-    company: "Google",
-    location: "Mountain View, CA",
-    type: "Full-time",
-    period: "2020 - Present",
-    description: "Leading development of next-generation search algorithms and infrastructure. Architected and implemented scalable backend systems serving millions of users.",
-    responsibilities: [
-      "Lead a team of 5 engineers working on search optimization",
-      "Reduced query response time by 40% through innovative caching mechanisms",
-      "Implemented CI/CD pipeline reducing deployment time by 60%",
-      "Mentored junior developers through code reviews and pair programming"
-    ],
-    skills: ["React", "Node.js", "Go", "Kubernetes", "TensorFlow", "GraphQL"],
-    logo: "/google-logo.png"
-  },
-  {
-    title: "Full Stack Developer",
-    company: "Facebook",
-    location: "Menlo Park, CA",
-    type: "Full-time",
-    period: "2018 - 2020",
-    description: "Worked on the News Feed team to develop features that improved user engagement and content relevance. Collaborated with designers and product managers to create intuitive interfaces.",
-    responsibilities: [
-      "Developed key React components for the News Feed interface",
-      "Created adaptive algorithms for content personalization",
-      "Optimized database queries resulting in 30% performance improvement",
-      "Participated in A/B testing and feature launch decision making"
-    ],
-    skills: ["React", "Redux", "PHP", "MySQL", "GraphQL", "Jest"],
-    logo: "/facebook-logo.png"
-  },
-  {
-    title: "Software Development Intern",
-    company: "Amazon",
-    location: "Seattle, WA",
-    type: "Internship",
-    period: "Summer 2017",
-    description: "Contributed to the development of internal tools for the fulfillment center operations team. Created dashboards and monitoring systems that improved operational efficiency.",
-    responsibilities: [
-      "Built real-time monitoring dashboard for fulfillment centers",
-      "Implemented data visualization components with D3.js",
-      "Developed REST APIs for internal service communication",
-      "Presented project results to senior management team"
-    ],
-    skills: ["JavaScript", "Python", "AWS Lambda", "DynamoDB", "D3.js"],
-    logo: "/amazon-logo.png"
-  }
-];
 
 export function ExperiencesSection() {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);

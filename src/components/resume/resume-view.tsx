@@ -1,6 +1,6 @@
 "use client";
 
-import { resumeData } from "@/data/resume-data";
+import { resumeData } from "@/data";
 import { Badge } from "@/components/ui/badge";
 import { Briefcase, Calendar, MapPin, GraduationCap, Award, User } from "lucide-react";
 
