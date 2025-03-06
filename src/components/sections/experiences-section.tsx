@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Briefcase, Calendar, ChevronDown, MapPin, ExternalLink, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ResumeDownloadButton } from "@/components/resume/resume-download-button";
 
 // Animation variants
 const fadeIn = {
@@ -212,16 +211,6 @@ export function ExperiencesSection() {
               </motion.div>
             </motion.div>
           ))}
-        </motion.div>
-        
-        <motion.div 
-          className="text-center mt-12"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={fadeIn}
-        >
-          <ResumeDownloadButton className="rounded-full" />
         </motion.div>
       </div>
     </section>
