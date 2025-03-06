@@ -1,9 +1,9 @@
 // Resume data
 export const resumeData = {
-  name: "Your Full Name",
-  title: "Senior Software Engineer",
+  name: "Kelvin You",
+  title: "Software Engineer",
   contact: {
-    email: "your.email@example.com",
+    email: "kelvin.you@gmail.com",
     phone: "(123) 456-7890",
     linkedin: "linkedin.com/in/yourprofile",
     github: "github.com/yourusername",

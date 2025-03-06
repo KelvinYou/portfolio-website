@@ -9,6 +9,7 @@ import Link from "next/link";
 import { TypeAnimation } from 'react-type-animation';
 import { cn } from "@/lib/utils";
 import { useMotionValue } from "framer-motion";
+import { resumeData } from "@/data/resume-data";
 
 export function HeroSection() {
   const ref = useRef<HTMLDivElement>(null);
@@ -143,7 +144,7 @@ export function HeroSection() {
               <span className="inline-block">
                 Hi, I&apos;m{" "}
                 <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-indigo-500">
-                  Your Name
+                  {resumeData.name}
                 </span>
               </span>
               <br />
@@ -269,12 +270,12 @@ export function HeroSection() {
                         style={{ transform: "translateZ(20px)" }}
                       >
                         <Avatar className="w-full h-full border-2 border-background">
-                          <AvatarImage src="/your-photo.jpg" alt="Your Name" />
+                          <AvatarImage src="/your-photo.jpg" alt="{resumeData.name}" />
                           <AvatarFallback className="bg-muted">YN</AvatarFallback>
                         </Avatar>
                       </motion.div>
                       <div style={{ transform: "translateZ(30px)" }}>
-                        <h3 className="font-semibold">Your Name</h3>
+                        <h3 className="font-semibold">{resumeData.name}</h3>
                         <p className="text-xs text-muted-foreground">Software Developer</p>
                       </div>
                     </div>
