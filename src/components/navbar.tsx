@@ -23,6 +23,7 @@ import Link from "next/link";
 import React from "react";
 import { navItems } from "@/constants/navItems";
 import { Icons } from "@/components/icons";
+import { personalInfo } from "@/data";
 
 // Function to get Icon component from icon name
 const getIcon = (iconName: string, className: string = "h-4 w-4") => {
@@ -224,9 +225,9 @@ export function Navbar() {
               >
                 <div className="relative">
                   <Avatar className="h-7 w-7 sm:h-9 sm:w-9 border-2 border-primary/30 shadow-lg">
-                    <AvatarImage src="/your-photo.jpg" alt="Your Name" />
+                    <AvatarImage src={personalInfo.profilePicture} alt={personalInfo.name} />
                     <AvatarFallback className="bg-primary/10 text-xs sm:text-sm">
-                      KY
+                      {personalInfo.name.charAt(0)}
                     </AvatarFallback>
                   </Avatar>
                   <motion.div 
@@ -241,9 +242,9 @@ export function Navbar() {
                     whileHover={{ scale: 1.05 }}
                     transition={{ type: "spring", stiffness: 400, damping: 10 }}
                   >
-                    Kelvin You
+                    {personalInfo.name}
                   </motion.span>
-                  <span className="text-[10px] text-muted-foreground -mt-1 hidden sm:block">Full-Stack Developer</span>
+                  <span className="text-[10px] text-muted-foreground -mt-1 hidden sm:block">{personalInfo.title}</span>
                 </motion.div>
               </Link>
             </motion.div>
@@ -418,14 +419,14 @@ export function Navbar() {
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     <Avatar className="h-8 w-8 border-2 border-primary/20">
-                      <AvatarImage src="/your-photo.jpg" alt="Your Name" />
-                      <AvatarFallback className="bg-primary/10 text-xs">KY</AvatarFallback>
+                      <AvatarImage src={personalInfo.profilePicture} alt={personalInfo.name} />
+                      <AvatarFallback className="bg-primary/10 text-xs">{personalInfo.name.charAt(0)}</AvatarFallback>
                     </Avatar>
                     <div className="flex flex-col">
                       <span className="font-bold text-lg bg-clip-text text-transparent bg-gradient-to-r from-primary to-indigo-500">
-                        Kelvin You
+                        {personalInfo.name}
                       </span>
-                      <span className="text-[10px] text-muted-foreground -mt-1">Full-Stack Developer</span>
+                      <span className="text-[10px] text-muted-foreground -mt-1">{personalInfo.title}</span>
                     </div>
                   </Link>
                   

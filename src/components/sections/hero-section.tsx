@@ -132,7 +132,7 @@ export function HeroSection() {
               <div className="flex items-center justify-center p-1 rounded-full bg-primary/10 border border-primary/20">
                 <Sparkles className="h-3.5 w-3.5 text-primary" />
               </div>
-              <p className="text-sm text-muted-foreground">Full-Stack Developer</p>
+              <p className="text-sm text-muted-foreground">{personalInfo.title}</p>
             </motion.div>
             
             <motion.h1 
@@ -164,7 +164,7 @@ export function HeroSection() {
                     sequence={[
                       'Full-Stack Developer',
                       1000,
-                      'Problem Solver',
+                      'Software Engineer',
                       1000
                     ]}
                     wrapper="span"

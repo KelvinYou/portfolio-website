@@ -2,9 +2,11 @@
 
 import { motion } from "framer-motion";
 import { FileText, Mail } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
-// import Image from "next/image";
+import { personalInfo } from "@/data";
+import Image from "next/image";
+import { cn } from "@/lib/utils";
 
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
@@ -34,13 +36,13 @@ export function AboutSection() {
           >
             <div className="absolute inset-0 border border-primary/20 rounded-lg -m-1 z-10" />
             <div className="absolute -inset-0.5 bg-gradient-to-tr from-primary/20 to-secondary/20 rounded-lg blur-sm" />
-            {/* <Image
-              src="/images/about-me.jpg"
+            <Image
+              src={personalInfo.profilePicture}
               alt="About Me"
               width={600}
               height={400}
-              className="rounded-lg relative z-0 w-full h-auto"
-            /> */}
+              className="rounded-lg relative z-0 h-[400px] object-cover"
+            />
           </motion.div>
           
           <motion.div
@@ -51,23 +53,20 @@ export function AboutSection() {
           >
             <h3 className="text-2xl font-semibold mb-4">My Journey</h3>
             <p className="text-muted-foreground mb-6">
-              I&apos;m a passionate software developer with over X years of experience creating user-centric 
-              web applications. My journey in technology started when I first encountered [your story here].
+              {personalInfo.summary}
             </p>
             <p className="text-muted-foreground mb-6">
               I specialize in front-end development with React and TypeScript, but I&apos;m also proficient 
               with back-end technologies like Node.js and databases. I believe in writing clean, maintainable 
               code and creating intuitive user experiences.
             </p>
-            <div className="flex gap-4">
-              <Button variant="outline" className="rounded-full px-6" asChild>
-                <Link href="/resume">
-                  <FileText className="mr-2 h-4 w-4" /> View Resume
-                </Link>
-              </Button>
-              <Button className="rounded-full px-6">
+            <div className="flex gap-2">
+              <Link href="/resume" className={cn(buttonVariants({ variant: "outline" }), "rounded-full px-6")}>
+                <FileText className="mr-2 h-4 w-4" /> View Resume
+              </Link>
+              <Link href="/#contact" className={cn(buttonVariants(), "rounded-full px-6")}>
                 <Mail className="mr-2 h-4 w-4" /> Contact
-              </Button>
+              </Link>
             </div>
           </motion.div>
         </div>
