@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent, useTransform } from "framer-motion";
-import { Menu, X, ChevronRight, Home, User, Briefcase, Code, Sparkles, GraduationCap, Send, FileText, Bookmark } from "lucide-react";
+import { Menu, X, ChevronRight, FileText } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { 
   NavigationMenu,
@@ -21,18 +21,14 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
 import React from "react";
+import { navItems } from "@/constants/navItems";
+import { Icons } from "@/components/icons";
 
-// Define the navigation items with icons
-const navItems = [
-  { name: "Home", href: "/#home", icon: <Home className="h-4 w-4" /> },
-  { name: "About", href: "/#about", icon: <User className="h-4 w-4" /> },
-  { name: "Education", href: "/#education", icon: <GraduationCap className="h-4 w-4" /> },
-  { name: "Experience", href: "/#experience", icon: <Briefcase className="h-4 w-4" /> },
-  { name: "Projects", href: "/#projects", icon: <Code className="h-4 w-4" /> },
-  { name: "Skills", href: "/#skills", icon: <Sparkles className="h-4 w-4" /> },
-  { name: "Blog", href: "/blog", icon: <Bookmark className="h-4 w-4" /> },
-  { name: "Contact", href: "/#contact", icon: <Send className="h-4 w-4" /> },
-];
+// Function to get Icon component from icon name
+const getIcon = (iconName: string, className: string = "h-4 w-4") => {
+  const IconComponent = Icons[iconName as keyof typeof Icons];
+  return IconComponent ? <IconComponent className={className} /> : null;
+};
 
 // Navigation menu component for large screens
 const ListItem = React.forwardRef<
@@ -269,7 +265,7 @@ export function Navbar() {
                           legacyBehavior 
                           passHref
                         >
-                          <NavigationMenuLink 
+                          <NavigationMenuLink
                             className={cn(
                               "transition-all text-xs lg:text-sm rounded-full px-3 lg:px-4 py-1.5 flex items-center gap-1.5 hover:bg-accent/50 hover:text-foreground",
                               activeSection === item.href.replace('/#', '') ? 
@@ -287,7 +283,7 @@ export function Navbar() {
                                 activeSection === item.href.replace('/#', '') ?
                                   "text-primary" : "text-muted-foreground"
                               )}>
-                                {item.icon}
+                                {getIcon(item.icon)}
                               </div>
                               <span className={isSmallScreen ? "hidden lg:inline" : ""}>
                                 {item.name}
@@ -325,7 +321,7 @@ export function Navbar() {
                                   )}
                                 >
                                   <div className="w-6 h-6 rounded-full bg-background flex items-center justify-center">
-                                    {item.icon}
+                                    {getIcon(item.icon)}
                                   </div>
                                   <span>{item.name}</span>
                                 </Link>
@@ -489,7 +485,7 @@ export function Navbar() {
                               "bg-primary/5 border-primary/20 text-primary" :
                               "text-muted-foreground"
                           )}>
-                            {item.icon}
+                            {getIcon(item.icon)}
                           </div>
                           <span>{item.name}</span>
                           {!isTinyScreen && (
