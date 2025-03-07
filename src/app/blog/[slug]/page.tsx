@@ -6,6 +6,7 @@ import { formatDate } from "@/lib/utils";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { notFound } from "next/navigation";
+import { MdxRemoteRender } from "@/components/mdx";
 
 // MDX components - simplified for troubleshooting
 // const components = {
@@ -20,8 +21,8 @@ export const revalidate = 3600; // Revalidate every hour
 
 export async function generateStaticParams() {
   try {
-    const posts = getAllPosts();
-    return posts.map((post) => ({
+    const posts = await getAllPosts();
+    return posts.map((post: { slug: string }) => ({
       slug: post.slug,
     }));
   } catch (error) {
@@ -30,13 +31,11 @@ export async function generateStaticParams() {
   }
 }
 
-type PageProps = { params: Promise<{ slug: string }> };
+type PageProps = { params: { slug: string } };
 
-export async function generateMetadata(props: PageProps) {
-  const params = await props.params;
-
+export async function generateMetadata({ params }: PageProps) {
   try {
-    const post = getPostBySlug(params.slug);
+    const post = await getPostBySlug(params.slug);
     return {
       title: `${post.frontmatter.title} | Blog`,
       description: post.frontmatter.description,
@@ -44,7 +43,7 @@ export async function generateMetadata(props: PageProps) {
   } catch (error) {
     console.error("Error generating metadata:", error);
     return {
-      title: "Blog Post Not Found",
+      title: "Blog Post Not Found", 
       description: "The requested blog post could not be found.",
     };
   }
@@ -100,9 +99,9 @@ export default async function BlogPostPage(props: PageProps) {
               </div>
             )}
             
-            {/* <article className="prose prose-lg dark:prose-invert max-w-none">
-              <MDXRemote source={post.content} components={components} />
-            </article> */}
+            <article className="prose prose-lg dark:prose-invert max-w-none">
+              <MdxRemoteRender mdxSource={post.serializedContent} mdxScope={{}} />
+            </article>
           </div>
         </div>
       </div>

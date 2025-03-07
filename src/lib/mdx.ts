@@ -1,6 +1,10 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
+import { MDXRemoteSerializeResult } from 'next-mdx-remote';
+import rehypeExternalLinks from 'rehype-external-links';
+import remarkSlug from 'rehype-slug';
+import { serialize } from 'next-mdx-remote/serialize'
 
 // Define the blog post type
 export type Post = {
@@ -14,6 +18,7 @@ export type Post = {
     author: string;
   };
   content: string;
+  serializedContent: MDXRemoteSerializeResult;
 };
 
 const postsDirectory = path.join(process.cwd(), 'src/content/blog');
@@ -32,7 +37,7 @@ export function getPostSlugs() {
   }
 }
 
-export function getPostBySlug(slug: string): Post {
+export async function getPostBySlug(slug: string): Promise<Post> {
   try {
     const realSlug = slug.replace(/\.mdx$/, '');
     const fullPath = path.join(postsDirectory, `${realSlug}.mdx`);
@@ -43,6 +48,14 @@ export function getPostBySlug(slug: string): Post {
     
     const fileContents = fs.readFileSync(fullPath, 'utf8');
     const { data, content } = matter(fileContents);
+
+    const mdxSource = await serialize(content, {
+      mdxOptions: {
+        remarkPlugins: [remarkSlug],
+        rehypePlugins: [[rehypeExternalLinks, { target: '_blank' }]],
+      },
+      scope: data,
+    })
     
     // Ensure all required frontmatter fields exist
     const frontmatter = {
@@ -58,6 +71,7 @@ export function getPostBySlug(slug: string): Post {
       slug: realSlug,
       frontmatter: frontmatter as Post['frontmatter'],
       content,
+      serializedContent: mdxSource,
     };
   } catch (error) {
     console.error(`Error getting post ${slug}:`, error);
@@ -65,20 +79,23 @@ export function getPostBySlug(slug: string): Post {
   }
 }
 
-export function getAllPosts(): Post[] {
+export async function getAllPosts(): Promise<Post[]> {
   try {
     const slugs = getPostSlugs();
     if (slugs.length === 0) {
       return [];
     }
     
-    const posts = slugs
-      .map(slug => getPostBySlug(slug))
-      .sort((post1, post2) => (new Date(post1.frontmatter.date) > new Date(post2.frontmatter.date) ? -1 : 1));
+    const posts = await Promise.all(
+      slugs.map((slug) => getPostBySlug(slug))
+    );
     
-    return posts;
+    return posts.sort((post1, post2) => 
+      new Date(post2.frontmatter.date).getTime() - new Date(post1.frontmatter.date).getTime()
+    );
+    
   } catch (error) {
     console.error("Error getting all posts:", error);
     return [];
   }
-} 
+}
