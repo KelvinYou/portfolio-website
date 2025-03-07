@@ -3,7 +3,6 @@ import {
   Font 
 } from '@react-pdf/renderer';
 
-
 Font.register({
   family: 'Quicksand',
   fonts: [
@@ -12,91 +11,139 @@ Font.register({
     { src: '/assets/fonts/quicksand-v20-latin-600.ttf', fontWeight: 600 }, // Semi-bold
   ]
 });
-
+// Create styles for the modern resume
 export const styles = StyleSheet.create({
   page: {
     padding: 30,
     fontFamily: 'Quicksand',
-    fontSize: 12,
+    fontSize: 10,
     lineHeight: 1.5,
     color: '#333',
   },
   section: {
-    marginBottom: 10,
+    marginBottom: 15,
   },
+  // Header section
   header: {
     marginBottom: 20,
+    borderBottom: '1px solid #eaeaea',
+    paddingBottom: 10,
   },
   name: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 5,
+    marginBottom: 4,
   },
   title: {
     fontSize: 14,
     color: '#555',
     marginBottom: 10,
   },
-  contactInfo: {
+  contactRow: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    fontSize: 10,
-    color: '#555',
-    marginBottom: 10,
+    flexWrap: 'wrap',
+    justifyContent: 'flex-start',
+    marginTop: 5,
   },
+  contactItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginRight: 15,
+    fontSize: 9,
+  },
+  contactText: {
+    color: '#555',
+  },
+  contactLink: {
+    color: '#2563eb',
+    textDecoration: 'none',
+  },
+  
+  // Section headers
   sectionTitle: {
     fontSize: 14,
     fontWeight: 'bold',
-    marginBottom: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
+    marginBottom: 8,
+    color: '#1a1a1a',
+    borderBottom: '1px solid #eaeaea',
     paddingBottom: 3,
   },
-  experienceItem: {
-    marginBottom: 15,
+  
+  // Experience & Education items
+  itemContainer: {
+    marginBottom: 12,
   },
-  companyHeader: {
+  itemHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 5,
+    marginBottom: 2,
   },
-  companyName: {
+  itemTitle: {
+    fontWeight: 'bold',
+    fontSize: 11,
+  },
+  itemCompany: {
+    fontSize: 11,
     fontWeight: 'bold',
   },
-  jobTitle: {
-    fontWeight: 'bold',
-  },
-  date: {
-    fontSize: 10,
+  itemDate: {
+    fontSize: 9,
     color: '#555',
+    fontWeight: 'normal',
   },
-  location: {
-    fontSize: 10,
+  itemLocation: {
+    fontSize: 9,
     color: '#555',
-    marginBottom: 5,
+    marginBottom: 4,
   },
-  bullet: {
-    marginLeft: 10,
+  
+  // Bullets
+  bulletList: {
+    marginTop: 4,
+  },
+  bulletItem: {
+    flexDirection: 'row',
     marginBottom: 3,
   },
-  bulletContent: {
-    flexDirection: 'row',
-  },
-  bulletDot: {
+  bulletPoint: {
     width: 10,
+    fontSize: 9,
   },
-  educationItem: {
-    marginBottom: 10,
+  bulletText: {
+    flex: 1,
+    fontSize: 9,
   },
+  
+  // Skills section
   skillsContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
+    marginTop: 4,
+  },
+  skillCategory: {
+    width: '25%',
+    marginBottom: 8,
+  },
+  skillCategoryTitle: {
+    fontWeight: 'bold',
+    fontSize: 10,
+    marginBottom: 4,
   },
   skillItem: {
-    padding: '3 8',
-    margin: 3,
-    backgroundColor: '#f0f0f0',
-    borderRadius: 3,
+    fontSize: 9,
+    marginBottom: 2,
+  },
+  
+  // Certifications
+  certContainer: {
+    marginBottom: 5,
+  },
+  certName: {
+    fontWeight: 'bold',
     fontSize: 10,
+  },
+  certDetails: {
+    fontSize: 9,
+    color: '#555',
   },
 });
