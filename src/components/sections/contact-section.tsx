@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Github, Mail, Linkedin } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { personalInfo } from "@/data";
 
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
@@ -10,6 +11,10 @@ const fadeIn = {
 };
 
 export function ContactSection() {
+  const handleSubmit = () => {
+    console.log("Form submitted");
+  };
+
   return (
     <section id="contact" className="py-24">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -41,8 +46,11 @@ export function ContactSection() {
                 </div>
                 <div>
                   <h4 className="font-medium">Email</h4>
-                  <a href="mailto:your.email@example.com" className="text-muted-foreground hover:text-primary transition-colors">
-                    your.email@example.com
+                  <a 
+                    href={`mailto:${personalInfo.contact.email}`} 
+                    className="text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    {personalInfo.contact.email}
                   </a>
                 </div>
               </div>
@@ -53,8 +61,12 @@ export function ContactSection() {
                 </div>
                 <div>
                   <h4 className="font-medium">LinkedIn</h4>
-                  <a href="https://linkedin.com/in/yourusername" className="text-muted-foreground hover:text-primary transition-colors">
-                    linkedin.com/in/yourusername
+                  <a 
+                    href={`${personalInfo.contact.linkedin}`} 
+                    target="_blank"
+                    className="text-muted-foreground hover:text-primary transition-colors break-all"
+                  >
+                    {personalInfo.contact.linkedin}
                   </a>
                 </div>
               </div>
@@ -65,8 +77,12 @@ export function ContactSection() {
                 </div>
                 <div>
                   <h4 className="font-medium">GitHub</h4>
-                  <a href="https://github.com/yourusername" className="text-muted-foreground hover:text-primary transition-colors">
-                    github.com/yourusername
+                  <a 
+                    href={`${personalInfo.contact.github}`} 
+                    target="_blank"
+                    className="text-muted-foreground hover:text-primary transition-colors break-all"
+                  >
+                    {personalInfo.contact.github}
                   </a>
                 </div>
               </div>
@@ -108,7 +124,7 @@ export function ContactSection() {
                     className="w-full px-4 py-2 bg-muted/30 border border-border/40 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50"
                   />
                 </div>
-                <Button className="w-full">Send Message</Button>
+                <Button className="w-full" onClick={handleSubmit}>Send Message</Button>
               </form>
             </div>
           </motion.div>
