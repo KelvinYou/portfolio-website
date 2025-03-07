@@ -298,3 +298,80 @@ export const educations = [
     ],
   }
 ];
+
+export const projects = [
+  {
+    title: "Personal Website",
+    description: "A personal website built with Next.js, TailwindCSS, and Vercel",
+    image: "/images/projects/portfolio.jpg",
+    github: "https://github.com/KelvinYou/portfolio-website",
+    demo: "https://kelvinyou.vercel.app/",
+    status: "Maintaining",
+    techStacks: ["Next.js", "TailwindCSS", "Vercel"],
+    date: "2025-3-3"
+  },
+  {
+    title: "Tuition Management System (PTIB)",
+    description: "Real world app for a local tuition center with Next.js, TailwindCSS, PostgreSQL, Stripe, and more",
+    // image: "/images/projects/ptib.jpg",
+    demo: "https://ptib.vercel.app/",
+    status: "In Progress",
+    techStacks: ["Next.js", "TailwindCSS", "Supabase", "PostgreSQL", "Stripe", "Shadcn"],
+    date: "2025-3-3"
+  },
+  {
+    title: "Travel Guide: Tourist App",
+    description: "Mobile application created using Flutter with dart as programming language",
+    // image: "/project3.jpg",
+    github: "https://github.com/KelvinYou/fyp_tour_guide_app",
+    demo: "https://project3.com",
+    status: "Completed",
+    techStacks: ["Flutter", "Dart", "Firebase"],
+    date: "2023-11-14"
+  },
+  {
+    title: "Restaurant Landing",
+    description: "Build the landing page UI using ReactJS and Bootstrap",
+    image: "/images/projects/restaurant-landing.png",
+    github: "https://github.com/KelvinYou/react-selflearn/tree/main/react-restaurant-landing",
+    demo: "https://restaurant-landing-kelvinyou.vercel.app/",
+    status: "Completed",
+    techStacks: ["React", "Bootstrap"],
+    date: "2023-2-21"
+  },
+  {
+    title: "Automated Market-Making System",
+    description: "An assignment from Blockchain course which to build a liquidity pool using smart contract",
+    demo: "https://github.com/KelvinYou/amm-assignment",
+    status: "Completed",
+    techStacks: ["React", "Solidity", "Ethereum"],
+    date: "2023-1-5"
+  },
+  {
+    title: "Edge Detection System",
+    description: "An assignment for the Distributed Systems and Parallel Computing course, Detecting edges in images. We also use tools like Threading, Dask, Classified, etc. to speed up the process",
+    // image: "/images/projects/ecommerce.jpg",
+    github: "https://github.com/KelvinYou/react-selflearn/tree/main/react-restaurant-landing",
+    demo: "https://restaurant-landing-kelvinyou.vercel.app/",
+    status: "Completed",
+    techStacks: ["Python", "Dask", "Threading", "Classified"],
+    date: "2022-9-23"
+  },
+  {
+    title: "Donation System",
+    description: "An assignment for the Data Structures and Algorithms course, create adt using doubly linked list",
+    github: "https://github.com/KelvinYou/dsa-assignment",
+    status: "Completed",
+    techStacks: ["Java"],
+    date: "2023-2-21"
+  },
+  {
+    title: "Travel Guide: Admin App",
+    description: "Mobile application created using Flutter with dart as programming language",
+    // image: "/images/projects/ecommerce.jpg",
+    github: "https://github.com/KelvinYou/fyp_admin_app",
+    status: "Completed",
+    techStacks: ["Flutter", "Dart", "Firebase"],
+    date: "2022-12-17"
+  }
+];

@@ -4,6 +4,9 @@ import { motion } from "framer-motion";
 import { Github, ArrowRight, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { projects } from "@/data";
+import Image from "next/image";
+import { ImageIcon } from "lucide-react";
 
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
@@ -19,30 +22,6 @@ const staggerContainer = {
     }
   }
 };
-
-const projects = [
-  {
-    title: "Project One",
-    description: "A comprehensive web application built with Next.js and TypeScript",
-    image: "/project1.jpg",
-    github: "https://github.com/yourusername/project1",
-    demo: "https://project1.com"
-  },
-  {
-    title: "Project Two",
-    description: "Mobile-responsive dashboard with real-time data visualization",
-    image: "/project2.jpg",
-    github: "https://github.com/yourusername/project2",
-    demo: "https://project2.com"
-  },
-  {
-    title: "Project Three",
-    description: "E-commerce platform with integrated payment processing",
-    image: "/project3.jpg",
-    github: "https://github.com/yourusername/project3",
-    demo: "https://project3.com"
-  }
-];
 
 export function ProjectsSection() {
   return (
@@ -72,13 +51,27 @@ export function ProjectsSection() {
             <motion.div key={index} variants={fadeIn}>
               <Card className="overflow-hidden border border-border/40 bg-muted/10 backdrop-blur-sm hover:shadow-lg transition-all duration-300 h-full flex flex-col">
                 <div className="relative h-48 overflow-hidden">
-                  {/* <Image
-                    src={project.image || "/project-placeholder.jpg"}
-                    alt={project.title}
-                    fill
-                    className="object-cover transition-transform duration-300 hover:scale-105"
-                  /> */}
+                  {project.image ? (
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      fill
+                      className="object-cover transition-transform duration-300 hover:scale-105"
+                    />
+                  ) : (
+                    <div className="absolute inset-0 bg-gradient-to-br from-muted/10 to-muted/30 flex items-center justify-center">
+                      <div className="flex flex-col items-center gap-3">
+                        <ImageIcon className="w-12 h-12 opacity-40" aria-label="Project placeholder" width={48} height={48} />
+                        <div className="text-sm font-medium text-muted-foreground/50">Project Preview</div>
+                      </div>
+                    </div>
+                  )}
                   <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
+                  <div className="absolute inset-0 flex items-center justify-center bg-muted/20 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div className="text-center">
+                      <h3 className="text-lg font-semibold">{project.title}</h3>
+                    </div>
+                  </div>
                 </div>
                 <CardHeader>
                   <CardTitle>{project.title}</CardTitle>
