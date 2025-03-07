@@ -1,5 +1,5 @@
-import { ResumeDownloadButton } from "@/components/resume";
-import { ResumeView } from "@/components/resume/resume-view";
+import { DownloadResume, ViewResume } from "@/components/resume";
+import ResumeDocument from "@/components/resume/resume-document";
 
 export const metadata = {
   title: "Resume | Your Name",
@@ -13,11 +13,16 @@ export default function ResumePage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex justify-between items-center mb-10">
             <h1 className="text-3xl md:text-4xl font-bold">Resume</h1>
-            <ResumeDownloadButton className="rounded-full" />
+
+            <DownloadResume document={<ResumeDocument />} fileName="resume.pdf">
+              Resume
+            </DownloadResume>
           </div>
           
-          <div className="bg-background border border-border/40 rounded-xl shadow-sm p-8 mb-8">
-            <ResumeView />
+          <div className="bg-background border border-border/40 rounded-xl shadow-sm p-8 mb-8 h-[80vh]">
+            <ViewResume>
+              <ResumeDocument />
+            </ViewResume>
           </div>
         </div>
       </div>
