@@ -17,14 +17,22 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
+const basicInfo = {
   title: `${personalInfo.name} | ${personalInfo.title}`,
   description: `${personalInfo.summary}`,
+  images: [personalInfo.profilePicture],
+}
+
+export const metadata: Metadata = {
+  ...basicInfo,
   icons: {
     icon: '/logo.png',
   },
   openGraph: {
-    images: '/images/profile_pic.jpg',
+    ...basicInfo,
+  },
+  twitter: {
+    ...basicInfo,
   },
 };
 
