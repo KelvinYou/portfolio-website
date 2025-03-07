@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { School, Calendar, Award, ExternalLink, BookOpen, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { educations } from "@/data";
-import { cn } from "@/lib/utils";
+import { calculatePeriod, cn } from "@/lib/utils";
 import Image from "next/image";
 // Animation variants
 const fadeIn = {
@@ -92,7 +92,7 @@ export function EducationsSection() {
                     index % 2 === 0 ? "pl-3 pr-4" : "pl-4 pr-3"
                   )}>
                     <Calendar className="h-3 w-3 text-primary shrink-0" />
-                    <span className="ml-1.5">{edu.period}</span>
+                    <span className="ml-1.5">{calculatePeriod(edu.startDate, edu.endDate)}</span>
                   </div>
                 </div>
                 
@@ -121,7 +121,7 @@ export function EducationsSection() {
                         </h3>
                         <div className="md:hidden flex-shrink-0 ml-4 mt-1 bg-muted/30 p-1.5 rounded-md">
                           <Calendar className="h-3.5 w-3.5 text-primary" />
-                          <span className="text-[10px] block mt-0.5 text-center font-mono">{edu.period}</span>
+                          <span className="text-[10px] block mt-0.5 text-center font-mono">{calculatePeriod(edu.startDate, edu.endDate)}</span>
                         </div>
                       </div>
                       
@@ -165,7 +165,7 @@ export function EducationsSection() {
                         )}
                       </div>
                       <Button variant="ghost" size="sm" className="text-xs h-8 px-2" asChild>
-                        <a href="#" className="flex items-center group">
+                        <a href={edu.documents[0].url} target="_blank" className="flex items-center group">
                           <span>View certificate</span>
                           <ExternalLink className="ml-1 h-3 w-3 transition-transform group-hover:translate-x-0.5" />
                         </a>

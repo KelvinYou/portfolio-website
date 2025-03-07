@@ -111,7 +111,7 @@ export const experiences = [
     location: "Kuala Lumpur, Malaysia",
     type: "Full-time",
     startDate: "2024-6-10",
-    endDate: null,
+    endDate: undefined,
     description: "Building reusable React component libraries, optimizing frontend performance, and integrating APIs for seamless user experiences.",
     responsibilities: [
       "Designed and implemented reusable React component libraries to streamline development processes and ensure UI consistency across projects.",
@@ -171,36 +171,130 @@ export const experiences = [
       "SOAP"
     ],
     logo: "/images/companies/finexus.png"
+  },
+  {
+    title: "Software Engineer (Intern)",
+    company: "Techtics Blockchain PLT",
+    companyUrl: "https://www.techtics.io/",
+    location: "Kuala Lumpur, Malaysia",
+    type: "Internship",
+    startDate: "2020-10-1",
+    endDate: "2021-1-31",
+    description: "Modernizing frontend with ReactJS for improved maintenance and dynamic capabilities. Developing a blockchain app with ReactJS and Solidity, integrating smart contracts with MetaMask. Exploring Laravel’s MVC, ORM, and event-driven architecture. Implementing authentication, real-time exchange rates, dynamic UI updates, and seamless CRUD APIs.",
+    responsibilities: [
+      "Revitalized project's frontend using ReactJS for enhanced maintenance, modernization, and dynamic website capabilities.",
+      "Developed a cutting-edge blockchain app utilizing ReactJS and Solidity to seamlessly integrate smart contracts with MetaMask for secure and streamlined transactions.",
+      "Explored Laravel's router functionality, MVC architecture, ORM, events, listeners, and data seeding techniques for efficient database testing.",
+      "Implemented key functionalities such as authentication, real-time exchange rate fetching, dynamic UI updates, and built APIs for seamless CRUD operations on transactions."
+    ],
+    skills: [
+      "Laravel PHP",
+      "PhpMyAdmin",
+      "Typescript",
+      "Javascript",
+      "Solidity",
+      "ReactJS",
+      "NodeJS",
+      "ExpressJS",
+      "PuppeteerJS",
+      "Git",
+      "MetaMask"
+    ],
+    logo: "/images/companies/techtics.png"
+  },
+  {
+    title: "Frontend Web Developer",
+    company: "Jonvi Marketing Sdn. Bhd.",
+    location: "Kuala Lumpur, Malaysia",
+    type: "Full-time",
+    startDate: "2019-1-1",
+    endDate: "2019-5-20",
+    description: "Developed two user-friendly web apps with HTML, CSS, JavaScript, PHP, and Bootstrap. Integrated front-end components with API endpoints for authentication and CRUD operations. Automated data tasks using Python and Google Script for efficient data fetching, entry, and Excel file generation.",
+    responsibilities: [
+      "Developed 2 web apps using HTML, CSS, JavaScript, PHP, and Bootstrap, with a focus on user-friendly design.",
+      "Integrated front-end components to interact with API endpoints for authentication and CRUD operations.",
+      "Leveraged Python and Google Script to automate data tasks, including fetching, entry, and Excel file generation.",
+    ],
+    skills: [
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "Php",
+      "Python",
+      "MySQL",
+      "Git",
+      "NodeJS",
+      "Bootstrap",
+      "Postman API"
+    ],
+    logo: "/images/companies/jonvi.png"
   }
 ];
 
 // Example education data
 export const educations = [
   {
-    degree: "Master of Science in Computer Science",
-    institution: "Stanford University",
-    location: "Stanford, CA",
-    period: "2018 - 2020",
-    description: "Specialized in Artificial Intelligence and Machine Learning. Graduated with honors and completed thesis on 'Neural Network Optimization Techniques for Real-time Applications'.",
-    achievements: ["Dean's List (All Semesters)", "Best Graduate Research Award", "AI Research Scholarship"],
-    logo: "/stanford-logo.png" // You'll need to add these logo images to your public folder
+    degree: "Bachelor of Software Engineering (Honours)",
+    institution: "Tunku Abdul Rahman University of Management and Technology",
+    location: "Kuala Lumpur, Malaysia",
+    startDate: "2021-6-20",
+    endDate: "2023-7-31",
+    description: "Taken core courses for software development such as Data Structure and Algorithm in Java, Human-Computer Interaction, Graphics Programming, Distributed System and Parallel Computing. Exposed to technologies such as Mobile App Development, Blockchain App Development, Data Science through elective courses.",
+    achievements: [
+      "Dean's List", 
+      // "Best Graduate Research Award", 
+      // "AI Research Scholarship"
+    ],
+    logo: "/images/institutions/tarumt.png",
+    cgpa: "3.72",
+    institutionUrl: "https://tarc.edu.my/",
+    documents: [
+      {
+        name: "Transcript",
+        url: "/pdf/educations/degree-transcript.pdf"
+      }
+    ],
+    techStacks: [
+      "Java",
+      "Flutter",
+      "C++",
+      "TypeScript",
+      "ReactJS",
+      "Linux",
+      "Python",
+      "Git",
+    ],
   },
   {
-    degree: "Bachelor of Science in Software Engineering",
-    institution: "MIT",
-    location: "Cambridge, MA",
-    period: "2014 - 2018",
-    description: "Focused on software architecture and development methodologies. Participated in multiple hackathons and coding competitions, consistently placing in the top percentiles.",
-    achievements: ["Graduated Summa Cum Laude", "Innovation Award for Senior Project", "Coding Competition Winner (2017)"],
-    logo: "/mit-logo.png"
-  },
-  {
-    degree: "Professional Certification in UI/UX Design",
-    institution: "Designlab",
-    location: "Online",
-    period: "2017",
-    description: "Intensive 3-month certification focusing on user interface design principles, research methodologies, and prototyping techniques.",
-    achievements: ["Outstanding Final Project Award"],
-    logo: "/designlab-logo.png"
+    degree: "Diploma in Computer Science",
+    institution: "Tunku Abdul Rahman University of Management and Technology",
+    location: "Kuala Lumpur, Malaysia",
+    startDate: "2019-5-28",
+    endDate: "2021-5-31",
+    description: "Basic Programming Concepts through various languages such as Object-Oriented Programming in Java, C, and Assembly Language. Mathematics courses included Algebra, Calculus, Statistics, Discrete Math.",
+    achievements: [
+      // "Graduated Summa Cum Laude", 
+      // "Innovation Award for Senior Project", 
+      // "Coding Competition Winner (2017)"
+    ],
+    logo: "/images/institutions/tarumt.png",
+    cgpa: "3.7439",
+    institutionUrl: "https://tarc.edu.my/",
+    documents: [
+      {
+        name: "Transcript",
+        url: "/pdf/educations/diploma-transcript.pdf"
+      }
+    ],
+    techStacks: [
+      "C lang",
+      "Java",
+      "C++",
+      "html",
+      "css",
+      "JavaScript",
+      "Linux",
+      "Git"
+    ],
   }
 ];

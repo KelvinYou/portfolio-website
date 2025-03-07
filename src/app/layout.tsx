@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   title: `${personalInfo.name} | ${personalInfo.title}`,
   description: `${personalInfo.summary}`,
   icons: {
-    icon: '/images/profile_pic.jpg',
+    icon: '/logo.png',
   },
   openGraph: {
     images: '/images/profile_pic.jpg',
