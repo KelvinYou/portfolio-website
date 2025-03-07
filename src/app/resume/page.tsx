@@ -1,4 +1,4 @@
-import { DownloadResume } from "@/components/resume";
+import { DownloadResume, ViewResume } from "@/components/resume";
 import ResumeDocument from "@/components/resume/resume-document";
 
 export const metadata = {
@@ -20,9 +20,9 @@ export default function ResumePage() {
           </div>
           
           <div className="bg-background border border-border/40 rounded-xl shadow-sm p-8 mb-8 h-[80vh]">
-            {/* <ViewResume>
+            <ViewResume>
               <ResumeDocument />
-            </ViewResume> */}
+            </ViewResume>
           </div>
         </div>
       </div>

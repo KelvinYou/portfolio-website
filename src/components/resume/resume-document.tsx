@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react';
 import { 
   Document, 
@@ -5,24 +7,24 @@ import {
   Text, 
   View, 
   StyleSheet, 
-  // Font 
+  Font 
 } from '@react-pdf/renderer';
 import { resumeData } from "@/data";
 
-// Font.register({
-//   family: 'Quicksand',
-//   fonts: [
-//     { src: '/assets/fonts/quicksand-v20-latin-regular.ttf' }, // Regular
-//     { src: '/assets/fonts/quicksand-v20-latin-300.ttf', fontWeight: 300 }, // Light
-//     { src: '/assets/fonts/quicksand-v20-latin-600.ttf', fontWeight: 600 }, // Semi-bold
-//   ]
-// });
+Font.register({
+  family: 'Quicksand',
+  fonts: [
+    { src: '/assets/fonts/quicksand-v20-latin-regular.ttf' }, // Regular
+    { src: '/assets/fonts/quicksand-v20-latin-300.ttf', fontWeight: 300 }, // Light
+    { src: '/assets/fonts/quicksand-v20-latin-600.ttf', fontWeight: 600 }, // Semi-bold
+  ]
+});
 
 // Create styles
 const styles = StyleSheet.create({
   page: {
     padding: 30,
-    // fontFamily: 'Quicksand',
+    fontFamily: 'Quicksand',
     fontSize: 12,
     lineHeight: 1.5,
     color: '#333',
