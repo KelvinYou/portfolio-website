@@ -19,12 +19,23 @@ const staggerContainer = {
 };
 
 const skills = [
-  { name: "React", level: 90 },
-  { name: "TypeScript", level: 85 },
-  { name: "Node.js", level: 80 },
-  { name: "Next.js", level: 85 },
-  { name: "CSS/SCSS", level: 90 },
-  { name: "UI/UX Design", level: 75 }
+  { name: "TypeScript", level: 90 },
+  { name: "Next.js (React)", level: 90 },
+  { name: "Gin (Go)", level: 80 },
+  { name: "Flutter", level: 70 },
+  { name: "Python", level: 60 },
+  { name: "Java", level: 70 },
+  { name: "C++", level: 60 },
+  { name: "Linux", level: 60 },
+  { name: "Git", level: 80 },
+].sort((a, b) => b.level - a.level).slice(0, 5);
+
+const softSkills = [
+  "Team Collaboration",
+  "Problem Solving",
+  "Time Management",
+  "Adaptability",
+  "Leadership"
 ];
 
 export function SkillsSection() {
@@ -86,7 +97,7 @@ export function SkillsSection() {
               viewport={{ once: true, margin: "-100px" }}
               className="grid gap-6 sm:grid-cols-2"
             >
-              {["Communication", "Team Collaboration", "Problem Solving", "Time Management", "Adaptability", "Leadership"].map((skill, index) => (
+              {softSkills.map((skill, index) => (
                 <motion.div key={index} variants={fadeIn} className="flex items-center gap-3">
                   <div className="h-2 w-2 rounded-full bg-primary"></div>
                   <span>{skill}</span>
