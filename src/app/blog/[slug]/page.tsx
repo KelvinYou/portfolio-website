@@ -31,9 +31,11 @@ export async function generateStaticParams() {
   }
 }
 
-type PageProps = { params: { slug: string } };
+type PageProps = { params: Promise<{ slug: string }> };
 
-export async function generateMetadata({ params }: PageProps) {
+export async function generateMetadata(props: PageProps) {
+  const params = await props.params;
+
   try {
     const post = await getPostBySlug(params.slug);
     return {
