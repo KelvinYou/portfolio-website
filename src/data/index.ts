@@ -105,52 +105,72 @@ export const personalInfo = {
 
 export const experiences = [
   {
-    title: "Senior Software Engineer",
-    company: "Google",
-    location: "Mountain View, CA",
+    title: "Frontend Engineer",
+    company: "Simpletruss",
+    companyUrl: "https://www.simpletruss.com/",
+    location: "Kuala Lumpur, Malaysia",
     type: "Full-time",
-    period: "2020 - Present",
-    description: "Leading development of next-generation search algorithms and infrastructure. Architected and implemented scalable backend systems serving millions of users.",
+    startDate: "2024-6-10",
+    endDate: null,
+    description: "Building reusable React component libraries, optimizing frontend performance, and integrating APIs for seamless user experiences.",
     responsibilities: [
-      "Lead a team of 5 engineers working on search optimization",
-      "Reduced query response time by 40% through innovative caching mechanisms",
-      "Implemented CI/CD pipeline reducing deployment time by 60%",
-      "Mentored junior developers through code reviews and pair programming"
+      "Designed and implemented reusable React component libraries to streamline development processes and ensure UI consistency across projects.",
+      "Collaborated with cross-functional teams to deliver responsive, mobile-first web app.",
+      "Optimized frontend performance, reducing load times by implementing lazy loading and effective state management.",
+      "Developed and integrated APIs with frontend interfaces, ensuring seamless data flow."
     ],
-    skills: ["React", "Node.js", "Go", "Kubernetes", "TensorFlow", "GraphQL"],
-    logo: "/google-logo.png"
+    skills: ["React", "TypeScript", "GraphQL", "Material UI", "Git", "Jest", "Storybook"],
+    logo: "/images/companies/simpletruss.jpeg"
   },
   {
-    title: "Full Stack Developer",
-    company: "Facebook",
-    location: "Menlo Park, CA",
+    title: "Frontend Developer",
+    company: "Beyondsoft (Malaysia) Sdn. Bhd.",
+    companyUrl: "https://www.beyondsoft.com/",
+    location: "Kuala Lumpur, Malaysia",
     type: "Full-time",
-    period: "2018 - 2020",
-    description: "Worked on the News Feed team to develop features that improved user engagement and content relevance. Collaborated with designers and product managers to create intuitive interfaces.",
+    startDate: "2023-7-31",
+    endDate: "2024-6-7",
+    description: "Developing and maintaining ReactJS-based web and mobile UIs, optimizing performance, and ensuring cross-browser compatibility. Collaborating with Tencent's team to implement designs, adding features based on user feedback, and upholding coding best practices through code reviews and Git-based version control.",
     responsibilities: [
-      "Developed key React components for the News Feed interface",
-      "Created adaptive algorithms for content personalization",
-      "Optimized database queries resulting in 30% performance improvement",
-      "Participated in A/B testing and feature launch decision making"
+      "Developed and maintain user interfaces for web & mobile apps using ReactJS.",
+      "Optimized web applications for performance, cross-browser compatibility, and responsive design.",
+      "Collaborated closely with Tencent's development team to understand project requirements and implement designs according to specifications.",
+      "Implemented features and functionality based on user requirements and feedback.",
+      "Participated in code reviews and Git-based version control to ensure high-quality code and maintainability.",
+      "Utilized version control systems (Git) for collaborative development and code management.",
+      "Utilized Docker for containerization and CI/CD pipelines for automated testing and deployment."
     ],
-    skills: ["React", "Redux", "PHP", "MySQL", "GraphQL", "Jest"],
-    logo: "/facebook-logo.png"
+    skills: ["React", "Redux", "Webpack", "MySQL", "GraphQL", "Jest", "Git", "Docker", "CI/CD", "TypeScript", "Go"],
+    logo: "/images/companies/beyondsoft.jpeg"
   },
   {
-    title: "Software Development Intern",
-    company: "Amazon",
-    location: "Seattle, WA",
+    title: "Java Software Engineer (Internship)",
+    company: "Finexus International Sdn. Bhd.",
+    companyUrl: "https://www.finexusgroup.com/",
+    location: "Kuala Lumpur, Malaysia",
     type: "Internship",
-    period: "Summer 2017",
-    description: "Contributed to the development of internal tools for the fulfillment center operations team. Created dashboards and monitoring systems that improved operational efficiency.",
+    startDate: "2023-2-1",
+    endDate: "2023-7-31",
+    description: "Enhancing Java-based projects with new features, rigorous testing, and optimized deployment. Mastering debugging, web resource searches, and performance improvements for seamless project execution.",
     responsibilities: [
-      "Built real-time monitoring dashboard for fulfillment centers",
-      "Implemented data visualization components with D3.js",
-      "Developed REST APIs for internal service communication",
-      "Presented project results to senior management team"
+      "Revitalized and advanced Java-based projects by integrating innovative features and implementing a thorough testing regimen.",
+      "Proficiently mastered debugging techniques, conducted efficient web resource searches, simplify application deployment processes, ensuring optimal project performance.",
     ],
-    skills: ["JavaScript", "Python", "AWS Lambda", "DynamoDB", "D3.js"],
-    logo: "/amazon-logo.png"
+    skills: [
+      "Java",
+      "Firebase",
+      "Oracle SQL",
+      "XML",
+      "Servlets",
+      "JavaServer Pages (JSP)",
+      "Tomcat",
+      "Linux",
+      "Shell Scripting",
+      "Jasper",
+      "TortoiseSVN",
+      "SOAP"
+    ],
+    logo: "/images/companies/finexus.png"
   }
 ];
 

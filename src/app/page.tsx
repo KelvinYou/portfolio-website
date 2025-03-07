@@ -11,8 +11,8 @@ export default function Home() {
     <div className="min-h-screen bg-background text-foreground">
       <HeroSection />
       <AboutSection />
-      <EducationsSection />
       <ExperiencesSection />
+      <EducationsSection />
       <ProjectsSection />
       <SkillsSection />
       <ContactSection />

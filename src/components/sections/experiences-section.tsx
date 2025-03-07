@@ -95,7 +95,7 @@ export function ExperiencesSection() {
                           </Badge>
                           <div className="flex items-center text-xs text-muted-foreground whitespace-nowrap">
                             <Calendar className="h-3 w-3 mr-1" />
-                            <span>{exp.period}</span>
+                            <span>{exp.startDate} - {exp.endDate}</span>
                           </div>
                         </div>
                       </div>
