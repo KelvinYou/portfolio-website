@@ -11,21 +11,20 @@ import {
 } from '@react-pdf/renderer';
 import { resumeData } from "@/data";
 
-// Register fonts (optional but recommended for professional look)
 Font.register({
-  family: 'Open Sans',
+  family: 'Quicksand',
   fonts: [
-    { src: 'https://cdn.jsdelivr.net/npm/open-sans-all@0.1.3/fonts/open-sans-regular.ttf' },
-    { src: 'https://cdn.jsdelivr.net/npm/open-sans-all@0.1.3/fonts/open-sans-600.ttf', fontWeight: 600 },
-    { src: 'https://cdn.jsdelivr.net/npm/open-sans-all@0.1.3/fonts/open-sans-700.ttf', fontWeight: 700 },
+    { src: '/assets/fonts/quicksand-v20-latin-regular.ttf' },
+    { src: '/assets/fonts/quicksand-v20-latin-300.ttf', fontWeight: 300 },
+    { src: '/assets/fonts/quicksand-v20-latin-600.ttf', fontWeight: 600 },
   ],
-});
+})
 
 // Create styles
 const styles = StyleSheet.create({
   page: {
     padding: 30,
-    fontFamily: 'Open Sans',
+    fontFamily: 'Quicksand',
     fontSize: 12,
     lineHeight: 1.5,
     color: '#333',
