@@ -218,7 +218,7 @@ export const projects = [
     github: "https://github.com/KelvinYou/portfolio-website",
     demo: "https://kelvinyou.netlify.app/",
     status: "Maintaining",
-    techStacks: ["Next.js", "TailwindCSS", "Vercel"],
+    techStacks: ["Next.js", "TailwindCSS", "Shadcn", "React"],
     date: "2025-3-3"
   },
   {
@@ -227,7 +227,7 @@ export const projects = [
     // image: "/images/projects/ptib.jpg",
     demo: "https://ptib.vercel.app/",
     status: "In Progress",
-    techStacks: ["Next.js", "TailwindCSS", "Supabase", "PostgreSQL", "Stripe", "Shadcn"],
+    techStacks: ["Next.js", "TailwindCSS", "Supabase", "PostgreSQL", "Stripe", "Shadcn", "React"],
     date: "2025-3-3"
   },
   {

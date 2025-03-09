@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { School, Calendar, Award, ExternalLink, BookOpen, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { educations } from "@/data";
-import { calculatePeriod, cn } from "@/lib/utils";
+import { formatStartEndDate, cn } from "@/lib/utils";
 import Image from "next/image";
 // Animation variants
 const fadeIn = {
@@ -92,7 +92,7 @@ export function EducationsSection() {
                     index % 2 === 0 ? "pl-3 pr-4" : "pl-4 pr-3"
                   )}>
                     <Calendar className="h-3 w-3 text-primary shrink-0" />
-                    <span className="ml-1.5">{calculatePeriod(edu.startDate, edu.endDate)}</span>
+                    <span className="ml-1.5">{formatStartEndDate(edu.startDate, edu.endDate)}</span>
                   </div>
                 </div>
                 
@@ -119,10 +119,6 @@ export function EducationsSection() {
                         <h3 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-indigo-500">
                           {edu.degree}
                         </h3>
-                        <div className="md:hidden flex-shrink-0 ml-4 mt-1 bg-muted/30 p-1.5 rounded-md">
-                          <Calendar className="h-3.5 w-3.5 text-primary" />
-                          <span className="text-[10px] block mt-0.5 text-center font-mono">{calculatePeriod(edu.startDate, edu.endDate)}</span>
-                        </div>
                       </div>
                       
                       <div className="flex flex-wrap items-center mt-2 text-muted-foreground">
@@ -133,6 +129,10 @@ export function EducationsSection() {
                         <div className="flex items-center mt-1 sm:mt-0">
                           <MapPin className="h-3.5 w-3.5 mr-1 text-primary/70" />
                           <span className="text-sm">{edu.location}</span>
+                        </div>
+                        <div className="md:hidden flex items-center mt-1 sm:mt-0">
+                          <Calendar className="h-3.5 w-3.5 mr-1 text-primary/70" />
+                          <span className="text-sm">{formatStartEndDate(edu.startDate, edu.endDate)}</span>
                         </div>
                       </div>
                     </div>
@@ -161,7 +161,7 @@ export function EducationsSection() {
                     <div className="mt-4 pt-4 border-t border-border/40 flex justify-between items-center">
                       <div className="text-xs text-muted-foreground">
                         {edu.logo && (
-                          <Image src={edu.logo} alt={edu.institution} className="h-6 opacity-70" width={24} height={24} />
+                          <Image src={edu.logo} alt={edu.institution} className="h-6 opacity-70" width={42} height={24} />
                         )}
                       </div>
                       <Button variant="ghost" size="sm" className="text-xs h-8 px-2" asChild>

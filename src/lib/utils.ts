@@ -15,7 +15,7 @@ export function formatDate(dateString: string): string {
   });
 }
 
-export function calculatePeriod(startDate: string, endDate: string | undefined): string {
+export function formatStartEndDate(startDate: string, endDate: string | undefined): string {
   const start = dayjs(startDate);
   const end = endDate ? dayjs(endDate) : 'Present';
 

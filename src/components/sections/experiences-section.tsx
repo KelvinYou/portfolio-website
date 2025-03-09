@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { experiences } from "@/data";
 import Image from "next/image";
-import { calculatePeriod } from "@/lib/utils";
+import { formatStartEndDate } from "@/lib/utils";
 
 // Animation variants
 const fadeIn = {
@@ -97,7 +97,7 @@ export function ExperiencesSection() {
                             </Badge>
                             <div className="flex items-center text-xs text-muted-foreground whitespace-nowrap">
                               <Calendar className="h-3 w-3 mr-1" />
-                              <span>{calculatePeriod(exp.startDate, exp.endDate)}</span>
+                              <span>{formatStartEndDate(exp.startDate, exp.endDate)}</span>
                             </div>
                           </div>
                         </div>

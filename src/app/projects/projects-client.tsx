@@ -37,15 +37,26 @@ export default function ProjectsClient({ initialProjects }: { initialProjects: P
   const [sortOption, setSortOption] = useState<SortOption>("newest");
   const [showFilters, setShowFilters] = useState(false);
   
-  // Extract all unique tech stacks from projects
-  const allTechStacks = Array.from(
-    new Set(initialProjects.flatMap(project => project.techStacks))
-  ).sort();
+  // Count technologies and sort by frequency
+  const techCounts = initialProjects.reduce((counts, project) => {
+    project.techStacks.forEach(tech => {
+      counts[tech] = (counts[tech] || 0) + 1;
+    });
+    return counts;
+  }, {} as Record<string, number>);
+  
+  // Extract and sort tech stacks by frequency
+  const allTechStacks = Object.keys(techCounts).sort((a, b) => {
+    // Sort by count (descending)
+    const countDiff = techCounts[b] - techCounts[a];
+    // If counts are equal, sort alphabetically
+    return countDiff !== 0 ? countDiff : a.localeCompare(b);
+  });
   
   // Extract all unique statuses
   const allStatuses = Array.from(
     new Set(initialProjects.map(project => project.status))
-  ).sort();
+  );
   
   // Filter and sort projects
   useEffect(() => {
@@ -279,10 +290,13 @@ export default function ProjectsClient({ initialProjects }: { initialProjects: P
                       <Badge 
                         key={tech}
                         variant={selectedTechs.includes(tech) ? "default" : "outline"}
-                        className="cursor-pointer transition-colors"
+                        className="cursor-pointer transition-colors flex items-center gap-1.5"
                         onClick={() => toggleTech(tech)}
                       >
-                        {tech}
+                        <span>{tech}</span>
+                        <span className="text-xs opacity-70 px-1.5 py-0.5 rounded-full bg-background/20">
+                          {techCounts[tech]}
+                        </span>
                       </Badge>
                     ))}
                   </div>
@@ -294,24 +308,30 @@ export default function ProjectsClient({ initialProjects }: { initialProjects: P
                     Status
                   </h4>
                   <div className="flex flex-wrap gap-2">
-                    {allStatuses.map((status) => (
-                      <Badge 
-                        key={status}
-                        variant={selectedStatus === status ? "default" : "outline"}
-                        className={`cursor-pointer transition-colors ${
-                          status === 'Completed' && selectedStatus === status 
-                            ? 'bg-green-500/90' :
-                          status === 'In Progress' && selectedStatus === status 
-                            ? 'bg-blue-500/90' :
-                          status === 'Maintaining' && selectedStatus === status 
-                            ? 'bg-purple-500/90' :
-                          ''
-                        }`}
-                        onClick={() => setSelectedStatus(prev => prev === status ? null : status)}
-                      >
-                        {status}
-                      </Badge>
-                    ))}
+                    {allStatuses.map((status) => {
+                      const statusCount = initialProjects.filter(p => p.status === status).length;
+                      return (
+                        <Badge 
+                          key={status}
+                          variant={selectedStatus === status ? "default" : "outline"}
+                          className={`cursor-pointer transition-colors flex items-center gap-1.5 ${
+                            status === 'Completed' && selectedStatus === status 
+                              ? 'bg-green-500/90' :
+                            status === 'In Progress' && selectedStatus === status 
+                              ? 'bg-blue-500/90' :
+                            status === 'Maintaining' && selectedStatus === status 
+                              ? 'bg-purple-500/90' :
+                            ''
+                          }`}
+                          onClick={() => setSelectedStatus(prev => prev === status ? null : status)}
+                        >
+                          <span>{status}</span>
+                          <span className="text-xs opacity-70 px-1.5 py-0.5 rounded-full bg-background/20">
+                            {statusCount}
+                          </span>
+                        </Badge>
+                      );
+                    })}
                   </div>
                 </div>
               </div>
@@ -376,11 +396,18 @@ export default function ProjectsClient({ initialProjects }: { initialProjects: P
         className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
         variants={staggerContainer}
         initial="hidden"
-        whileInView="visible"
+        animate="visible"
         viewport={{ once: true, margin: "-100px" }}
       >
         {projects.map((project, index) => (
-          <ProjectCard key={index} project={project} index={index} />
+          <motion.div
+            key={project.title}
+            variants={staggerContainer}
+            initial="hidden" 
+            animate="visible"
+          >
+            <ProjectCard project={project} index={index} />
+          </motion.div>
         ))}
       </motion.div>
     </div>
