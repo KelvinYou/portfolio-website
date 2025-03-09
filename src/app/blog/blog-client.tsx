@@ -98,7 +98,7 @@ export default function BlogClient({ posts: initialPosts }: { posts: Post[] }) {
   };
   
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="mx-auto">
       {/* Header section with animation */}
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
