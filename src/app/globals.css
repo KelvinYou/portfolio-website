@@ -229,3 +229,23 @@
 .prose p, .prose ul, .prose ol {
   @apply mb-4;
 }
+
+.shadow-glow {
+  box-shadow: 0 0 8px rgba(var(--color-primary), 0.3);
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}

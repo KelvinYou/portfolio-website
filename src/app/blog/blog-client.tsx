@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight, Calendar, User, Search, SlidersHorizontal } from "lucide-react";
+import { ArrowRight, Calendar, User, Search, SlidersHorizontal, Filter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { formatDate } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
@@ -172,7 +172,7 @@ export default function BlogClient({ posts: initialPosts }: { posts: Post[] }) {
               onClick={() => setIsFiltersOpen(!isFiltersOpen)}
               className="gap-2"
             >
-              <SlidersHorizontal className="h-4 w-4" />
+              <Filter className="h-4 w-4" />
               <span className="hidden sm:inline">Filter</span>
               {selectedTags.length > 0 && (
                 <Badge variant="secondary" className="ml-1">{selectedTags.length}</Badge>
