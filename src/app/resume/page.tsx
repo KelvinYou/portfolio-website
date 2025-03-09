@@ -1,5 +1,5 @@
-import ResumeDocument from "@/components/resume/resume-document";
-import ResumeViewerWithFallback from "@/components/resume/resume-viewer-fallback";
+import ResumeViewerWithFallback from "@/app/resume/resume-viewer-fallback";
+import ResumeDocument from "./resume-document";
 
 export const metadata = {
   title: "Resume | Kelvin You",

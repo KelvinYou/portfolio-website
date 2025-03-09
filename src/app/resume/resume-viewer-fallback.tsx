@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-import { ViewResume } from "./index";
-import { Button } from "../ui/button";
+import { Button } from "../../components/ui/button";
 import { Download, FileSearch, Smartphone, Laptop } from "lucide-react";
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import { DocumentProps } from '@react-pdf/renderer';
+import { PdfViewer } from '../../components/pdf-renderer';
 
 interface ResumeViewerProps {
   document: React.ReactElement<DocumentProps>;
@@ -111,9 +111,9 @@ export default function ResumeViewerWithFallback({ document }: ResumeViewerProps
         </div>
 
         <div className="bg-background border border-border/40 rounded-xl shadow-sm p-8 mb-8 h-[80vh]">
-          <ViewResume>
+          <PdfViewer>
             {document}
-          </ViewResume>
+          </PdfViewer>
         </div>
       </>
     );

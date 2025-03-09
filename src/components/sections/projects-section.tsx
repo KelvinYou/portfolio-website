@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Github, ArrowRight, ExternalLink } from "lucide-react";
+import { Github, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { projects } from "@/data";
@@ -96,7 +96,7 @@ export function ProjectsSection() {
           ))}
         </motion.div>
         
-        <motion.div 
+        {/* <motion.div 
           className="text-center mt-12"
           initial="hidden"
           whileInView="visible"
@@ -106,7 +106,7 @@ export function ProjectsSection() {
           <Button variant="outline" className="rounded-full">
             See All Projects <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
-        </motion.div>
+        </motion.div> */}
       </div>
     </section>
   );
