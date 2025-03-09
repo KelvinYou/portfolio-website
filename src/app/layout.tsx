@@ -20,7 +20,7 @@ const geistMono = Geist_Mono({
 const basicInfo = {
   title: `${personalInfo.name} | ${personalInfo.title}`,
   description: `${personalInfo.summary}`,
-  images: ['/images/projects/portfolio.png']
+  images: ['/images/projects/portfolio.jpg']
 }
 
 export const metadata: Metadata = {
