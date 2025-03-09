@@ -34,20 +34,6 @@ export function HeroSection() {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, [mouseX, mouseY]);
 
-  const blobX = useTransform(
-    mouseX,
-    [-0.5, 0.5],
-    ["-15%", "15%"],
-    { clamp: false }
-  );
-  
-  const blobY = useTransform(
-    mouseY,
-    [-0.5, 0.5],
-    ["-15%", "15%"],
-    { clamp: false }
-  );
-
   // Card parallax effect
   const cardRotateX = useTransform(
     mouseY,
@@ -78,22 +64,6 @@ export function HeroSection() {
       <div className="absolute inset-0 overflow-hidden -z-10">
         {/* Primary background - static gradient to improve performance */}
         <div className="absolute inset-0 bg-gradient-to-b from-background to-background/60" />
-        
-        {/* Single simplified animated blob with reduced animation complexity */}
-        <motion.div
-          className="absolute -top-1/4 -left-1/4 w-2/3 h-2/3 bg-gradient-to-br from-primary/20 via-indigo-500/10 to-transparent rounded-full blur-3xl"
-          style={{ x: blobX, y: blobY }}
-          animate={{
-            scale: [1, 1.05, 1],
-          }}
-          transition={{
-            duration: 12, // Longer duration for smoother, less CPU-intensive animation
-            repeat: Infinity,
-            repeatType: "reverse",
-            ease: "linear" // Linear easing uses less CPU than complex curves
-          }}
-        />
-        
         {/* Static secondary blob */}
         <div
           className="absolute top-1/2 -right-1/4 w-1/2 h-1/2 bg-gradient-to-bl from-blue-500/10 via-purple-500/10 to-transparent rounded-full blur-3xl"
@@ -342,30 +312,6 @@ export function HeroSection() {
         </div>
       </div>
       
-      {/* Simplified scroll indicator */}
-      <motion.div 
-        className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5, duration: 1 }}
-      >
-        <div className="flex flex-col items-center gap-2">
-          <span className="text-xs text-muted-foreground">Scroll to explore</span>
-          <div className="w-6 h-10 rounded-full border border-muted/50 flex items-start justify-center p-1.5">
-            <motion.div 
-              className="w-1 h-2 bg-primary rounded-full"
-              animate={{ 
-                y: [0, 20, 0],
-              }}
-              transition={{
-                duration: 1.5,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            />
-          </div>
-        </div>
-      </motion.div>
     </section>
   );
 } 

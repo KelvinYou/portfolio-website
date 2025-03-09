@@ -1,5 +1,7 @@
 # Modern Portfolio Website
 
+![Portfolio](/public/images/projects/portfolio.jpg)
+
 A sleek and responsive portfolio website built with Next.js 15, TailwindCSS, and modern web technologies. This project provides a customizable template for developers to showcase their work, blog posts, and professional experience.
 
 ## ✨ Features
