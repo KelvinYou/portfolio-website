@@ -6,6 +6,7 @@ export const personalInfo = {
     phone: "+60183732752",
     linkedin: "https://www.linkedin.com/in/kelvinyou2001/",
     github: "https://github.com/KelvinYou",
+    personalWebsite: "https://kelvinyou.netlify.app/",
     location: "Kuala Lumpur, Malaysia",
   },
   profilePicture: "/images/profile-picture.jpg",
@@ -234,7 +235,6 @@ export const projects = [
     description: "Mobile application created using Flutter with dart as programming language",
     // image: "/project3.jpg",
     github: "https://github.com/KelvinYou/fyp_tour_guide_app",
-    demo: "https://project3.com",
     status: "Completed",
     techStacks: ["Flutter", "Dart", "Firebase"],
     date: "2023-11-14"
@@ -286,7 +286,7 @@ export const projects = [
   }
 ];
 
-export const domainPath = "https://kelvinyou.netlify.app/";
+export const domainPath = personalInfo.contact.personalWebsite;
 
 export const certifications = [
   {
@@ -297,13 +297,13 @@ export const certifications = [
   },
   {
     name: 'HTML, CSS, and Javascript for Web Developers',
-    link: `${domainPath}assets/pdf/TDA-html_css_js.pdf`,
+    link: `${domainPath}pdf/TDA-html_css_js.pdf`,
     issuingOrganization: 'The Digital Adda',
     issueDate: '2023-12-11',
   },
   {
     name: 'ReactJS',
-    link: `${domainPath}assets/pdf/TDA-reactjs.pdf`,
+    link: `${domainPath}pdf/TDA-reactjs.pdf`,
     issuingOrganization: 'The Digital Adda',
     issueDate: '2023-12-12',
   },
@@ -319,6 +319,6 @@ export const certifications = [
 export const skills = {
   "languages": ["TypeScript", "JavaScript", "Java", "Go"],
   "frameworks": ["Next.js", "React", "Express", "Node.js", "React Native", "Flutter"],
-  "databases": ["PostgreSQL", "MySQL", "MongoDB"],
-  "tools": ["Git", "Docker", "Jenkins", "Postman", "Jira", "BitBucket", "Firebase"],
+  "databases": ["PostgreSQL", "MySQL"],
+  "tools": ["Git", "Docker", "Postman", "Supabase"],
 }
