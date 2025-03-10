@@ -225,7 +225,7 @@ export function Navbar() {
               >
                 <div className="relative">
                   <Avatar className="h-7 w-7 sm:h-9 sm:w-9 border-2 border-primary/30 shadow-lg">
-                    <AvatarImage src={personalInfo.profilePicture} alt={personalInfo.name} />
+                    <AvatarImage src={personalInfo.profilePicture} alt={`${personalInfo.name}'s profile picture`} />
                     <AvatarFallback className="bg-primary/10 text-xs sm:text-sm">
                       {personalInfo.name.charAt(0)}
                     </AvatarFallback>
@@ -365,9 +365,9 @@ export function Navbar() {
               <Button 
                 variant="ghost" 
                 size="icon"
-                id="mobile-menu-button"
                 className="md:hidden text-foreground rounded-full h-8 w-8"
                 onClick={() => setMobileMenuOpen(true)}
+                aria-label="Open mobile menu"
               >
                 <Menu size={isMobile ? 16 : 20} />
               </Button>

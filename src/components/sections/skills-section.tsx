@@ -57,8 +57,8 @@ export function SkillsSection() {
         
         <Tabs defaultValue="technical" className="max-w-3xl mx-auto">
           <TabsList className="grid w-full grid-cols-2 mb-8">
-            <TabsTrigger value="technical">Technical Skills</TabsTrigger>
-            <TabsTrigger value="soft">Soft Skills</TabsTrigger>
+            <TabsTrigger value="technical" className="text-foreground cursor-pointer">Technical Skills</TabsTrigger>
+            <TabsTrigger value="soft" className="text-foreground cursor-pointer">Soft Skills</TabsTrigger>
           </TabsList>
           
           <TabsContent value="technical">
