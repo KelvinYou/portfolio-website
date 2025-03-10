@@ -1,0 +1,154 @@
+---
+title: "Next.js SEO: Setting up meta tags for SEO of my portfolio website"
+date: "2025-03-09"
+description: "This article covers the best SEO meta tags setup using Next.js 15's Metadata API, along with a sitemap and robots.txt for my portfolio website."
+tags: ["nextjs", "seo", "web development", "personal website", "portfolio"]
+author: "Me"
+---
+
+## **1. Metadata Configuration in `app/layout.tsx`**  
+
+In Next.js 15, the `generateMetadata` function allows you to **dynamically generate SEO metadata** for each page.
+
+```tsx
+export const metadata = {
+  title: "Your Name | Portfolio",
+  description:
+    "Discover the portfolio of [Your Name], a Frontend Engineer specializing in React, Next.js, and modern web technologies.",
+  keywords: [
+    "Frontend Engineer",
+    "React Developer",
+    "Next.js Portfolio",
+    "Web Developer",
+    "JavaScript",
+    "TypeScript",
+  ],
+  authors: [{ name: "Your Name", url: "https://yourwebsite.com" }],
+  creator: "Your Name",
+  openGraph: {
+    title: "Your Name | Portfolio",
+    description:
+      "Explore projects, blog posts, and case studies from [Your Name], a web developer focused on modern technologies.",
+    url: "https://yourwebsite.com",
+    siteName: "Your Name's Portfolio",
+    images: [
+      {
+        url: "https://yourwebsite.com/images/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Your Name's Portfolio",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Your Name | Portfolio",
+    description:
+      "Explore projects, blog posts, and case studies from [Your Name], a web developer focused on modern technologies.",
+    images: ["https://yourwebsite.com/images/og-image.jpg"],
+    creator: "@yourTwitterHandle",
+  },
+  alternates: {
+    canonical: "https://yourwebsite.com",
+  },
+};
+```
+
+---
+
+## **2. Generating a Dynamic Sitemap (`sitemap.ts`)**  
+
+A sitemap helps search engines **index your website efficiently**.  
+
+Create a `sitemap.ts` file inside the `app` directory:
+
+```tsx
+import { MetadataRoute } from "next";
+
+export default function sitemap(): MetadataRoute.Sitemap {
+  return [
+    {
+      url: "https://yourwebsite.com",
+      lastModified: new Date().toISOString(),
+      changeFrequency: "monthly",
+      priority: 1.0,
+    },
+    {
+      url: "https://yourwebsite.com/projects",
+      lastModified: new Date().toISOString(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: "https://yourwebsite.com/blog",
+      lastModified: new Date().toISOString(),
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+  ];
+}
+```
+
+---
+
+## **3. Robots.txt for SEO Optimization**  
+
+A `robots.txt` file **controls how search engines crawl your site**. Add `robots.ts` inside the `app` directory:
+
+```tsx
+import { MetadataRoute } from "next";
+
+export default function robots(): MetadataRoute.Robots {
+  return {
+    rules: [
+      {
+        userAgent: "*",
+        allow: "/",
+        disallow: ["/admin", "/private"],
+      },
+    ],
+    sitemap: "https://yourwebsite.com/sitemap.xml",
+  };
+}
+```
+
+---
+
+## **4. Adding Structured Data (JSON-LD for Rich Results)**  
+
+Google recommends **structured data** to enhance search rankings. Add this inside your `layout.tsx`:
+
+```tsx
+export const metadata = {
+  other: {
+    "application/ld+json": JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Person",
+      name: "Your Name",
+      url: "https://yourwebsite.com",
+      sameAs: [
+        "https://twitter.com/yourTwitterHandle",
+        "https://github.com/yourGithubHandle",
+        "https://linkedin.com/in/yourLinkedInHandle",
+      ],
+      jobTitle: "Frontend Engineer",
+      worksFor: {
+        "@type": "Organization",
+        name: "Your Company Name",
+      },
+    }),
+  },
+};
+```
+
+---
+
+## **Final Notes**  
+
+✅ **Metadata API** ensures **best SEO practices** with Open Graph, Twitter cards, and JSON-LD.  
+✅ **Dynamic sitemap** allows **search engines to discover your content**.  
+✅ **Robots.txt** manages **crawl permissions** for search engines.  
+✅ **JSON-LD structured data** improves **rich snippets and search ranking**.  
+
+This setup ensures **your Next.js portfolio website is optimized for search engines**. 🚀 Let me know if you need refinements!
