@@ -1,9 +1,59 @@
 import ResumeViewerWithFallback from "@/app/resume/resume-viewer-fallback";
 import ResumeDocument from "./resume-document";
+import { domainPath, personalInfo } from "@/data";
+import { Metadata } from "next";
 
-export const metadata = {
-  title: "Resume | Kelvin You",
-  description: "Professional resume of Kelvin You, showcasing experience, skills, and education."
+export const metadata: Metadata = {
+  title: `${personalInfo.name} | Resume`,
+  description: "Professional resume of Kelvin You, showcasing experience, skills, and education.",
+  keywords: [
+    "resume",
+    "Kelvin You",
+    "software engineer",
+    "professional resume",
+    "experience",
+    "skills",
+    "education"
+  ],
+  authors: [{ name: personalInfo.name, url: domainPath }],
+  creator: personalInfo.name,
+  openGraph: {
+    title: `${personalInfo.name} | Resume`,
+    description: "Professional resume of Kelvin You, showcasing experience, skills, and education.",
+    url: `${domainPath}/resume`,
+    siteName: `${personalInfo.name}'s Resume`,
+    images: [
+      {
+        url: '/images/projects/portfolio.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Resume | Kelvin You',
+      }
+    ],
+    type: "website"
+  },
+  twitter: {
+    title: `${personalInfo.name} | Resume`,
+    description: "Professional resume of Kelvin You, showcasing experience, skills, and education.",
+    images: ['/images/projects/portfolio.jpg'],
+    card: "summary_large_image",
+    creator: personalInfo.name,
+  },
+  alternates: {
+    canonical: `${domainPath}/resume`,
+  },
+  other: {
+    "application/ld+json": JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Resume",
+      name: `${personalInfo.name}'s Resume`,
+      url: `${domainPath}/resume`,
+      author: {
+        "@type": "Person",
+        name: personalInfo.name,
+      },
+    }),
+  },
 };
 
 export default function ResumePage() {
