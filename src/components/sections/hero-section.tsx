@@ -86,7 +86,10 @@ export function HeroSection() {
               <div className="flex items-center justify-center p-1 rounded-full bg-background/50">
                 <Sparkles className="h-3.5 w-3.5 text-primary" />
               </div>
-              <p className="text-xs font-medium text-primary/80">Available for tech consulting</p>
+              <p className="text-xs font-medium text-primary/80">
+                Available for tech consulting
+                {/* Available for new opportunities */}
+              </p>
             </motion.div>
             
             {/* Simplified heading animation */}
