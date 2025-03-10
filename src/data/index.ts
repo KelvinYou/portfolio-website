@@ -1,12 +1,14 @@
+export const domainPath = "https://kelvinyou.vercel.app";
+
 export const personalInfo = {
   name: "Kelvin You",
   title: "Software Engineer",
   contact: {
     email: "ykekelvin0220@gmail.com",
     phone: "+60183732752",
-    linkedin: "https://www.linkedin.com/in/kelvinyou2001/",
+    linkedin: "https://www.linkedin.com/in/kelvinyou2001",
     github: "https://github.com/KelvinYou",
-    personalWebsite: "https://kelvinyou.netlify.app/",
+    personalWebsite: domainPath,
     location: "Kuala Lumpur, Malaysia",
   },
   profilePicture: "/images/profile-picture.jpg",
@@ -285,8 +287,6 @@ export const projects = [
     date: "2022-12-17"
   }
 ];
-
-export const domainPath = personalInfo.contact.personalWebsite;
 
 export const certifications = [
   {

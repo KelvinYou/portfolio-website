@@ -29,3 +29,22 @@ export function formatStartEndDate(startDate: string, endDate: string | undefine
 
   return `${start.format('MMM YYYY')} - ${end.format('MMM YYYY')}`;
 }
+
+export function getLinkedInName(url: string): string | undefined {
+  const urlObj = new URL(url);
+  const pathname = urlObj.pathname;
+  const name = pathname.split('/').pop();
+  return name;
+}
+
+export function getGitHubName(url: string): string | undefined {
+  const urlObj = new URL(url);
+  const pathname = urlObj.pathname;
+  const name = pathname.split('/').pop();
+  return name;
+}
+
+export function getPersonalWebsiteName(url: string): string | undefined {
+  const urlObj = new URL(url);
+  return urlObj.hostname;
+}

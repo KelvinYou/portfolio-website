@@ -4,6 +4,7 @@ import React from 'react';
 import { Document, Page, Text, View, Link } from '@react-pdf/renderer';
 import { personalInfo, experiences, educations, skills, certifications, projects } from "@/data";
 import { styles } from './style';
+import { getGitHubName, getLinkedInName, getPersonalWebsiteName } from '@/lib/utils';
 
 // Format date for resume
 const formatResumeDate = (dateString: string | undefined) => {
@@ -36,13 +37,13 @@ const ResumeDocument = () => (
         
         <View style={styles.contactRow}>
           <View style={styles.contactItem}>
-            <Link src={personalInfo.contact.linkedin} style={styles.contactLink}>LinkedIn: kelvinyou2001</Link>
+            <Link src={personalInfo.contact.linkedin} style={styles.contactLink}>LinkedIn: {getLinkedInName(personalInfo.contact.linkedin)}</Link>
           </View>
           <View style={styles.contactItem}>
-            <Link src={personalInfo.contact.github} style={styles.contactLink}>GitHub: KelvinYou</Link>
+            <Link src={personalInfo.contact.github} style={styles.contactLink}>GitHub: {getGitHubName(personalInfo.contact.github)}</Link>
           </View>
           <View style={styles.contactItem}>
-            <Link src={personalInfo.contact.personalWebsite} style={styles.contactLink}>Portfolio: kelvinyou.netlify.app</Link>
+            <Link src={personalInfo.contact.personalWebsite} style={styles.contactLink}>Portfolio: {getPersonalWebsiteName(personalInfo.contact.personalWebsite)}</Link>
           </View>
         </View>
       </View>
