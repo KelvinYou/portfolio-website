@@ -1,20 +1,6 @@
-export const domainPath = "https://kelvinyou.vercel.app";
+import { getTotalWorkingExperiences } from "@/lib/utils";
 
-export const personalInfo = {
-  name: "Kelvin You",
-  title: "Software Engineer",
-  contact: {
-    email: "ykekelvin0220@gmail.com",
-    phone: "+60183732752",
-    linkedin: "https://www.linkedin.com/in/kelvinyou2001",
-    github: "https://github.com/KelvinYou",
-    personalWebsite: domainPath,
-    location: "Kuala Lumpur, Malaysia",
-  },
-  profilePicture: "/images/profile-picture.jpg",
-  summary:
-    "Experienced software engineer with 2+ years of experience in developing and maintaining web applications (includes all internships). Skilled in agile methodologies and CI/CD. I'm an INTP-T, nerd. I'm also passionate about blockchain, investing and chess.",
-};
+export const domainPath = "https://kelvinyou.vercel.app";
 
 export const experiences = [
   {
@@ -143,6 +129,22 @@ export const experiences = [
     logo: "/images/companies/jonvi.png"
   }
 ];
+
+export const personalInfo = {
+  name: "Kelvin You",
+  title: "Software Engineer",
+  contact: {
+    email: "ykekelvin0220@gmail.com",
+    phone: "+60183732752",
+    linkedin: "https://www.linkedin.com/in/kelvinyou2001",
+    github: "https://github.com/KelvinYou",
+    personalWebsite: domainPath,
+    location: "Kuala Lumpur, Malaysia",
+  },
+  profilePicture: "/images/profile-picture.jpg",
+  summary:
+    `Experienced software engineer with ${getTotalWorkingExperiences(experiences)} of experience in developing and maintaining web applications (includes all internships). Skilled in agile methodologies and CI/CD. I'm an INTP-T, nerd. I'm also passionate about blockchain, investing and chess.`,
+};
 
 // Example education data
 export const educations = [

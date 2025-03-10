@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence, useScroll, useMotionValueEvent, useTransform } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
 import { Menu, X, ChevronRight, FileText } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { 
@@ -24,6 +24,7 @@ import React from "react";
 import { navItems } from "@/constants/navItems";
 import { Icons } from "@/components/icons";
 import { personalInfo } from "@/data";
+import { usePathname } from "next/navigation";
 
 // Function to get Icon component from icon name
 const getIcon = (iconName: string, className: string = "h-4 w-4") => {
@@ -63,11 +64,15 @@ export function Navbar() {
   const [activeSection, setActiveSection] = useState("home");
   const [scrolled, setScrolled] = useState(false);
   const [windowWidth, setWindowWidth] = useState(0);
-  const [scrollDistance, setScrollDistance] = useState(1000);
   const [isClient, setIsClient] = useState(false); // Track client-side rendering
   const prevScrollY = useRef(0);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const [activeRoute, setActiveRoute] = useState("/");
+  const [isNavigating, setIsNavigating] = useState(false);
   
   const { scrollY } = useScroll();
+  const pathname = usePathname();
   
   // Track if we're on the client side
   useEffect(() => {
@@ -153,21 +158,6 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [windowWidth, isClient, activeSection]);
   
-  // Get the document height on the client side only
-  useEffect(() => {
-    if (!isClient) return; // Skip if not client-side
-    
-    const updateScrollDistance = () => {
-      setScrollDistance(
-        document.documentElement.scrollHeight - window.innerHeight
-      );
-    };
-    
-    updateScrollDistance();
-    window.addEventListener('resize', updateScrollDistance);
-    return () => window.removeEventListener('resize', updateScrollDistance);
-  }, [isClient]);
-  
   // Calculate how many menu items to show based on screen width
   const getVisibleNavItems = () => {
     if (!isClient) return navItems.slice(0, 3); // Default for SSR
@@ -192,6 +182,61 @@ export function Navbar() {
   const isTinyScreen = isClient && windowWidth < 400;
   const isVeryTinyScreen = isClient && windowWidth < 350;
   
+  // Update active route when pathname changes
+  useEffect(() => {
+    // Reset scroll progress on page change
+    setScrollProgress(0);
+    setIsNavigating(false);
+    
+    // Find the matching route based on pathname
+    const matchedRoute = navItems.find(item => {
+      // Exact match for home
+      if (item.href === "/" && pathname === "/") {
+        return true;
+      }
+      // Prefix match for other routes (handles nested routes better)
+      if (item.href !== "/" && pathname.startsWith(item.href)) {
+        return true;
+      }
+      return false;
+    });
+    
+    setActiveRoute(matchedRoute?.href || pathname);
+  }, [pathname]);
+  
+  // Calculate scroll progress
+  useEffect(() => {
+    if (isNavigating) {
+      return;
+    }
+    
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      const scrollHeight = document.documentElement.scrollHeight;
+      const clientHeight = document.documentElement.clientHeight;
+      const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+      
+      // Calculate scroll progress (0 to 1)
+      const scrollableHeight = scrollHeight - clientHeight;
+      const progress = scrollableHeight > 0 ? scrollTop / scrollableHeight : 0;
+      
+      setScrollProgress(progress);
+      setLastScrollY(currentScrollY);
+    };
+    
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [lastScrollY, isNavigating]);
+  
+  // Set navigation state when links are clicked
+  const handleLinkClick = () => {
+    setIsNavigating(true);
+    setScrollProgress(0);
+  };
+  
   return (
     <>
       <motion.header 
@@ -203,12 +248,20 @@ export function Navbar() {
         )}
         // Auto-hide navbar when scrolling down, show when scrolling up
         animate={{ 
-          // top: scrollDirection === "down" && scrolled && !mobileMenuOpen ? "-80px" : "0px",
           paddingTop: scrolled ? "0.25rem" : "0.5rem",
           paddingBottom: scrolled ? "0.25rem" : "0.5rem"
         }}
         transition={{ duration: 0.3 }}
       >
+        {/* Progress bar */}
+        <div 
+          className="absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500" 
+          style={{ 
+            width: `${scrollProgress * 100}%`, 
+            transition: isNavigating ? "none" : "width ease" 
+          }} 
+        />
+        
         <div className="container mx-auto px-3 sm:px-6 lg:px-8">
           <nav className="flex items-center justify-between h-14 sm:h-16">
             {/* Logo - responsive sizing */}
@@ -265,11 +318,12 @@ export function Navbar() {
                           href={item.href} 
                           legacyBehavior 
                           passHref
+                          onClick={handleLinkClick}
                         >
                           <NavigationMenuLink
                             className={cn(
                               "transition-all text-xs lg:text-sm rounded-full px-3 lg:px-4 py-1.5 flex items-center gap-1.5 hover:bg-accent/50 hover:text-foreground",
-                              activeSection === item.href.replace('/#', '') ? 
+                              activeRoute === item.href.replace('/#', '') ? 
                                 "bg-primary/15 text-primary font-medium shadow-sm" : 
                                 "text-muted-foreground"
                             )}
@@ -281,7 +335,7 @@ export function Navbar() {
                             >
                               <div className={cn(
                                 "flex items-center justify-center",
-                                activeSection === item.href.replace('/#', '') ?
+                                activeRoute === item.href.replace('/#', '') ?
                                   "text-primary" : "text-muted-foreground"
                               )}>
                                 {getIcon(item.icon)}
@@ -316,7 +370,7 @@ export function Navbar() {
                                   href={item.href} 
                                   className={cn(
                                     "flex items-center gap-2 rounded-lg px-2 py-1.5 text-sm",
-                                    activeSection === item.href.replace('/#', '') ? 
+                                    activeRoute === item.href.replace('/#', '') ? 
                                       "bg-primary/10 text-primary font-medium" : 
                                       "text-foreground hover:bg-accent/50"
                                   )}
@@ -373,16 +427,6 @@ export function Navbar() {
               </Button>
             </motion.div>
           </nav>
-        </div>
-        
-        {/* Modern Gradient Progress Bar */}
-        <div className="h-[2px] w-full overflow-hidden bg-border/30">
-          <motion.div 
-            className="h-full bg-gradient-to-r from-primary via-indigo-500 to-primary origin-left"
-            style={{ 
-              scaleX: useTransform(scrollY, [0, scrollDistance || 1000], [0, 1])
-            }}
-          />
         </div>
       </motion.header>
       
@@ -474,16 +518,19 @@ export function Navbar() {
                             isTinyScreen 
                               ? "p-2 text-sm flex-col text-center gap-1" 
                               : "p-3 text-base gap-2",
-                            activeSection === item.href.replace('/#', '') ?
+                            activeRoute === item.href.replace('/#', '') ?
                               "bg-primary/10 text-primary font-medium shadow-sm" :
                               "text-foreground hover:bg-muted/50"
                           )}
-                          onClick={() => setMobileMenuOpen(false)}
+                          onClick={() => {
+                            setMobileMenuOpen(false);
+                            handleLinkClick();
+                          }}
                         >
                           <div className={cn(
                             "rounded-full bg-background/80 border border-border/30 flex items-center justify-center shadow-sm",
                             isTinyScreen ? "w-8 h-8" : "w-9 h-9 mr-3",
-                            activeSection === item.href.replace('/#', '') ?
+                            activeRoute === item.href.replace('/#', '') ?
                               "bg-primary/5 border-primary/20 text-primary" :
                               "text-muted-foreground"
                           )}>

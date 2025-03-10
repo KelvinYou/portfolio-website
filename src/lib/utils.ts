@@ -6,8 +6,17 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export function formatDate(dateString: string): string {
+export function formatDate(dateString: string, format: 'full' | 'short' = 'full'): string {
   const date = new Date(dateString);
+  
+  if (format === 'short') {
+    return date.toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric'
+    });
+  }
+  
   return date.toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',
@@ -48,3 +57,20 @@ export function getPersonalWebsiteName(url: string): string | undefined {
   const urlObj = new URL(url);
   return urlObj.hostname;
 }
+
+export const getTotalWorkingExperiences = (experiences: {
+  startDate: string;
+  endDate?: string;
+}[]) => {
+  const today = dayjs();
+  let totalDays = 0;
+
+  experiences.forEach((experience) => {
+    const start = dayjs(experience.startDate);
+    const end = experience.endDate ? dayjs(experience.endDate) : today;
+    totalDays += end.diff(start, "day");
+  });
+
+  const totalYears = totalDays / 365;
+  return `${Math.floor(totalYears)}+ years`;
+};
