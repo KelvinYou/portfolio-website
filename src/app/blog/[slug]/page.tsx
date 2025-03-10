@@ -2,7 +2,7 @@
 import { getPostBySlug, getAllPosts } from "@/lib/mdx";
 import { notFound } from "next/navigation";
 import BlogPostClient from "./client";
-import { personalInfo } from "@/data";
+import { domainPath, personalInfo } from "@/data";
 
 // Keep static generation settings
 export const dynamic = 'force-static';
@@ -31,34 +31,67 @@ export async function generateMetadata(props: PageProps) {
     const basicInfo = {
       title: `${post.frontmatter.title} | Blog`,
       description: post.frontmatter.description,
-      keywords: `blog, ${post.frontmatter.tags?.join(",")}`,
+      keywords: `blog, ${post.frontmatter.tags?.join(", ")}`,
       images: [post.frontmatter?.image ? post.frontmatter.image : '/images/projects/portfolio.jpg'],
-    }
+    };
 
     return {
-      ...basicInfo,
+      title: basicInfo.title,
+      description: basicInfo.description,
+      keywords: basicInfo.keywords,
+      authors: [{ name: personalInfo.name, url: domainPath }],
+      creator: personalInfo.name,
       openGraph: {
-        ...basicInfo,
+        title: basicInfo.title,
+        description: basicInfo.description,
+        url: `${domainPath}/blog/${params.slug}`,
+        siteName: `${personalInfo.name}'s Blog`,
+        images: basicInfo.images.map((image) => ({
+          url: image,
+          width: 1200,
+          height: 630,
+          alt: basicInfo.title,
+        })),
+        type: "article",
+        article: {
+          publishedTime: post.frontmatter.date,
+          authors: [domainPath],
+          tags: post.frontmatter.tags,
+        },
       },
       twitter: {
-        ...basicInfo,
+        card: "summary_large_image",
+        title: basicInfo.title,
+        description: basicInfo.description,
+        images: basicInfo.images,
+        creator: personalInfo.name,
       },
     };
   } catch (error) {
     console.error("Error generating metadata:", error);
-    return {
-      title: "Blog Post Not Found | Kelvin You", 
+
+    const basicInfo = {
+      title: "Blog Post Not Found | Kelvin You",
       description: "The requested blog post could not be found.",
-      images: [personalInfo.profilePicture],
+    };
+
+    return {
+      title: basicInfo.title,
+      description: basicInfo.description,
       openGraph: {
-        title: "Blog Post Not Found | Kelvin You",
-        description: "The requested blog post could not be found.", 
-        images: [personalInfo.profilePicture],
+        title: basicInfo.title,
+        description: basicInfo.description,
+        url: `${domainPath}/blog/${params.slug}`,
+        siteName: `${personalInfo.name}'s Blog`,
+        images: ['/images/projects/portfolio.jpg'],
+        type: "article",
       },
       twitter: {
-        title: "Blog Post Not Found | Kelvin You",
-        description: "The requested blog post could not be found.",
-        images: [personalInfo.profilePicture],
+        card: "summary_large_image",
+        title: basicInfo.title,
+        description: basicInfo.description,
+        images: ['/images/projects/portfolio.jpg'],
+        creator: personalInfo.name,
       },
     };
   }

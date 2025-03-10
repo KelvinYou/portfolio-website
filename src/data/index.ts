@@ -19,7 +19,7 @@ export const personalInfo = {
 export const experiences = [
   {
     title: "Frontend Engineer",
-    company: "Simpletruss",
+    company: "Simpletruss Sdn Bhd",
     companyUrl: "https://www.simpletruss.com/",
     location: "Kuala Lumpur, Malaysia",
     type: "Full-time",

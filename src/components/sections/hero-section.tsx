@@ -134,12 +134,15 @@ export function HeroSection() {
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.4 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
               className="relative"
             >
               <motion.p 
                 className="text-lg md:text-xl mb-10 text-muted-foreground max-w-xl pr-8 leading-relaxed"
                 style={{ textWrap: "balance" }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
               >
                 I create <span className="text-foreground font-medium">elegant, user-focused</span> web 
                 experiences with modern technologies. Passionate about turning complex problems into 
