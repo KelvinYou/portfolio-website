@@ -1,12 +1,14 @@
-import { MetadataRoute } from "next"
+import { domainPath } from "@/data";
+import { MetadataRoute } from "next";
 
 export default function robots(): MetadataRoute.Robots {
   return {
-    rules: {
-      userAgent: "*",
-      allow: "/",
-      disallow: "/admin",
-    },
-    sitemap: `https://www.example.com/sitemap.xml`,
-  }
+    rules: [
+      {
+        userAgent: "*",
+        allow: "/",
+      },
+    ],
+    sitemap: `${domainPath}/sitemap.xml`,
+  };
 }
