@@ -364,7 +364,8 @@ export function Navbar() {
               {/* Mobile menu button */}
               <Button 
                 variant="ghost" 
-                size="icon" 
+                size="icon"
+                id="mobile-menu-button"
                 className="md:hidden text-foreground rounded-full h-8 w-8"
                 onClick={() => setMobileMenuOpen(true)}
               >

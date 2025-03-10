@@ -137,17 +137,13 @@ export function HeroSection() {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="relative"
             >
-              <motion.p 
+              <p 
                 className="text-lg md:text-xl mb-10 text-muted-foreground max-w-xl pr-8 leading-relaxed"
-                style={{ textWrap: "balance" }}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.5, delay: 0.3 }}
               >
                 I create <span className="text-foreground font-medium">elegant, user-focused</span> web 
                 experiences with modern technologies. Passionate about turning complex problems into 
                 <span className="text-foreground font-medium"> simple, intuitive</span> solutions.
-              </motion.p>
+              </p>
               
               {/* Static decorative element instead of animated */}
               <div className="absolute -left-6 top-0 h-full w-1 bg-gradient-to-b from-primary/50 via-primary/30 to-transparent rounded" />
