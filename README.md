@@ -27,7 +27,7 @@ A sleek and responsive portfolio website built with Next.js 15, TailwindCSS, and
 1. Clone the repository:
 
    ```sh
-   git clone https://github.com/your-username/portfolio-website.git
+   git clone https://github.com/KelvinYou/portfolio-website.git
    cd portfolio-website
    ```
 
