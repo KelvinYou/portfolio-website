@@ -218,7 +218,7 @@ export const projects = [
     description: "A personal website built with Next.js, TailwindCSS, and Vercel",
     image: "/images/projects/portfolio.jpg",
     github: "https://github.com/KelvinYou/portfolio-website",
-    demo: "https://kelvinyou.netlify.app/",
+    demo: "https://kelvinyou.vercel.app/",
     status: "Maintaining",
     techStacks: ["Next.js", "TailwindCSS", "Shadcn", "React"],
     date: "2025-3-3"
