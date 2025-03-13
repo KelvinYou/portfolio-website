@@ -80,7 +80,7 @@ export const experiences = [
     type: "Internship",
     startDate: "2020-10-1",
     endDate: "2021-1-31",
-    description: "Modernizing frontend with ReactJS for improved maintenance and dynamic capabilities. Developing a blockchain app with ReactJS and Solidity, integrating smart contracts with MetaMask. Exploring Laravel’s MVC, ORM, and event-driven architecture. Implementing authentication, real-time exchange rates, dynamic UI updates, and seamless CRUD APIs.",
+    description: "Modernizing frontend with ReactJS for improved maintenance and dynamic capabilities. Developing a blockchain app with ReactJS and Solidity, integrating smart contracts with MetaMask. Exploring Laravel's MVC, ORM, and event-driven architecture. Implementing authentication, real-time exchange rates, dynamic UI updates, and seamless CRUD APIs.",
     responsibilities: [
       "Revitalized project's frontend using ReactJS for enhanced maintenance, modernization, and dynamic website capabilities.",
       "Developed a cutting-edge blockchain app utilizing ReactJS and Solidity to seamlessly integrate smart contracts with MetaMask for secure and streamlined transactions.",
@@ -224,7 +224,8 @@ export const projects = [
     demo: "https://kelvinyou.vercel.app/",
     status: "Maintaining",
     techStacks: ["Next.js", "TailwindCSS", "Shadcn", "React"],
-    date: "2025-3-3"
+    date: "2025-3-3",
+    blogSlugs: ['personal-website']
   },
   {
     title: "Tuition Management System (PTIB)",

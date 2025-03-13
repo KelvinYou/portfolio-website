@@ -171,7 +171,10 @@ export function ExperienceCard({ experience: exp, index }: ExperienceCardProps) 
                   
                   {/* Render blog links if blogSlugs exist */}
                   {exp.blogSlugs && exp.blogSlugs.length > 0 && (
-                    <RelatedBlogLinks blogSlugs={exp.blogSlugs} />
+                    <div className="flex flex-col w-full sm:w-auto">
+                      <h4 className="text-sm font-medium mb-2">Related Articles</h4>
+                      <RelatedBlogLinks blogSlugs={exp.blogSlugs} />
+                    </div>
                   )}
                 </div>
               </div>

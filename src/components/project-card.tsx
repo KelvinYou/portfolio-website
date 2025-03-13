@@ -1,11 +1,24 @@
 "use client";
 
+import { useState } from "react";
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Github, ExternalLink } from "lucide-react";
+import { Github, ExternalLink, Info, Calendar, Code, Sparkles } from "lucide-react";
 import Image from "next/image";
 import { ImageIcon } from "lucide-react";
 import { motion } from "framer-motion";
+import { RelatedBlogLinks } from "./blog/related-blog-links";
+import { formatDate } from "@/lib/utils";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import { Badge } from "@/components/ui/badge";
 
 export type ProjectCardProps = {
   title: string;
@@ -16,9 +29,12 @@ export type ProjectCardProps = {
   techStacks: string[];
   status: string;
   date: string;
+  blogSlugs?: string[];
 };
 
 export function ProjectCard({ project, index = 0 }: { project: ProjectCardProps, index?: number }) {
+  const [dialogOpen, setDialogOpen] = useState(false);
+
   const fadeIn = {
     hidden: { opacity: 0, y: 20 },
     visible: { 
@@ -95,8 +111,8 @@ export function ProjectCard({ project, index = 0 }: { project: ProjectCardProps,
           </div>
         </CardHeader>
         
-        <CardFooter className="pt-2 mt-auto">
-          <div className="flex gap-3">
+        <CardFooter className="pt-2 mt-auto flex-col gap-3">
+          <div className="flex gap-3 w-full">
             {project.github && (
               <Button 
                 variant="outline" 
@@ -125,6 +141,114 @@ export function ProjectCard({ project, index = 0 }: { project: ProjectCardProps,
                 </a>
               </Button>
             )}
+            
+            {/* Dialog trigger button */}
+            <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+              <DialogTrigger asChild>
+                <Button 
+                  variant="ghost" 
+                  size="sm"
+                  className="rounded-full text-xs gap-1.5 hover:bg-muted/50 ml-auto"
+                >
+                  <span>Details</span>
+                  <Info className="h-3.5 w-3.5" />
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[425px] md:max-w-[600px]">
+                <DialogHeader>
+                  <DialogTitle className="text-xl flex items-center gap-2">
+                    {project.title}
+                    <Badge className={`ml-2 text-xs ${
+                      project.status === 'Completed' ? 'bg-green-500/20 text-green-500' :
+                      project.status === 'In Progress' ? 'bg-blue-500/20 text-blue-500' :
+                      project.status === 'Maintaining' ? 'bg-purple-500/20 text-purple-500' :
+                      'bg-gray-500/20 text-gray-500'
+                    }`}>
+                      {project.status}
+                    </Badge>
+                  </DialogTitle>
+                  <DialogDescription className="text-base mt-2">
+                    {project.description}
+                  </DialogDescription>
+                </DialogHeader>
+
+                <div className="mt-4 grid gap-6">
+                  {/* Created Date */}
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <Calendar className="h-4 w-4" />
+                    <span>Created: {formatDate(project.date)}</span>
+                  </div>
+                  
+                  {/* Project Image */}
+                  {project.image && (
+                    <div className="relative w-full h-48 overflow-hidden rounded-md">
+                      <Image
+                        src={project.image}
+                        alt={project.title}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                  )}
+                  
+                  {/* Technologies */}
+                  <div className="space-y-2">
+                    <h4 className="text-sm font-medium flex items-center gap-2">
+                      <Code className="h-4 w-4" /> Technologies
+                    </h4>
+                    <div className="flex flex-wrap gap-2">
+                      {project.techStacks.map((tech, i) => (
+                        <Badge 
+                          key={i} 
+                          variant="secondary"
+                          className="bg-background/50"
+                        >
+                          {tech}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  {/* Related blog posts */}
+                  {project.blogSlugs && project.blogSlugs.length > 0 && (
+                    <div className="space-y-2">
+                      <h4 className="text-sm font-medium flex items-center gap-2">
+                        <Sparkles className="h-4 w-4" /> Related Articles
+                      </h4>
+                      <RelatedBlogLinks blogSlugs={project.blogSlugs} />
+                    </div>
+                  )}
+                </div>
+                
+                <DialogFooter className="mt-6 flex flex-col sm:flex-row gap-3">
+                  {project.github && (
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="w-full sm:w-auto" 
+                      asChild
+                    >
+                      <a href={project.github} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center">
+                        <Github className="h-4 w-4 mr-2" /> 
+                        View Source Code
+                      </a>
+                    </Button>
+                  )}
+                  {project.demo && (
+                    <Button 
+                      size="sm" 
+                      className="w-full sm:w-auto"
+                      asChild
+                    >
+                      <a href={project.demo} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center">
+                        <ExternalLink className="h-4 w-4 mr-2" /> 
+                        View Demo
+                      </a>
+                    </Button>
+                  )}
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
           </div>
         </CardFooter>
       </Card>
