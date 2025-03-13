@@ -181,7 +181,7 @@ export function EducationsSection() {
           </motion.div>
         </div>
         
-        <motion.div 
+        {/* <motion.div 
           className="text-center mt-8"
           initial="hidden"
           whileInView="visible"
@@ -192,7 +192,7 @@ export function EducationsSection() {
             <span>View All Certifications</span>
             <ExternalLink className="ml-2 h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
           </Button>
-        </motion.div>
+        </motion.div> */}
       </div>
     </section>
   );
