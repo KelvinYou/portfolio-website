@@ -40,7 +40,8 @@ export const experiences = [
       "Utilized Docker for containerization and CI/CD pipelines for automated testing and deployment."
     ],
     skills: ["React", "Redux", "Webpack", "MySQL", "GraphQL", "Jest", "Git", "Docker", "CI/CD", "TypeScript", "Go"],
-    logo: "/images/companies/beyondsoft.jpeg"
+    logo: "/images/companies/beyondsoft.jpeg",
+    blogSlugs: ['beyondsoft']
   },
   {
     title: "Java Software Engineer (Internship)",
