@@ -1,18 +1,11 @@
+/* eslint-disable jsx-a11y/alt-text */
 'use client'
 
 import React from 'react';
-import { Document, Page, Text, View, Link } from '@react-pdf/renderer';
+import { Document, Page, Text, View, Link, Image } from '@react-pdf/renderer';
 import { personalInfo, experiences, educations, skills, certifications, projects } from "@/data";
 import { styles } from './style';
-import { getGitHubName, getLinkedInName, getPersonalWebsiteName } from '@/lib/utils';
-
-// Format date for resume
-const formatResumeDate = (dateString: string | undefined) => {
-  if (!dateString) return 'Present';
-  
-  const date = new Date(dateString);
-  return `${date.toLocaleString('default', { month: 'short' })} ${date.getFullYear()}`;
-};
+import { capitalizeFirstLetter, formatDate, formatStartEndDate, getGitHubName, getLinkedInName, getPersonalWebsiteName } from '@/lib/utils';
 
 // Create Resume Document
 const ResumeDocument = () => (
@@ -25,26 +18,56 @@ const ResumeDocument = () => (
         
         <View style={styles.contactRow}>
           <View style={styles.contactItem}>
+            <Image src={'/images/resume/email.png'} style={styles.contactIcon} />
             <Text style={styles.contactText}>{personalInfo.contact.email}</Text>
           </View>
           <View style={styles.contactItem}>
+          <Image src={'/images/resume/phone.png'} style={styles.contactIcon} />
             <Text style={styles.contactText}>{personalInfo.contact.phone}</Text>
           </View>
           <View style={styles.contactItem}>
+            <Image src={'/images/resume/location.png'} style={styles.contactIcon} />
             <Text style={styles.contactText}>{personalInfo.contact.location}</Text>
           </View>
         </View>
         
         <View style={styles.contactRow}>
           <View style={styles.contactItem}>
+            <Image src={'/images/resume/linkedin.png'} style={styles.contactIcon} />
             <Link src={personalInfo.contact.linkedin} style={styles.contactLink}>LinkedIn: {getLinkedInName(personalInfo.contact.linkedin)}</Link>
           </View>
           <View style={styles.contactItem}>
+            <Image src={'/images/resume/github.png'} style={styles.contactIcon} />
             <Link src={personalInfo.contact.github} style={styles.contactLink}>GitHub: {getGitHubName(personalInfo.contact.github)}</Link>
           </View>
           <View style={styles.contactItem}>
+            <Image src={'/images/resume/person.png'} style={styles.contactIcon} />
             <Link src={personalInfo.contact.personalWebsite} style={styles.contactLink}>Portfolio: {getPersonalWebsiteName(personalInfo.contact.personalWebsite)}</Link>
           </View>
+        </View>
+      </View>
+
+      {/* Summary */}
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>Summary</Text>
+        <Text style={styles.summaryText}>{personalInfo.summary}</Text>
+      </View>
+
+      {/* Skills */}
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>Technical Skills</Text>
+        
+        <View>
+          {Object.entries(skills).map(([category, skillList]) => (
+            <View key={category} style={styles.skillContainer}>
+              <Text style={styles.skillTitle}>
+                {capitalizeFirstLetter(category)}:
+              </Text>
+              <Text style={styles.skillItem}>
+                {skillList.join(', ')}
+              </Text>
+            </View>
+          ))}
         </View>
       </View>
 
@@ -52,12 +75,14 @@ const ResumeDocument = () => (
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Professional Experience</Text>
         
-        {experiences.slice(0, 3).map((job, index) => (
+        {experiences.map((job, index) => (
           <View key={index} style={styles.itemContainer}>
             <View style={styles.itemHeader}>
-              <Text style={styles.itemCompany}>{job.company}</Text>
+              <Link src={job.companyUrl}>
+                <Text style={styles.itemCompany}>{job.company}</Text>
+              </Link>
               <Text style={styles.itemDate}>
-                {formatResumeDate(job.startDate)} - {formatResumeDate(job.endDate)}
+                {formatStartEndDate(job.startDate, job.endDate)}
               </Text>
             </View>
             
@@ -65,7 +90,7 @@ const ResumeDocument = () => (
             <Text style={styles.itemLocation}>{job.location} • {job.type}</Text>
             
             <View style={styles.bulletList}>
-              {job.responsibilities.map((bullet, bulletIndex) => (
+              {job.responsibilities.slice(0, 3).map((bullet, bulletIndex) => (
                 <View key={bulletIndex} style={styles.bulletItem}>
                   <Text style={styles.bulletPoint}>•</Text>
                   <Text style={styles.bulletText}>{bullet}</Text>
@@ -85,27 +110,6 @@ const ResumeDocument = () => (
         ))}
       </View>
 
-      {/* Skills - Moved up for better ATS scanning */}
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Technical Skills</Text>
-        
-        <View style={styles.skillsContainer}>
-          {Object.entries(skills).map(([category, skillList]) => (
-            <View key={category} style={styles.skillCategory}>
-              <Text style={styles.skillCategoryTitle}>
-                {category.charAt(0).toUpperCase() + category.slice(1)}
-              </Text>
-              
-              {skillList.map((skill, skillIndex) => (
-                <Text key={skillIndex} style={styles.skillItem}>
-                  • {skill}
-                </Text>
-              ))}
-            </View>
-          ))}
-        </View>
-      </View>
-
       {/* Projects Section */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Notable Projects</Text>
@@ -114,7 +118,7 @@ const ResumeDocument = () => (
           <View key={index} style={styles.itemContainer}>
             <View style={styles.itemHeader}>
               <Text style={styles.itemCompany}>{project.title}</Text>
-              <Text style={styles.itemDate}>{project.status} • {formatResumeDate(project.date)}</Text>
+              <Text style={styles.itemDate}>{project.status} • {formatDate(project.date, 'short')}</Text>
             </View>
             
             <Text style={styles.bulletText}>{project.description}</Text>
@@ -153,7 +157,7 @@ const ResumeDocument = () => (
             <View style={styles.itemHeader}>
               <Text style={styles.itemCompany}>{edu.institution}</Text>
               <Text style={styles.itemDate}>
-                {formatResumeDate(edu.startDate)} - {formatResumeDate(edu.endDate)}
+                {formatStartEndDate(edu.startDate, edu.endDate)}
               </Text>
             </View>
             
@@ -164,7 +168,7 @@ const ResumeDocument = () => (
               <View style={styles.bulletItem}>
                 <Text style={styles.bulletPoint}>•</Text>
                 <Text style={styles.bulletText}>
-                  <Text style={{ fontWeight: 'bold' }}>Relevant coursework: </Text>
+                  <Text style={{ fontWeight: 'bold' }}>Skills utilized: </Text>
                   {edu.techStacks.join(', ')}
                 </Text>
               </View>
@@ -182,7 +186,7 @@ const ResumeDocument = () => (
             <Link key={index} src={cert.link} style={{ ...styles.certContainer, width: '50%' }}>
               <Text style={styles.certName}>{cert.name}</Text>
               <Text style={styles.certDetails}>
-                {cert.issuingOrganization} • {formatResumeDate(cert.issueDate)}
+                {cert.issuingOrganization} • {formatDate(cert.issueDate, 'short')}
               </Text>
             </Link>
           ))}

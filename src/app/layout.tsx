@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
-import { Navbar } from "@/components/navbar";
-import { FooterSection } from "@/components/sections/footer-section";
+import Navbar from "@/components/layout/navbar";
+import Footer from "@/components/layout/footer";
 import { domainPath, experiences, personalInfo } from "@/data";
 import { Toaster } from "sonner";
 
@@ -105,7 +105,7 @@ export default function RootLayout({
           <div className="min-h-screen bg-background text-foreground">
             <Navbar />
             {children}
-            <FooterSection />
+            <Footer />
           </div>
           <Toaster />
         </ThemeProvider>

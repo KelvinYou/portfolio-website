@@ -24,7 +24,7 @@ import React from "react";
 import { navItems } from "@/constants/navItems";
 import { Icons } from "@/components/icons";
 import { personalInfo } from "@/data";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 // Function to get Icon component from icon name
 const getIcon = (iconName: string, className: string = "h-4 w-4") => {
@@ -59,12 +59,12 @@ const ListItem = React.forwardRef<
 });
 ListItem.displayName = "ListItem";
 
-export function Navbar() {
+export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const [scrolled, setScrolled] = useState(false);
   const [windowWidth, setWindowWidth] = useState(0);
-  const [isClient, setIsClient] = useState(false); // Track client-side rendering
+  const [isClient, setIsClient] = useState(false);
   const prevScrollY = useRef(0);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -73,6 +73,7 @@ export function Navbar() {
   
   const { scrollY } = useScroll();
   const pathname = usePathname();
+  const router = useRouter();
   
   // Track if we're on the client side
   useEffect(() => {
@@ -144,6 +145,8 @@ export function Navbar() {
           }
         }
       }
+
+      console.log('currentSection: ', currentSection);
       
       if (currentSection && currentSection !== activeSection) {
         setActiveSection(currentSection);
@@ -232,9 +235,13 @@ export function Navbar() {
   }, [lastScrollY, isNavigating]);
   
   // Set navigation state when links are clicked
-  const handleLinkClick = () => {
+  const handleLinkClick = (href?: string) => {
     setIsNavigating(true);
     setScrollProgress(0);
+
+    if (href) {
+      router.push(href);
+    }
   };
   
   return (
@@ -314,38 +321,32 @@ export function Navbar() {
                   <NavigationMenuList className="gap-0.5 lg:gap-1">
                     {getVisibleNavItems().map((item) => (
                       <NavigationMenuItem key={item.name}>
-                        <Link 
-                          href={item.href} 
-                          legacyBehavior 
-                          passHref
-                          onClick={handleLinkClick}
+                        <NavigationMenuLink
+                          className={cn(
+                            "transition-all text-xs lg:text-sm rounded-full px-3 lg:px-4 py-1.5 flex items-center gap-1.5 hover:bg-accent/50 hover:text-foreground cursor-pointer",
+                            activeRoute === item.href.replace('/#', '') ? 
+                              "bg-primary/15 text-primary font-medium shadow-sm" : 
+                              "text-muted-foreground"
+                          )}
+                          onClick={() => handleLinkClick(item.href)}
                         >
-                          <NavigationMenuLink
-                            className={cn(
-                              "transition-all text-xs lg:text-sm rounded-full px-3 lg:px-4 py-1.5 flex items-center gap-1.5 hover:bg-accent/50 hover:text-foreground",
-                              activeRoute === item.href.replace('/#', '') ? 
-                                "bg-primary/15 text-primary font-medium shadow-sm" : 
-                                "text-muted-foreground"
-                            )}
+                          <motion.div 
+                            className="flex items-center gap-1.5 md:gap-2"
+                            whileHover={{ x: 2 }}
+                            transition={{ type: "spring", stiffness: 400, damping: 17 }}
                           >
-                            <motion.div 
-                              className="flex items-center gap-1.5 md:gap-2"
-                              whileHover={{ x: 2 }}
-                              transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                            >
-                              <div className={cn(
-                                "flex items-center justify-center",
-                                activeRoute === item.href.replace('/#', '') ?
-                                  "text-primary" : "text-muted-foreground"
-                              )}>
-                                {getIcon(item.icon)}
-                              </div>
-                              <span className={isSmallScreen ? "hidden lg:inline" : ""}>
-                                {item.name}
-                              </span>
-                            </motion.div>
-                          </NavigationMenuLink>
-                        </Link>
+                            <div className={cn(
+                              "flex items-center justify-center",
+                              activeRoute === item.href.replace('/#', '') ?
+                                "text-primary" : "text-muted-foreground"
+                            )}>
+                              {getIcon(item.icon)}
+                            </div>
+                            <span className={isSmallScreen ? "hidden lg:inline" : ""}>
+                              {item.name}
+                            </span>
+                          </motion.div>
+                        </NavigationMenuLink>
                       </NavigationMenuItem>
                     ))}
                     

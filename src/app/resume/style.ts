@@ -16,44 +16,46 @@ Font.register({
 // Create styles for the modern resume
 export const styles = StyleSheet.create({
   page: {
-    padding: 35,
+    padding: 15,
     fontFamily: 'Open Sans',
     fontSize: 10,
     lineHeight: 1.5,
     color: '#2d3748', // Darker text for better readability
   },
   section: {
-    marginBottom: 18,
+    marginBottom: 10,
   },
   // Header section with subtle accent
   header: {
-    marginBottom: 25,
+    marginBottom: 10,
     borderBottom: '2px solid #4a5568',
-    paddingBottom: 15,
+    paddingBottom: 10,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   name: {
-    fontSize: 26,
+    fontSize: 16,
     fontWeight: 'bold',
-    marginBottom: 12,
+    marginBottom: 10,
     color: '#1a202c', // Almost black for better contrast
   },
   title: {
-    fontSize: 14,
+    fontSize: 12,
     color: '#4a5568',
-    marginBottom: 4,
+    marginBottom: 8,
     fontWeight: 600,
   },
   contactRow: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'flex-start',
-    marginTop: 4,
   },
   contactItem: {
     flexDirection: 'row',
     alignItems: 'center',
+    gap: 2,
     marginRight: 18,
-    marginBottom: 6,
     fontSize: 9,
   },
   contactText: {
@@ -63,10 +65,15 @@ export const styles = StyleSheet.create({
     color: '#3182ce', // Professional blue
     textDecoration: 'none',
   },
-  
+  contactIcon: {
+    width: 10,
+    height: 10,
+    marginBottom: 2
+  },
+
   // Modern section headers with subtle accent
   sectionTitle: {
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: 'bold',
     marginBottom: 10,
     color: '#1a202c',
@@ -75,16 +82,22 @@ export const styles = StyleSheet.create({
     textTransform: 'uppercase',
     letterSpacing: 1,
   },
+
+  summaryText: {
+    fontSize: 10,
+    color: '#4a5568',
+    marginTop: 2,
+  },
   
   // Experience & Education items with improved spacing
   itemContainer: {
-    marginBottom: 14,
+    marginBottom: 8,
     paddingBottom: 2,
   },
   itemHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 4,
+    // marginBottom: 4,
   },
   itemTitle: {
     fontWeight: 'bold',
@@ -105,6 +118,10 @@ export const styles = StyleSheet.create({
     fontSize: 9,
     color: '#4a5568',
     marginBottom: 5,
+  },
+  companyLogo: {
+    width: 24,
+    height: 24,
   },
   
   // Cleaner bullets
@@ -146,6 +163,18 @@ export const styles = StyleSheet.create({
     fontSize: 9,
     marginBottom: 3,
     color: '#4a5568',
+  },
+  skillContainer: {
+    fontSize: 10,
+    color: '#4a5568',
+    display: 'flex',
+    flexDirection: 'row',
+    marginBottom: 2,
+    fontFamily: 'Open Sans',
+  },
+  skillTitle: {
+    fontWeight: 'bold',
+    width: 70,
   },
   
   // Projects section styling
