@@ -22,7 +22,7 @@ export const templateData = [
     id: "landing-suite",
     name: "Landing Suite",
     description: "A collection of 5 landing page templates optimized for conversions and SEO",
-    screenshot: "/images/templates/landing-suite.jpg",
+    screenshot: "/image/templates/landing-suite.jpg",
     price: 59,
     features: [
       "5 Unique Designs",
@@ -40,7 +40,7 @@ export const templateData = [
     id: "ecommerce-starter",
     name: "E-commerce Starter",
     description: "A complete e-commerce starter kit with product listings, cart, and checkout flow",
-    screenshot: "/images/templates/ecommerce-starter.jpg",
+    screenshot: "",
     price: 99,
     features: [
       "Product Catalog",

@@ -58,14 +58,14 @@ function PlanCard({ plan, billingPeriod }: PlanCardProps) {
         <div className="space-y-6">
           <div>
             <p className="text-4xl font-bold">
-              ${price.monthly}
+              RM {price.monthly}
               <span className="text-sm font-normal text-muted-foreground ml-1">
                 /month
               </span>
             </p>
             {billingPeriod === "annual" && (
               <p className="text-sm text-muted-foreground mt-1">
-                ${price.annually} billed annually
+                RM {price.annually} billed annually
               </p>
             )}
           </div>

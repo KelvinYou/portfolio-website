@@ -60,7 +60,7 @@ function TemplateCard({ template }: TemplateCardProps) {
       <CardContent>
         <div className="space-y-2">
           <p className="font-bold text-2xl text-foreground">
-            ${template.price}
+            RM {template.price}
             <span className="text-sm font-normal text-muted-foreground ml-1">one-time</span>
           </p>
           <ul className="space-y-1.5 mt-4">
