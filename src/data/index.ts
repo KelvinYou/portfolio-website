@@ -134,6 +134,7 @@ export const experiences = [
 export const personalInfo = {
   name: "Kelvin You",
   title: "Software Engineer",
+  fullname: "Kelvin You Kok Eng",
   contact: {
     email: "ykekelvin0220@gmail.com",
     phone: "+60183732752",

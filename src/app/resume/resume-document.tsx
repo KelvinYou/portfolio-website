@@ -13,7 +13,7 @@ const ResumeDocument = () => (
     <Page size="A4" style={styles.page}>
       {/* Header */}
       <View style={styles.header}>
-        <Text style={styles.name}>{personalInfo.name}</Text>
+        <Text style={styles.name}>{personalInfo.fullname}</Text>
         <Text style={styles.title}>{personalInfo.title}</Text>
         
         <View style={styles.contactRow}>
