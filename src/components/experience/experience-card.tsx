@@ -2,12 +2,13 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, MapPin, ExternalLink, User, Building, Calendar, LinkIcon } from "lucide-react";
+import { ChevronDown, MapPin, ExternalLink, User, Building, Calendar, LinkIcon, Github } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 import { formatStartEndDate } from "@/lib/utils";
 import { RelatedBlogLinks } from "../blog/related-blog-links";
+import { Experience } from "@/types";
 
 // Fade in animation for items
 const fadeIn = {
@@ -16,20 +17,7 @@ const fadeIn = {
 };
 
 interface ExperienceCardProps {
-  experience: {
-    title: string;
-    company: string;
-    companyUrl?: string;
-    location: string;
-    type: string;
-    startDate: string;
-    endDate?: string;
-    description: string;
-    responsibilities: string[];
-    skills: string[];
-    logo?: string;
-    blogSlugs?: string[];
-  };
+  experience: Experience;
   index: number;
 }
 
@@ -157,6 +145,43 @@ export function ExperienceCard({ experience: exp, index }: ExperienceCardProps) 
                     </li>
                   ))}
                 </ul>
+
+                {exp.projects && exp.projects.length > 0 && (
+                  <>
+                    <h4 className="text-md font-semibold mb-4 flex items-center">
+                      <User className="h-4 w-4 mr-2 text-primary" /> Projects
+                    </h4>
+                    <div className="grid gap-4 mt-4">
+                      {exp.projects.map((project, index) => (
+                        <div key={index} className="space-y-2">
+                          <div className="flex items-center justify-between">
+                            <h5 className="font-medium">{project.title}</h5>
+                            <div className="flex gap-2">
+                              {project.github && (
+                                <a href={project.github} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary">
+                                  <Github className="h-4 w-4" />
+                                </a>
+                              )}
+                              {project.demo && (
+                                <a href={project.demo} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary">
+                                  <ExternalLink className="h-4 w-4" />
+                                </a>
+                              )}
+                            </div>
+                          </div>
+                          <p className="text-sm text-muted-foreground">{project.description}</p>
+                          <div className="flex flex-wrap gap-2">
+                            {project.techStacks.map((tech, i) => (
+                              <Badge key={i} variant="secondary" className="text-xs">
+                                {tech}
+                              </Badge>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                )}
                 
                 <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4 pt-4 border-t border-border/10">
                   {exp.companyUrl && (

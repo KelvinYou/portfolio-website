@@ -1,8 +1,9 @@
 import { getTotalWorkingExperiences } from "@/lib/utils";
+import { Experience, Project } from "@/types";
 
 export const domainPath = "https://kelvinyou.vercel.app";
 
-export const experiences = [
+export const experiences: Experience[] = [
   {
     title: "Frontend Engineer",
     company: "Simpletruss Sdn Bhd",
@@ -19,7 +20,15 @@ export const experiences = [
       "Developed and integrated APIs with frontend interfaces, ensuring seamless data flow."
     ],
     skills: ["React", "TypeScript", "GraphQL", "Material UI", "Git", "Jest", "Storybook"],
-    logo: "/images/companies/simpletruss.jpeg"
+    logo: "/images/companies/simpletruss.jpeg",
+    projects: [
+      {
+        title: "LessenPro - Property Management SaaS",
+        description: "A comprehensive SaaS platform designed to centralize and automate property management services, integrating scheduling, vendor coordination, and maintenance tracking for efficiency-driven operations.",
+        demo: "https://www.lessenpro.com/",
+        techStacks: ["React", "TypeScript", "GraphQL", "Material UI", "Apollo Client"],
+      }
+    ]
   },
   {
     title: "Frontend Developer",
@@ -41,7 +50,15 @@ export const experiences = [
     ],
     skills: ["React", "Redux", "Webpack", "MySQL", "GraphQL", "Jest", "Git", "Docker", "CI/CD", "TypeScript", "Go"],
     logo: "/images/companies/beyondsoft.jpeg",
-    blogSlugs: ['beyondsoft']
+    blogSlugs: ['beyondsoft'],
+    projects: [
+      {
+        title: "Databrain Global - Data Analysis Platform",
+        description: "A platform for analyzing games data for Tencent, MiHoYo, and other game companies.",
+        demo: "https://databrain-global.intlgame.com/",
+        techStacks: ["React", "Umi.js", "Ant Design", "TypeScript", "Go"],
+      }
+    ]
   },
   {
     title: "Java Software Engineer (Internship)",
@@ -216,7 +233,7 @@ export const educations = [
   }
 ];
 
-export const projects = [
+export const projects: Project[] = [
   {
     title: "Personal Website",
     description: "A personal website built with Next.js, TailwindCSS, and Vercel",
@@ -231,7 +248,7 @@ export const projects = [
   {
     title: "Tuition Management System (PTIB)",
     description: "Real world app for a local tuition center with Next.js, TailwindCSS, PostgreSQL, Stripe, and more",
-    // image: "/images/projects/ptib.jpg",
+    image: "/images/projects/tms.png",
     demo: "https://ptib.vercel.app/",
     status: "In Progress",
     techStacks: ["Next.js", "TailwindCSS", "Supabase", "PostgreSQL", "Stripe", "Shadcn", "React"],

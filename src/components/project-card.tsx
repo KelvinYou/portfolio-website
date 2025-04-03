@@ -19,20 +19,9 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
+import { Project } from "@/types";
 
-export type ProjectCardProps = {
-  title: string;
-  description: string;
-  image?: string;
-  github?: string;
-  demo?: string;
-  techStacks: string[];
-  status: string;
-  date: string;
-  blogSlugs?: string[];
-};
-
-export function ProjectCard({ project, index = 0 }: { project: ProjectCardProps, index?: number }) {
+export function ProjectCard({ project, index = 0 }: { project: Project, index?: number }) {
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const fadeIn = {
@@ -174,10 +163,12 @@ export function ProjectCard({ project, index = 0 }: { project: ProjectCardProps,
 
                 <div className="mt-4 grid gap-6">
                   {/* Created Date */}
+                  {project.date && (
                   <div className="flex items-center gap-2 text-sm text-muted-foreground">
                     <Calendar className="h-4 w-4" />
-                    <span>Created: {formatDate(project.date)}</span>
-                  </div>
+                      <span>Created: {formatDate(project.date)}</span>
+                    </div>
+                  )}
                   
                   {/* Project Image */}
                   {project.image && (
