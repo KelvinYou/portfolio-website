@@ -118,7 +118,7 @@ const ResumeDocument = () => (
           <View key={index} style={styles.itemContainer}>
             <View style={styles.itemHeader}>
               <Text style={styles.itemCompany}>{project.title}</Text>
-              <Text style={styles.itemDate}>{project.status} • {formatDate(project.date, 'short')}</Text>
+              <Text style={styles.itemDate}>{project.status} • {formatDate(project.date || '', 'short')}</Text>
             </View>
             
             <Text style={styles.bulletText}>{project.description}</Text>

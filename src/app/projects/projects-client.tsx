@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { ProjectCard, ProjectCardProps } from "@/components/project-card";
+import { ProjectCard } from "@/components/project-card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { 
@@ -15,6 +15,7 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, Filter, X, ArrowUpDown, Check } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { Project } from "@/types";
 
 type SortOption = "newest" | "oldest" | "az" | "za";
 
@@ -29,8 +30,8 @@ const staggerContainer = {
 };
 
 
-export default function ProjectsClient({ initialProjects }: { initialProjects: ProjectCardProps[] }) {
-  const [projects, setProjects] = useState<ProjectCardProps[]>(initialProjects);
+export default function ProjectsClient({ initialProjects }: { initialProjects: Project[] }) {
+  const [projects, setProjects] = useState<Project[]>(initialProjects);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedTechs, setSelectedTechs] = useState<string[]>([]);
   const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
@@ -91,9 +92,9 @@ export default function ProjectsClient({ initialProjects }: { initialProjects: P
     filteredProjects.sort((a, b) => {
       switch (sortOption) {
         case "newest":
-          return new Date(b.date).getTime() - new Date(a.date).getTime();
+          return new Date(b.date || "").getTime() - new Date(a.date || "").getTime();
         case "oldest":
-          return new Date(a.date).getTime() - new Date(b.date).getTime();
+          return new Date(a.date || "").getTime() - new Date(b.date || "").getTime();
         case "az":
           return a.title.localeCompare(b.title);
         case "za":
@@ -323,7 +324,7 @@ export default function ProjectsClient({ initialProjects }: { initialProjects: P
                               ? 'bg-purple-500/90' :
                             ''
                           }`}
-                          onClick={() => setSelectedStatus(prev => prev === status ? null : status)}
+                          onClick={() => setSelectedStatus(prev => prev === status ? null : status as string)}
                         >
                           <span>{status}</span>
                           <span className="text-xs opacity-70 px-1.5 py-0.5 rounded-full bg-background/20">
