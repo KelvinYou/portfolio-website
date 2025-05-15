@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import React, { ReactNode, useEffect, useState } from 'react';
-import { DocumentProps, PDFDownloadLink } from '@react-pdf/renderer';
 import { Button } from "@/components/ui/button";
+import { DocumentProps, PDFDownloadLink } from "@react-pdf/renderer";
 import { FileText, Loader2 } from "lucide-react";
+import React, { ReactNode, useEffect, useState } from "react";
 
 interface PdfDownloaderProps {
   document: React.ReactElement<DocumentProps>;
@@ -11,7 +11,11 @@ interface PdfDownloaderProps {
   children?: ReactNode;
 }
 
-const PdfDownloader = ({ document, fileName, children }: PdfDownloaderProps) => {
+const PdfDownloader = ({
+  document,
+  fileName,
+  children,
+}: PdfDownloaderProps) => {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
@@ -28,10 +32,7 @@ const PdfDownloader = ({ document, fileName, children }: PdfDownloaderProps) => 
   }
 
   return (
-    <PDFDownloadLink 
-      document={document} 
-      fileName={fileName}
-    >
+    <PDFDownloadLink document={document} fileName={fileName}>
       {({ loading }) => (
         <Button disabled={loading}>
           {loading ? (

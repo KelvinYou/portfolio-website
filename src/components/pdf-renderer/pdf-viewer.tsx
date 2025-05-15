@@ -1,7 +1,7 @@
 "use client";
 
-import React from 'react';
-import { DocumentProps, PDFViewer } from '@react-pdf/renderer';
+import { DocumentProps, PDFViewer } from "@react-pdf/renderer";
+import React from "react";
 
 interface PdfViewerProps {
   children: React.ReactElement<DocumentProps>;
@@ -26,13 +26,13 @@ const PdfViewer = ({ children }: PdfViewerProps) => {
   }
 
   return (
-    <PDFViewer 
-      style={{ 
-        width: '100%', 
-        height: '100%', 
-        border: 'none',
-        borderRadius: '0.5rem',
-        backgroundColor: 'transparent'
+    <PDFViewer
+      style={{
+        width: "100%",
+        height: "100%",
+        border: "none",
+        borderRadius: "0.5rem",
+        backgroundColor: "transparent",
       }}
     >
       {children}

@@ -3,7 +3,8 @@ export const templateData = [
   {
     id: "dashboard-pro",
     name: "Dashboard Pro",
-    description: "A comprehensive admin dashboard template with 50+ components and 10+ pre-built pages",
+    description:
+      "A comprehensive admin dashboard template with 50+ components and 10+ pre-built pages",
     screenshot: "/images/templates/dashboard-pro.jpg",
     price: 79,
     features: [
@@ -21,7 +22,8 @@ export const templateData = [
   {
     id: "landing-suite",
     name: "Landing Suite",
-    description: "A collection of 5 landing page templates optimized for conversions and SEO",
+    description:
+      "A collection of 5 landing page templates optimized for conversions and SEO",
     screenshot: "/image/templates/landing-suite.jpg",
     price: 59,
     features: [
@@ -39,7 +41,8 @@ export const templateData = [
   {
     id: "ecommerce-starter",
     name: "E-commerce Starter",
-    description: "A complete e-commerce starter kit with product listings, cart, and checkout flow",
+    description:
+      "A complete e-commerce starter kit with product listings, cart, and checkout flow",
     screenshot: "",
     price: 99,
     features: [
@@ -97,10 +100,7 @@ export const saasPlansData = [
       "Payment processing",
       "Parent portal",
     ],
-    notIncluded: [
-      "Multiple locations",
-      "API access",
-    ],
+    notIncluded: ["Multiple locations", "API access"],
     cta: "Start Free Trial",
     highlight: true,
   },
@@ -131,28 +131,78 @@ export const saasPlansData = [
 ];
 
 export const featureComparisonData = [
-  { feature: "Students", starter: "50", professional: "200", enterprise: "Unlimited" },
-  { feature: "Staff Accounts", starter: "2", professional: "10", enterprise: "Unlimited" },
-  { feature: "Scheduling", starter: "Basic", professional: "Advanced", enterprise: "Advanced" },
-  { feature: "Invoicing", starter: "Simple", professional: "Comprehensive", enterprise: "Comprehensive" },
-  { feature: "Notifications", starter: "Email", professional: "Email & SMS", enterprise: "Email & SMS" },
+  {
+    feature: "Students",
+    starter: "50",
+    professional: "200",
+    enterprise: "Unlimited",
+  },
+  {
+    feature: "Staff Accounts",
+    starter: "2",
+    professional: "10",
+    enterprise: "Unlimited",
+  },
+  {
+    feature: "Scheduling",
+    starter: "Basic",
+    professional: "Advanced",
+    enterprise: "Advanced",
+  },
+  {
+    feature: "Invoicing",
+    starter: "Simple",
+    professional: "Comprehensive",
+    enterprise: "Comprehensive",
+  },
+  {
+    feature: "Notifications",
+    starter: "Email",
+    professional: "Email & SMS",
+    enterprise: "Email & SMS",
+  },
   { feature: "Mobile App", starter: "✓", professional: "✓", enterprise: "✓" },
-  { feature: "Reporting", starter: "Basic", professional: "Advanced", enterprise: "Advanced" },
-  { feature: "Payment Processing", starter: "✗", professional: "✓", enterprise: "✓" },
-  { feature: "Parent Portal", starter: "✗", professional: "✓", enterprise: "✓" },
-  { feature: "Multiple Locations", starter: "✗", professional: "✗", enterprise: "✓" },
+  {
+    feature: "Reporting",
+    starter: "Basic",
+    professional: "Advanced",
+    enterprise: "Advanced",
+  },
+  {
+    feature: "Payment Processing",
+    starter: "✗",
+    professional: "✓",
+    enterprise: "✓",
+  },
+  {
+    feature: "Parent Portal",
+    starter: "✗",
+    professional: "✓",
+    enterprise: "✓",
+  },
+  {
+    feature: "Multiple Locations",
+    starter: "✗",
+    professional: "✗",
+    enterprise: "✓",
+  },
   { feature: "API Access", starter: "✗", professional: "✗", enterprise: "✓" },
-  { feature: "Support", starter: "Email", professional: "Priority Email", enterprise: "Dedicated" },
+  {
+    feature: "Support",
+    starter: "Email",
+    professional: "Priority Email",
+    enterprise: "Dedicated",
+  },
 ];
 
 // Animation variants
 export const fadeIn = {
   hidden: { opacity: 0, y: 20 },
-  visible: { 
-    opacity: 1, 
+  visible: {
+    opacity: 1,
     y: 0,
-    transition: { duration: 0.6 }
-  }
+    transition: { duration: 0.6 },
+  },
 };
 
 export const staggerContainer = {
@@ -160,7 +210,7 @@ export const staggerContainer = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.1
-    }
-  }
-}; 
+      staggerChildren: 0.1,
+    },
+  },
+};

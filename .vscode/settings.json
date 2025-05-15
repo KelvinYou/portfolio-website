@@ -1,0 +1,33 @@
+{
+  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+  "editor.formatOnSave": true,
+  "editor.formatOnType": true,
+  "eslint.format.enable": true,
+  "editor.formatOnPaste": true,
+  "editor.codeActionsOnSave": {
+    // "source.removeUnusedImports": "explicit",
+    // "source.addMissingImports.ts": "explicit",
+    // "source.sortImports": "explicit",
+    "source.fixAll.eslint": "explicit",
+    // "source.organizeImports": "explicit"
+  },
+  "editor.formatOnSaveMode": "modificationsIfAvailable",
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+  ],
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+}

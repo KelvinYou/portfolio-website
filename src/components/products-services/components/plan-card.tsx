@@ -1,9 +1,7 @@
 "use client";
 
-import { memo } from "react";
-import { Check, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -13,6 +11,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { Check, X } from "lucide-react";
+import { memo } from "react";
 import { Plan } from "../types";
 
 interface PlanCardProps {
@@ -26,7 +26,7 @@ function PlanCard({ plan, billingPeriod }: PlanCardProps) {
     if (billingPeriod === "annual") {
       return {
         monthly: Math.round(price * 0.8),
-        annually: Math.round(price * 0.8 * 12)
+        annually: Math.round(price * 0.8 * 12),
       };
     }
     return { monthly: price, annually: price * 12 };
@@ -35,23 +35,23 @@ function PlanCard({ plan, billingPeriod }: PlanCardProps) {
   const price = getPlanPrice(plan.price);
 
   return (
-    <Card className={cn(
-      "h-full border-border/40 backdrop-blur-sm relative overflow-hidden",
-      plan.highlight ? "border-primary/50 shadow-lg" : ""
-    )}>
+    <Card
+      className={cn(
+        "h-full border-border/40 backdrop-blur-sm relative overflow-hidden",
+        plan.highlight ? "border-primary/50 shadow-lg" : "",
+      )}
+    >
       {plan.highlight && (
         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-indigo-600" />
       )}
-      
+
       <CardHeader>
         {plan.highlight && (
           <div className="absolute top-6 right-6">
             <Badge className="bg-primary">Popular</Badge>
           </div>
         )}
-        <CardTitle className="flex items-baseline gap-2">
-          {plan.name}
-        </CardTitle>
+        <CardTitle className="flex items-baseline gap-2">{plan.name}</CardTitle>
         <CardDescription>{plan.description}</CardDescription>
       </CardHeader>
       <CardContent>
@@ -69,7 +69,7 @@ function PlanCard({ plan, billingPeriod }: PlanCardProps) {
               </p>
             )}
           </div>
-          
+
           <div>
             <p className="font-medium mb-3">Includes:</p>
             <ul className="space-y-2">
@@ -81,10 +81,12 @@ function PlanCard({ plan, billingPeriod }: PlanCardProps) {
               ))}
             </ul>
           </div>
-          
+
           {plan.notIncluded.length > 0 && (
             <div>
-              <p className="font-medium text-muted-foreground mb-3">Not included:</p>
+              <p className="font-medium text-muted-foreground mb-3">
+                Not included:
+              </p>
               <ul className="space-y-2 opacity-70">
                 {plan.notIncluded.map((feature: string, index: number) => (
                   <li key={index} className="flex items-start">
@@ -98,10 +100,10 @@ function PlanCard({ plan, billingPeriod }: PlanCardProps) {
         </div>
       </CardContent>
       <CardFooter>
-        <Button 
+        <Button
           className={cn(
             "w-full rounded-full",
-            plan.highlight ? "" : "bg-primary/80 hover:bg-primary"
+            plan.highlight ? "" : "bg-primary/80 hover:bg-primary",
           )}
         >
           {plan.cta}
@@ -112,4 +114,4 @@ function PlanCard({ plan, billingPeriod }: PlanCardProps) {
 }
 
 // Memoize to prevent unnecessary re-renders
-export default memo(PlanCard); 
+export default memo(PlanCard);

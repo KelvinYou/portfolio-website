@@ -3,7 +3,8 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Products & Services | Your Name",
-  description: "Explore our premium templates and subscription-based SaaS solutions. From ready-to-use web templates to powerful tuition management software.",
+  description:
+    "Explore our premium templates and subscription-based SaaS solutions. From ready-to-use web templates to powerful tuition management software.",
   openGraph: {
     title: "Products & Services | Your Name",
     description: "Premium templates and SaaS solutions for modern businesses",

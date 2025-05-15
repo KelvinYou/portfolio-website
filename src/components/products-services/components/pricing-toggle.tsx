@@ -1,9 +1,9 @@
 "use client";
 
-import { Dispatch, SetStateAction, memo } from "react";
-import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
+import { Dispatch, SetStateAction, memo } from "react";
 import { fadeIn } from "../data";
 
 interface PricingToggleProps {
@@ -11,9 +11,12 @@ interface PricingToggleProps {
   setBillingPeriod: Dispatch<SetStateAction<"monthly" | "annual">>;
 }
 
-function PricingToggle({ billingPeriod, setBillingPeriod }: PricingToggleProps) {
+function PricingToggle({
+  billingPeriod,
+  setBillingPeriod,
+}: PricingToggleProps) {
   return (
-    <motion.div 
+    <motion.div
       className="flex justify-center mb-12"
       initial="hidden"
       whileInView="visible"
@@ -36,7 +39,10 @@ function PricingToggle({ billingPeriod, setBillingPeriod }: PricingToggleProps) 
           onClick={() => setBillingPeriod("annual")}
         >
           Annual Billing
-          <Badge variant="outline" className="ml-2 bg-green-500/10 text-green-600 border-0 text-xs rounded-full">
+          <Badge
+            variant="outline"
+            className="ml-2 bg-green-500/10 text-green-600 border-0 text-xs rounded-full"
+          >
             Save 20%
           </Badge>
         </Button>
@@ -46,4 +52,4 @@ function PricingToggle({ billingPeriod, setBillingPeriod }: PricingToggleProps) 
 }
 
 // Memoize to prevent unnecessary re-renders
-export default memo(PricingToggle); 
+export default memo(PricingToggle);

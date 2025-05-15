@@ -1,11 +1,11 @@
 // Server Component
-import { getPostBySlug, getAllPosts } from "@/lib/mdx";
+import { domainPath, personalInfo } from "@/data";
+import { getAllPosts, getPostBySlug } from "@/lib/mdx";
 import { notFound } from "next/navigation";
 import BlogPostClient from "./client";
-import { domainPath, personalInfo } from "@/data";
 
 // Keep static generation settings
-export const dynamic = 'force-static';
+export const dynamic = "force-static";
 export const revalidate = 3600;
 
 export async function generateStaticParams() {
@@ -32,7 +32,11 @@ export async function generateMetadata(props: PageProps) {
       title: `${post.frontmatter.title} | Blog`,
       description: post.frontmatter.description,
       keywords: `blog, ${post.frontmatter.tags?.join(", ")}`,
-      images: [post.frontmatter?.image ? post.frontmatter.image : '/images/projects/portfolio.jpg'],
+      images: [
+        post.frontmatter?.image
+          ? post.frontmatter.image
+          : "/images/projects/portfolio.jpg",
+      ],
     };
 
     return {
@@ -83,14 +87,14 @@ export async function generateMetadata(props: PageProps) {
         description: basicInfo.description,
         url: `${domainPath}/blog/${params.slug}`,
         siteName: `${personalInfo.name}'s Blog`,
-        images: ['/images/projects/portfolio.jpg'],
+        images: ["/images/projects/portfolio.jpg"],
         type: "article",
       },
       twitter: {
         card: "summary_large_image",
         title: basicInfo.title,
         description: basicInfo.description,
-        images: ['/images/projects/portfolio.jpg'],
+        images: ["/images/projects/portfolio.jpg"],
         creator: personalInfo.name,
       },
     };
@@ -107,4 +111,4 @@ export default async function BlogPostPage(props: PageProps) {
     console.error("Error fetching blog post:", error);
     notFound();
   }
-} 
+}

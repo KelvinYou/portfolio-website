@@ -7,7 +7,7 @@ import { personalInfo } from "@/data";
 
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
 };
 
 export function ContactSection() {
@@ -25,12 +25,15 @@ export function ContactSection() {
           variants={fadeIn}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Let&apos;s Connect</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            Let&apos;s Connect
+          </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Interested in working together or have questions? Feel free to reach out!
+            Interested in working together or have questions? Feel free to reach
+            out!
           </p>
         </motion.div>
-        
+
         <div className="grid md:grid-cols-2 gap-12 max-w-4xl mx-auto">
           <motion.div
             initial="hidden"
@@ -46,23 +49,23 @@ export function ContactSection() {
                 </div>
                 <div>
                   <h4 className="font-medium">Email</h4>
-                  <a 
-                    href={`mailto:${personalInfo.contact.email}`} 
+                  <a
+                    href={`mailto:${personalInfo.contact.email}`}
                     className="text-muted-foreground hover:text-primary transition-colors"
                   >
                     {personalInfo.contact.email}
                   </a>
                 </div>
               </div>
-              
+
               <div className="flex items-start gap-4">
                 <div className="bg-muted/30 p-3 rounded-full">
                   <Linkedin className="h-5 w-5" />
                 </div>
                 <div>
                   <h4 className="font-medium">LinkedIn</h4>
-                  <a 
-                    href={`${personalInfo.contact.linkedin}`} 
+                  <a
+                    href={`${personalInfo.contact.linkedin}`}
                     target="_blank"
                     className="text-muted-foreground hover:text-primary transition-colors break-all"
                   >
@@ -70,15 +73,15 @@ export function ContactSection() {
                   </a>
                 </div>
               </div>
-              
+
               <div className="flex items-start gap-4">
                 <div className="bg-muted/30 p-3 rounded-full">
                   <Github className="h-5 w-5" />
                 </div>
                 <div>
                   <h4 className="font-medium">GitHub</h4>
-                  <a 
-                    href={`${personalInfo.contact.github}`} 
+                  <a
+                    href={`${personalInfo.contact.github}`}
                     target="_blank"
                     className="text-muted-foreground hover:text-primary transition-colors break-all"
                   >
@@ -88,7 +91,7 @@ export function ContactSection() {
               </div>
             </div>
           </motion.div>
-          
+
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -101,7 +104,12 @@ export function ContactSection() {
               <h3 className="text-2xl font-semibold mb-6">Send a Message</h3>
               <form className="space-y-6">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium mb-2">Name</label>
+                  <label
+                    htmlFor="name"
+                    className="block text-sm font-medium mb-2"
+                  >
+                    Name
+                  </label>
                   <input
                     type="text"
                     id="name"
@@ -109,7 +117,12 @@ export function ContactSection() {
                   />
                 </div>
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium mb-2">Email</label>
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium mb-2"
+                  >
+                    Email
+                  </label>
                   <input
                     type="email"
                     id="email"
@@ -117,14 +130,21 @@ export function ContactSection() {
                   />
                 </div>
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium mb-2">Message</label>
+                  <label
+                    htmlFor="message"
+                    className="block text-sm font-medium mb-2"
+                  >
+                    Message
+                  </label>
                   <textarea
                     id="message"
                     rows={4}
                     className="w-full px-4 py-2 bg-muted/30 border border-border/40 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50"
                   />
                 </div>
-                <Button className="w-full" onClick={handleSubmit}>Send Message</Button>
+                <Button className="w-full" onClick={handleSubmit}>
+                  Send Message
+                </Button>
               </form>
             </div>
           </motion.div>
@@ -132,4 +152,4 @@ export function ContactSection() {
       </div>
     </section>
   );
-} 
+}

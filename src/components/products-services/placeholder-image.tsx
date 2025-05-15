@@ -7,32 +7,35 @@ interface PlaceholderImageProps {
   className?: string;
 }
 
-export default function PlaceholderImage({ name, className }: PlaceholderImageProps) {
+export default function PlaceholderImage({
+  name,
+  className,
+}: PlaceholderImageProps) {
   // Generate a consistent color based on the name
   const stringToColor = (str: string) => {
     let hash = 0;
     for (let i = 0; i < str.length; i++) {
       hash = str.charCodeAt(i) + ((hash << 5) - hash);
     }
-    let color = '#';
+    let color = "#";
     for (let i = 0; i < 3; i++) {
-      const value = (hash >> (i * 8)) & 0xFF;
-      color += ('00' + value.toString(16)).substr(-2);
+      const value = (hash >> (i * 8)) & 0xff;
+      color += ("00" + value.toString(16)).substr(-2);
     }
     return color;
   };
 
   const bgColor = stringToColor(name);
-  
+
   return (
-    <motion.div 
+    <motion.div
       className={`w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/10 to-primary/5 ${className}`}
       whileHover={{ scale: 1.02 }}
       transition={{ type: "spring", stiffness: 400, damping: 10 }}
     >
-      <div 
+      <div
         className="w-4/5 h-3/5 rounded-lg border border-border/40 bg-background/70 backdrop-blur-sm shadow-lg p-4 flex flex-col"
-        style={{ borderTopColor: bgColor, borderTopWidth: '4px' }}
+        style={{ borderTopColor: bgColor, borderTopWidth: "4px" }}
       >
         <div className="flex gap-1.5 mb-3">
           <div className="w-3 h-3 rounded-full bg-red-400"></div>
@@ -42,7 +45,7 @@ export default function PlaceholderImage({ name, className }: PlaceholderImagePr
         <div className="flex-1 overflow-hidden">
           {/* Header */}
           <div className="h-2 w-1/3 bg-muted rounded mb-2"></div>
-          
+
           {/* Main content */}
           <div className="flex gap-2 h-full">
             <div className="w-1/4">
@@ -53,7 +56,7 @@ export default function PlaceholderImage({ name, className }: PlaceholderImagePr
             </div>
             <div className="flex-1">
               <div className="h-4 w-1/3 bg-muted rounded mb-2"></div>
-              <div 
+              <div
                 className="h-16 w-full rounded"
                 style={{ backgroundColor: `${bgColor}33` }}
               ></div>
@@ -67,4 +70,4 @@ export default function PlaceholderImage({ name, className }: PlaceholderImagePr
       </div>
     </motion.div>
   );
-} 
+}

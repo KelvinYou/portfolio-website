@@ -9,7 +9,7 @@ import Link from "next/link";
 
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
 };
 
 const staggerContainer = {
@@ -17,9 +17,9 @@ const staggerContainer = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.2
-    }
-  }
+      staggerChildren: 0.2,
+    },
+  },
 };
 
 export function ProjectsSection() {
@@ -33,12 +33,15 @@ export function ProjectsSection() {
           variants={fadeIn}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Featured Projects</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            Featured Projects
+          </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Here are some projects I&apos;ve worked on that showcase my skills and approach to problem-solving.
+            Here are some projects I&apos;ve worked on that showcase my skills
+            and approach to problem-solving.
           </p>
         </motion.div>
-        
+
         <motion.div
           className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
           variants={staggerContainer}
@@ -50,8 +53,8 @@ export function ProjectsSection() {
             <ProjectCard key={index} project={project} index={index} />
           ))}
         </motion.div>
-        
-        <motion.div 
+
+        <motion.div
           className="text-center mt-12"
           initial="hidden"
           whileInView="visible"
@@ -67,4 +70,4 @@ export function ProjectsSection() {
       </div>
     </section>
   );
-} 
+}

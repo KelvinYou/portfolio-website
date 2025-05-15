@@ -1,9 +1,7 @@
 "use client";
 
-import Image from "next/image";
-import { Download, Check } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -12,9 +10,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Check, Download } from "lucide-react";
+import Image from "next/image";
 import { memo } from "react";
-import { Template } from "../types";
 import PlaceholderImage from "../placeholder-image";
+import { Template } from "../types";
 
 interface TemplateCardProps {
   template: Template;
@@ -36,13 +36,17 @@ function TemplateCard({ template }: TemplateCardProps) {
           <PlaceholderImage name={template.name} />
         )}
         <div className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <Button 
-            variant="outline" 
-            size="sm" 
+          <Button
+            variant="outline"
+            size="sm"
             className="rounded-full text-white border-white/20 hover:bg-white/10"
             asChild
           >
-            <a href={template.demoUrl} target="_blank" rel="noopener noreferrer">
+            <a
+              href={template.demoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               View Demo
             </a>
           </Button>
@@ -61,7 +65,9 @@ function TemplateCard({ template }: TemplateCardProps) {
         <div className="space-y-2">
           <p className="font-bold text-2xl text-foreground">
             RM {template.price}
-            <span className="text-sm font-normal text-muted-foreground ml-1">one-time</span>
+            <span className="text-sm font-normal text-muted-foreground ml-1">
+              one-time
+            </span>
           </p>
           <ul className="space-y-1.5 mt-4">
             {template.features.map((feature: string, index: number) => (
@@ -75,7 +81,7 @@ function TemplateCard({ template }: TemplateCardProps) {
       </CardContent>
       <CardFooter className="flex flex-col gap-3">
         <Button className="w-full rounded-full">
-          <Download className="mr-2 h-4 w-4" /> 
+          <Download className="mr-2 h-4 w-4" />
           Purchase Now
         </Button>
         <Button variant="ghost" className="w-full rounded-full" asChild>
@@ -89,4 +95,4 @@ function TemplateCard({ template }: TemplateCardProps) {
 }
 
 // Memoize to prevent unnecessary re-renders
-export default memo(TemplateCard); 
+export default memo(TemplateCard);

@@ -1,11 +1,12 @@
 import ResumeViewerWithFallback from "@/app/resume/resume-viewer-fallback";
-import ResumeDocument from "./resume-document";
 import { domainPath, personalInfo } from "@/data";
 import { Metadata } from "next";
+import ResumeDocument from "./resume-document";
 
 export const metadata: Metadata = {
   title: `${personalInfo.name} | Resume`,
-  description: "Professional resume of Kelvin You, showcasing experience, skills, and education.",
+  description:
+    "Professional resume of Kelvin You, showcasing experience, skills, and education.",
   keywords: [
     "resume",
     "Kelvin You",
@@ -13,29 +14,31 @@ export const metadata: Metadata = {
     "professional resume",
     "experience",
     "skills",
-    "education"
+    "education",
   ],
   authors: [{ name: personalInfo.name, url: domainPath }],
   creator: personalInfo.name,
   openGraph: {
     title: `${personalInfo.name} | Resume`,
-    description: "Professional resume of Kelvin You, showcasing experience, skills, and education.",
+    description:
+      "Professional resume of Kelvin You, showcasing experience, skills, and education.",
     url: `${domainPath}/resume`,
     siteName: `${personalInfo.name}'s Resume`,
     images: [
       {
-        url: '/images/projects/portfolio.jpg',
+        url: "/images/projects/portfolio.jpg",
         width: 1200,
         height: 630,
-        alt: 'Resume | Kelvin You',
-      }
+        alt: "Resume | Kelvin You",
+      },
     ],
-    type: "website"
+    type: "website",
   },
   twitter: {
     title: `${personalInfo.name} | Resume`,
-    description: "Professional resume of Kelvin You, showcasing experience, skills, and education.",
-    images: ['/images/projects/portfolio.jpg'],
+    description:
+      "Professional resume of Kelvin You, showcasing experience, skills, and education.",
+    images: ["/images/projects/portfolio.jpg"],
     card: "summary_large_image",
     creator: personalInfo.name,
   },
@@ -66,4 +69,4 @@ export default function ResumePage() {
       </div>
     </div>
   );
-} 
+}

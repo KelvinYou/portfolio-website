@@ -5,7 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
 };
 
 const staggerContainer = {
@@ -13,9 +13,9 @@ const staggerContainer = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.2
-    }
-  }
+      staggerChildren: 0.2,
+    },
+  },
 };
 
 const skills = [
@@ -28,14 +28,16 @@ const skills = [
   { name: "C++", level: 60 },
   { name: "Linux", level: 60 },
   { name: "Git", level: 80 },
-].sort((a, b) => b.level - a.level).slice(0, 5);
+]
+  .sort((a, b) => b.level - a.level)
+  .slice(0, 5);
 
 const softSkills = [
   "Team Collaboration",
   "Problem Solving",
   "Time Management",
   "Adaptability",
-  "Leadership"
+  "Leadership",
 ];
 
 export function SkillsSection() {
@@ -49,18 +51,31 @@ export function SkillsSection() {
           variants={fadeIn}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Skills & Expertise</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            Skills & Expertise
+          </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Technologies and tools I&apos;ve mastered throughout my professional journey.
+            Technologies and tools I&apos;ve mastered throughout my professional
+            journey.
           </p>
         </motion.div>
-        
+
         <Tabs defaultValue="technical" className="max-w-3xl mx-auto">
           <TabsList className="grid w-full grid-cols-2 mb-8">
-            <TabsTrigger value="technical" className="text-foreground cursor-pointer">Technical Skills</TabsTrigger>
-            <TabsTrigger value="soft" className="text-foreground cursor-pointer">Soft Skills</TabsTrigger>
+            <TabsTrigger
+              value="technical"
+              className="text-foreground cursor-pointer"
+            >
+              Technical Skills
+            </TabsTrigger>
+            <TabsTrigger
+              value="soft"
+              className="text-foreground cursor-pointer"
+            >
+              Soft Skills
+            </TabsTrigger>
           </TabsList>
-          
+
           <TabsContent value="technical">
             <motion.div
               variants={staggerContainer}
@@ -73,10 +88,12 @@ export function SkillsSection() {
                 <motion.div key={index} variants={fadeIn} className="mb-4">
                   <div className="flex justify-between mb-1">
                     <span className="font-medium">{skill.name}</span>
-                    <span className="text-muted-foreground">{skill.level}%</span>
+                    <span className="text-muted-foreground">
+                      {skill.level}%
+                    </span>
                   </div>
                   <div className="h-2.5 bg-muted/50 rounded-full overflow-hidden">
-                    <motion.div 
+                    <motion.div
                       className="h-full bg-gradient-to-r from-primary to-primary/70 rounded-full"
                       initial={{ width: 0 }}
                       whileInView={{ width: `${skill.level}%` }}
@@ -88,7 +105,7 @@ export function SkillsSection() {
               ))}
             </motion.div>
           </TabsContent>
-          
+
           <TabsContent value="soft">
             <motion.div
               variants={staggerContainer}
@@ -98,7 +115,11 @@ export function SkillsSection() {
               className="grid gap-6 sm:grid-cols-2"
             >
               {softSkills.map((skill, index) => (
-                <motion.div key={index} variants={fadeIn} className="flex items-center gap-3">
+                <motion.div
+                  key={index}
+                  variants={fadeIn}
+                  className="flex items-center gap-3"
+                >
                   <div className="h-2 w-2 rounded-full bg-primary"></div>
                   <span>{skill}</span>
                 </motion.div>
@@ -109,4 +130,4 @@ export function SkillsSection() {
       </div>
     </section>
   );
-} 
+}

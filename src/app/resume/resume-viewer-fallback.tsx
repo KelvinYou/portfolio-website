@@ -1,42 +1,46 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import { DocumentProps, PDFDownloadLink } from "@react-pdf/renderer";
+import { Download, FileSearch, Laptop, Smartphone } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { PdfViewer } from "../../components/pdf-renderer";
 import { Button } from "../../components/ui/button";
-import { Download, FileSearch, Smartphone, Laptop } from "lucide-react";
-import { PDFDownloadLink } from '@react-pdf/renderer';
-import { DocumentProps } from '@react-pdf/renderer';
-import { PdfViewer } from '../../components/pdf-renderer';
 
 interface ResumeViewerProps {
   document: React.ReactElement<DocumentProps>;
 }
 
-export default function ResumeViewerWithFallback({ document }: ResumeViewerProps) {
+export default function ResumeViewerWithFallback({
+  document,
+}: ResumeViewerProps) {
   const [hasPdfSupport, setHasPdfSupport] = useState<boolean | null>(null);
   const [isClient, setIsClient] = useState(false);
-  const [deviceType, setDeviceType] = useState<'desktop' | 'mobile' | null>(null);
+  const [deviceType, setDeviceType] = useState<"desktop" | "mobile" | null>(
+    null,
+  );
 
   useEffect(() => {
     setIsClient(true);
     detectDevice();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const detectDevice = () => {
     // Check if we're on the client side
-    if (typeof window === 'undefined') return;
+    if (typeof window === "undefined") return;
 
     // Detect mobile devices
-    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-      navigator.userAgent
-    );
+    const isMobile =
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent,
+      );
 
     if (isMobile) {
-      setDeviceType('mobile');
+      setDeviceType("mobile");
       // Skip PDF support check for mobile - just use download option
       setHasPdfSupport(false);
     } else {
-      setDeviceType('desktop');
+      setDeviceType("desktop");
       // Continue with PDF support check for desktop
       checkPdfSupport();
     }
@@ -45,20 +49,22 @@ export default function ResumeViewerWithFallback({ document }: ResumeViewerProps
   const checkPdfSupport = () => {
     try {
       // Various checks for PDF support
-      const hasAcrobat = 
-        navigator?.plugins?.namedItem('Chrome PDF Viewer') || 
-        navigator?.plugins?.namedItem('Adobe Acrobat') ||
-        navigator?.plugins?.namedItem('PDF Viewer') ||
+      const hasAcrobat =
+        navigator?.plugins?.namedItem("Chrome PDF Viewer") ||
+        navigator?.plugins?.namedItem("Adobe Acrobat") ||
+        navigator?.plugins?.namedItem("PDF Viewer") ||
         // @ts-expect-error lazy to figure out why this is not working
-        navigator?.mimeTypes?.['application/pdf'];
-      
-      const hasBuiltInViewer = ('application/pdf' in navigator.mimeTypes);
-      
+        navigator?.mimeTypes?.["application/pdf"];
+
+      const hasBuiltInViewer = "application/pdf" in navigator.mimeTypes;
+
       // Modern browsers usually have built-in PDF capability
-      const isModernBrowser = /Chrome|Firefox|Safari|Edge/.test(navigator.userAgent);
-      
+      const isModernBrowser = /Chrome|Firefox|Safari|Edge/.test(
+        navigator.userAgent,
+      );
+
       setHasPdfSupport(hasAcrobat || hasBuiltInViewer || isModernBrowser);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (e) {
       // If any error occurs during detection, default to fallback
       setHasPdfSupport(false);
@@ -77,7 +83,10 @@ export default function ResumeViewerWithFallback({ document }: ResumeViewerProps
     );
   }
 
-  if (deviceType === null || (deviceType === 'desktop' && hasPdfSupport === null)) {
+  if (
+    deviceType === null ||
+    (deviceType === "desktop" && hasPdfSupport === null)
+  ) {
     // Still detecting device or checking PDF support
     return (
       <div className="bg-background border border-border/40 rounded-xl shadow-sm p-8 mb-8 h-[80vh] flex items-center justify-center">
@@ -90,14 +99,14 @@ export default function ResumeViewerWithFallback({ document }: ResumeViewerProps
   }
 
   // Desktop with PDF support
-  if (deviceType === 'desktop' && hasPdfSupport) {
+  if (deviceType === "desktop" && hasPdfSupport) {
     return (
       <>
         <div className="flex justify-between items-center mb-10">
           <h1 className="text-3xl md:text-4xl font-bold">Resume</h1>
 
-          <PDFDownloadLink 
-            document={document} 
+          <PDFDownloadLink
+            document={document}
             fileName="KelvinYou-Resume.pdf"
             className="inline-flex"
           >
@@ -111,9 +120,7 @@ export default function ResumeViewerWithFallback({ document }: ResumeViewerProps
         </div>
 
         <div className="bg-background border border-border/40 rounded-xl shadow-sm p-8 mb-8 h-[80vh]">
-          <PdfViewer>
-            {document}
-          </PdfViewer>
+          <PdfViewer>{document}</PdfViewer>
         </div>
       </>
     );
@@ -128,27 +135,27 @@ export default function ResumeViewerWithFallback({ document }: ResumeViewerProps
 
       <div className="bg-background border border-border/40 rounded-xl shadow-sm p-8 mb-8 flex items-center justify-center">
         <div className="text-center max-w-md">
-          {deviceType === 'mobile' ? (
+          {deviceType === "mobile" ? (
             <Smartphone className="w-16 h-16 mx-auto mb-6 text-primary/70" />
           ) : (
             <Laptop className="w-16 h-16 mx-auto mb-6 text-muted-foreground" />
           )}
-          
+
           <h2 className="text-2xl font-bold mb-3">
-            {deviceType === 'mobile' 
-              ? "Mobile Device Detected" 
+            {deviceType === "mobile"
+              ? "Mobile Device Detected"
               : "PDF Viewer Not Available"}
           </h2>
-          
+
           <p className="text-muted-foreground mb-6">
-            {deviceType === 'mobile' 
-              ? "For the best experience on mobile devices, please download the resume to view it in your device's PDF reader." 
+            {deviceType === "mobile"
+              ? "For the best experience on mobile devices, please download the resume to view it in your device's PDF reader."
               : "Your browser doesn't support viewing PDFs directly. You can download the resume to view it in your preferred PDF reader."}
           </p>
-          
+
           <div className="flex justify-center items-center">
-            <PDFDownloadLink 
-              document={document} 
+            <PDFDownloadLink
+              document={document}
               fileName="KelvinYou-Resume.pdf"
               className="inline-flex"
             >
@@ -163,6 +170,5 @@ export default function ResumeViewerWithFallback({ document }: ResumeViewerProps
         </div>
       </div>
     </>
-
   );
-} 
+}

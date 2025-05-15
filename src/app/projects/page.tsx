@@ -5,36 +5,39 @@ import { ProjectsPageHeader } from "./projects-page-header";
 
 export const metadata: Metadata = {
   title: `${personalInfo.name} | Projects`,
-  description: "Explore my portfolio of software development projects, from web applications to mobile apps and more.",
+  description:
+    "Explore my portfolio of software development projects, from web applications to mobile apps and more.",
   keywords: [
     "projects",
     "Kelvin You",
     "software engineer",
     "portfolio",
     "web development",
-    "mobile development"
+    "mobile development",
   ],
   authors: [{ name: personalInfo.name, url: domainPath }],
   creator: personalInfo.name,
   openGraph: {
     title: `${personalInfo.name} | Projects`,
-    description: "Explore my portfolio of software development projects, from web applications to mobile apps and more.",
+    description:
+      "Explore my portfolio of software development projects, from web applications to mobile apps and more.",
     url: `${domainPath}/projects`,
     siteName: `${personalInfo.name}'s Projects`,
     images: [
       {
-        url: '/images/projects/portfolio.jpg',
+        url: "/images/projects/portfolio.jpg",
         width: 1200,
         height: 630,
-        alt: 'Projects | Kelvin You',
-      }
+        alt: "Projects | Kelvin You",
+      },
     ],
     type: "website",
   },
   twitter: {
     title: `${personalInfo.name} | Projects`,
-    description: "Explore my portfolio of software development projects, from web applications to mobile apps and more.",
-    images: ['/images/projects/portfolio.jpg'],
+    description:
+      "Explore my portfolio of software development projects, from web applications to mobile apps and more.",
+    images: ["/images/projects/portfolio.jpg"],
     card: "summary_large_image",
     creator: personalInfo.name,
   },
@@ -63,7 +66,7 @@ export default function ProjectsPage() {
         <div className="mx-auto">
           {/* Animated header component */}
           <ProjectsPageHeader />
-          
+
           {/* Pass projects to client component */}
           <ProjectsClient initialProjects={projects} />
         </div>

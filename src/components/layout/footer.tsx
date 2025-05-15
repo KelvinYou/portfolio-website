@@ -1,12 +1,24 @@
-import { Github, Mail, Linkedin } from "lucide-react";
-import dayjs from "dayjs";
 import { personalInfo } from "@/data";
+import dayjs from "dayjs";
+import { Github, Linkedin, Mail } from "lucide-react";
 
 export default function Footer() {
   const socialLinks = [
-    { href: personalInfo.contact.github, icon: Github, label: "GitHub Profile" },
-    { href: personalInfo.contact.linkedin, icon: Linkedin, label: "LinkedIn Profile" },
-    { href: `mailto:${personalInfo.contact.email}`, icon: Mail, label: "Send Email" },
+    {
+      href: personalInfo.contact.github,
+      icon: Github,
+      label: "GitHub Profile",
+    },
+    {
+      href: personalInfo.contact.linkedin,
+      icon: Linkedin,
+      label: "LinkedIn Profile",
+    },
+    {
+      href: `mailto:${personalInfo.contact.email}`,
+      icon: Mail,
+      label: "Send Email",
+    },
   ];
 
   return (
@@ -17,7 +29,12 @@ export default function Footer() {
         </p>
         <div className="flex justify-center mt-4 gap-6">
           {socialLinks.map(({ href, icon: Icon, label }, index) => (
-            <a key={index} href={href} className="text-muted-foreground hover:text-foreground transition-colors" aria-label={label}>
+            <a
+              key={index}
+              href={href}
+              className="text-muted-foreground hover:text-foreground transition-colors"
+              aria-label={label}
+            >
               <Icon className="h-5 w-5" />
             </a>
           ))}
@@ -25,4 +42,4 @@ export default function Footer() {
       </div>
     </footer>
   );
-} 
+}
