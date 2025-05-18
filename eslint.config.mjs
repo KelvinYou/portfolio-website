@@ -18,7 +18,7 @@ const eslintConfig = [
       prettier: eslintPluginPrettier,
     },
     rules: {
-      "prettier/prettier": "warn",
+      "prettier/prettier": ["warn", { endOfLine: "auto" }],
     },
   },
 ];
