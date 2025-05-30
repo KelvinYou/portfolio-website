@@ -17,13 +17,13 @@ function PricingToggle({
 }: PricingToggleProps) {
   return (
     <motion.div
-      className="flex justify-center mb-12"
+      className="mb-12 flex justify-center"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: "-100px" }}
       variants={fadeIn}
     >
-      <div className="bg-muted/50 p-1 rounded-full">
+      <div className="rounded-full bg-muted/50 p-1">
         <Button
           variant={billingPeriod === "monthly" ? "default" : "ghost"}
           size="sm"
@@ -41,7 +41,7 @@ function PricingToggle({
           Annual Billing
           <Badge
             variant="outline"
-            className="ml-2 bg-green-500/10 text-green-600 border-0 text-xs rounded-full"
+            className="ml-2 rounded-full border-0 bg-green-500/10 text-xs text-green-600"
           >
             Save 20%
           </Badge>

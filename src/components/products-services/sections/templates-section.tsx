@@ -12,29 +12,32 @@ interface TemplatesSectionProps {
 
 export default function TemplatesSection({ templates }: TemplatesSectionProps) {
   return (
-    <section id="templates" className="py-20 bg-muted/30">
+    <section id="templates" className="bg-muted/30 py-20">
       <div className="container mx-auto px-4">
-        <motion.div 
-          className="text-center max-w-3xl mx-auto mb-16"
+        <motion.div
+          className="mx-auto mb-16 max-w-3xl text-center"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={fadeIn}
         >
-          <Badge variant="outline" className="mb-4 px-3 py-1 text-sm rounded-full border-primary/20 bg-primary/5 text-primary">
+          <Badge
+            variant="outline"
+            className="mb-4 rounded-full border-primary/20 bg-primary/5 px-3 py-1 text-sm text-primary"
+          >
             Premium Templates
           </Badge>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+          <h2 className="mb-4 text-3xl font-bold md:text-4xl">
             Ready-to-Use Web Templates
           </h2>
-          <p className="text-muted-foreground text-lg">
-            Save time and resources with our professionally designed templates. 
+          <p className="text-lg text-muted-foreground">
+            Save time and resources with our professionally designed templates.
             Just customize and launch your project in minutes, not weeks.
           </p>
         </motion.div>
 
-        <motion.div 
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+        <motion.div
+          className="grid gap-8 md:grid-cols-2 lg:grid-cols-3"
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
@@ -49,4 +52,4 @@ export default function TemplatesSection({ templates }: TemplatesSectionProps) {
       </div>
     </section>
   );
-} 
+}

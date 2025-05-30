@@ -23,35 +23,35 @@ export function ContactSection() {
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={fadeIn}
-          className="text-center mb-16"
+          className="mb-16 text-center"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+          <h2 className="mb-4 text-3xl font-bold md:text-4xl">
             Let&apos;s Connect
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
+          <p className="mx-auto max-w-2xl text-muted-foreground">
             Interested in working together or have questions? Feel free to reach
             out!
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-12 max-w-4xl mx-auto">
+        <div className="mx-auto grid max-w-4xl gap-12 md:grid-cols-2">
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             variants={fadeIn}
           >
-            <h3 className="text-2xl font-semibold mb-6">Contact Information</h3>
+            <h3 className="mb-6 text-2xl font-semibold">Contact Information</h3>
             <div className="space-y-6">
               <div className="flex items-start gap-4">
-                <div className="bg-muted/30 p-3 rounded-full">
+                <div className="rounded-full bg-muted/30 p-3">
                   <Mail className="h-5 w-5" />
                 </div>
                 <div>
                   <h4 className="font-medium">Email</h4>
                   <a
                     href={`mailto:${personalInfo.contact.email}`}
-                    className="text-muted-foreground hover:text-primary transition-colors"
+                    className="text-muted-foreground transition-colors hover:text-primary"
                   >
                     {personalInfo.contact.email}
                   </a>
@@ -59,7 +59,7 @@ export function ContactSection() {
               </div>
 
               <div className="flex items-start gap-4">
-                <div className="bg-muted/30 p-3 rounded-full">
+                <div className="rounded-full bg-muted/30 p-3">
                   <Linkedin className="h-5 w-5" />
                 </div>
                 <div>
@@ -67,7 +67,7 @@ export function ContactSection() {
                   <a
                     href={`${personalInfo.contact.linkedin}`}
                     target="_blank"
-                    className="text-muted-foreground hover:text-primary transition-colors break-all"
+                    className="break-all text-muted-foreground transition-colors hover:text-primary"
                   >
                     {personalInfo.contact.linkedin}
                   </a>
@@ -75,7 +75,7 @@ export function ContactSection() {
               </div>
 
               <div className="flex items-start gap-4">
-                <div className="bg-muted/30 p-3 rounded-full">
+                <div className="rounded-full bg-muted/30 p-3">
                   <Github className="h-5 w-5" />
                 </div>
                 <div>
@@ -83,7 +83,7 @@ export function ContactSection() {
                   <a
                     href={`${personalInfo.contact.github}`}
                     target="_blank"
-                    className="text-muted-foreground hover:text-primary transition-colors break-all"
+                    className="break-all text-muted-foreground transition-colors hover:text-primary"
                   >
                     {personalInfo.contact.github}
                   </a>
@@ -99,47 +99,47 @@ export function ContactSection() {
             variants={fadeIn}
             className="relative"
           >
-            <div className="absolute -inset-0.5 bg-gradient-to-tr from-primary/20 to-secondary/20 rounded-lg blur-sm opacity-50" />
-            <div className="relative bg-background border border-border/40 p-8 rounded-lg">
-              <h3 className="text-2xl font-semibold mb-6">Send a Message</h3>
+            <div className="absolute -inset-0.5 rounded-lg bg-gradient-to-tr from-primary/20 to-secondary/20 opacity-50 blur-sm" />
+            <div className="relative rounded-lg border border-border/40 bg-background p-8">
+              <h3 className="mb-6 text-2xl font-semibold">Send a Message</h3>
               <form className="space-y-6">
                 <div>
                   <label
                     htmlFor="name"
-                    className="block text-sm font-medium mb-2"
+                    className="mb-2 block text-sm font-medium"
                   >
                     Name
                   </label>
                   <input
                     type="text"
                     id="name"
-                    className="w-full px-4 py-2 bg-muted/30 border border-border/40 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50"
+                    className="w-full rounded-md border border-border/40 bg-muted/30 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary/50"
                   />
                 </div>
                 <div>
                   <label
                     htmlFor="email"
-                    className="block text-sm font-medium mb-2"
+                    className="mb-2 block text-sm font-medium"
                   >
                     Email
                   </label>
                   <input
                     type="email"
                     id="email"
-                    className="w-full px-4 py-2 bg-muted/30 border border-border/40 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50"
+                    className="w-full rounded-md border border-border/40 bg-muted/30 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary/50"
                   />
                 </div>
                 <div>
                   <label
                     htmlFor="message"
-                    className="block text-sm font-medium mb-2"
+                    className="mb-2 block text-sm font-medium"
                   >
                     Message
                   </label>
                   <textarea
                     id="message"
                     rows={4}
-                    className="w-full px-4 py-2 bg-muted/30 border border-border/40 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50"
+                    className="w-full rounded-md border border-border/40 bg-muted/30 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary/50"
                   />
                 </div>
                 <Button className="w-full" onClick={handleSubmit}>

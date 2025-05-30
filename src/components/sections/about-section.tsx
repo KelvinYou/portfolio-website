@@ -15,7 +15,7 @@ const fadeIn = {
 
 export function AboutSection() {
   return (
-    <section id="about" className="py-24 bg-muted/20">
+    <section id="about" className="bg-muted/20 py-24">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial="hidden"
@@ -23,27 +23,27 @@ export function AboutSection() {
           viewport={{ once: true, margin: "-100px" }}
           variants={fadeIn}
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
+          <h2 className="mb-12 text-center text-3xl font-bold md:text-4xl">
             About Me
           </h2>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+        <div className="grid items-center gap-12 md:grid-cols-2">
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             variants={fadeIn}
-            className="relative rounded-lg overflow-hidden"
+            className="relative overflow-hidden rounded-lg"
           >
-            <div className="absolute inset-0 border border-primary/20 rounded-lg -m-1 z-10" />
-            <div className="absolute -inset-0.5 bg-gradient-to-tr from-primary/20 to-secondary/20 rounded-lg blur-sm" />
+            <div className="absolute inset-0 z-10 -m-1 rounded-lg border border-primary/20" />
+            <div className="absolute -inset-0.5 rounded-lg bg-gradient-to-tr from-primary/20 to-secondary/20 blur-sm" />
             <Image
               src={personalInfo.profilePicture}
               alt="About Me"
               width={600}
               height={400}
-              className="rounded-lg relative z-0 h-[400px] object-cover"
+              className="relative z-0 h-[400px] rounded-lg object-cover"
             />
           </motion.div>
 
@@ -53,9 +53,9 @@ export function AboutSection() {
             viewport={{ once: true, margin: "-100px" }}
             variants={fadeIn}
           >
-            <h3 className="text-2xl font-semibold mb-4">My Journey</h3>
-            <p className="text-muted-foreground mb-6">{personalInfo.summary}</p>
-            <p className="text-muted-foreground mb-6">
+            <h3 className="mb-4 text-2xl font-semibold">My Journey</h3>
+            <p className="mb-6 text-muted-foreground">{personalInfo.summary}</p>
+            <p className="mb-6 text-muted-foreground">
               I specialize in front-end development with React and TypeScript,
               but I&apos;m also proficient with back-end technologies like
               Node.js and databases. I believe in writing clean, maintainable

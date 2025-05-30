@@ -42,35 +42,35 @@ const softSkills = [
 
 export function SkillsSection() {
   return (
-    <section id="skills" className="py-24 bg-muted/10">
+    <section id="skills" className="bg-muted/10 py-24">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={fadeIn}
-          className="text-center mb-16"
+          className="mb-16 text-center"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+          <h2 className="mb-4 text-3xl font-bold md:text-4xl">
             Skills & Expertise
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
+          <p className="mx-auto max-w-2xl text-muted-foreground">
             Technologies and tools I&apos;ve mastered throughout my professional
             journey.
           </p>
         </motion.div>
 
-        <Tabs defaultValue="technical" className="max-w-3xl mx-auto">
-          <TabsList className="grid w-full grid-cols-2 mb-8">
+        <Tabs defaultValue="technical" className="mx-auto max-w-3xl">
+          <TabsList className="mb-8 grid w-full grid-cols-2">
             <TabsTrigger
               value="technical"
-              className="text-foreground cursor-pointer"
+              className="cursor-pointer text-foreground"
             >
               Technical Skills
             </TabsTrigger>
             <TabsTrigger
               value="soft"
-              className="text-foreground cursor-pointer"
+              className="cursor-pointer text-foreground"
             >
               Soft Skills
             </TabsTrigger>
@@ -86,15 +86,15 @@ export function SkillsSection() {
             >
               {skills.map((skill, index) => (
                 <motion.div key={index} variants={fadeIn} className="mb-4">
-                  <div className="flex justify-between mb-1">
+                  <div className="mb-1 flex justify-between">
                     <span className="font-medium">{skill.name}</span>
                     <span className="text-muted-foreground">
                       {skill.level}%
                     </span>
                   </div>
-                  <div className="h-2.5 bg-muted/50 rounded-full overflow-hidden">
+                  <div className="h-2.5 overflow-hidden rounded-full bg-muted/50">
                     <motion.div
-                      className="h-full bg-gradient-to-r from-primary to-primary/70 rounded-full"
+                      className="h-full rounded-full bg-gradient-to-r from-primary to-primary/70"
                       initial={{ width: 0 }}
                       whileInView={{ width: `${skill.level}%` }}
                       transition={{ duration: 1, delay: index * 0.1 }}

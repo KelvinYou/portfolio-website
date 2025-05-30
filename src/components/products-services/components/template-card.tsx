@@ -22,24 +22,24 @@ interface TemplateCardProps {
 
 function TemplateCard({ template }: TemplateCardProps) {
   return (
-    <Card className="overflow-hidden h-full border-border/40 bg-background/70 backdrop-blur-sm hover:shadow-lg transition-all duration-300 hover:scale-[1.02]">
-      <div className="relative aspect-video overflow-hidden group">
+    <Card className="h-full overflow-hidden border-border/40 bg-background/70 backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-lg">
+      <div className="group relative aspect-video overflow-hidden">
         {template.screenshot.startsWith("/images") ? (
           <Image
             src={template.screenshot}
             alt={template.name}
             width={600}
             height={400}
-            className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
+            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
           <PlaceholderImage name={template.name} />
         )}
-        <div className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <div className="absolute inset-0 flex items-center justify-center bg-black/60 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
           <Button
             variant="outline"
             size="sm"
-            className="rounded-full text-white border-white/20 hover:bg-white/10"
+            className="rounded-full border-white/20 text-black hover:bg-white/90 dark:border-black/20 dark:text-white dark:hover:bg-black/10"
             asChild
           >
             <a
@@ -52,7 +52,7 @@ function TemplateCard({ template }: TemplateCardProps) {
           </Button>
         </div>
         {template.popular && (
-          <Badge className="absolute top-3 right-3 bg-primary text-primary-foreground">
+          <Badge className="absolute right-3 top-3 bg-primary text-primary-foreground">
             Popular Choice
           </Badge>
         )}
@@ -63,16 +63,16 @@ function TemplateCard({ template }: TemplateCardProps) {
       </CardHeader>
       <CardContent>
         <div className="space-y-2">
-          <p className="font-bold text-2xl text-foreground">
+          <p className="text-2xl font-bold text-foreground">
             RM {template.price}
-            <span className="text-sm font-normal text-muted-foreground ml-1">
+            <span className="ml-1 text-sm font-normal text-muted-foreground">
               one-time
             </span>
           </p>
-          <ul className="space-y-1.5 mt-4">
+          <ul className="mt-4 space-y-1.5">
             {template.features.map((feature: string, index: number) => (
               <li key={index} className="flex items-start">
-                <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" />
+                <Check className="mr-2 h-5 w-5 flex-shrink-0 text-green-500" />
                 <span className="text-sm">{feature}</span>
               </li>
             ))}

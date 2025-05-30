@@ -42,12 +42,12 @@ function PlanCard({ plan, billingPeriod }: PlanCardProps) {
       )}
     >
       {plan.highlight && (
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-indigo-600" />
+        <div className="absolute left-0 top-0 h-1 w-full bg-gradient-to-r from-primary to-indigo-600" />
       )}
 
       <CardHeader>
         {plan.highlight && (
-          <div className="absolute top-6 right-6">
+          <div className="absolute right-6 top-6">
             <Badge className="bg-primary">Popular</Badge>
           </div>
         )}
@@ -59,23 +59,23 @@ function PlanCard({ plan, billingPeriod }: PlanCardProps) {
           <div>
             <p className="text-4xl font-bold">
               RM {price.monthly}
-              <span className="text-sm font-normal text-muted-foreground ml-1">
+              <span className="ml-1 text-sm font-normal text-muted-foreground">
                 /month
               </span>
             </p>
             {billingPeriod === "annual" && (
-              <p className="text-sm text-muted-foreground mt-1">
+              <p className="mt-1 text-sm text-muted-foreground">
                 RM {price.annually} billed annually
               </p>
             )}
           </div>
 
           <div>
-            <p className="font-medium mb-3">Includes:</p>
+            <p className="mb-3 font-medium">Includes:</p>
             <ul className="space-y-2">
               {plan.features.map((feature: string, index: number) => (
                 <li key={index} className="flex items-start">
-                  <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" />
+                  <Check className="mr-2 h-5 w-5 flex-shrink-0 text-green-500" />
                   <span className="text-sm">{feature}</span>
                 </li>
               ))}
@@ -84,13 +84,13 @@ function PlanCard({ plan, billingPeriod }: PlanCardProps) {
 
           {plan.notIncluded.length > 0 && (
             <div>
-              <p className="font-medium text-muted-foreground mb-3">
+              <p className="mb-3 font-medium text-muted-foreground">
                 Not included:
               </p>
               <ul className="space-y-2 opacity-70">
                 {plan.notIncluded.map((feature: string, index: number) => (
                   <li key={index} className="flex items-start">
-                    <X className="h-5 w-5 text-muted-foreground mr-2 flex-shrink-0" />
+                    <X className="mr-2 h-5 w-5 flex-shrink-0 text-muted-foreground" />
                     <span className="text-sm">{feature}</span>
                   </li>
                 ))}

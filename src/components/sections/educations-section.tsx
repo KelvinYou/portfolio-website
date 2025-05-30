@@ -40,38 +40,38 @@ const timelineVariants = {
 
 export function EducationsSection() {
   return (
-    <section id="education" className="py-24 bg-muted/5">
+    <section id="education" className="bg-muted/5 py-24">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={fadeIn}
-          className="text-center mb-16"
+          className="mb-16 text-center"
         >
-          <div className="inline-block p-1.5 px-3 mb-4 rounded-full bg-primary/10 border border-primary/20">
-            <BookOpen className="h-4 w-4 text-primary inline mr-1" />
+          <div className="mb-4 inline-block rounded-full border border-primary/20 bg-primary/10 p-1.5 px-3">
+            <BookOpen className="mr-1 inline h-4 w-4 text-primary" />
             <span className="text-xs font-medium">Academic Journey</span>
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+          <h2 className="mb-4 text-3xl font-bold md:text-4xl">
             Education & Certifications
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
+          <p className="mx-auto max-w-2xl text-muted-foreground">
             My academic journey and continuous learning path that has shaped my
             professional skills.
           </p>
         </motion.div>
 
-        <div className="relative max-w-4xl mx-auto">
+        <div className="relative mx-auto max-w-4xl">
           {/* Timeline line */}
           <motion.div
-            className="absolute left-0 md:left-1/2 transform md:-translate-x-1/2 h-full w-1"
+            className="absolute left-0 h-full w-1 transform md:left-1/2 md:-translate-x-1/2"
             variants={timelineVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
           >
-            <div className="h-full w-full bg-gradient-to-b from-primary via-primary/50 to-primary/10 rounded-full"></div>
+            <div className="h-full w-full rounded-full bg-gradient-to-b from-primary via-primary/50 to-primary/10"></div>
           </motion.div>
 
           <motion.div
@@ -85,11 +85,11 @@ export function EducationsSection() {
               <motion.div
                 key={index}
                 variants={fadeIn}
-                className={`mb-12 md:mb-24 flex flex-col ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"}`}
+                className={`mb-12 flex flex-col md:mb-24 ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"}`}
               >
                 {/* Timeline node */}
-                <div className="hidden md:flex absolute left-0 md:left-1/2 transform md:-translate-x-1/2 w-8 h-8 rounded-full border-2 border-primary/80 bg-background items-center justify-center shadow-[0_0_10px_rgba(var(--primary),0.3)]">
-                  <div className="w-3 h-3 rounded-full bg-primary animate-pulse"></div>
+                <div className="absolute left-0 hidden h-8 w-8 transform items-center justify-center rounded-full border-2 border-primary/80 bg-background shadow-[0_0_10px_rgba(var(--primary),0.3)] md:left-1/2 md:flex md:-translate-x-1/2">
+                  <div className="h-3 w-3 animate-pulse rounded-full bg-primary"></div>
                 </div>
 
                 {/* Date tag */}
@@ -107,7 +107,7 @@ export function EducationsSection() {
                       index % 2 === 0 ? "pl-3 pr-4" : "pl-4 pr-3",
                     )}
                   >
-                    <Calendar className="h-3 w-3 text-primary shrink-0" />
+                    <Calendar className="h-3 w-3 shrink-0 text-primary" />
                     <span className="ml-1.5">
                       {formatStartEndDate(edu.startDate, edu.endDate)}
                     </span>
@@ -119,7 +119,7 @@ export function EducationsSection() {
                   className={`relative ml-6 md:ml-0 md:w-1/2 ${index % 2 === 0 ? "md:pr-12" : "md:pl-12"}`}
                 >
                   <motion.div
-                    className="relative p-6 bg-background/80 backdrop-blur-sm border border-border/40 rounded-lg hover:shadow-lg transition-all duration-300"
+                    className="relative rounded-lg border border-border/40 bg-background/80 p-6 backdrop-blur-sm transition-all duration-300 hover:shadow-lg"
                     whileHover={{
                       scale: 1.02,
                       boxShadow:
@@ -127,9 +127,9 @@ export function EducationsSection() {
                     }}
                   >
                     {/* Mobile timeline marker */}
-                    <div className="absolute -left-8 md:hidden top-8 flex flex-col items-center">
-                      <div className="w-4 h-4 rounded-full border border-primary bg-background flex items-center justify-center">
-                        <div className="w-1.5 h-1.5 rounded-full bg-primary"></div>
+                    <div className="absolute -left-8 top-8 flex flex-col items-center md:hidden">
+                      <div className="flex h-4 w-4 items-center justify-center rounded-full border border-primary bg-background">
+                        <div className="h-1.5 w-1.5 rounded-full bg-primary"></div>
                       </div>
                       <div className="h-full w-0.5 bg-gradient-to-b from-primary to-primary/10"></div>
                     </div>
@@ -137,22 +137,22 @@ export function EducationsSection() {
                     {/* Content header */}
                     <div className="mb-4">
                       <div className="flex items-start justify-between">
-                        <h3 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-indigo-500">
+                        <h3 className="bg-gradient-to-r from-primary to-indigo-500 bg-clip-text text-xl font-bold text-transparent">
                           {edu.degree}
                         </h3>
                       </div>
 
-                      <div className="flex flex-wrap items-center mt-2 text-muted-foreground">
-                        <div className="flex items-center mr-4">
-                          <School className="h-3.5 w-3.5 mr-1 text-primary" />
+                      <div className="mt-2 flex flex-wrap items-center text-muted-foreground">
+                        <div className="mr-4 flex items-center">
+                          <School className="mr-1 h-3.5 w-3.5 text-primary" />
                           <span className="text-sm">{edu.institution}</span>
                         </div>
-                        <div className="flex items-center mt-1 sm:mt-0">
-                          <MapPin className="h-3.5 w-3.5 mr-1 text-primary/70" />
+                        <div className="mt-1 flex items-center sm:mt-0">
+                          <MapPin className="mr-1 h-3.5 w-3.5 text-primary/70" />
                           <span className="text-sm">{edu.location}</span>
                         </div>
-                        <div className="md:hidden flex items-center mt-1 sm:mt-0">
-                          <Calendar className="h-3.5 w-3.5 mr-1 text-primary/70" />
+                        <div className="mt-1 flex items-center sm:mt-0 md:hidden">
+                          <Calendar className="mr-1 h-3.5 w-3.5 text-primary/70" />
                           <span className="text-sm">
                             {formatStartEndDate(edu.startDate, edu.endDate)}
                           </span>
@@ -163,22 +163,22 @@ export function EducationsSection() {
                     <div className="relative">
                       {/* Decorative line */}
                       <div className="absolute left-0 top-0 h-full w-0.5 bg-gradient-to-b from-primary/30 to-transparent"></div>
-                      <p className="text-muted-foreground text-sm my-4 pl-3">
+                      <p className="my-4 pl-3 text-sm text-muted-foreground">
                         {edu.description}
                       </p>
                     </div>
 
                     {edu.achievements.length > 0 && (
-                      <div className="mt-5 pt-4 border-t border-border/40">
-                        <h4 className="text-sm font-semibold mb-2 flex items-center">
-                          <Award className="h-4 w-4 mr-1.5 text-primary" />{" "}
+                      <div className="mt-5 border-t border-border/40 pt-4">
+                        <h4 className="mb-2 flex items-center text-sm font-semibold">
+                          <Award className="mr-1.5 h-4 w-4 text-primary" />{" "}
                           Achievements & Honors
                         </h4>
-                        <ul className="grid sm:grid-cols-2 gap-y-1 gap-x-4">
+                        <ul className="grid gap-x-4 gap-y-1 sm:grid-cols-2">
                           {edu.achievements.map((achievement, i) => (
                             <li
                               key={i}
-                              className="text-xs pl-5 relative before:absolute before:left-1.5 before:top-1.5 before:w-1.5 before:h-1.5 before:bg-primary/40 before:rounded-full"
+                              className="relative pl-5 text-xs before:absolute before:left-1.5 before:top-1.5 before:h-1.5 before:w-1.5 before:rounded-full before:bg-primary/40"
                             >
                               {achievement}
                             </li>
@@ -187,7 +187,7 @@ export function EducationsSection() {
                       </div>
                     )}
 
-                    <div className="mt-4 pt-4 border-t border-border/40 flex justify-between items-center">
+                    <div className="mt-4 flex items-center justify-between border-t border-border/40 pt-4">
                       <div className="text-xs text-muted-foreground">
                         {edu.logo && (
                           <Image
@@ -202,13 +202,13 @@ export function EducationsSection() {
                       <Button
                         variant="ghost"
                         size="sm"
-                        className="text-xs h-8 px-2"
+                        className="h-8 px-2 text-xs"
                         asChild
                       >
                         <a
                           href={edu.documents[0].url}
                           target="_blank"
-                          className="flex items-center group"
+                          className="group flex items-center"
                         >
                           <span>View certificate</span>
                           <ExternalLink className="ml-1 h-3 w-3 transition-transform group-hover:translate-x-0.5" />

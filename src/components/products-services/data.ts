@@ -14,7 +14,6 @@ export const templateData = [
       "Responsive Design",
       "React & Next.js",
       "Tailwind CSS",
-      "6 Months Support",
     ],
     popular: true,
     demoUrl: "#",
@@ -33,30 +32,29 @@ export const templateData = [
       "Customizable Sections",
       "React & Next.js",
       "Tailwind CSS",
-      "3 Months Support",
     ],
     popular: false,
     demoUrl: "#",
   },
-  {
-    id: "ecommerce-starter",
-    name: "E-commerce Starter",
-    description:
-      "A complete e-commerce starter kit with product listings, cart, and checkout flow",
-    screenshot: "",
-    price: 99,
-    features: [
-      "Product Catalog",
-      "Shopping Cart",
-      "Checkout Flow",
-      "User Authentication",
-      "React & Next.js",
-      "Tailwind CSS",
-      "12 Months Support",
-    ],
-    popular: false,
-    demoUrl: "#",
-  },
+  // {
+  //   id: "ecommerce-starter",
+  //   name: "E-commerce Starter",
+  //   description:
+  //     "A complete e-commerce starter kit with product listings, cart, and checkout flow",
+  //   screenshot: "",
+  //   price: 99,
+  //   features: [
+  //     "Product Catalog",
+  //     "Shopping Cart",
+  //     "Checkout Flow",
+  //     "User Authentication",
+  //     "React & Next.js",
+  //     "Tailwind CSS",
+  //     "12 Months Support",
+  //   ],
+  //   popular: false,
+  //   demoUrl: "#",
+  // },
 ];
 
 // Mock data for SaaS plans

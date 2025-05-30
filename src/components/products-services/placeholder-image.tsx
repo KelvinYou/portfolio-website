@@ -29,38 +29,38 @@ export default function PlaceholderImage({
 
   return (
     <motion.div
-      className={`w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/10 to-primary/5 ${className}`}
+      className={`flex h-full w-full items-center justify-center bg-gradient-to-br from-primary/10 to-primary/5 ${className}`}
       whileHover={{ scale: 1.02 }}
       transition={{ type: "spring", stiffness: 400, damping: 10 }}
     >
       <div
-        className="w-4/5 h-3/5 rounded-lg border border-border/40 bg-background/70 backdrop-blur-sm shadow-lg p-4 flex flex-col"
+        className="flex h-3/5 w-4/5 flex-col rounded-lg border border-border/40 bg-background/70 p-4 shadow-lg backdrop-blur-sm"
         style={{ borderTopColor: bgColor, borderTopWidth: "4px" }}
       >
-        <div className="flex gap-1.5 mb-3">
-          <div className="w-3 h-3 rounded-full bg-red-400"></div>
-          <div className="w-3 h-3 rounded-full bg-yellow-400"></div>
-          <div className="w-3 h-3 rounded-full bg-green-400"></div>
+        <div className="mb-3 flex gap-1.5">
+          <div className="h-3 w-3 rounded-full bg-red-400"></div>
+          <div className="h-3 w-3 rounded-full bg-yellow-400"></div>
+          <div className="h-3 w-3 rounded-full bg-green-400"></div>
         </div>
         <div className="flex-1 overflow-hidden">
           {/* Header */}
-          <div className="h-2 w-1/3 bg-muted rounded mb-2"></div>
+          <div className="mb-2 h-2 w-1/3 rounded bg-muted"></div>
 
           {/* Main content */}
-          <div className="flex gap-2 h-full">
+          <div className="flex h-full gap-2">
             <div className="w-1/4">
-              <div className="h-4 w-4/5 bg-muted rounded mb-2"></div>
-              <div className="h-3 w-full bg-muted/60 rounded mb-1.5"></div>
-              <div className="h-3 w-full bg-muted/60 rounded mb-1.5"></div>
-              <div className="h-3 w-3/4 bg-muted/60 rounded"></div>
+              <div className="mb-2 h-4 w-4/5 rounded bg-muted"></div>
+              <div className="mb-1.5 h-3 w-full rounded bg-muted/60"></div>
+              <div className="mb-1.5 h-3 w-full rounded bg-muted/60"></div>
+              <div className="h-3 w-3/4 rounded bg-muted/60"></div>
             </div>
             <div className="flex-1">
-              <div className="h-4 w-1/3 bg-muted rounded mb-2"></div>
+              <div className="mb-2 h-4 w-1/3 rounded bg-muted"></div>
               <div
                 className="h-16 w-full rounded"
                 style={{ backgroundColor: `${bgColor}33` }}
               ></div>
-              <div className="grid grid-cols-2 gap-2 mt-2">
+              <div className="mt-2 grid grid-cols-2 gap-2">
                 <div className="h-8 w-full rounded bg-muted/40"></div>
                 <div className="h-8 w-full rounded bg-muted/40"></div>
               </div>

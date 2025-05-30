@@ -23,11 +23,11 @@ const staggerContainer = {
 
 export function ExperiencesSection() {
   return (
-    <section id="experience" className="py-24 relative overflow-hidden">
+    <section id="experience" className="relative overflow-hidden py-24">
       {/* Subtle background gradients */}
       <div className="absolute inset-0 -z-10 opacity-30">
-        <div className="absolute right-1/4 top-1/4 w-96 h-96 bg-primary/5 rounded-full filter blur-3xl"></div>
-        <div className="absolute left-1/4 bottom-1/4 w-96 h-96 bg-secondary/5 rounded-full filter blur-3xl"></div>
+        <div className="absolute right-1/4 top-1/4 h-96 w-96 rounded-full bg-primary/5 blur-3xl filter"></div>
+        <div className="absolute bottom-1/4 left-1/4 h-96 w-96 rounded-full bg-secondary/5 blur-3xl filter"></div>
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -36,16 +36,16 @@ export function ExperiencesSection() {
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={fadeIn}
-          className="text-center mb-16"
+          className="mb-16 text-center"
         >
-          <div className="inline-block p-1.5 px-3 mb-4 rounded-full bg-primary/10 border border-primary/20">
-            <Briefcase className="h-4 w-4 text-primary inline mr-1" />
+          <div className="mb-4 inline-block rounded-full border border-primary/20 bg-primary/10 p-1.5 px-3">
+            <Briefcase className="mr-1 inline h-4 w-4 text-primary" />
             <span className="text-xs font-medium">Work History</span>
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+          <h2 className="mb-4 text-3xl font-bold md:text-4xl">
             Professional Experience
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
+          <p className="mx-auto max-w-2xl text-muted-foreground">
             A showcase of my professional journey and the skills I&apos;ve
             developed along the way.
           </p>
@@ -56,7 +56,7 @@ export function ExperiencesSection() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
-          className="max-w-4xl mx-auto"
+          className="mx-auto max-w-4xl"
         >
           {experiences.map((exp, index) => (
             <ExperienceCard key={index} experience={exp} index={index} />

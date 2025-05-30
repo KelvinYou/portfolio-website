@@ -29,8 +29,8 @@ function FeaturesTabs({ featureComparison }: FeaturesTabsProps) {
       variants={fadeIn}
     >
       <Tabs defaultValue="features" className="w-full">
-        <div className="flex justify-center mb-8">
-          <TabsList className="grid grid-cols-2 w-[400px]">
+        <div className="mb-8 flex justify-center">
+          <TabsList className="grid w-[400px] grid-cols-2">
             <TabsTrigger value="features">Features Comparison</TabsTrigger>
             <TabsTrigger value="testimonials">Testimonials</TabsTrigger>
           </TabsList>
@@ -41,14 +41,14 @@ function FeaturesTabs({ featureComparison }: FeaturesTabsProps) {
             <table className="w-full border-collapse">
               <thead>
                 <tr>
-                  <th className="text-left py-4 px-4 bg-muted/30 rounded-tl-lg">
+                  <th className="rounded-tl-lg bg-muted/30 px-4 py-4 text-left">
                     Feature
                   </th>
-                  <th className="text-center py-4 px-4 bg-muted/30">Starter</th>
-                  <th className="text-center py-4 px-4 bg-primary/10 font-bold">
+                  <th className="bg-muted/30 px-4 py-4 text-center">Starter</th>
+                  <th className="bg-primary/10 px-4 py-4 text-center font-bold">
                     Professional
                   </th>
-                  <th className="text-center py-4 px-4 bg-muted/30 rounded-tr-lg">
+                  <th className="rounded-tr-lg bg-muted/30 px-4 py-4 text-center">
                     Enterprise
                   </th>
                 </tr>
@@ -59,32 +59,32 @@ function FeaturesTabs({ featureComparison }: FeaturesTabsProps) {
                     key={index}
                     className={index % 2 === 0 ? "bg-muted/10" : ""}
                   >
-                    <td className="py-3 px-4 border-t border-border/20 font-medium">
+                    <td className="border-t border-border/20 px-4 py-3 font-medium">
                       {row.feature}
                     </td>
-                    <td className="py-3 px-4 border-t border-border/20 text-center">
+                    <td className="border-t border-border/20 px-4 py-3 text-center">
                       {row.starter === "✓" ? (
-                        <Check className="h-5 w-5 text-green-500 mx-auto" />
+                        <Check className="mx-auto h-5 w-5 text-green-500" />
                       ) : row.starter === "✗" ? (
-                        <X className="h-5 w-5 text-muted-foreground mx-auto" />
+                        <X className="mx-auto h-5 w-5 text-muted-foreground" />
                       ) : (
                         row.starter
                       )}
                     </td>
-                    <td className="py-3 px-4 border-t border-primary/20 text-center bg-primary/5">
+                    <td className="border-t border-primary/20 bg-primary/5 px-4 py-3 text-center">
                       {row.professional === "✓" ? (
-                        <Check className="h-5 w-5 text-green-500 mx-auto" />
+                        <Check className="mx-auto h-5 w-5 text-green-500" />
                       ) : row.professional === "✗" ? (
-                        <X className="h-5 w-5 text-muted-foreground mx-auto" />
+                        <X className="mx-auto h-5 w-5 text-muted-foreground" />
                       ) : (
                         row.professional
                       )}
                     </td>
-                    <td className="py-3 px-4 border-t border-border/20 text-center">
+                    <td className="border-t border-border/20 px-4 py-3 text-center">
                       {row.enterprise === "✓" ? (
-                        <Check className="h-5 w-5 text-green-500 mx-auto" />
+                        <Check className="mx-auto h-5 w-5 text-green-500" />
                       ) : row.enterprise === "✗" ? (
-                        <X className="h-5 w-5 text-muted-foreground mx-auto" />
+                        <X className="mx-auto h-5 w-5 text-muted-foreground" />
                       ) : (
                         row.enterprise
                       )}
@@ -97,12 +97,12 @@ function FeaturesTabs({ featureComparison }: FeaturesTabsProps) {
         </TabsContent>
 
         <TabsContent value="testimonials">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {[1, 2, 3].map((i) => (
               <Card key={i} className="border-border/40 backdrop-blur-sm">
                 <CardHeader>
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
                       <Image
                         src={`/images/testimonial-${i}.jpg`}
                         alt="Testimonial"
@@ -118,7 +118,7 @@ function FeaturesTabs({ featureComparison }: FeaturesTabsProps) {
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <div className="flex items-center mb-3">
+                  <div className="mb-3 flex items-center">
                     {[1, 2, 3, 4, 5].map((star) => (
                       <Star
                         key={star}
