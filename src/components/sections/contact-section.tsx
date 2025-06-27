@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Github, Mail, Linkedin } from "lucide-react";
-import { Button } from "@/components/ui/button";
+// import { Button } from "@/components/ui/button";
 import { personalInfo } from "@/data";
 
 const fadeIn = {
@@ -11,9 +11,9 @@ const fadeIn = {
 };
 
 export function ContactSection() {
-  const handleSubmit = () => {
-    console.log("Form submitted");
-  };
+  // const handleSubmit = () => {
+  //   console.log("Form submitted");
+  // };
 
   return (
     <section id="contact" className="py-24">
