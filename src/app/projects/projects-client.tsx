@@ -150,7 +150,6 @@ export default function ProjectsClient({
       y: 0,
       transition: {
         duration: 0.4,
-        ease: [0.22, 1, 0.36, 1], // Custom easing for subtle, elegant animation
       },
     },
   };

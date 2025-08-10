@@ -34,7 +34,7 @@ const timelineVariants = {
   visible: {
     opacity: 1,
     height: "100%",
-    transition: { duration: 1.5, ease: "easeInOut" },
+    transition: { duration: 1.5 },
   },
 };
 

@@ -156,8 +156,6 @@ export default function Navbar() {
         }
       }
 
-      console.log("currentSection: ", currentSection);
-
       if (currentSection && currentSection !== activeSection) {
         setActiveSection(currentSection);
       }

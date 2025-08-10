@@ -29,7 +29,7 @@ export function MdxImage({
       <div className="overflow-hidden rounded-lg">
         <div className={cn("transition-all", isLoading ? "blur-sm" : "blur-0")}>
           <Image
-            src={src || ""}
+            src={(src as string) || ""}
             alt={alt}
             width={safeWidth}
             height={safeHeight}
