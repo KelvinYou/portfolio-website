@@ -269,6 +269,21 @@ export const educations = [
 
 export const projects: Project[] = [
   {
+    title: "Availability Scheduling Platform (Zync)",
+    description:
+      "Zync is a smart availability sharing and scheduling platform for both personal and professional use. It helps friends and teams find the perfect time to meet by sharing their free slots.",
+    status: "Focusing",
+    techStacks: [
+      "React.js",
+      "Nest.js",
+      "Supabase",
+      "PostgreSQL",
+      "Shadcn",
+      "Stripe",
+    ],
+    date: "2025-8-8",
+  },
+  {
     title: "Personal Website",
     description:
       "A personal website built with Next.js, TailwindCSS, and Vercel",
