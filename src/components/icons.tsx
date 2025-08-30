@@ -2,6 +2,7 @@ import {
   Bookmark,
   Briefcase,
   Code,
+  Edit3,
   GraduationCap,
   Home,
   LucideIcon,
@@ -23,6 +24,7 @@ export const Icons = {
   graduationCap: GraduationCap,
   send: Send,
   bookmark: Bookmark,
+  edit: Edit3,
   gitHub: ({ ...props }: LucideProps) => (
     <svg
       aria-hidden="true"

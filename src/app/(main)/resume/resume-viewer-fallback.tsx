@@ -3,8 +3,8 @@
 import { DocumentProps, PDFDownloadLink } from "@react-pdf/renderer";
 import { Download, FileSearch, Laptop, Smartphone } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import { PdfViewer } from "../../components/pdf-renderer";
-import { Button } from "../../components/ui/button";
+import { PdfViewer } from "../../../components/pdf-renderer";
+import { Button } from "../../../components/ui/button";
 
 interface ResumeViewerProps {
   document: React.ReactElement<DocumentProps>;
