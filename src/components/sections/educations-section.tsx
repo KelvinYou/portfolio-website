@@ -10,7 +10,7 @@ import {
   MapPin,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { educations } from "@/data";
+import { educations } from "@/constants";
 import { formatStartEndDate, cn } from "@/lib/utils";
 import Image from "next/image";
 // Animation variants

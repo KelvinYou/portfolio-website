@@ -1,4 +1,4 @@
-import { domainPath, personalInfo } from "@/data";
+import { domainPath, personalInfo } from "@/constants";
 import { getAllPosts } from "@/lib/mdx";
 import { Metadata } from "next";
 import BlogClient from "./blog-client";

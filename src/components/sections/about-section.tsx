@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { FileText, Mail } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
-import { personalInfo } from "@/data";
+import { personalInfo } from "@/constants";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 

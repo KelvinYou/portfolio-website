@@ -1,5 +1,5 @@
 // Server Component
-import { domainPath, personalInfo } from "@/data";
+import { domainPath, personalInfo } from "@/constants";
 import { getAllPosts, getPostBySlug } from "@/lib/mdx";
 import { notFound } from "next/navigation";
 import BlogPostClient from "./client";

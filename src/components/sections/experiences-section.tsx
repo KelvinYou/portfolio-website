@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Briefcase } from "lucide-react";
-import { experiences } from "@/data";
+import { experiences } from "@/constants";
 import { ExperienceCard } from "@/components/experience/experience-card";
 
 // Animation variants

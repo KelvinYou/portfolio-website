@@ -1,6 +1,6 @@
 import { Github, Mail, Linkedin } from "lucide-react";
 import dayjs from "dayjs";
-import { personalInfo } from "@/data";
+import { personalInfo } from "@/constants";
 
 export function FooterSection() {
   const socialLinks = [

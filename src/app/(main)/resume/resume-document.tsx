@@ -8,7 +8,7 @@ import {
   personalInfo,
   projects,
   skills,
-} from "@/data";
+} from "@/constants";
 import {
   capitalizeFirstLetter,
   formatDate,

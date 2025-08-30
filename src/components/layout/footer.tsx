@@ -1,4 +1,4 @@
-import { personalInfo } from "@/data";
+import { personalInfo } from "@/constants";
 import dayjs from "dayjs";
 import { Github, Linkedin, Mail } from "lucide-react";
 

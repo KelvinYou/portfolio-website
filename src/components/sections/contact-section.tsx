@@ -2,8 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Github, Mail, Linkedin } from "lucide-react";
-// import { Button } from "@/components/ui/button";
-import { personalInfo } from "@/data";
+import { personalInfo } from "@/constants";
 
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },

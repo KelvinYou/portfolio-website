@@ -1,5 +1,5 @@
 import ResumeViewerWithFallback from "@/app/(main)/resume/resume-viewer-fallback";
-import { domainPath, personalInfo } from "@/data";
+import { domainPath, personalInfo } from "@/constants";
 import { Metadata } from "next";
 import ResumeDocument from "./resume-document";
 

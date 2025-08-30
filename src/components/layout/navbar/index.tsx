@@ -16,8 +16,7 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
-import { navItems } from "@/constants/navItems";
-import { personalInfo } from "@/data";
+import { navItems, personalInfo } from "@/constants";
 import { cn } from "@/lib/utils";
 import {
   AnimatePresence,

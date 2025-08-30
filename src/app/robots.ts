@@ -1,4 +1,4 @@
-import { domainPath } from "@/data";
+import { domainPath } from "@/constants";
 import { MetadataRoute } from "next";
 
 export default function robots(): MetadataRoute.Robots {

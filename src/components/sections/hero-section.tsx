@@ -15,7 +15,7 @@ import Link from "next/link";
 import { TypeAnimation } from "react-type-animation";
 import { cn } from "@/lib/utils";
 import { useMotionValue } from "framer-motion";
-import { personalInfo } from "@/data";
+import { personalInfo } from "@/constants";
 
 export function HeroSection() {
   const ref = useRef<HTMLDivElement>(null);

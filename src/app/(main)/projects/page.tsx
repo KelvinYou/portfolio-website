@@ -1,4 +1,4 @@
-import { domainPath, personalInfo, projects } from "@/data";
+import { domainPath, personalInfo, projects } from "@/constants";
 import { Metadata } from "next";
 import ProjectsClient from "./projects-client";
 import { ProjectsPageHeader } from "./projects-page-header";

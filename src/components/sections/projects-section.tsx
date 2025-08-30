@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { projects } from "@/data";
+import { projects } from "@/constants";
 import { ProjectCard } from "@/components/project-card";
 import Link from "next/link";
 
