@@ -4,6 +4,7 @@ import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
 import Image from "next/image";
 import React from "react";
 import { CodeBlock, InlineCode } from "./code-block";
+import { createSlug } from "@/lib/utils";
 
 // Helper function to extract text content from React children
 const extractTextFromChildren = (children: React.ReactNode): string => {
@@ -45,10 +46,7 @@ const components = {
   },
   h1: ({ children, ...props }: React.ComponentPropsWithoutRef<"h1">) => {
     const text = extractTextFromChildren(children);
-    const id = text
-      .toLowerCase()
-      .replace(/\s+/g, "-")
-      .replace(/[^\w-]/g, "");
+    const id = createSlug(text);
     console.log("h1 text:", text, "id:", id);
     return (
       <h1
@@ -62,10 +60,7 @@ const components = {
   },
   h2: ({ children, ...props }: React.ComponentPropsWithoutRef<"h2">) => {
     const text = extractTextFromChildren(children);
-    const id = text
-      .toLowerCase()
-      .replace(/\s+/g, "-")
-      .replace(/[^\w-]/g, "");
+    const id = createSlug(text);
     console.log("h2 text:", text, "id:", id);
     return (
       <h2
@@ -79,10 +74,7 @@ const components = {
   },
   h3: ({ children, ...props }: React.ComponentPropsWithoutRef<"h3">) => {
     const text = extractTextFromChildren(children);
-    const id = text
-      .toLowerCase()
-      .replace(/\s+/g, "-")
-      .replace(/[^\w-]/g, "");
+    const id = createSlug(text);
     console.log("h3 text:", text, "id:", id);
     return (
       <h3
@@ -96,10 +88,7 @@ const components = {
   },
   h4: ({ children, ...props }: React.ComponentPropsWithoutRef<"h4">) => {
     const text = extractTextFromChildren(children);
-    const id = text
-      .toLowerCase()
-      .replace(/\s+/g, "-")
-      .replace(/[^\w-]/g, "");
+    const id = createSlug(text);
     return (
       <h4
         id={id}
@@ -112,10 +101,7 @@ const components = {
   },
   h5: ({ children, ...props }: React.ComponentPropsWithoutRef<"h5">) => {
     const text = extractTextFromChildren(children);
-    const id = text
-      .toLowerCase()
-      .replace(/\s+/g, "-")
-      .replace(/[^\w-]/g, "");
+    const id = createSlug(text);
     return (
       <h5
         id={id}
@@ -128,10 +114,7 @@ const components = {
   },
   h6: ({ children, ...props }: React.ComponentPropsWithoutRef<"h6">) => {
     const text = extractTextFromChildren(children);
-    const id = text
-      .toLowerCase()
-      .replace(/\s+/g, "-")
-      .replace(/[^\w-]/g, "");
+    const id = createSlug(text);
     return (
       <h6
         id={id}

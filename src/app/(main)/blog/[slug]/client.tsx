@@ -4,7 +4,7 @@ import { MdxRemoteRender } from "@/components/mdx";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import type { Post } from "@/lib/mdx";
-import { formatDate } from "@/lib/utils";
+import { formatDate, createSlug } from "@/lib/utils";
 import { motion } from "framer-motion";
 import {
   ArrowLeft,
@@ -100,14 +100,23 @@ export default function BlogPostClient({ post }: { post: Post }) {
         .replace(/`(.*?)`/g, "$1") // Remove code
         .replace(/\[(.*?)\]\(.*?\)/g, "$1"); // Remove links but keep text
 
-      // Generate ID in the same way as the mdx-remote-render.tsx component does
-      const id = text
-        .toLowerCase()
-        .replace(/\s+/g, "-")
-        .replace(/[^\w-]/g, "")
-        .replace(/^-+|-+$/g, ""); // Trim dashes from start and end
+      // Decode HTML entities for display text
+      const displayText = text
+        .replace(/&amp;/g, "&")
+        .replace(/&lt;/g, "<")
+        .replace(/&gt;/g, ">")
+        .replace(/&quot;/g, '"')
+        .replace(/&#39;/g, "'")
+        .replace(/&apos;/g, "'")
+        .replace(/&nbsp;/g, " ")
+        .replace(/&copy;/g, "©")
+        .replace(/&reg;/g, "®")
+        .replace(/&trade;/g, "™");
 
-      return { text, id, level };
+      // Generate ID using the shared createSlug function for consistency
+      const id = createSlug(text);
+
+      return { text: displayText, id, level };
     });
   };
 
