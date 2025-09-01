@@ -3,6 +3,7 @@
 import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
 import Image from "next/image";
 import React from "react";
+import { CodeBlock, InlineCode } from "./code-block";
 
 // Helper function to extract text content from React children
 const extractTextFromChildren = (children: React.ReactNode): string => {
@@ -28,17 +29,20 @@ const extractTextFromChildren = (children: React.ReactNode): string => {
 
 const components = {
   pre: (props: React.ComponentPropsWithoutRef<"pre">) => (
-    <pre
-      {...props}
-      className="p-4 bg-muted/40 rounded-lg overflow-auto my-4 text-sm border border-border/50"
-    />
+    <CodeBlock {...props} />
   ),
-  code: (props: React.ComponentPropsWithoutRef<"code">) => (
-    <code
-      {...props}
-      className="bg-muted/50 px-1.5 py-0.5 rounded font-mono text-sm"
-    />
-  ),
+  code: (props: React.ComponentPropsWithoutRef<"code">) => {
+    // If code is inside a pre tag, it's already handled by CodeBlock
+    // This is for inline code
+    const isInline = !props.className?.includes("language-");
+
+    if (isInline) {
+      return <InlineCode {...props} />;
+    }
+
+    // For code blocks, return the code element as-is since it will be handled by pre/CodeBlock
+    return <code {...props} />;
+  },
   h1: ({ children, ...props }: React.ComponentPropsWithoutRef<"h1">) => {
     const text = extractTextFromChildren(children);
     const id = text
@@ -47,7 +51,11 @@ const components = {
       .replace(/[^\w-]/g, "");
     console.log("h1 text:", text, "id:", id);
     return (
-      <h1 id={id} className="group flex mt-10 mb-5 scroll-mt-24" {...props}>
+      <h1
+        id={id}
+        className="group flex mt-12 mb-6 scroll-mt-24 text-4xl font-bold text-foreground"
+        {...props}
+      >
         {children}
       </h1>
     );
@@ -60,7 +68,11 @@ const components = {
       .replace(/[^\w-]/g, "");
     console.log("h2 text:", text, "id:", id);
     return (
-      <h2 id={id} className="group flex mt-10 mb-5 scroll-mt-24" {...props}>
+      <h2
+        id={id}
+        className="group flex mt-10 mb-5 scroll-mt-24 text-3xl font-bold text-foreground"
+        {...props}
+      >
         {children}
       </h2>
     );
@@ -73,7 +85,11 @@ const components = {
       .replace(/[^\w-]/g, "");
     console.log("h3 text:", text, "id:", id);
     return (
-      <h3 id={id} className="group flex mt-8 mb-4 scroll-mt-24" {...props}>
+      <h3
+        id={id}
+        className="group flex mt-8 mb-4 scroll-mt-24 text-2xl font-semibold text-foreground"
+        {...props}
+      >
         {children}
       </h3>
     );
@@ -85,7 +101,11 @@ const components = {
       .replace(/\s+/g, "-")
       .replace(/[^\w-]/g, "");
     return (
-      <h4 id={id} className="group flex mt-6 mb-3 scroll-mt-24" {...props}>
+      <h4
+        id={id}
+        className="group flex mt-6 mb-3 scroll-mt-24 text-xl font-semibold text-foreground"
+        {...props}
+      >
         {children}
       </h4>
     );
@@ -97,7 +117,11 @@ const components = {
       .replace(/\s+/g, "-")
       .replace(/[^\w-]/g, "");
     return (
-      <h5 id={id} className="group flex mt-4 mb-2 scroll-mt-24" {...props}>
+      <h5
+        id={id}
+        className="group flex mt-4 mb-2 scroll-mt-24 text-lg font-semibold text-foreground"
+        {...props}
+      >
         {children}
       </h5>
     );
@@ -109,7 +133,11 @@ const components = {
       .replace(/\s+/g, "-")
       .replace(/[^\w-]/g, "");
     return (
-      <h6 id={id} className="group flex mt-2 mb-1 scroll-mt-24" {...props}>
+      <h6
+        id={id}
+        className="group flex mt-2 mb-1 scroll-mt-24 text-base font-semibold text-foreground"
+        {...props}
+      >
         {children}
       </h6>
     );
@@ -121,17 +149,46 @@ const components = {
       width={0}
       height={0}
       sizes="100vw"
-      className="w-full h-auto"
+      className="w-full h-auto my-8 rounded-2xl border border-border/20 shadow-lg"
       style={{ maxWidth: "100%" }}
     />
   ),
+  p: (props: React.ComponentPropsWithoutRef<"p">) => (
+    <p {...props} className="mb-6 leading-relaxed text-muted-foreground" />
+  ),
   ol: (props: React.ComponentPropsWithoutRef<"ol">) => (
-    <ol {...props} className="list-decimal list-inside my-4 pl-4" />
+    <ol
+      {...props}
+      className="list-decimal list-inside my-6 pl-6 space-y-2 text-muted-foreground"
+    />
   ),
   ul: (props: React.ComponentPropsWithoutRef<"ul">) => (
-    <ul {...props} className="list-disc list-inside my-4 pl-4" />
+    <ul
+      {...props}
+      className="list-disc list-inside my-6 pl-6 space-y-2 text-muted-foreground"
+    />
   ),
-  li: (props: React.ComponentPropsWithoutRef<"li">) => <li {...props} />,
+  li: (props: React.ComponentPropsWithoutRef<"li">) => (
+    <li {...props} className="leading-relaxed" />
+  ),
+  blockquote: (props: React.ComponentPropsWithoutRef<"blockquote">) => (
+    <blockquote
+      {...props}
+      className="my-8 border-l-4 border-primary/30 bg-muted/20 pl-6 pr-4 py-4 rounded-r-xl italic text-muted-foreground"
+    />
+  ),
+  a: (props: React.ComponentPropsWithoutRef<"a">) => (
+    <a
+      {...props}
+      className="text-primary hover:text-primary/80 transition-colors underline underline-offset-2 font-medium"
+    />
+  ),
+  strong: (props: React.ComponentPropsWithoutRef<"strong">) => (
+    <strong {...props} className="font-bold text-foreground" />
+  ),
+  em: (props: React.ComponentPropsWithoutRef<"em">) => (
+    <em {...props} className="italic text-foreground" />
+  ),
 };
 
 const MdxRemoteRender = ({
