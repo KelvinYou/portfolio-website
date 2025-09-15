@@ -5,6 +5,7 @@ import Image from "next/image";
 import React from "react";
 import { CodeBlock, InlineCode } from "./code-block";
 import { createSlug } from "@/lib/utils";
+import { Gallery } from "@/components/gallery";
 
 // Helper function to extract text content from React children
 const extractTextFromChildren = (children: React.ReactNode): string => {
@@ -172,6 +173,7 @@ const components = {
   em: (props: React.ComponentPropsWithoutRef<"em">) => (
     <em {...props} className="italic text-foreground" />
   ),
+  Gallery,
 };
 
 const MdxRemoteRender = ({

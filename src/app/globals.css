@@ -129,6 +129,34 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Gallery enhancements */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Smooth scrolling for gallery thumbnails */
+.gallery-thumbnails {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Better touch targets on mobile */
+@media (max-width: 768px) {
+  .gallery-item {
+    min-height: 44px; /* iOS recommended touch target */
+  }
+  
+  .gallery-button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
