@@ -85,6 +85,8 @@ export default function BlogPostClient({ post }: { post: Post }) {
     // Extract headers from the markdown content
     const headers = post.content.match(/(#{1,6})\s+(.*?)$/gm) || [];
 
+    const usedIds = new Set<string>();
+
     return headers.map((header) => {
       // Get level based on number of # symbols
       const level = (header.match(/^#+/) || [""])[0].length;
@@ -114,7 +116,20 @@ export default function BlogPostClient({ post }: { post: Post }) {
         .replace(/&trade;/g, "™");
 
       // Generate ID using the shared createSlug function for consistency
-      const id = createSlug(text);
+      let id = createSlug(text);
+
+      // Ensure unique IDs by adding a counter if duplicate is found
+      if (usedIds.has(id)) {
+        let counter = 1;
+        let uniqueId = `${id}-${counter}`;
+        while (usedIds.has(uniqueId)) {
+          counter++;
+          uniqueId = `${id}-${counter}`;
+        }
+        id = uniqueId;
+      }
+
+      usedIds.add(id);
 
       return { text: displayText, id, level };
     });

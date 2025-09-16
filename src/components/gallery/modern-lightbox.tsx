@@ -127,10 +127,10 @@ export function ModernLightbox({
     }
   }, [isOpen, resetControlsTimeout]);
 
-  const handlePrevious = () => {
+  const handlePrevious = useCallback(() => {
     const newIndex = currentIndex > 0 ? currentIndex - 1 : items.length - 1;
     onNavigate(newIndex);
-  };
+  }, [currentIndex, items.length, onNavigate]);
 
   const handleNext = useCallback(() => {
     const newIndex = currentIndex < items.length - 1 ? currentIndex + 1 : 0;
@@ -150,68 +150,6 @@ export function ModernLightbox({
       setSlideshowInterval(null);
     }
   }, [isSlideshow, items.length, handleNext, slideshowInterval]);
-
-  // Keyboard shortcuts
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (!isOpen) return;
-
-      switch (e.key) {
-        case "Escape":
-          onClose();
-          break;
-        case "ArrowLeft":
-          e.preventDefault();
-          handlePrevious();
-          break;
-        case "ArrowRight":
-          e.preventDefault();
-          handleNext();
-          break;
-        case "=":
-        case "+":
-          e.preventDefault();
-          handleZoomIn();
-          break;
-        case "-":
-          e.preventDefault();
-          handleZoomOut();
-          break;
-        case "0":
-          e.preventDefault();
-          resetZoom();
-          break;
-        case "r":
-          e.preventDefault();
-          handleRotate();
-          break;
-        case "f":
-          e.preventDefault();
-          toggleFullscreen();
-          break;
-        case "i":
-          e.preventDefault();
-          setShowInfo(!showInfo);
-          break;
-        case " ":
-          e.preventDefault();
-          toggleSlideshow();
-          break;
-      }
-    };
-
-    document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [
-    isOpen,
-    currentIndex,
-    items.length,
-    showInfo,
-    isSlideshow,
-    handleNext,
-    handlePrevious,
-    onClose,
-  ]);
 
   const handleZoomIn = () => {
     setZoom((prev) => Math.min(prev * 1.5, 5));
@@ -238,9 +176,9 @@ export function ModernLightbox({
     }
   };
 
-  const toggleSlideshow = () => {
+  const toggleSlideshow = useCallback(() => {
     setIsSlideshow(!isSlideshow);
-  };
+  }, [isSlideshow]);
 
   const handleDownload = () => {
     if (currentItem) {
@@ -343,6 +281,69 @@ export function ModernLightbox({
     }
     setIsDragging(false);
   };
+
+  // Keyboard shortcuts
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!isOpen) return;
+
+      switch (e.key) {
+        case "Escape":
+          onClose();
+          break;
+        case "ArrowLeft":
+          e.preventDefault();
+          handlePrevious();
+          break;
+        case "ArrowRight":
+          e.preventDefault();
+          handleNext();
+          break;
+        case "=":
+        case "+":
+          e.preventDefault();
+          handleZoomIn();
+          break;
+        case "-":
+          e.preventDefault();
+          handleZoomOut();
+          break;
+        case "0":
+          e.preventDefault();
+          resetZoom();
+          break;
+        case "r":
+          e.preventDefault();
+          handleRotate();
+          break;
+        case "f":
+          e.preventDefault();
+          toggleFullscreen();
+          break;
+        case "i":
+          e.preventDefault();
+          setShowInfo(!showInfo);
+          break;
+        case " ":
+          e.preventDefault();
+          toggleSlideshow();
+          break;
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [
+    isOpen,
+    currentIndex,
+    items.length,
+    showInfo,
+    isSlideshow,
+    handleNext,
+    handlePrevious,
+    onClose,
+    toggleSlideshow,
+  ]);
 
   const renderMedia = () => {
     if (!currentItem) return null;
