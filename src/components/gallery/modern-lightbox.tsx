@@ -43,7 +43,6 @@ export function ModernLightbox({
   const [isLoading, setIsLoading] = useState(true);
   const [zoom, setZoom] = useState(1);
   const [rotation, setRotation] = useState(0);
-  const [isFullscreen, setIsFullscreen] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
   const [isSlideshow, setIsSlideshow] = useState(false);
   const [slideshowInterval, setSlideshowInterval] =
@@ -60,7 +59,7 @@ export function ModernLightbox({
 
   const imageRef = useRef<HTMLImageElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const controlsTimeoutRef = useRef<NodeJS.Timeout>();
+  const controlsTimeoutRef = useRef<NodeJS.Timeout>(null);
 
   const currentItem = items[currentIndex];
 
@@ -234,10 +233,8 @@ export function ModernLightbox({
   const toggleFullscreen = () => {
     if (!document.fullscreenElement) {
       containerRef.current?.requestFullscreen();
-      setIsFullscreen(true);
     } else {
       document.exitFullscreen();
-      setIsFullscreen(false);
     }
   };
 
