@@ -1,10 +1,19 @@
 "use client";
 
 import { DocumentProps, PDFDownloadLink } from "@react-pdf/renderer";
-import { Download, FileSearch, Laptop, Smartphone } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import {
+  Download,
+  FileSearch,
+  Laptop,
+  Smartphone,
+  Maximize2,
+  Minimize2,
+  X,
+} from "lucide-react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import { PdfViewer } from "../../../components/pdf-renderer";
 import { Button } from "../../../components/ui/button";
+import { Dialog, DialogContent } from "../../../components/ui/dialog";
 
 interface ResumeViewerProps {
   document: React.ReactElement<DocumentProps>;
@@ -18,12 +27,72 @@ export default function ResumeViewerWithFallback({
   const [deviceType, setDeviceType] = useState<"desktop" | "mobile" | null>(
     null,
   );
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isNativeFullscreen, setIsNativeFullscreen] = useState(false);
+  const fullscreenRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setIsClient(true);
     detectDevice();
+
+    // Listen for fullscreen changes
+    const handleFullscreenChange = () => {
+      if (typeof window === "undefined") return;
+
+      const isCurrentlyFullscreen = !!(
+        window.document.fullscreenElement ||
+        // @ts-expect-error - webkit prefixed versions
+        window.document.webkitFullscreenElement ||
+        // @ts-expect-error - moz prefixed versions
+        window.document.mozFullScreenElement ||
+        // @ts-expect-error - ms prefixed versions
+        window.document.msFullscreenElement
+      );
+      setIsNativeFullscreen(isCurrentlyFullscreen);
+      if (!isCurrentlyFullscreen && isFullscreen) {
+        setIsFullscreen(false);
+      }
+    };
+
+    if (typeof window !== "undefined") {
+      window.document.addEventListener(
+        "fullscreenchange",
+        handleFullscreenChange,
+      );
+      window.document.addEventListener(
+        "webkitfullscreenchange",
+        handleFullscreenChange,
+      );
+      window.document.addEventListener(
+        "mozfullscreenchange",
+        handleFullscreenChange,
+      );
+      window.document.addEventListener(
+        "MSFullscreenChange",
+        handleFullscreenChange,
+      );
+
+      return () => {
+        window.document.removeEventListener(
+          "fullscreenchange",
+          handleFullscreenChange,
+        );
+        window.document.removeEventListener(
+          "webkitfullscreenchange",
+          handleFullscreenChange,
+        );
+        window.document.removeEventListener(
+          "mozfullscreenchange",
+          handleFullscreenChange,
+        );
+        window.document.removeEventListener(
+          "MSFullscreenChange",
+          handleFullscreenChange,
+        );
+      };
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isFullscreen]);
 
   const detectDevice = () => {
     // Check if we're on the client side
@@ -71,6 +140,79 @@ export default function ResumeViewerWithFallback({
     }
   };
 
+  const enterFullscreen = useCallback(async () => {
+    if (!fullscreenRef.current) return;
+
+    try {
+      // Try native fullscreen API first
+      if (fullscreenRef.current.requestFullscreen) {
+        await fullscreenRef.current.requestFullscreen();
+        setIsFullscreen(true);
+        setIsNativeFullscreen(true);
+      }
+      // @ts-expect-error - webkit prefixed version
+      else if (fullscreenRef.current.webkitRequestFullscreen) {
+        // @ts-expect-error - webkit prefixed version
+        await fullscreenRef.current.webkitRequestFullscreen();
+        setIsFullscreen(true);
+        setIsNativeFullscreen(true);
+      }
+      // @ts-expect-error - moz prefixed version
+      else if (fullscreenRef.current.mozRequestFullScreen) {
+        // @ts-expect-error - moz prefixed version
+        await fullscreenRef.current.mozRequestFullScreen();
+        setIsFullscreen(true);
+        setIsNativeFullscreen(true);
+      }
+      // @ts-expect-error - ms prefixed version
+      else if (fullscreenRef.current.msRequestFullscreen) {
+        // @ts-expect-error - ms prefixed version
+        await fullscreenRef.current.msRequestFullscreen();
+        setIsFullscreen(true);
+        setIsNativeFullscreen(true);
+      } else {
+        // Fallback to modal fullscreen
+        setIsFullscreen(true);
+        setIsNativeFullscreen(false);
+      }
+    } catch (error) {
+      console.warn("Native fullscreen failed, using modal fallback:", error);
+      // Fallback to modal fullscreen
+      setIsFullscreen(true);
+      setIsNativeFullscreen(false);
+    }
+  }, []);
+
+  const exitFullscreen = useCallback(async () => {
+    try {
+      if (isNativeFullscreen && typeof window !== "undefined") {
+        if (window.document.exitFullscreen) {
+          await window.document.exitFullscreen();
+        }
+        // @ts-expect-error - webkit prefixed version
+        else if (window.document.webkitExitFullscreen) {
+          // @ts-expect-error - webkit prefixed version
+          await window.document.webkitExitFullscreen();
+        }
+        // @ts-expect-error - moz prefixed version
+        else if (window.document.mozCancelFullScreen) {
+          // @ts-expect-error - moz prefixed version
+          await window.document.mozCancelFullScreen();
+        }
+        // @ts-expect-error - ms prefixed version
+        else if (window.document.msExitFullscreen) {
+          // @ts-expect-error - ms prefixed version
+          await window.document.msExitFullscreen();
+        }
+      }
+    } catch (error) {
+      console.warn("Exit fullscreen failed:", error);
+    }
+
+    setIsFullscreen(false);
+    setIsNativeFullscreen(false);
+  }, [isNativeFullscreen]);
+
   if (!isClient) {
     return (
       <div className="bg-background border border-border/40 rounded-xl shadow-sm p-8 mb-8 h-[80vh] flex items-center justify-center">
@@ -105,23 +247,95 @@ export default function ResumeViewerWithFallback({
         <div className="flex justify-between items-center mb-10">
           <h1 className="text-3xl md:text-4xl font-bold">Resume</h1>
 
-          <PDFDownloadLink
-            document={document}
-            fileName="KelvinYou-Resume.pdf"
-            className="inline-flex"
-          >
-            {({ loading }) => (
-              <Button disabled={loading} size="lg" className="gap-2">
-                <Download className="h-4 w-4" />
-                {loading ? "Preparing PDF..." : "Download Resume"}
-              </Button>
-            )}
-          </PDFDownloadLink>
+          <div className="flex gap-3">
+            <Button
+              onClick={enterFullscreen}
+              size="lg"
+              variant="outline"
+              className="gap-2"
+            >
+              <Maximize2 className="h-4 w-4" />
+              Fullscreen
+            </Button>
+
+            <PDFDownloadLink
+              document={document}
+              fileName="KelvinYou-Resume.pdf"
+              className="inline-flex"
+            >
+              {({ loading }) => (
+                <Button disabled={loading} size="lg" className="gap-2">
+                  <Download className="h-4 w-4" />
+                  {loading ? "Preparing PDF..." : "Download Resume"}
+                </Button>
+              )}
+            </PDFDownloadLink>
+          </div>
         </div>
 
-        <div className="bg-background border border-border/40 rounded-xl shadow-sm p-8 mb-8 h-[80vh]">
+        <div
+          ref={fullscreenRef}
+          className={`bg-background border border-border/40 rounded-xl shadow-sm p-8 mb-8 transition-all duration-300 ${
+            isNativeFullscreen
+              ? "fixed inset-0 z-50 rounded-none border-none m-0 bg-black"
+              : "h-[80vh]"
+          }`}
+        >
+          {isNativeFullscreen && (
+            <div className="absolute top-4 right-4 z-10 flex gap-2">
+              <Button
+                onClick={exitFullscreen}
+                size="sm"
+                variant="outline"
+                className="gap-2 bg-background/90 backdrop-blur-sm"
+              >
+                <Minimize2 className="h-4 w-4" />
+                Exit Fullscreen
+              </Button>
+            </div>
+          )}
           <PdfViewer>{document}</PdfViewer>
         </div>
+
+        {/* Modal Fullscreen Fallback */}
+        {isFullscreen && !isNativeFullscreen && (
+          <Dialog
+            open={isFullscreen}
+            onOpenChange={() => setIsFullscreen(false)}
+          >
+            <DialogContent className="max-w-[95vw] max-h-[95vh] w-full h-full p-0 gap-0">
+              <div className="flex items-center justify-between p-4 border-b bg-background">
+                <h2 className="text-lg font-semibold">
+                  Resume - Fullscreen View
+                </h2>
+                <div className="flex gap-2">
+                  <Button
+                    onClick={exitFullscreen}
+                    size="sm"
+                    variant="outline"
+                    className="gap-2"
+                  >
+                    <Minimize2 className="h-4 w-4" />
+                    Exit Fullscreen
+                  </Button>
+                  <Button
+                    onClick={exitFullscreen}
+                    size="sm"
+                    variant="ghost"
+                    className="h-8 w-8 p-0"
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+              <div className="flex-1 p-4 overflow-hidden">
+                <div className="w-full h-full bg-background border border-border/40 rounded-lg">
+                  <PdfViewer>{document}</PdfViewer>
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
+        )}
       </>
     );
   }
@@ -153,20 +367,70 @@ export default function ResumeViewerWithFallback({
               : "Your browser doesn't support viewing PDFs directly. You can download the resume to view it in your preferred PDF reader."}
           </p>
 
-          <div className="flex justify-center items-center">
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-3">
+            <Button
+              onClick={enterFullscreen}
+              size="lg"
+              variant="outline"
+              className="gap-2 w-full sm:w-auto"
+            >
+              <Maximize2 className="h-4 w-4" />
+              View Fullscreen
+            </Button>
+
             <PDFDownloadLink
               document={document}
               fileName="KelvinYou-Resume.pdf"
-              className="inline-flex"
+              className="inline-flex w-full sm:w-auto"
             >
               {({ loading }) => (
-                <Button disabled={loading} size="lg" className="gap-2">
+                <Button disabled={loading} size="lg" className="gap-2 w-full">
                   <Download className="h-4 w-4" />
                   {loading ? "Preparing PDF..." : "Download Resume"}
                 </Button>
               )}
             </PDFDownloadLink>
           </div>
+
+          {/* Fullscreen Modal for Mobile/Fallback */}
+          {isFullscreen && (
+            <Dialog
+              open={isFullscreen}
+              onOpenChange={() => setIsFullscreen(false)}
+            >
+              <DialogContent className="max-w-[95vw] max-h-[95vh] w-full h-full p-0 gap-0">
+                <div className="flex items-center justify-between p-4 border-b bg-background">
+                  <h2 className="text-lg font-semibold">
+                    Resume - Fullscreen View
+                  </h2>
+                  <div className="flex gap-2">
+                    <Button
+                      onClick={exitFullscreen}
+                      size="sm"
+                      variant="outline"
+                      className="gap-2"
+                    >
+                      <Minimize2 className="h-4 w-4" />
+                      <span className="hidden sm:inline">Exit Fullscreen</span>
+                    </Button>
+                    <Button
+                      onClick={exitFullscreen}
+                      size="sm"
+                      variant="ghost"
+                      className="h-8 w-8 p-0"
+                    >
+                      <X className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
+                <div className="flex-1 p-4 overflow-hidden">
+                  <div className="w-full h-full bg-background border border-border/40 rounded-lg">
+                    <PdfViewer>{document}</PdfViewer>
+                  </div>
+                </div>
+              </DialogContent>
+            </Dialog>
+          )}
         </div>
       </div>
     </>
