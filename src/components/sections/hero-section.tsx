@@ -102,7 +102,6 @@ export function HeroSection() {
               </div>
               <p className="text-xs font-medium text-primary/80">
                 Available for tech consulting
-                {/* Available for new opportunities */}
               </p>
             </motion.div>
 
@@ -132,12 +131,7 @@ export function HeroSection() {
               <div className="mt-2 h-[64px] overflow-hidden sm:h-[72px] md:h-[80px] lg:h-[100px]">
                 {isMounted && (
                   <TypeAnimation
-                    sequence={[
-                      "Full-Stack Developer",
-                      2000, // Longer pause for better performance
-                      "Software Engineer",
-                      2000,
-                    ]}
+                    sequence={["Software Engineer", 2000]}
                     wrapper="span"
                     speed={50}
                     repeat={Infinity}

@@ -283,6 +283,7 @@ export default function Navbar() {
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
+              whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.5 }}
               className="flex-shrink-0"
             >
@@ -294,7 +295,7 @@ export default function Navbar() {
                 <div className="relative">
                   <Avatar className="h-7 w-7 sm:h-9 sm:w-9 border-2 border-primary/30 shadow-lg">
                     <AvatarImage
-                      src={personalInfo.profilePicture}
+                      src={personalInfo.memoji}
                       alt={`${personalInfo.name}'s profile picture`}
                     />
                     <AvatarFallback className="bg-primary/10 text-xs sm:text-sm">
@@ -310,7 +311,6 @@ export default function Navbar() {
                 <motion.div className="flex flex-col">
                   <motion.span
                     className="font-bold text-base sm:text-xl bg-clip-text text-transparent bg-gradient-to-r from-primary to-indigo-500"
-                    whileHover={{ scale: 1.05 }}
                     transition={{ type: "spring", stiffness: 400, damping: 10 }}
                   >
                     {personalInfo.name}
@@ -345,7 +345,6 @@ export default function Navbar() {
                         >
                           <motion.div
                             className="flex items-center gap-1.5 md:gap-2"
-                            whileHover={{ x: 2 }}
                             transition={{
                               type: "spring",
                               stiffness: 400,

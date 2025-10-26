@@ -194,6 +194,7 @@ export const personalInfo = {
     location: "Kuala Lumpur, Malaysia",
   },
   profilePicture: "/images/profile-picture.jpg",
+  memoji: "/images/memoji.png",
   summary: `Experienced software engineer with ${getTotalWorkingExperiences(experiences)} of experience in developing and maintaining web applications (includes all internships). Skilled in agile methodologies and CI/CD. I'm an INTP-T, nerd. I'm also passionate about blockchain, investing and chess.`,
 };
 
