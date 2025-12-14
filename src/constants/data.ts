@@ -133,7 +133,6 @@ export const experiences: Experience[] = [
     responsibilities: [
       "Revitalized project's frontend using ReactJS for enhanced maintenance, modernization, and dynamic website capabilities.",
       "Developed a cutting-edge blockchain app utilizing ReactJS and Solidity to seamlessly integrate smart contracts with MetaMask for secure and streamlined transactions.",
-      "Explored Laravel's router functionality, MVC architecture, ORM, events, listeners, and data seeding techniques for efficient database testing.",
       "Implemented key functionalities such as authentication, real-time exchange rate fetching, dynamic UI updates, and built APIs for seamless CRUD operations on transactions.",
     ],
     skills: [
@@ -216,12 +215,8 @@ export const educations = [
     logo: "/images/institutions/tarumt.png",
     cgpa: "3.72",
     institutionUrl: "https://tarc.edu.my/",
-    documents: [
-      {
-        name: "Transcript",
-        url: "/pdf/educations/degree-transcript.pdf",
-      },
-    ],
+    certificateUrl: "/pdf/educations/degree-cert.pdf",
+    transcriptUrl: "/pdf/educations/degree-transcript.pdf",
     techStacks: [
       "Java",
       "Flutter",
@@ -249,12 +244,7 @@ export const educations = [
     logo: "/images/institutions/tarumt.png",
     cgpa: "3.7439",
     institutionUrl: "https://tarc.edu.my/",
-    documents: [
-      {
-        name: "Transcript",
-        url: "/pdf/educations/diploma-transcript.pdf",
-      },
-    ],
+    transcriptUrl: "/pdf/educations/diploma-transcript.pdf",
     techStacks: [
       "C lang",
       "Java",

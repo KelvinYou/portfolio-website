@@ -199,21 +199,23 @@ export function EducationsSection() {
                           />
                         )}
                       </div>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="h-8 px-2 text-xs"
-                        asChild
-                      >
-                        <a
-                          href={edu.documents[0].url}
-                          target="_blank"
-                          className="group flex items-center"
+                      {edu.certificateUrl && (
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-8 px-2 text-xs"
+                          asChild
                         >
-                          <span>View certificate</span>
-                          <ExternalLink className="ml-1 h-3 w-3 transition-transform group-hover:translate-x-0.5" />
-                        </a>
-                      </Button>
+                          <a
+                            href={edu.certificateUrl}
+                            target="_blank"
+                            className="group flex items-center"
+                          >
+                            <span>View certificate</span>
+                            <ExternalLink className="ml-1 h-3 w-3 transition-transform group-hover:translate-x-0.5" />
+                          </a>
+                        </Button>
+                      )}
                     </div>
 
                     {/* Visual highlight effect */}
