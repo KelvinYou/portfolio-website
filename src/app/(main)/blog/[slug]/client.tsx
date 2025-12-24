@@ -353,7 +353,21 @@ export default function BlogPostClient({ post }: { post: Post }) {
 
               {/* Enhanced article content */}
               <motion.article
-                className="prose prose-lg dark:prose-invert max-w-none prose-headings:scroll-mt-24 prose-p:text-muted-foreground prose-p:leading-relaxed prose-li:text-muted-foreground prose-strong:text-foreground prose-code:text-primary prose-code:bg-muted/50 prose-code:px-2 prose-code:py-1 prose-code:rounded-md prose-code:font-mono prose-code:text-sm prose-blockquote:border-l-primary/30 prose-blockquote:bg-muted/20 prose-blockquote:rounded-r-lg prose-blockquote:py-4"
+                className="prose prose-lg dark:prose-invert max-w-none 
+                  prose-headings:scroll-mt-24 
+                  prose-p:text-muted-foreground prose-p:leading-relaxed prose-p:text-[1.05rem]
+                  prose-li:text-muted-foreground prose-li:leading-relaxed
+                  prose-strong:text-foreground prose-strong:font-semibold
+                  prose-code:text-primary prose-code:bg-muted/50 prose-code:px-2 prose-code:py-1 prose-code:rounded-md prose-code:font-mono prose-code:text-sm prose-code:before:content-none prose-code:after:content-none
+                  prose-pre:bg-muted/30 prose-pre:border prose-pre:border-border/30 prose-pre:shadow-lg
+                  prose-blockquote:border-l-primary/30 prose-blockquote:bg-muted/20 prose-blockquote:rounded-r-lg prose-blockquote:py-4 prose-blockquote:not-italic
+                  prose-a:text-primary prose-a:no-underline prose-a:font-medium hover:prose-a:underline hover:prose-a:underline-offset-4
+                  prose-img:rounded-2xl prose-img:shadow-xl prose-img:border prose-img:border-border/20
+                  prose-hr:border-0 prose-hr:h-px prose-hr:bg-gradient-to-r prose-hr:from-transparent prose-hr:via-border prose-hr:to-transparent prose-hr:my-12
+                  prose-table:my-8
+                  prose-th:bg-primary/10 prose-th:font-bold prose-th:text-foreground
+                  prose-td:text-muted-foreground
+                  prose-ul:my-6 prose-ol:my-6"
                 variants={fadeInUp}
               >
                 <MdxRemoteRender

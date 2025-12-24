@@ -138,27 +138,30 @@ const components = {
     />
   ),
   p: (props: React.ComponentPropsWithoutRef<"p">) => (
-    <p {...props} className="mb-6 leading-relaxed text-muted-foreground" />
+    <p
+      {...props}
+      className="mb-6 leading-relaxed text-muted-foreground text-[1.05rem]"
+    />
   ),
   ol: (props: React.ComponentPropsWithoutRef<"ol">) => (
     <ol
       {...props}
-      className="list-decimal list-inside my-6 pl-6 space-y-2 text-muted-foreground"
+      className="list-decimal list-outside my-6 pl-8 space-y-3 text-muted-foreground marker:text-primary marker:font-semibold"
     />
   ),
   ul: (props: React.ComponentPropsWithoutRef<"ul">) => (
     <ul
       {...props}
-      className="list-disc list-inside my-6 pl-6 space-y-2 text-muted-foreground"
+      className="list-disc list-outside my-6 pl-8 space-y-3 text-muted-foreground marker:text-primary"
     />
   ),
   li: (props: React.ComponentPropsWithoutRef<"li">) => (
-    <li {...props} className="leading-relaxed" />
+    <li {...props} className="leading-relaxed pl-2" />
   ),
   blockquote: (props: React.ComponentPropsWithoutRef<"blockquote">) => (
     <blockquote
       {...props}
-      className="my-8 border-l-4 border-primary/30 bg-muted/20 pl-6 pr-4 py-4 rounded-r-xl italic text-muted-foreground"
+      className="my-8 border-l-4 border-primary/40 bg-gradient-to-r from-muted/30 to-muted/10 pl-6 pr-6 py-5 rounded-r-xl not-italic text-muted-foreground shadow-sm"
     />
   ),
   a: (props: React.ComponentPropsWithoutRef<"a">) => (
@@ -172,6 +175,47 @@ const components = {
   ),
   em: (props: React.ComponentPropsWithoutRef<"em">) => (
     <em {...props} className="italic text-foreground" />
+  ),
+  table: (props: React.ComponentPropsWithoutRef<"table">) => (
+    <div className="my-8 overflow-x-auto rounded-xl border border-border/50 shadow-lg">
+      <table
+        {...props}
+        className="w-full border-collapse bg-gradient-to-br from-muted/20 to-muted/5"
+      />
+    </div>
+  ),
+  thead: (props: React.ComponentPropsWithoutRef<"thead">) => (
+    <thead
+      {...props}
+      className="bg-gradient-to-r from-primary/10 to-primary/5 border-b-2 border-primary/20"
+    />
+  ),
+  tbody: (props: React.ComponentPropsWithoutRef<"tbody">) => (
+    <tbody {...props} className="divide-y divide-border/30" />
+  ),
+  tr: (props: React.ComponentPropsWithoutRef<"tr">) => (
+    <tr
+      {...props}
+      className="transition-colors hover:bg-muted/30 duration-200"
+    />
+  ),
+  th: (props: React.ComponentPropsWithoutRef<"th">) => (
+    <th
+      {...props}
+      className="px-6 py-4 text-left text-sm font-bold text-foreground uppercase tracking-wider"
+    />
+  ),
+  td: (props: React.ComponentPropsWithoutRef<"td">) => (
+    <td
+      {...props}
+      className="px-6 py-4 text-sm text-muted-foreground leading-relaxed"
+    />
+  ),
+  hr: (props: React.ComponentPropsWithoutRef<"hr">) => (
+    <hr
+      {...props}
+      className="my-12 border-0 h-px bg-gradient-to-r from-transparent via-border to-transparent"
+    />
   ),
   Gallery,
 };

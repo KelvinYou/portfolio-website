@@ -5,6 +5,7 @@ import { serialize } from "next-mdx-remote/serialize";
 import path from "path";
 import rehypeExternalLinks from "rehype-external-links";
 import remarkSlug from "rehype-slug";
+import remarkGfm from "remark-gfm";
 
 // Define the blog post type
 export type Post = {
@@ -53,8 +54,11 @@ export async function getPostBySlug(slug: string): Promise<Post> {
 
     const mdxSource = await serialize(content, {
       mdxOptions: {
-        remarkPlugins: [remarkSlug],
-        rehypePlugins: [[rehypeExternalLinks, { target: "_blank" }]],
+        remarkPlugins: [remarkGfm],
+        rehypePlugins: [
+          remarkSlug,
+          [rehypeExternalLinks, { target: "_blank" }],
+        ],
       },
       scope: data,
     });
