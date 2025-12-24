@@ -427,6 +427,29 @@ export default function BlogPostClient({ post }: { post: Post }) {
                       <Button
                         size="icon"
                         variant="outline"
+                        className="rounded-full h-12 w-12 hover:bg-pink-50 hover:border-pink-200 dark:hover:bg-pink-950 transition-all duration-200"
+                        aria-label="Share on Instagram"
+                        onClick={() =>
+                          window.open(
+                            `https://www.instagram.com/?url=${encodeURIComponent(window.location.href)}`,
+                            "_blank",
+                          )
+                        }
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="20"
+                          height="20"
+                          fill="currentColor"
+                          viewBox="0 0 24 24"
+                          className="text-pink-600"
+                        >
+                          <path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2zm0 1.5A4.25 4.25 0 0 0 3.5 7.75v8.5A4.25 4.25 0 0 0 7.75 20.5h8.5a4.25 4.25 0 0 0 4.25-4.25v-8.5A4.25 4.25 0 0 0 16.25 3.5zm8.75 2a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm-5.5 2a5.25 5.25 0 1 1 0 10.5 5.25 5.25 0 0 1 0-10.5zm0 1.5a3.75 3.75 0 1 0 0 7.5 3.75 3.75 0 0 0 0-7.5z" />
+                        </svg>
+                      </Button>
+                      <Button
+                        size="icon"
+                        variant="outline"
                         className="rounded-full h-12 w-12 hover:bg-green-50 hover:border-green-200 dark:hover:bg-green-950 transition-all duration-200"
                         aria-label="Share on WhatsApp"
                         onClick={() =>
