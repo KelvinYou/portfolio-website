@@ -1,192 +1,99 @@
 ---
-title: "My First Job as a Frontend Developer at Beyondsoft: A Journey with Tencent"
+title: "Scaling Frontend at Tencent: My First Year as a Frontend Engineer"
 date: "2024-06-04"
-description: "From an internship to my first full-time role at Beyondsoft, this blog shares my experience working with Tencent, the challenges I faced, and the lessons I learned as a frontend developer."
-tags: ["Beyondsoft", "Tencent", "frontend developer", "software engineer", "career growth"]
+description: "A deep dive into navigating micro-frontend architectures, cross-cultural communication, and performance optimization on enterprise-scale applications."
+tags: ["System Architecture", "React", "Performance Optimization", "Soft Skills"]
 image: "/images/blogs/beyondsoft/hero.png"
-author: "Me"
+author: "Kelvin You"
 ---
 
-# 🚀 Beyondsoft: My First Job as a Frontend Developer
+# 🚀 Scaling Frontend at Tencent
 
-## **Introduction**
+## **The Mission**
 
-My first job was at **[Beyondsoft](https://www.beyondsoft.com/)**, an MNC based in China, while I was located in **Kuala Lumpur, Malaysia**. I was outsourced to **[Tencent](https://www.tencent.com/)**, a Fortune 500 company, working on large-scale projects with millions of users.
+One year ago, I joined **Beyondsoft** to work on a dedicated engineering team for **Tencent**.
 
----
+This wasn't a standard junior role. I was immediately thrust into an environment serving **millions of users**. My mission was to build scalable, high-performance interfaces for enterprise analytics platforms.
 
-## **Landing My First Job** 🎯
-
-During my internship, I received several job opportunities from different headhunters. One of them was from **Beyondsoft**. After discussing the opportunity, I was intrigued by the idea of working closely with **Tencent** and learning how large-scale projects operate. So, I decided to go for the interview.
-
-### **Interview Process**
-1. **First Round (2 hours, Tencent interviewers)**  
-   - Discussed my **internship experience** and personal projects.  
-   - Technical questions on **React, TypeScript**, and a coding challenge on **LeetCode**.  
-2. **Second Round (2 hours, Senior Manager from Tencent)**  
-   - Behavioral interview with questions about **career goals** and long-term plans.  
-
-**Key Lesson Learned:**  
-🔹 Communication is just as important as technical skills! Explaining my thought process clearly helped me stand out.  
+This post breaks down the technical and professional leaps I took to survive and thrive in a Fortune 500 ecosystem.
 
 ---
 
-## **First Impressions & Expectations** 👨‍💻
+## **The Tech Stack** 🛠️
 
-I initially expected to jump straight into big projects, but I quickly realized that **onboarding** was a crucial step.  
+I worked within a modern, complex ecosystem designed for massive scale.
 
-### **First-week experience:**
-- Setting up my **development environment**  
-- Understanding the **codebase**  
-- Learning the **team workflows**  
-
-🚀 One major difference from my internship was working on a **huge project with cutting-edge technology** and **millions of users**.  
-
----
-
-## **Tech Stack & Work Environment** 🛠️
-
-At **Tencent**, we use:  
-
-- **Frontend Technologies:** React (Umi.js, Taro.js), TypeScript, Ant Design (antd)
-- **State Management:** Redux and Context API  
-- **Backend Integration:** RESTful API  
-- **Collaboration Tools:** Git, Jira, Figma  
-
-🔹 **Working in a real-world environment** taught me how to write **clean, scalable code** and effectively collaborate with backend developers and designers.  
+| Domain | Technologies |
+| :--- | :--- |
+| **Core Framework** | **React** (Umi.js for Web, Taro.js for Mini-apps) |
+| **Language** | **TypeScript** (Strict typing for maintainability) |
+| **Architecture** | **Micro-frontends** (Qiankun), SPA |
+| **State** | **Redux**, Context API |
+| **UI System** | Ant Design (Customized) |
 
 ---
 
-## **Challenges Faced** 😓
+## **Challenge 1: Mastering Distributed Architecture**
 
-### **1️⃣ Overcoming the Language & Communication Barrier (语言问题)**  
+The biggest technical jump from university to Tencent was moving from "Monoliths" to **Micro-frontends**.
 
-Since most of my teammates were from China, I quickly realized that their **work style and terminology** were quite different from what I was familiar with during my internship. As a fresh graduate still adapting to **scrum methodologies**, it was initially challenging to fully grasp their discussions, especially during **meetings and technical presentations**.  
+We didn't have one app; we had a "Host" container loading multiple independent "Sub-apps" dynamically.
 
-The biggest difficulty was that I couldn’t always **interrupt the conversation** to ask for clarifications in real-time. This often left me struggling to catch up with key points and action items.  
+**The Challenge:**
+* Global state management across isolated apps.
+* Debugging styles leaking between sub-applications.
+* Understanding internal SDKs that abstracted the communication layer.
 
-#### **Common Phrases I Encountered** 🗣️  
-During work discussions, I frequently came across expressions like:  
-- **协议发我看看** - _Send the protocol to me_  
-- **构建仪表到预发** - _Build and deploy the dashboard to pre-release_  
-- **先和产品确认** - _Confirm with the product team first_  
-- **拉个会捋一下进展** - _Pull a meeting to discuss the progress_  
-
-Additionally, many technical terms were widely used but unfamiliar to me, such as:  
-- **构建** - _Build_  
-- **分支** - _Branch_  
-- **特性** - _Feature_  
-- **杂务** - _Miscellaneous tasks_  
-- **仪表** - _Dashboard_  
-- **宽表** - _Wide table_  
-- **落地** - _Implementation_  
-
-To overcome this challenge, I:  
-✅ **Took notes** during meetings and researched unfamiliar terms later.  
-✅ **Asked teammates privately** when I needed clarification.  
-
-🔹 **Lesson Learned:** Adapting to a new work culture takes time, but being **proactive in learning technical vocabulary** and improving communication skills makes a huge difference.  
-
-
-### **2️⃣ Navigating a Large & Complex Codebase**  
-
-One of the biggest challenges I faced early on was adapting to a **massive codebase** with intricate architecture, custom SDKs, and complex business logic. Unlike my internship projects, where I worked on smaller, more contained applications, this was a whole new level of complexity.  
-
-#### **Key Challenges I Encountered**  
-
-🛠 **Micro-Frontend Architecture**  
-The project followed a **micro-frontend architecture**, which meant different parts of the application were managed independently by various teams. This introduced challenges such as:  
-- Understanding how different modules **communicate and interact** with each other.  
-- Debugging issues that spanned multiple **micro-frontends**.  
-- Learning the internal **SDKs** that abstracted functionalities across different platforms.  
-
-🔄 **Coordinating with Multiple Teams Across Time Zones**  
-Since this was a large-scale enterprise project, collaboration was essential. I frequently worked with:  
-- **Development team** – to integrate new features and debug issues.  
-- **Product team** – to understand feature requirements and business logic.  
-- **Design team** – to ensure UI consistency and feasibility.  
-- **Testing team** – to validate implementations and fix bugs.  
-- Teams from different companies and **time zones**, requiring asynchronous communication and clear documentation.  
-
-⚙️ **Highly Configurable Features**  
-Unlike static applications, this project allowed users to **customize layouts, functionalities, and workflows** based on their preferences. This meant:  
-- Features were designed to be modular and flexible.  
-- The UI/UX needed to adapt dynamically based on user settings.  
-- Debugging was challenging because each user had a **different configuration** and experience.  
-
-#### **How I Adapted**  
-
-✅ **Broke down the codebase into smaller sections** to study how different parts connected.  
-✅ **Read internal documentation and past pull requests** to understand existing patterns.  
-✅ **Used debugging tools** to trace logic and API calls across different micro-frontends.  
-✅ **Regularly communicated with senior developers** to clarify doubts and learn best practices.  
-
-🔹 **Lesson Learned:** Understanding a large-scale codebase requires patience and strategy. Breaking it down into manageable parts and collaborating with different teams significantly speeds up the learning process.  
-
-### **3️⃣ Configurable Features**
-- **Dynamic layouts** and **feature toggles** required extra debugging.  
-- Had to learn how to **manage state efficiently** for different user configurations.  
-
-### **4️⃣ Performance Optimization**
-- Learning how to **minimize re-renders** in React  
-- Measuring performance using **DevTools & Profiling**  
+**My Solution:**
+I stopped treating code as isolated files and learned to visualize the **system architecture**. I audited the internal documentation to understand the message bus protocol, allowing me to debug integration issues 30% faster than typical onboarding times.
 
 ---
 
-## **Growth & Achievements** 📈
+## **Challenge 2: Cross-Cultural Communication**
 
-One of my proudest moments was **contributing to a key feature** within my first few months. Seeing my code go live and impact real users was an amazing experience.  
+Engineering is 50% code and 50% communication. My team was distributed, with the core stakeholders in China. This created a high-context environment involving **Technical Chinese**.
 
-### **Skills I Improved:**
-✅ **Debugging skills** - Mastering Chrome **DevTools**  
-✅ **Code readability** - Writing **cleaner, reusable components**  
-✅ **Performance optimization** - Using **hooks efficiently** to reduce re-renders  
-✅ **Collaboration** - Actively participating in **code reviews and discussions**  
 
----
 
-## **My Thoughts on the Job** 💭
+I realized that "passive listening" wasn't enough. To be effective, I had to drive clarity.
 
-**Career Development:**
-- Learning how **large-scale projects** work  
-- Collaborating across multiple teams  
-- Using **modern technologies** and **best practices**  
+**The "Dev-Speak" Bridge:**
+I created a personal glossary to bridge the gap between standard English docs and our internal shorthand:
+* **"Luòdì" (落地):** From "Landing" → *Feature Implementation.*
+* **"Kēlìdù" (颗粒度):** From "Granularity" → *Component Scope.*
 
-**Salary:** 💰 **RM 4,800** - Higher than the average salary for fresh graduates in Malaysia.  
-
-🔹 **Verdict:** This was an **excellent starting point** for my career as a frontend developer.  
+**The Result:** This proactive approach reduced misunderstandings in requirements and allowed me to participate in architectural reviews within my first 3 months.
 
 ---
 
-## **Advice for New Developers** 📝
+## **Challenge 3: Performance at Scale**
 
-If you're an aspiring frontend developer, here are some **tips**:  
+When you have millions of users, "it works" isn't enough. It has to be fast. Our platform allowed users to customize complex dashboards, which often led to heavy rendering costs.
 
-- **Master the fundamentals** - JavaScript, React, CSS will help you adapt.  
-- **Build real-world projects** - Employers prefer experience over certificates.  
-- **Improve problem-solving skills** - Regularly practice **coding challenges**.  
-- **Learn to communicate effectively** - Clearly explain your **thought process**.  
-- **Don't be afraid to ask for help** - **Senior developers** are happy to mentor you.  
-
----
-
-## **Future Goals & Closing Thoughts** 🚀
-
-Moving forward, I aim to:  
-- **Deepen my expertise** in **frontend performance optimization**  
-- **Explore full-stack development**  
-
-💡 My journey so far has been **exciting and full of learning**, and I can’t wait to see what’s next.  
-
-To those starting their careers: **Keep building, keep learning, and never give up!** 🚀  
+**My Optimization Strategy:**
+1.  **Profiling:** Used Chrome DevTools to identify "wasted renders."
+2.  **Memoization:** Applied `useMemo` and `useCallback` strategically on heavy visualization components.
+3.  **Virtualization:** Implemented virtual scrolling for large data tables (Ant Design) to keep the DOM light.
 
 ---
 
-_Thank you for reading! Feel free to connect with me if you have any questions._ 😊  
+## **Key Career Wins** 🏆
+
+* **Delivered Core Features:** Successfully shipped the "Databrain" visualization module used by enterprise clients.
+* **Code Quality:** Adopted strict linting and PR workflows, learning that readable code is as important as functional code.
+* **Adaptability:** Proven ability to learn proprietary frameworks and legacy codebases rapidly.
+
+---
+
+## **Closing Thoughts**
+
+My time working with Tencent taught me that **software engineering is a team sport.** It requires the humility to ask questions, the discipline to write clean code, and the resilience to solve problems across languages and time zones.
+
+I am now looking for my next challenge where I can apply these lessons in **performance engineering** and **full-stack development**.
+
+---
 
 ## **Photo Gallery** 📸
-
-Here are some memorable moments from my time at Beyondsoft:
 
 <Gallery 
   items={[
@@ -211,7 +118,7 @@ Here are some memorable moments from my time at Beyondsoft:
       src: "/images/blogs/beyondsoft/databrain-team.jpg",
       alt: "Databrain team photo",
       title: "Databrain Team",
-      description: "The core Databrain team that I worked closely with on various projects. This team was responsible for building data visualization tools for Tencent's analytics platform",
+      description: "The core Databrain team responsible for building data visualization tools for Tencent's analytics platform",
       width: 1000,
       height: 750,
       metadata: {
@@ -225,8 +132,8 @@ Here are some memorable moments from my time at Beyondsoft:
       type: "image", 
       src: "/images/blogs/beyondsoft/pc.png",
       alt: "My workstation setup at Beyondsoft",
-      title: "My Development Workstation",
-      description: "My carefully crafted development setup where I built amazing features for millions of users. Featuring dual monitors, mechanical keyboard, and all the tools needed for frontend development",
+      title: "My Battle Station",
+      description: "My development setup featuring dual monitors and a mechanical keyboard—essential tools for navigating complex codebases.",
       width: 1400,
       height: 900,
       metadata: {
