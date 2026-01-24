@@ -2,21 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-
-const fadeIn = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-};
-
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.2,
-    },
-  },
-};
+import { fadeIn, staggerContainer, defaultViewport } from "@/lib/animations";
 
 const skills = [
   { name: "TypeScript", level: 90 },
@@ -47,7 +33,7 @@ export function SkillsSection() {
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={defaultViewport}
           variants={fadeIn}
           className="mb-16 text-center"
         >
@@ -81,7 +67,7 @@ export function SkillsSection() {
               variants={staggerContainer}
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true, margin: "-100px" }}
+              viewport={defaultViewport}
               className="grid gap-4"
             >
               {skills.map((skill, index) => (
@@ -111,7 +97,7 @@ export function SkillsSection() {
               variants={staggerContainer}
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true, margin: "-100px" }}
+              viewport={defaultViewport}
               className="grid gap-6 sm:grid-cols-2"
             >
               {softSkills.map((skill, index) => (

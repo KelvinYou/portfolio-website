@@ -101,7 +101,7 @@ export function HeroSection() {
                 <Sparkles className="h-3.5 w-3.5 text-primary" />
               </div>
               <p className="text-xs font-medium text-primary/80">
-                Available for tech consulting
+                Previously built data platforms at Tencent scale
               </p>
             </motion.div>
 
@@ -131,7 +131,14 @@ export function HeroSection() {
               <div className="mt-2 h-[64px] overflow-hidden sm:h-[72px] md:h-[80px] lg:h-[100px]">
                 {isMounted && (
                   <TypeAnimation
-                    sequence={["Software Engineer", 2000]}
+                    sequence={[
+                      "Frontend Engineer",
+                      2500,
+                      "React Specialist",
+                      2500,
+                      "TypeScript Developer",
+                      2500,
+                    ]}
                     wrapper="span"
                     speed={50}
                     repeat={Infinity}
@@ -149,30 +156,31 @@ export function HeroSection() {
               className="relative"
             >
               <p className="mb-10 max-w-xl pr-8 text-lg leading-relaxed text-muted-foreground md:text-xl">
-                I create{" "}
+                I build{" "}
                 <span className="font-medium text-foreground">
-                  elegant, user-focused
+                  high-performance React applications
                 </span>{" "}
-                web experiences with modern technologies. Passionate about
-                turning complex problems into
+                that scale. From data platforms serving millions of users to
+                SaaS products that
                 <span className="font-medium text-foreground">
                   {" "}
-                  simple, intuitive
-                </span>{" "}
-                solutions.
+                  drive real business outcomes
+                </span>
+                .
               </p>
 
               {/* Static decorative element instead of animated */}
               <div className="absolute -left-6 top-0 h-full w-1 rounded bg-gradient-to-b from-primary/50 via-primary/30 to-transparent" />
             </motion.div>
 
-            {/* Simplified button section */}
+            {/* CTA button section with clear hierarchy */}
             <motion.div
-              className="mb-6 flex flex-col gap-4 sm:flex-row sm:gap-6"
+              className="mb-6 flex flex-col gap-3 sm:flex-row sm:gap-4"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.6 }}
             >
+              {/* Primary CTA */}
               <Button
                 size="lg"
                 className="group relative w-full gap-2 overflow-hidden rounded-full px-6 py-3 text-sm shadow-lg shadow-primary/10 hover:shadow-primary/20 sm:w-auto sm:px-8 sm:py-4 sm:text-base"
@@ -191,6 +199,19 @@ export function HeroSection() {
                     whileHover={{ x: "0%" }}
                     transition={{ duration: 0.4, ease: "easeInOut" }}
                   />
+                </Link>
+              </Button>
+
+              {/* Secondary CTA - Resume with premium styling */}
+              <Button
+                size="lg"
+                variant="outline"
+                className="group w-full gap-2 rounded-full border-2 border-primary/30 bg-background/50 px-6 py-3 text-sm backdrop-blur-sm transition-all hover:border-primary hover:bg-primary/5 sm:w-auto sm:px-8 sm:py-4 sm:text-base"
+                asChild
+              >
+                <Link href="/resume">
+                  <FileText className="h-3.5 w-3.5 transition-transform group-hover:scale-110 sm:h-4 sm:w-4" />
+                  <span className="font-medium">View Resume</span>
                 </Link>
               </Button>
             </motion.div>

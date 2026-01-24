@@ -7,12 +7,6 @@ const withBundleAnalyzerConfig = withBundleAnalyzer({
 
 const nextConfig: NextConfig = {
   turbopack: {},
-  webpack: (config) => {
-    // Disable minification
-    config.optimization.minimize = false;
-
-    return config;
-  },
 };
 
 export default withBundleAnalyzerConfig(nextConfig);

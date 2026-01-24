@@ -4,22 +4,7 @@ import { motion } from "framer-motion";
 import { Briefcase } from "lucide-react";
 import { experiences } from "@/constants";
 import { ExperienceCard } from "@/components/experience/experience-card";
-
-// Animation variants
-const fadeIn = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-};
-
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.2,
-    },
-  },
-};
+import { fadeIn, staggerContainer, defaultViewport } from "@/lib/animations";
 
 export function ExperiencesSection() {
   return (
@@ -34,7 +19,7 @@ export function ExperiencesSection() {
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={defaultViewport}
           variants={fadeIn}
           className="mb-16 text-center"
         >
@@ -55,7 +40,7 @@ export function ExperiencesSection() {
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={defaultViewport}
           className="mx-auto max-w-4xl"
         >
           {experiences.map((exp, index) => (

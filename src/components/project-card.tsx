@@ -19,6 +19,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { formatDate } from "@/lib/utils";
+import { fadeInWithDelay } from "@/lib/animations";
 import { Project } from "@/types";
 import { motion } from "framer-motion";
 import {
@@ -31,10 +32,11 @@ import {
   Sparkles,
 } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
+import React, { useState } from "react";
 import { RelatedBlogLinks } from "./blog/related-blog-links";
+import { StatusBadge } from "./ui/status-badge";
 
-export function ProjectCard({
+export const ProjectCard = React.memo(function ProjectCard({
   project,
   index = 0,
 }: {
@@ -42,18 +44,7 @@ export function ProjectCard({
   index?: number;
 }) {
   const [dialogOpen, setDialogOpen] = useState(false);
-
-  const fadeIn = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5,
-        delay: index * 0.1,
-      },
-    },
-  };
+  const fadeIn = fadeInWithDelay(index * 0.1);
 
   return (
     <motion.div
@@ -89,19 +80,7 @@ export function ProjectCard({
 
           {/* Status badge with glow effect on hover */}
           <div className="absolute top-3 right-3 transition-transform duration-300 group-hover:scale-110 group-hover:translate-x-1">
-            <span
-              className={`px-2 py-1 text-xs rounded-full backdrop-blur-sm group-hover:shadow-glow ${
-                project.status === "Completed"
-                  ? "bg-green-500/20 text-green-500 group-hover:bg-green-500/30"
-                  : project.status === "In Progress"
-                    ? "bg-blue-500/20 text-blue-500 group-hover:bg-blue-500/30"
-                    : project.status === "Maintaining"
-                      ? "bg-purple-500/20 text-purple-500 group-hover:bg-purple-500/30"
-                      : "bg-gray-500/20 text-gray-500 group-hover:bg-gray-500/30"
-              }`}
-            >
-              {project.status}
-            </span>
+            <StatusBadge status={project.status} className="group-hover:shadow-glow" />
           </div>
         </div>
 
@@ -190,19 +169,7 @@ export function ProjectCard({
                 <DialogHeader>
                   <DialogTitle className="text-xl flex items-center gap-2">
                     {project.title}
-                    <Badge
-                      className={`ml-2 text-xs ${
-                        project.status === "Completed"
-                          ? "bg-green-500/20 text-green-500"
-                          : project.status === "In Progress"
-                            ? "bg-blue-500/20 text-blue-500"
-                            : project.status === "Maintaining"
-                              ? "bg-purple-500/20 text-purple-500"
-                              : "bg-gray-500/20 text-gray-500"
-                      }`}
-                    >
-                      {project.status}
-                    </Badge>
+                    <StatusBadge status={project.status} className="ml-2" withHoverEffect={false} />
                   </DialogTitle>
                   <DialogDescription className="text-base mt-2">
                     {project.description}
@@ -299,4 +266,4 @@ export function ProjectCard({
       </Card>
     </motion.div>
   );
-}
+});

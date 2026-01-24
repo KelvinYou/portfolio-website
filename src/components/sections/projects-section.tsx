@@ -6,21 +6,7 @@ import { Button } from "@/components/ui/button";
 import { projects } from "@/constants";
 import { ProjectCard } from "@/components/project-card";
 import Link from "next/link";
-
-const fadeIn = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-};
-
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.2,
-    },
-  },
-};
+import { fadeIn, staggerContainer, defaultViewport } from "@/lib/animations";
 
 export function ProjectsSection() {
   return (
@@ -29,7 +15,7 @@ export function ProjectsSection() {
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={defaultViewport}
           variants={fadeIn}
           className="mb-16 text-center"
         >
@@ -47,7 +33,7 @@ export function ProjectsSection() {
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={defaultViewport}
         >
           {projects.slice(0, 3).map((project, index) => (
             <ProjectCard key={index} project={project} index={index} />
@@ -58,7 +44,7 @@ export function ProjectsSection() {
           className="mt-12 text-center"
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={defaultViewport}
           variants={fadeIn}
         >
           <Button variant="outline" className="rounded-full" asChild>

@@ -431,15 +431,16 @@ export default function Navbar() {
               <div className="hidden md:flex">
                 <Button
                   size="sm"
-                  variant="outline"
-                  className="rounded-full text-xs sm:text-sm group border-primary/20 hover:border-primary/50"
+                  className="group relative overflow-hidden rounded-full border-0 bg-gradient-to-r from-primary/90 to-indigo-500/90 px-5 text-xs text-primary-foreground shadow-lg shadow-primary/20 transition-all hover:shadow-xl hover:shadow-primary/30 sm:text-sm"
                   asChild
                 >
                   <Link href="/resume">
-                    <FileText className="mr-1.5 h-3.5 w-3.5 group-hover:scale-110 transition-transform" />
+                    <FileText className="mr-1.5 h-3.5 w-3.5 transition-transform group-hover:-rotate-3 group-hover:scale-110" />
                     <span className={isSmallScreen ? "hidden lg:inline" : ""}>
                       Resume
                     </span>
+                    {/* Premium shimmer effect */}
+                    <span className="animate-shimmer absolute inset-0 -z-10 rounded-full bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
                   </Link>
                 </Button>
               </div>
@@ -590,18 +591,19 @@ export default function Navbar() {
                   <ThemeToggle />
                   <Button
                     size="sm"
-                    variant="outline"
-                    className="rounded-full text-xs group border-primary/20 hover:border-primary/50"
+                    className="group relative overflow-hidden rounded-full border-0 bg-gradient-to-r from-primary/90 to-indigo-500/90 px-5 text-xs text-primary-foreground shadow-lg shadow-primary/20 transition-all hover:shadow-xl hover:shadow-primary/30"
                     asChild
                   >
                     <Link
                       href="/resume"
                       onClick={() => setMobileMenuOpen(false)}
                     >
-                      <FileText className="mr-1.5 h-3.5 w-3.5 group-hover:scale-110 transition-transform" />
+                      <FileText className="mr-1.5 h-3.5 w-3.5 transition-transform group-hover:-rotate-3 group-hover:scale-110" />
                       <span className={isVeryTinyScreen ? "sr-only" : ""}>
                         Resume
                       </span>
+                      {/* Premium shimmer effect */}
+                      <span className="animate-shimmer absolute inset-0 -z-10 rounded-full bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
                     </Link>
                   </Button>
                 </div>

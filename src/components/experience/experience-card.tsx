@@ -3,6 +3,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { formatStartEndDate } from "@/lib/utils";
+import { fadeIn } from "@/lib/animations";
 import { Experience } from "@/types";
 import { AnimatePresence, motion } from "framer-motion";
 import {
@@ -16,21 +17,15 @@ import {
   User,
 } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
+import React, { useState } from "react";
 import { RelatedBlogLinks } from "../blog/related-blog-links";
-
-// Fade in animation for items
-const fadeIn = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-};
 
 interface ExperienceCardProps {
   experience: Experience;
   index: number;
 }
 
-export function ExperienceCard({
+export const ExperienceCard = React.memo(function ExperienceCard({
   experience: exp,
   index,
 }: ExperienceCardProps) {
@@ -259,4 +254,4 @@ export function ExperienceCard({
       </motion.div>
     </motion.div>
   );
-}
+});
