@@ -27,10 +27,10 @@ export function ExperiencesSection() {
             <Briefcase className="mr-1 inline h-4 w-4 text-primary" />
             <span className="text-xs font-medium">Work History</span>
           </div>
-          <h2 className="mb-4 text-3xl font-bold md:text-4xl">
+          <h2 className="section-heading !mb-4">
             Professional Experience
           </h2>
-          <p className="mx-auto max-w-2xl text-muted-foreground">
+          <p className="section-subheading !mb-0">
             A showcase of my professional journey and the skills I&apos;ve
             developed along the way.
           </p>

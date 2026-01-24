@@ -19,10 +19,10 @@ export function ProjectsSection() {
           variants={fadeIn}
           className="mb-16 text-center"
         >
-          <h2 className="mb-4 text-3xl font-bold md:text-4xl">
+          <h2 className="section-heading !mb-4">
             Featured Projects
           </h2>
-          <p className="mx-auto max-w-2xl text-muted-foreground">
+          <p className="section-subheading !mb-0">
             Here are some projects I&apos;ve worked on that showcase my skills
             and approach to problem-solving.
           </p>

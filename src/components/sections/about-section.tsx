@@ -23,7 +23,7 @@ export function AboutSection() {
           viewport={{ once: true, margin: "-100px" }}
           variants={fadeIn}
         >
-          <h2 className="mb-12 text-center text-3xl font-bold md:text-4xl">
+          <h2 className="section-heading">
             About Me
           </h2>
         </motion.div>

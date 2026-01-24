@@ -37,7 +37,7 @@ export const ExperienceCard = React.memo(function ExperienceCard({
 
   return (
     <motion.div key={index} variants={fadeIn} className="mb-8">
-      <motion.div className="group relative border border-border/40 rounded-xl overflow-hidden transition-all duration-300 bg-background/80 backdrop-blur-sm hover:shadow-xl hover:-translate-y-1">
+      <motion.div className="group relative border border-border/40 rounded-xl overflow-hidden bg-background/80 backdrop-blur-sm card-hover-lift">
         {/* Card header with company info */}
         <div className="p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-border/10">
           <div className="flex items-center gap-4 w-full">

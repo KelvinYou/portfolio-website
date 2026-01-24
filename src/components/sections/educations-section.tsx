@@ -53,10 +53,10 @@ export function EducationsSection() {
             <BookOpen className="mr-1 inline h-4 w-4 text-primary" />
             <span className="text-xs font-medium">Academic Journey</span>
           </div>
-          <h2 className="mb-4 text-3xl font-bold md:text-4xl">
+          <h2 className="section-heading !mb-4">
             Education & Certifications
           </h2>
-          <p className="mx-auto max-w-2xl text-muted-foreground">
+          <p className="section-subheading !mb-0">
             My academic journey and continuous learning path that has shaped my
             professional skills.
           </p>

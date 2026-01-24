@@ -292,11 +292,42 @@
   animation: shimmer 1.5s ease-in-out;
 }
 
-/* Consistent section typography */
+/* Premium section typography with tighter letter-spacing */
 .section-heading {
-  @apply mb-6 text-center text-3xl font-bold tracking-tight md:text-4xl;
+  @apply mb-6 text-center text-3xl font-bold md:text-4xl lg:text-5xl;
+  letter-spacing: -0.02em; /* Premium tight tracking */
 }
 
 .section-subheading {
-  @apply mx-auto mb-12 max-w-2xl text-center text-lg text-muted-foreground;
+  @apply mx-auto mb-12 max-w-2xl text-center text-base text-muted-foreground md:text-lg;
+  letter-spacing: 0.01em; /* Subtle open tracking for body */
+}
+
+/* Hero specific typography */
+.hero-heading {
+  @apply text-4xl font-bold leading-[1.1] md:text-5xl lg:text-6xl;
+  letter-spacing: -0.03em; /* Tighter for impact */
+}
+
+/* Premium card interactions */
+.card-hover-lift {
+  @apply cursor-pointer transition-all duration-200 ease-out;
+}
+
+.card-hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 
+    0 10px 25px -5px rgba(0, 0, 0, 0.1),
+    0 8px 10px -6px rgba(0, 0, 0, 0.05);
+}
+
+.card-hover-lift:active {
+  transform: translateY(-2px);
+}
+
+/* Dark mode card shadows */
+.dark .card-hover-lift:hover {
+  box-shadow: 
+    0 10px 25px -5px rgba(0, 0, 0, 0.3),
+    0 8px 10px -6px rgba(0, 0, 0, 0.2);
 }

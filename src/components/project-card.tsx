@@ -52,7 +52,7 @@ export const ProjectCard = React.memo(function ProjectCard({
       whileHover={{ y: -5 }}
       transition={{ type: "spring", stiffness: 300 }}
     >
-      <Card className="overflow-hidden border border-border/40 bg-muted/10 backdrop-blur-sm hover:shadow-xl transition-all duration-300 h-full flex flex-col group">
+      <Card className="overflow-hidden border border-border/40 bg-muted/10 backdrop-blur-sm transition-all duration-300 h-full flex flex-col group card-hover-lift">
         <div className="relative h-52 overflow-hidden">
           {project.image ? (
             <Image
@@ -79,9 +79,11 @@ export const ProjectCard = React.memo(function ProjectCard({
           <div className="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent" />
 
           {/* Status badge with glow effect on hover */}
-          <div className="absolute top-3 right-3 transition-transform duration-300 group-hover:scale-110 group-hover:translate-x-1">
-            <StatusBadge status={project.status} className="group-hover:shadow-glow" />
-          </div>
+          {project.status && (
+            <div className="absolute top-3 right-3 transition-transform duration-300 group-hover:scale-110 group-hover:translate-x-1">
+              <StatusBadge status={project.status} className="group-hover:shadow-glow" />
+            </div>
+          )}
         </div>
 
         <CardHeader>
@@ -169,7 +171,9 @@ export const ProjectCard = React.memo(function ProjectCard({
                 <DialogHeader>
                   <DialogTitle className="text-xl flex items-center gap-2">
                     {project.title}
-                    <StatusBadge status={project.status} className="ml-2" withHoverEffect={false} />
+                    {project.status && (
+                      <StatusBadge status={project.status} className="ml-2" withHoverEffect={false} />
+                    )}
                   </DialogTitle>
                   <DialogDescription className="text-base mt-2">
                     {project.description}

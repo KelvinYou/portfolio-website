@@ -37,10 +37,10 @@ export function SkillsSection() {
           variants={fadeIn}
           className="mb-16 text-center"
         >
-          <h2 className="mb-4 text-3xl font-bold md:text-4xl">
+          <h2 className="section-heading !mb-4">
             Skills & Expertise
           </h2>
-          <p className="mx-auto max-w-2xl text-muted-foreground">
+          <p className="section-subheading !mb-0">
             Technologies and tools I&apos;ve mastered throughout my professional
             journey.
           </p>

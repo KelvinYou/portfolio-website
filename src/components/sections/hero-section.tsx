@@ -4,11 +4,11 @@ import { useRef, useState, useEffect } from "react";
 import { motion, useTransform } from "framer-motion";
 import {
   Github,
-  Mail,
   Linkedin,
   FileText,
   ArrowRight,
   Sparkles,
+  Mail,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -105,9 +105,9 @@ export function HeroSection() {
               </p>
             </motion.div>
 
-            {/* Simplified heading animation */}
+            {/* Simplified heading animation with premium typography */}
             <motion.h1
-              className="mb-6 text-4xl font-bold leading-[1.1] tracking-tight sm:text-5xl md:text-6xl lg:text-7xl"
+              className="hero-heading mb-6"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.2 }}
@@ -173,45 +173,37 @@ export function HeroSection() {
               <div className="absolute -left-6 top-0 h-full w-1 rounded bg-gradient-to-b from-primary/50 via-primary/30 to-transparent" />
             </motion.div>
 
-            {/* CTA button section with clear hierarchy */}
+            {/* CTA button section with clear hierarchy - Contact as primary for conversion */}
             <motion.div
-              className="mb-6 flex flex-col gap-3 sm:flex-row sm:gap-4"
+              className="mb-6 flex flex-col gap-4 sm:flex-row sm:gap-4"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.6 }}
             >
-              {/* Primary CTA */}
+              {/* Primary CTA - Contact for conversion */}
               <Button
                 size="lg"
-                className="group relative w-full gap-2 overflow-hidden rounded-full px-6 py-3 text-sm shadow-lg shadow-primary/10 hover:shadow-primary/20 sm:w-auto sm:px-8 sm:py-4 sm:text-base"
+                className="group relative w-full gap-2 overflow-hidden rounded-full bg-gradient-to-r from-primary to-indigo-500 px-6 py-3 text-sm text-primary-foreground shadow-lg shadow-primary/25 transition-all duration-200 hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-0.5 sm:w-auto sm:px-8 sm:py-4 sm:text-base"
                 asChild
               >
-                <Link href="#projects">
+                <Link href="#contact">
+                  <Mail className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                   <span className="relative z-10 font-medium">
-                    View Projects
+                    Let&apos;s Talk
                   </span>
-                  <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 sm:h-4 sm:w-4" />
-
-                  {/* Keep hover animation as it provides important user feedback */}
-                  <motion.span
-                    className="absolute inset-0 bg-gradient-to-r from-primary to-indigo-500"
-                    initial={{ x: "100%" }}
-                    whileHover={{ x: "0%" }}
-                    transition={{ duration: 0.4, ease: "easeInOut" }}
-                  />
                 </Link>
               </Button>
 
-              {/* Secondary CTA - Resume with premium styling */}
+              {/* Secondary CTA - View Projects */}
               <Button
                 size="lg"
                 variant="outline"
-                className="group w-full gap-2 rounded-full border-2 border-primary/30 bg-background/50 px-6 py-3 text-sm backdrop-blur-sm transition-all hover:border-primary hover:bg-primary/5 sm:w-auto sm:px-8 sm:py-4 sm:text-base"
+                className="group w-full gap-2 rounded-full border-2 border-primary/30 bg-background/50 px-6 py-3 text-sm backdrop-blur-sm transition-all duration-200 hover:border-primary hover:bg-primary/5 hover:-translate-y-0.5 sm:w-auto sm:px-8 sm:py-4 sm:text-base"
                 asChild
               >
-                <Link href="/resume">
-                  <FileText className="h-3.5 w-3.5 transition-transform group-hover:scale-110 sm:h-4 sm:w-4" />
-                  <span className="font-medium">View Resume</span>
+                <Link href="#projects">
+                  <span className="font-medium">View Projects</span>
+                  <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 sm:h-4 sm:w-4" />
                 </Link>
               </Button>
             </motion.div>
