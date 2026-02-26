@@ -15,12 +15,12 @@ export function SocialLinks({ variant = "icon-only", className }: SocialLinksPro
   const socialLinks = [
     {
       icon: Github,
-      href: contact.social.github,
+      href: contact.github,
       label: "GitHub",
     },
     {
       icon: Linkedin,
-      href: contact.social.linkedin,
+      href: contact.linkedin,
       label: "LinkedIn",
     },
     {

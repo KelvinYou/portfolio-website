@@ -6,27 +6,17 @@ import { Button } from "@/components/ui/button";
 import { projects } from "@/constants";
 import { ProjectCard } from "@/components/project-card";
 import Link from "next/link";
-import { fadeIn, staggerContainer, defaultViewport } from "@/lib/animations";
+import { staggerContainer, defaultViewport } from "@/lib/animations";
+import { UnifiedSectionHeader } from "@/components/base/unified-section-header";
 
 export function ProjectsSection() {
   return (
-    <section id="projects" className="geometric-bg relative">
+    <section id="projects" className="py-32 md:py-40">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={defaultViewport}
-          variants={fadeIn}
-          className="mb-20 text-center"
-        >
-          <h2 className="section-heading">
-            Featured Projects
-          </h2>
-          <p className="section-subheading">
-            Here are some projects I&apos;ve worked on that showcase my skills
-            and approach to problem-solving.
-          </p>
-        </motion.div>
+        <UnifiedSectionHeader
+          title="Featured Projects"
+          subtitle="Here are some projects I've worked on that showcase my skills and approach to problem-solving."
+        />
 
         {/* Portfolio Grid - Masonry-style layout */}
         <motion.div

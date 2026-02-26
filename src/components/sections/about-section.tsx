@@ -7,6 +7,8 @@ import Link from "next/link";
 import { personalInfo } from "@/constants";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { UnifiedSectionHeader } from "@/components/base/unified-section-header";
+import { useState } from "react";
 
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
@@ -14,19 +16,23 @@ const fadeIn = {
 };
 
 export function AboutSection() {
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    setMousePosition({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    });
+  };
+
   return (
-    <section id="about" className="geometric-bg relative bg-muted/30">
+    <section id="about" className="py-32 md:py-40">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={fadeIn}
-        >
-          <h2 className="section-heading">
-            About Me
-          </h2>
-        </motion.div>
+        <UnifiedSectionHeader
+          title="About Me"
+          subtitle="Learn more about my journey and what drives me as a developer"
+        />
 
         <div className="grid items-center gap-12 md:grid-cols-2">
           <motion.div
@@ -34,16 +40,23 @@ export function AboutSection() {
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             variants={fadeIn}
-            className="relative overflow-hidden rounded-lg"
+            className="group relative overflow-hidden rounded-lg"
+            onMouseMove={handleMouseMove}
           >
-            <div className="absolute inset-0 z-10 -m-1 rounded-lg border border-primary/20" />
-            <div className="absolute -inset-0.5 rounded-lg bg-gradient-to-tr from-primary/20 to-secondary/20 blur-sm" />
+            <div className="absolute inset-0 rounded-lg ring-1 ring-white/10 group-hover:ring-[#00F0FF]/30 transition-all duration-500 z-10" />
+            {/* Mouse spotlight effect */}
+            <div
+              className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 z-10"
+              style={{
+                background: `radial-gradient(400px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(0,240,255,0.08), transparent 40%)`,
+              }}
+            />
             <Image
               src={personalInfo.profilePicture}
               alt="About Me"
               width={600}
               height={400}
-              className="relative z-0 h-[400px] rounded-lg object-cover"
+              className="relative h-[400px] rounded-lg object-cover"
             />
           </motion.div>
 
@@ -55,12 +68,6 @@ export function AboutSection() {
           >
             <h3 className="mb-4 text-2xl font-semibold">My Journey</h3>
             <p className="mb-6 text-muted-foreground">{personalInfo.summary}</p>
-            <p className="mb-6 text-muted-foreground">
-              I specialize in front-end development with React and TypeScript,
-              but I&apos;m also proficient with back-end technologies like
-              Node.js and databases. I believe in writing clean, maintainable
-              code and creating intuitive user experiences.
-            </p>
             <div className="flex flex-wrap gap-3">
               <Link
                 href="/resume"

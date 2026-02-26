@@ -3,9 +3,6 @@
 import { useRef, useState, useEffect } from "react";
 import { motion, useTransform } from "framer-motion";
 import {
-  Github,
-  Linkedin,
-  FileText,
   ArrowRight,
   Sparkles,
   Mail,
@@ -13,9 +10,9 @@ import {
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { TypeAnimation } from "react-type-animation";
-import { cn } from "@/lib/utils";
 import { useMotionValue } from "framer-motion";
 import { personalInfo } from "@/constants";
+import { SocialLinks } from "@/components/base/social-links";
 
 export function HeroSection() {
   const ref = useRef<HTMLDivElement>(null);
@@ -47,53 +44,12 @@ export function HeroSection() {
 
   const cardRotateY = useTransform(mouseX, [-0.5, 0.5], ["-7deg", "7deg"]);
 
-  const socialIcons = [
-    {
-      icon: <Github className="h-5 w-5" />,
-      href: personalInfo.contact.github,
-      color: "hover:bg-zinc-800 dark:hover:bg-zinc-700",
-    },
-    {
-      icon: <Linkedin className="h-5 w-5" />,
-      href: personalInfo.contact.linkedin,
-      color: "hover:bg-blue-600",
-    },
-    {
-      icon: <Mail className="h-5 w-5" />,
-      href: `mailto:${personalInfo.contact.email}`,
-      color: "hover:bg-red-500",
-    },
-    {
-      icon: <FileText className="h-5 w-5" />,
-      href: "/resume",
-      color: "hover:bg-green-500",
-    },
-  ];
-
   return (
     <section
       id="home"
       ref={ref}
-      className="geometric-bg relative flex min-h-screen items-center justify-center overflow-hidden pt-16"
+      className="relative flex min-h-screen items-center justify-center overflow-hidden py-32 md:py-40"
     >
-      {/* Vibrant block-based background with geometric patterns */}
-      <div className="absolute inset-0 -z-10 overflow-hidden">
-        {/* Bold gradient blocks */}
-        <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-primary/5" />
-        
-        {/* Energetic geometric shapes */}
-        <div className="absolute left-0 top-1/4 h-96 w-96 rounded-full bg-primary/10 blur-3xl animate-pattern" />
-        <div className="absolute right-0 bottom-1/4 h-96 w-96 rounded-full bg-secondary/10 blur-3xl animate-pattern" style={{ animationDelay: '1s' }} />
-        
-        {/* Block pattern overlay */}
-        <div className="absolute inset-0 opacity-[0.03]" style={{
-          backgroundImage: `
-            linear-gradient(90deg, rgba(37, 99, 235, 0.1) 1px, transparent 1px),
-            linear-gradient(rgba(37, 99, 235, 0.1) 1px, transparent 1px)
-          `,
-          backgroundSize: '80px 80px'
-        }} />
-      </div>
 
       <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid items-center gap-12 lg:grid-cols-2">
@@ -103,12 +59,12 @@ export function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3 py-1.5 shadow-sm backdrop-blur-sm"
+              className="mb-6 inline-flex items-center gap-2 rounded-full bg-white/[0.03] backdrop-blur-md ring-1 ring-white/10 px-3 py-1.5"
             >
-              <div className="flex items-center justify-center rounded-full bg-background/50 p-1">
-                <Sparkles className="h-3.5 w-3.5 text-primary" />
+              <div className="flex items-center justify-center rounded-full bg-white/[0.05] p-1">
+                <Sparkles className="h-3.5 w-3.5 text-[#00F0FF]" />
               </div>
-              <p className="text-xs font-medium text-primary/80">
+              <p className="text-xs font-medium text-neutral-400">
                 Previously built data platforms at Tencent scale
               </p>
             </motion.div>
@@ -220,35 +176,13 @@ export function HeroSection() {
               </Button>
             </motion.div>
 
-            {/* Enhanced social icons with proper touch targets */}
+            {/* Social links with cyan hover states */}
             <motion.div
-              className="flex flex-wrap gap-4 sm:gap-5"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.8 }}
             >
-              {socialIcons.map((social, index) => (
-                <a
-                  key={index}
-                  href={social.href}
-                  className={cn(
-                    "flex items-center justify-center rounded-full transition-all duration-300",
-                    /* Mobile: 48x48px for better touch targets, Desktop: 44x44px */
-                    "h-12 w-12 sm:h-11 sm:w-11",
-                    "border-2 border-border/40 text-muted-foreground",
-                    "hover:border-primary/50 hover:text-primary hover:shadow-md hover:shadow-primary/10",
-                    "bg-background/60 backdrop-blur-md",
-                    "transform transition-transform hover:-translate-y-1 hover:scale-110 active:scale-95",
-                    "cursor-pointer", /* UX Pro Max: cursor-pointer for clickable elements */
-                  )}
-                  aria-label={social.href || "Social media link"}
-                >
-                  {social.icon}
-
-                  {/* Premium highlight effect */}
-                  <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-primary/10 to-transparent opacity-0 transition-opacity duration-300 hover:opacity-100" />
-                </a>
-              ))}
+              <SocialLinks variant="icon-only" />
             </motion.div>
           </div>
 
