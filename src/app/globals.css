@@ -46,76 +46,76 @@
 }
 
 :root {
-  /* Vibrant Block-based Color System */
+  /* Hyper-Minimalist Neo-Brutalism: Void-First Palette */
   --background: #FAFAFA; /* Light background */
-  --foreground: #09090B; /* Black text */
+  --foreground: #000000; /* Pure black text */
   --card: #FFFFFF;
-  --card-foreground: #09090B;
+  --card-foreground: #000000;
   --popover: #FFFFFF;
-  --popover-foreground: #09090B;
-  --primary: #2563EB; /* Blue CTA */
-  --primary-foreground: #FFFFFF;
+  --popover-foreground: #000000;
+  --primary: #00F0FF; /* Neon cyan - ONLY accent color */
+  --primary-foreground: #000000;
   --secondary: #3F3F46; /* Gray */
   --secondary-foreground: #FAFAFA;
   --muted: #F4F4F5;
-  --muted-foreground: #71717A;
-  --accent: #2563EB;
-  --accent-foreground: #FFFFFF;
+  --muted-foreground: #A1A1AA;
+  --accent: #00F0FF; /* Neon cyan */
+  --accent-foreground: #000000;
   --destructive: #EF4444;
   --destructive-foreground: #FFFFFF;
   --border: #E4E4E7;
   --input: #E4E4E7;
-  --ring: #2563EB;
-  --chart-1: #2563EB;
-  --chart-2: #3F3F46;
-  --chart-3: #18181B;
-  --chart-4: #71717A;
-  --chart-5: #A1A1AA;
+  --ring: #00F0FF; /* Cyan focus ring */
+  --chart-1: #00F0FF;
+  --chart-2: #00D4E6;
+  --chart-3: #00B8CC;
+  --chart-4: #009CB3;
+  --chart-5: #008099;
   --radius: 0.5rem;
   --sidebar: #FFFFFF;
-  --sidebar-foreground: #09090B;
-  --sidebar-primary: #2563EB;
-  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-foreground: #000000;
+  --sidebar-primary: #00F0FF;
+  --sidebar-primary-foreground: #000000;
   --sidebar-accent: #F4F4F5;
-  --sidebar-accent-foreground: #09090B;
+  --sidebar-accent-foreground: #000000;
   --sidebar-border: #E4E4E7;
-  --sidebar-ring: #2563EB;
+  --sidebar-ring: #00F0FF;
 }
 
 .dark {
-  /* Dark mode - maintaining vibrant block-based aesthetic */
-  --background: #18181B; /* Dark primary */
-  --foreground: #FAFAFA;
-  --card: #27272A;
-  --card-foreground: #FAFAFA;
-  --popover: #27272A;
-  --popover-foreground: #FAFAFA;
-  --primary: #3B82F6; /* Brighter blue for dark mode */
-  --primary-foreground: #FFFFFF;
-  --secondary: #3F3F46;
-  --secondary-foreground: #FAFAFA;
-  --muted: #27272A;
+  /* Void-First: Pure black background, no gray overlays */
+  --background: #000000; /* PURE BLACK - void-first */
+  --foreground: #FFFFFF; /* Pure white text */
+  --card: #000000;
+  --card-foreground: #FFFFFF;
+  --popover: #000000;
+  --popover-foreground: #FFFFFF;
+  --primary: #00F0FF; /* Neon cyan - glows against void */
+  --primary-foreground: #000000;
+  --secondary: #27272A;
+  --secondary-foreground: #FFFFFF;
+  --muted: #18181B;
   --muted-foreground: #A1A1AA;
-  --accent: #3B82F6;
-  --accent-foreground: #FFFFFF;
+  --accent: #00F0FF; /* Neon cyan */
+  --accent-foreground: #000000;
   --destructive: #F87171;
   --destructive-foreground: #FFFFFF;
-  --border: #3F3F46;
-  --input: #3F3F46;
-  --ring: #3B82F6;
-  --chart-1: #3B82F6;
-  --chart-2: #8B5CF6;
-  --chart-3: #EC4899;
-  --chart-4: #F59E0B;
-  --chart-5: #10B981;
-  --sidebar: #18181B;
-  --sidebar-foreground: #FAFAFA;
-  --sidebar-primary: #3B82F6;
-  --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #27272A;
-  --sidebar-accent-foreground: #FAFAFA;
-  --sidebar-border: #3F3F46;
-  --sidebar-ring: #3B82F6;
+  --border: rgba(255, 255, 255, 0.1); /* 10% white border */
+  --input: rgba(255, 255, 255, 0.1);
+  --ring: #00F0FF; /* Cyan focus ring */
+  --chart-1: #00F0FF;
+  --chart-2: #00D4E6;
+  --chart-3: #00B8CC;
+  --chart-4: #009CB3;
+  --chart-5: #008099;
+  --sidebar: #000000;
+  --sidebar-foreground: #FFFFFF;
+  --sidebar-primary: #00F0FF;
+  --sidebar-primary-foreground: #000000;
+  --sidebar-accent: #18181B;
+  --sidebar-accent-foreground: #FFFFFF;
+  --sidebar-border: rgba(255, 255, 255, 0.1);
+  --sidebar-ring: #00F0FF;
 }
 
 @layer base {
@@ -203,52 +203,6 @@
   }
 }
 
-@layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 224 71.4% 4.1%;
-    --card: 0 0% 100%;
-    --card-foreground: 224 71.4% 4.1%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 224 71.4% 4.1%;
-    --primary: 262.1 83.3% 57.8%;
-    --primary-foreground: 210 20% 98%;
-    --secondary: 220 14.3% 95.9%;
-    --secondary-foreground: 220.9 39.3% 11%;
-    --muted: 220 14.3% 95.9%;
-    --muted-foreground: 220 8.9% 38%; /* Improved contrast from 46.1% */
-    --accent: 220 14.3% 95.9%;
-    --accent-foreground: 220.9 39.3% 11%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 20% 98%;
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 262.1 83.3% 57.8%;
-    --radius: 0.5rem;
-  }
-
-  .dark {
-    --background: 224 71.4% 4.1%;
-    --foreground: 210 20% 98%;
-    --card: 224 71.4% 4.1%;
-    --card-foreground: 210 20% 98%;
-    --popover: 224 71.4% 4.1%;
-    --popover-foreground: 210 20% 98%;
-    --primary: 263.4 70% 50.4%;
-    --primary-foreground: 210 20% 98%;
-    --secondary: 215 27.9% 16.9%;
-    --secondary-foreground: 210 20% 98%;
-    --muted: 215 27.9% 16.9%;
-    --muted-foreground: 217.9 10.6% 72%; /* Improved contrast from 64.9% */
-    --accent: 215 27.9% 16.9%;
-    --accent-foreground: 210 20% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 20% 98%;
-    --border: 215 27.9% 16.9%;
-    --input: 215 27.9% 16.9%;
-    --ring: 263.4 70% 50.4%;
-  }
-}
 
 @layer base {
   * {
@@ -393,11 +347,11 @@
 @keyframes energetic-pulse {
   0%, 100% {
     transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4);
+    box-shadow: 0 0 0 0 rgba(0, 240, 255, 0.4);
   }
   50% {
     transform: scale(1.05);
-    box-shadow: 0 0 0 10px rgba(37, 99, 235, 0);
+    box-shadow: 0 0 0 10px rgba(0, 240, 255, 0);
   }
 }
 
@@ -417,27 +371,7 @@
   scroll-snap-stop: always;
 }
 
-/* Geometric shapes background */
-.geometric-bg {
-  position: relative;
-  overflow: hidden;
-}
-
-.geometric-bg::before {
-  content: '';
-  position: absolute;
-  width: 200%;
-  height: 200%;
-  background-image: 
-    linear-gradient(45deg, rgba(37, 99, 235, 0.03) 25%, transparent 25%),
-    linear-gradient(-45deg, rgba(37, 99, 235, 0.03) 25%, transparent 25%),
-    linear-gradient(45deg, transparent 75%, rgba(37, 99, 235, 0.03) 75%),
-    linear-gradient(-45deg, transparent 75%, rgba(37, 99, 235, 0.03) 75%);
-  background-size: 60px 60px;
-  background-position: 0 0, 0 30px, 30px -30px, -30px 0px;
-  animation: pattern-shift 20s linear infinite;
-  opacity: 0.5;
-}
+/* Geometric shapes background - REMOVED (violates void-first principle) */
 
 /* Vibrant Block-based Typography System */
 .section-heading {
@@ -487,7 +421,7 @@ section {
   }
 }
 
-/* Vibrant Block-based Card Interactions - Bold Hover with Color Shift */
+/* Neo-Brutalism Card Interactions - Neon Cyan Glow */
 .card-hover-lift {
   @apply cursor-pointer border-2 border-border transition-all duration-300 ease-out;
   will-change: transform, border-color, background-color;
@@ -495,12 +429,13 @@ section {
 
 .card-hover-lift:hover {
   transform: translateY(-8px);
-  border-color: #2563EB; /* Blue CTA color shift */
-  background-color: rgba(37, 99, 235, 0.02);
-  box-shadow: 
-    0 24px 48px -12px rgba(37, 99, 235, 0.2),
-    0 12px 24px -8px rgba(37, 99, 235, 0.15),
-    0 0 0 2px rgba(37, 99, 235, 0.1);
+  border-color: #00F0FF; /* Neon cyan accent */
+  background-color: rgba(0, 240, 255, 0.02);
+  box-shadow:
+    0 24px 48px -12px rgba(0, 240, 255, 0.2),
+    0 12px 24px -8px rgba(0, 240, 255, 0.15),
+    0 0 0 2px rgba(0, 240, 255, 0.1),
+    0 0 32px rgba(0, 240, 255, 0.15);
 }
 
 .card-hover-lift:active {
@@ -508,14 +443,15 @@ section {
   transition-duration: 100ms;
 }
 
-/* Dark mode - vibrant glow effect */
+/* Dark mode - enhanced neon glow against void */
 .dark .card-hover-lift:hover {
-  border-color: #3B82F6;
-  background-color: rgba(59, 130, 246, 0.05);
-  box-shadow: 
-    0 24px 48px -12px rgba(59, 130, 246, 0.3),
-    0 12px 24px -8px rgba(59, 130, 246, 0.2),
-    0 0 0 2px rgba(59, 130, 246, 0.2);
+  border-color: #00F0FF;
+  background-color: rgba(0, 240, 255, 0.05);
+  box-shadow:
+    0 24px 48px -12px rgba(0, 240, 255, 0.3),
+    0 12px 24px -8px rgba(0, 240, 255, 0.2),
+    0 0 0 2px rgba(0, 240, 255, 0.2),
+    0 0 48px rgba(0, 240, 255, 0.25);
 }
 
 /* Bold button hover - color shift */
