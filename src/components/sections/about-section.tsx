@@ -15,7 +15,7 @@ const fadeIn = {
 
 export function AboutSection() {
   return (
-    <section id="about" className="bg-muted/20 py-24">
+    <section id="about" className="geometric-bg relative bg-muted/30">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial="hidden"
@@ -61,21 +61,23 @@ export function AboutSection() {
               Node.js and databases. I believe in writing clean, maintainable
               code and creating intuitive user experiences.
             </p>
-            <div className="flex gap-2">
+            <div className="flex flex-wrap gap-3">
               <Link
                 href="/resume"
                 className={cn(
                   buttonVariants({ variant: "outline" }),
-                  "rounded-full px-6",
+                  "rounded-full px-6 py-3 cursor-pointer",
                 )}
+                aria-label="View my resume and download PDF"
               >
-                <FileText className="mr-2 h-4 w-4" /> View Resume
+                <FileText className="mr-2 h-4 w-4" aria-hidden="true" /> View Resume
               </Link>
               <Link
                 href="/#contact"
-                className={cn(buttonVariants(), "rounded-full px-6")}
+                className={cn(buttonVariants(), "rounded-full px-6 py-3 cursor-pointer")}
+                aria-label="Contact me via email or social media"
               >
-                <Mail className="mr-2 h-4 w-4" /> Contact
+                <Mail className="mr-2 h-4 w-4" aria-hidden="true" /> Contact
               </Link>
             </div>
           </motion.div>

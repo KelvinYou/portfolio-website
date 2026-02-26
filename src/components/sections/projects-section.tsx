@@ -10,26 +10,27 @@ import { fadeIn, staggerContainer, defaultViewport } from "@/lib/animations";
 
 export function ProjectsSection() {
   return (
-    <section id="projects" className="py-24">
+    <section id="projects" className="geometric-bg relative">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={defaultViewport}
           variants={fadeIn}
-          className="mb-16 text-center"
+          className="mb-20 text-center"
         >
-          <h2 className="section-heading !mb-4">
+          <h2 className="section-heading">
             Featured Projects
           </h2>
-          <p className="section-subheading !mb-0">
+          <p className="section-subheading">
             Here are some projects I&apos;ve worked on that showcase my skills
             and approach to problem-solving.
           </p>
         </motion.div>
 
+        {/* Portfolio Grid - Masonry-style layout */}
         <motion.div
-          className="grid gap-8 md:grid-cols-2 lg:grid-cols-3"
+          className="grid gap-12 md:grid-cols-2 lg:grid-cols-3"
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
@@ -41,15 +42,19 @@ export function ProjectsSection() {
         </motion.div>
 
         <motion.div
-          className="mt-12 text-center"
+          className="mt-16 text-center"
           initial="hidden"
           whileInView="visible"
           viewport={defaultViewport}
           variants={fadeIn}
         >
-          <Button variant="outline" className="rounded-full" asChild>
+          <Button 
+            variant="outline" 
+            className="rounded-lg border-3 border-foreground px-8 py-6 text-lg font-bold transition-all duration-200 hover:-translate-y-2 hover:border-primary hover:bg-primary hover:text-primary-foreground" 
+            asChild
+          >
             <Link href="/projects">
-              See All Projects <ArrowRight className="ml-2 h-4 w-4" />
+              See All Projects <ArrowRight className="ml-3 h-6 w-6" />
             </Link>
           </Button>
         </motion.div>

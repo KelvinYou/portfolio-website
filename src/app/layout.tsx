@@ -1,18 +1,23 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Archivo, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { domainPath, experiences, personalInfo } from "@/constants";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+// Vibrant Block-based Typography System
+const archivo = Archivo({
+  variable: "--font-archivo",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space-grotesk",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
 });
 
 const basicInfo = {
@@ -87,7 +92,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${archivo.variable} ${spaceGrotesk.variable} font-sans antialiased`}
       >
         <ThemeProvider
           attribute="class"

@@ -15,7 +15,7 @@ export function ContactSection() {
   // };
 
   return (
-    <section id="contact" className="py-24">
+    <section id="contact" className="py-24 bg-muted/5">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial="hidden"
@@ -33,61 +33,67 @@ export function ContactSection() {
           </p>
         </motion.div>
 
-        <div className="mx-auto grid max-w-4xl gap-12 md:grid-cols-2">
+        <div className="mx-auto max-w-2xl">
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             variants={fadeIn}
+            className="glass-card rounded-2xl p-8 sm:p-10"
           >
-            <h3 className="mb-6 text-2xl font-semibold">Contact Information</h3>
+            <h3 className="mb-8 text-2xl font-semibold text-center">Contact Information</h3>
             <div className="space-y-6">
-              <div className="flex items-start gap-4">
-                <div className="rounded-full bg-muted/30 p-3">
-                  <Mail className="h-5 w-5" />
+              <a
+                href={`mailto:${personalInfo.contact.email}`}
+                className="group flex items-center gap-5 rounded-xl border border-border/40 bg-background/50 p-5 transition-all duration-300 hover:border-primary/50 hover:bg-primary/5 hover:shadow-lg cursor-pointer"
+                aria-label={`Send email to ${personalInfo.contact.email}`}
+              >
+                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 text-primary transition-all duration-300 group-hover:scale-110 group-hover:bg-primary/20">
+                  <Mail className="h-6 w-6" aria-hidden="true" />
                 </div>
-                <div>
-                  <h4 className="font-medium">Email</h4>
-                  <a
-                    href={`mailto:${personalInfo.contact.email}`}
-                    className="text-muted-foreground transition-colors hover:text-primary"
-                  >
+                <div className="flex-1 min-w-0">
+                  <h4 className="font-semibold mb-1">Email</h4>
+                  <p className="text-sm text-muted-foreground truncate">
                     {personalInfo.contact.email}
-                  </a>
+                  </p>
                 </div>
-              </div>
+              </a>
 
-              <div className="flex items-start gap-4">
-                <div className="rounded-full bg-muted/30 p-3">
-                  <Linkedin className="h-5 w-5" />
+              <a
+                href={`${personalInfo.contact.linkedin}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center gap-5 rounded-xl border border-border/40 bg-background/50 p-5 transition-all duration-300 hover:border-primary/50 hover:bg-primary/5 hover:shadow-lg cursor-pointer"
+                aria-label="Visit my LinkedIn profile"
+              >
+                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-blue-500/10 text-blue-500 transition-all duration-300 group-hover:scale-110 group-hover:bg-blue-500/20">
+                  <Linkedin className="h-6 w-6" aria-hidden="true" />
                 </div>
-                <div>
-                  <h4 className="font-medium">LinkedIn</h4>
-                  <a
-                    href={`${personalInfo.contact.linkedin}`}
-                    target="_blank"
-                    className="break-all text-muted-foreground transition-colors hover:text-primary"
-                  >
-                    {personalInfo.contact.linkedin}
-                  </a>
+                <div className="flex-1 min-w-0">
+                  <h4 className="font-semibold mb-1">LinkedIn</h4>
+                  <p className="text-sm text-muted-foreground truncate">
+                    Connect with me
+                  </p>
                 </div>
-              </div>
+              </a>
 
-              <div className="flex items-start gap-4">
-                <div className="rounded-full bg-muted/30 p-3">
-                  <Github className="h-5 w-5" />
+              <a
+                href={`${personalInfo.contact.github}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center gap-5 rounded-xl border border-border/40 bg-background/50 p-5 transition-all duration-300 hover:border-primary/50 hover:bg-primary/5 hover:shadow-lg cursor-pointer"
+                aria-label="Visit my GitHub profile"
+              >
+                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-gray-500/10 text-gray-500 dark:text-gray-400 transition-all duration-300 group-hover:scale-110 group-hover:bg-gray-500/20">
+                  <Github className="h-6 w-6" aria-hidden="true" />
                 </div>
-                <div>
-                  <h4 className="font-medium">GitHub</h4>
-                  <a
-                    href={`${personalInfo.contact.github}`}
-                    target="_blank"
-                    className="break-all text-muted-foreground transition-colors hover:text-primary"
-                  >
-                    {personalInfo.contact.github}
-                  </a>
+                <div className="flex-1 min-w-0">
+                  <h4 className="font-semibold mb-1">GitHub</h4>
+                  <p className="text-sm text-muted-foreground truncate">
+                    View my code
+                  </p>
                 </div>
-              </div>
+              </a>
             </div>
           </motion.div>
 

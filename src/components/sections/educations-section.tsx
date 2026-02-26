@@ -40,7 +40,7 @@ const timelineVariants = {
 
 export function EducationsSection() {
   return (
-    <section id="education" className="bg-muted/5 py-24">
+    <section id="education" className="geometric-bg relative bg-muted/10">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial="hidden"

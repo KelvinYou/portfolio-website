@@ -16,6 +16,11 @@ module.exports = {
       },
     },
     extend: {
+      fontFamily: {
+        sans: ['var(--font-archivo)', 'system-ui', 'sans-serif'],
+        heading: ['var(--font-space-grotesk)', 'system-ui', 'sans-serif'],
+        mono: ['var(--font-space-grotesk)', 'monospace'],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

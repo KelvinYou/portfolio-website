@@ -74,17 +74,25 @@ export function HeroSection() {
     <section
       id="home"
       ref={ref}
-      className="relative flex min-h-screen items-center justify-center overflow-hidden pt-16"
+      className="geometric-bg relative flex min-h-screen items-center justify-center overflow-hidden pt-16"
     >
-      {/* Optimized background animations */}
+      {/* Vibrant block-based background with geometric patterns */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
-        {/* Primary background - static gradient to improve performance */}
-        <div className="absolute inset-0 bg-gradient-to-b from-background to-background/60" />
-        {/* Static secondary blob */}
-        <div className="absolute -right-1/4 top-1/2 h-1/2 w-1/2 rounded-full bg-gradient-to-bl from-blue-500/10 via-purple-500/10 to-transparent blur-3xl" />
-
-        {/* Static grid pattern */}
-        <div className="bg-grid-pattern absolute inset-0 opacity-[0.02]" />
+        {/* Bold gradient blocks */}
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-primary/5" />
+        
+        {/* Energetic geometric shapes */}
+        <div className="absolute left-0 top-1/4 h-96 w-96 rounded-full bg-primary/10 blur-3xl animate-pattern" />
+        <div className="absolute right-0 bottom-1/4 h-96 w-96 rounded-full bg-secondary/10 blur-3xl animate-pattern" style={{ animationDelay: '1s' }} />
+        
+        {/* Block pattern overlay */}
+        <div className="absolute inset-0 opacity-[0.03]" style={{
+          backgroundImage: `
+            linear-gradient(90deg, rgba(37, 99, 235, 0.1) 1px, transparent 1px),
+            linear-gradient(rgba(37, 99, 235, 0.1) 1px, transparent 1px)
+          `,
+          backgroundSize: '80px 80px'
+        }} />
       </div>
 
       <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
@@ -105,9 +113,9 @@ export function HeroSection() {
               </p>
             </motion.div>
 
-            {/* Simplified heading animation with premium typography */}
+            {/* Vibrant block-based heading with large type */}
             <motion.h1
-              className="hero-heading mb-6"
+              className="hero-heading mb-8"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.2 }}
@@ -155,6 +163,8 @@ export function HeroSection() {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="relative"
             >
+              <div>
+
               <p className="mb-10 max-w-xl pr-8 text-lg leading-relaxed text-muted-foreground md:text-xl">
                 I build{" "}
                 <span className="font-medium text-foreground">
@@ -170,47 +180,49 @@ export function HeroSection() {
               </p>
 
               {/* Static decorative element instead of animated */}
-              <div className="absolute -left-6 top-0 h-full w-1 rounded bg-gradient-to-b from-primary/50 via-primary/30 to-transparent" />
+                <div className="absolute -left-6 top-0 h-full w-1 rounded bg-gradient-to-b from-primary/50 via-primary/30 to-transparent" />
+              </div>
+                
             </motion.div>
 
             {/* CTA button section with clear hierarchy - Contact as primary for conversion */}
             <motion.div
-              className="mb-6 flex flex-col gap-4 sm:flex-row sm:gap-4"
+              className="mb-8 flex flex-col gap-5 sm:flex-row sm:gap-5"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.6 }}
             >
-              {/* Primary CTA - Contact for conversion */}
+              {/* Primary CTA - Bold block-based design */}
               <Button
                 size="lg"
-                className="group relative w-full gap-2 overflow-hidden rounded-full bg-gradient-to-r from-primary to-indigo-500 px-6 py-3 text-sm text-primary-foreground shadow-lg shadow-primary/25 transition-all duration-200 hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-0.5 sm:w-auto sm:px-8 sm:py-4 sm:text-base"
+                className="group relative w-full gap-3 overflow-hidden rounded-lg bg-primary px-8 py-6 text-lg font-bold text-primary-foreground shadow-xl shadow-primary/30 transition-all duration-200 hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary/40 sm:w-auto sm:px-12 sm:py-7 sm:text-xl btn-bold-hover"
                 asChild
               >
                 <Link href="#contact">
-                  <Mail className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-                  <span className="relative z-10 font-medium">
+                  <Mail className="h-6 w-6 sm:h-7 sm:w-7" />
+                  <span className="relative z-10">
                     Let&apos;s Talk
                   </span>
                 </Link>
               </Button>
 
-              {/* Secondary CTA - View Projects */}
+              {/* Secondary CTA - Vibrant outline */}
               <Button
                 size="lg"
                 variant="outline"
-                className="group w-full gap-2 rounded-full border-2 border-primary/30 bg-background/50 px-6 py-3 text-sm backdrop-blur-sm transition-all duration-200 hover:border-primary hover:bg-primary/5 hover:-translate-y-0.5 sm:w-auto sm:px-8 sm:py-4 sm:text-base"
+                className="group w-full gap-3 rounded-lg border-3 border-foreground bg-background px-8 py-6 text-lg font-bold transition-all duration-200 hover:-translate-y-2 hover:border-primary hover:bg-primary hover:text-primary-foreground hover:shadow-lg sm:w-auto sm:px-12 sm:py-7 sm:text-xl"
                 asChild
               >
                 <Link href="#projects">
-                  <span className="font-medium">View Projects</span>
-                  <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 sm:h-4 sm:w-4" />
+                  <span>View Projects</span>
+                  <ArrowRight className="h-6 w-6 transition-transform group-hover:translate-x-1 sm:h-7 sm:w-7" />
                 </Link>
               </Button>
             </motion.div>
 
-            {/* Simplified social icons section with minimal animations */}
+            {/* Enhanced social icons with proper touch targets */}
             <motion.div
-              className="flex gap-5"
+              className="flex flex-wrap gap-4 sm:gap-5"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.8 }}
@@ -220,18 +232,21 @@ export function HeroSection() {
                   key={index}
                   href={social.href}
                   className={cn(
-                    "flex items-center justify-center w-10 h-10 rounded-full transition-colors duration-300",
-                    "border border-border/30 text-muted-foreground",
-                    "hover:border-primary/30 hover:text-primary hover:shadow-sm",
-                    "bg-background/50 backdrop-blur-sm",
-                    "transform transition-transform hover:-translate-y-1 active:scale-95",
+                    "flex items-center justify-center rounded-full transition-all duration-300",
+                    /* Mobile: 48x48px for better touch targets, Desktop: 44x44px */
+                    "h-12 w-12 sm:h-11 sm:w-11",
+                    "border-2 border-border/40 text-muted-foreground",
+                    "hover:border-primary/50 hover:text-primary hover:shadow-md hover:shadow-primary/10",
+                    "bg-background/60 backdrop-blur-md",
+                    "transform transition-transform hover:-translate-y-1 hover:scale-110 active:scale-95",
+                    "cursor-pointer", /* UX Pro Max: cursor-pointer for clickable elements */
                   )}
                   aria-label={social.href || "Social media link"}
                 >
                   {social.icon}
 
-                  {/* Static highlight effect - pure CSS for better performance */}
-                  <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-primary/5 to-transparent opacity-0 transition-opacity duration-300 hover:opacity-100" />
+                  {/* Premium highlight effect */}
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-primary/10 to-transparent opacity-0 transition-opacity duration-300 hover:opacity-100" />
                 </a>
               ))}
             </motion.div>

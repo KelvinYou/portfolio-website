@@ -28,7 +28,7 @@ const softSkills = [
 
 export function SkillsSection() {
   return (
-    <section id="skills" className="bg-muted/10 py-24">
+    <section id="skills" className="geometric-bg relative bg-muted/20">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial="hidden"
