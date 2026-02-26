@@ -8,6 +8,7 @@ import { ProjectCard } from "@/components/project-card";
 import Link from "next/link";
 import { staggerContainer, defaultViewport } from "@/lib/animations";
 import { UnifiedSectionHeader } from "@/components/base/unified-section-header";
+import { fadeIn } from "@/lib/animations";
 
 export function ProjectsSection() {
   return (

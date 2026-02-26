@@ -64,7 +64,7 @@ export function HeroSection() {
               <div className="flex items-center justify-center rounded-full bg-white/[0.05] p-1">
                 <Sparkles className="h-3.5 w-3.5 text-[#00F0FF]" />
               </div>
-              <p className="text-xs font-medium text-neutral-400">
+              <p className="text-xs font-medium text-muted-foreground">
                 Previously built data platforms at Tencent scale
               </p>
             </motion.div>
