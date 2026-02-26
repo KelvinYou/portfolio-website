@@ -6,13 +6,13 @@ import {
   Calendar,
   Award,
   ExternalLink,
-  BookOpen,
   MapPin,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { educations } from "@/constants";
 import { formatStartEndDate, cn } from "@/lib/utils";
 import Image from "next/image";
+import { UnifiedSectionHeader } from "@/components/base/unified-section-header";
 // Animation variants
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
@@ -40,27 +40,12 @@ const timelineVariants = {
 
 export function EducationsSection() {
   return (
-    <section id="education" className="geometric-bg relative bg-muted/10">
+    <section id="education" className="py-32 md:py-40">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={fadeIn}
-          className="mb-16 text-center"
-        >
-          <div className="mb-4 inline-block rounded-full border border-primary/20 bg-primary/10 p-1.5 px-3">
-            <BookOpen className="mr-1 inline h-4 w-4 text-primary" />
-            <span className="text-xs font-medium">Academic Journey</span>
-          </div>
-          <h2 className="section-heading !mb-4">
-            Education & Certifications
-          </h2>
-          <p className="section-subheading !mb-0">
-            My academic journey and continuous learning path that has shaped my
-            professional skills.
-          </p>
-        </motion.div>
+        <UnifiedSectionHeader
+          title="Education & Certifications"
+          subtitle="My academic journey and continuous learning path that has shaped my professional skills."
+        />
 
         <div className="relative mx-auto max-w-4xl">
           {/* Timeline line */}
@@ -71,7 +56,7 @@ export function EducationsSection() {
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
           >
-            <div className="h-full w-full rounded-full bg-gradient-to-b from-primary via-primary/50 to-primary/10"></div>
+            <div className="h-full w-full rounded-full bg-gradient-to-b from-[#00F0FF] via-[#00F0FF]/50 to-[#00F0FF]/10"></div>
           </motion.div>
 
           <motion.div
@@ -88,8 +73,8 @@ export function EducationsSection() {
                 className={`mb-12 flex flex-col md:mb-24 ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"}`}
               >
                 {/* Timeline node */}
-                <div className="absolute left-0 hidden h-8 w-8 transform items-center justify-center rounded-full border-2 border-primary/80 bg-background shadow-[0_0_10px_rgba(var(--primary),0.3)] md:left-1/2 md:flex md:-translate-x-1/2">
-                  <div className="h-3 w-3 animate-pulse rounded-full bg-primary"></div>
+                <div className="absolute left-0 hidden h-8 w-8 transform items-center justify-center rounded-full border-2 border-[#00F0FF]/80 bg-background shadow-[0_0_10px_rgba(0,240,255,0.3)] md:left-1/2 md:flex md:-translate-x-1/2">
+                  <div className="h-3 w-3 animate-pulse rounded-full bg-[#00F0FF]"></div>
                 </div>
 
                 {/* Date tag */}
@@ -103,11 +88,11 @@ export function EducationsSection() {
                 >
                   <div
                     className={cn(
-                      "flex items-center bg-primary/10 border border-primary/20 rounded-full py-1 px-3 text-xs font-mono",
+                      "flex items-center bg-white/[0.03] border border-white/10 rounded-full py-1 px-3 text-xs font-mono hover:border-[#00F0FF]/30 transition-colors",
                       index % 2 === 0 ? "pl-3 pr-4" : "pl-4 pr-3",
                     )}
                   >
-                    <Calendar className="h-3 w-3 shrink-0 text-primary" />
+                    <Calendar className="h-3 w-3 shrink-0 text-[#00F0FF]" />
                     <span className="ml-1.5">
                       {formatStartEndDate(edu.startDate, edu.endDate)}
                     </span>
@@ -119,7 +104,7 @@ export function EducationsSection() {
                   className={`relative ml-6 md:ml-0 md:w-1/2 ${index % 2 === 0 ? "md:pr-12" : "md:pl-12"}`}
                 >
                   <motion.div
-                    className="relative rounded-lg border border-border/40 bg-background/80 p-6 backdrop-blur-sm transition-all duration-300 hover:shadow-lg"
+                    className="relative rounded-lg bg-white/[0.03] backdrop-blur-md ring-1 ring-white/10 p-6 transition-all duration-300 hover:bg-white/[0.06] hover:ring-[#00F0FF]/20"
                     whileHover={{
                       scale: 1.02,
                       boxShadow:
@@ -128,8 +113,8 @@ export function EducationsSection() {
                   >
                     {/* Mobile timeline marker */}
                     <div className="absolute -left-8 top-8 flex flex-col items-center md:hidden">
-                      <div className="flex h-4 w-4 items-center justify-center rounded-full border border-primary bg-background">
-                        <div className="h-1.5 w-1.5 rounded-full bg-primary"></div>
+                      <div className="flex h-4 w-4 items-center justify-center rounded-full border border-[#00F0FF] bg-background">
+                        <div className="h-1.5 w-1.5 rounded-full bg-[#00F0FF]"></div>
                       </div>
                       <div className="h-full w-0.5 bg-gradient-to-b from-primary to-primary/10"></div>
                     </div>
@@ -144,15 +129,15 @@ export function EducationsSection() {
 
                       <div className="mt-2 flex flex-wrap items-center text-muted-foreground">
                         <div className="mr-4 flex items-center">
-                          <School className="mr-1 h-3.5 w-3.5 text-primary" />
+                          <School className="mr-1 h-3.5 w-3.5 text-[#00F0FF]" />
                           <span className="text-sm">{edu.institution}</span>
                         </div>
                         <div className="mt-1 flex items-center sm:mt-0">
-                          <MapPin className="mr-1 h-3.5 w-3.5 text-primary/70" />
+                          <MapPin className="mr-1 h-3.5 w-3.5 text-[#00F0FF]/70" />
                           <span className="text-sm">{edu.location}</span>
                         </div>
                         <div className="mt-1 flex items-center sm:mt-0 md:hidden">
-                          <Calendar className="mr-1 h-3.5 w-3.5 text-primary/70" />
+                          <Calendar className="mr-1 h-3.5 w-3.5 text-[#00F0FF]/70" />
                           <span className="text-sm">
                             {formatStartEndDate(edu.startDate, edu.endDate)}
                           </span>
@@ -169,16 +154,16 @@ export function EducationsSection() {
                     </div>
 
                     {edu.achievements.length > 0 && (
-                      <div className="mt-5 border-t border-border/40 pt-4">
+                      <div className="mt-5 border-t border-white/10 pt-4">
                         <h4 className="mb-2 flex items-center text-sm font-semibold">
-                          <Award className="mr-1.5 h-4 w-4 text-primary" />{" "}
+                          <Award className="mr-1.5 h-4 w-4 text-[#00F0FF]" />{" "}
                           Achievements & Honors
                         </h4>
                         <ul className="grid gap-x-4 gap-y-1 sm:grid-cols-2">
                           {edu.achievements.map((achievement, i) => (
                             <li
                               key={i}
-                              className="relative pl-5 text-xs before:absolute before:left-1.5 before:top-1.5 before:h-1.5 before:w-1.5 before:rounded-full before:bg-primary/40"
+                              className="relative pl-5 text-xs before:absolute before:left-1.5 before:top-1.5 before:h-1.5 before:w-1.5 before:rounded-full before:bg-[#00F0FF]/40"
                             >
                               {achievement}
                             </li>
@@ -187,7 +172,7 @@ export function EducationsSection() {
                       </div>
                     )}
 
-                    <div className="mt-4 flex items-center justify-between border-t border-border/40 pt-4">
+                    <div className="mt-4 flex items-center justify-between border-t border-white/10 pt-4">
                       <div className="text-xs text-muted-foreground">
                         {edu.logo && (
                           <Image
