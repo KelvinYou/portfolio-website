@@ -2,7 +2,9 @@
 
 import { motion } from "framer-motion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { SkillRing } from "@/components/ui/skill-ring";
 import { fadeIn, staggerContainer, defaultViewport } from "@/lib/animations";
+import { useTranslations } from "next-intl";
 
 const skills = [
   { name: "TypeScript", level: 90 },
@@ -27,6 +29,8 @@ const softSkills = [
 ];
 
 export function SkillsSection() {
+  const t = useTranslations("sections");
+
   return (
     <section id="skills" className="geometric-bg relative bg-muted/20">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -38,11 +42,10 @@ export function SkillsSection() {
           className="mb-16 text-center"
         >
           <h2 className="section-heading !mb-4">
-            Skills & Expertise
+            {t("skills_title")}
           </h2>
           <p className="section-subheading !mb-0">
-            Technologies and tools I&apos;ve mastered throughout my professional
-            journey.
+            {t("skills_subtitle")}
           </p>
         </motion.div>
 
@@ -52,13 +55,13 @@ export function SkillsSection() {
               value="technical"
               className="cursor-pointer text-foreground"
             >
-              Technical Skills
+              {t("skills_technical")}
             </TabsTrigger>
             <TabsTrigger
               value="soft"
               className="cursor-pointer text-foreground"
             >
-              Soft Skills
+              {t("skills_soft")}
             </TabsTrigger>
           </TabsList>
 
@@ -68,25 +71,15 @@ export function SkillsSection() {
               initial="hidden"
               whileInView="visible"
               viewport={defaultViewport}
-              className="grid gap-4"
+              className="flex flex-wrap justify-center gap-6 sm:gap-8"
             >
               {skills.map((skill, index) => (
-                <motion.div key={index} variants={fadeIn} className="mb-4">
-                  <div className="mb-1 flex justify-between">
-                    <span className="font-medium">{skill.name}</span>
-                    <span className="text-muted-foreground">
-                      {skill.level}%
-                    </span>
-                  </div>
-                  <div className="h-2.5 overflow-hidden rounded-full bg-muted/50">
-                    <motion.div
-                      className="h-full rounded-full bg-gradient-to-r from-primary to-primary/70"
-                      initial={{ width: 0 }}
-                      whileInView={{ width: `${skill.level}%` }}
-                      transition={{ duration: 1, delay: index * 0.1 }}
-                      viewport={{ once: true }}
-                    />
-                  </div>
+                <motion.div key={index} variants={fadeIn}>
+                  <SkillRing
+                    name={skill.name}
+                    level={skill.level}
+                    index={index}
+                  />
                 </motion.div>
               ))}
             </motion.div>

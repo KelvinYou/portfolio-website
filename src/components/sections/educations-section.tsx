@@ -13,6 +13,7 @@ import { educations } from "@/constants";
 import { formatStartEndDate, cn } from "@/lib/utils";
 import Image from "next/image";
 import { UnifiedSectionHeader } from "@/components/base/unified-section-header";
+import { useTranslations } from "next-intl";
 // Animation variants
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
@@ -39,12 +40,14 @@ const timelineVariants = {
 };
 
 export function EducationsSection() {
+  const t = useTranslations("sections");
+
   return (
     <section id="education" className="py-32 md:py-40">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <UnifiedSectionHeader
-          title="Education & Certifications"
-          subtitle="My academic journey and continuous learning path that has shaped my professional skills."
+          title={t("education_title")}
+          subtitle={t("education_subtitle")}
         />
 
         <div className="relative mx-auto max-w-4xl">

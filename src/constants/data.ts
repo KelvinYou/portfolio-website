@@ -150,11 +150,7 @@ export const personalInfo = {
   },
   profilePicture: "/images/profile-picture.jpg",
   memoji: "/images/memoji.png",
-  summary: `Frontend Engineer who ships fast without breaking things. Built dashboards serving 1M+ users at Tencent/MiHoYo scale. ${getTotalWorkingExperiences(experiences)} specializing in performance (35% faster loads), architecture (GraphQL layers, component systems), and scale (500K-row tables at 60fps).
-
-0→1 startups + enterprise experience. I know when to move fast and when to architect for growth.
-
-Currently building SaaS with Next.js + Supabase. Exploring system design patterns and scalable architectures.`,
+  summary: `Frontend Engineer who ships fast without breaking things. ${getTotalWorkingExperiences(experiences)}+ years building at Tencent/MiHoYo scale (1M+ users). Performance (35% faster loads), component architecture (GraphQL layers), and scale (500K-row tables at 60fps). Currently building full-stack SaaS and exploring AI-assisted development workflows.`,
 };
 
 // Example education data
@@ -221,37 +217,9 @@ export const educations = [
 
 export const projects: Project[] = [
   {
-    title: "Zync - Meeting Scheduling SaaS",
-    description:
-      "Solving the $5B scheduling software market's core pain: the 30-minute meeting coordination dance. Built real-time availability sync (think Calendly + Doodle reimagined) with Stripe monetization. Target: 50% reduction in scheduling friction. Architected real-time sync engine handling 1000+ concurrent users with Supabase subscriptions. Integrated Stripe recurring billing with webhook-driven subscription lifecycle. Sub-200ms response times for availability checks through PostgreSQL query optimization and Redis caching.",
-    status: "Focusing",
-    techStacks: [
-      "React.js",
-      "Nest.js",
-      "Supabase",
-      "PostgreSQL",
-      "Shadcn",
-      "Stripe",
-      "Redis",
-    ],
-    date: "2025-8-8",
-  },
-  {
-    title: "Personal Website",
-    description:
-      "Engineered a performant portfolio with Next.js App Router, MDX blog support, and ISR for optimal SEO. Achieved 95+ Lighthouse scores across all metrics. Features dynamic OG images and structured data for search visibility.",
-    image: "/images/projects/portfolio.jpg",
-    github: "https://github.com/KelvinYou/portfolio-website",
-    demo: "https://kelvinyou.vercel.app/",
-    status: "Maintaining",
-    techStacks: ["Next.js", "TailwindCSS", "Shadcn", "React"],
-    date: "2025-3-3",
-    blogSlugs: ["personal-website"],
-  },
-  {
     title: "PTIB - Tuition Center Management SaaS",
     description:
-      "Digitizing a 200-student tuition center running on spreadsheets. Problem: 5+ hours weekly on manual invoicing, attendance tracking, parent communication. Solution: Role-based SaaS (admin/teacher/parent portals) with Stripe recurring billing, QR code attendance, and automated notifications. Technical challenges: Multi-tenant architecture with row-level security in Supabase PostgreSQL. Stripe webhooks for subscription lifecycle and dunning management. Real-time attendance updates via Supabase subscriptions. Optimistic UI updates for instant feedback despite 200ms API latency. Result: Saved 5 hours/week on admin work. Generated first $500 MRR from 3 pilot centers.",
+      "Multi-tenant SaaS digitizing a 200-student tuition center. Role-based portals, Stripe billing, QR attendance, row-level security in Supabase. Saved 5 hrs/week, $500 MRR from 3 pilot centers.",
     image: "/images/projects/tms.png",
     demo: "https://ptib.vercel.app/",
     status: "In Progress",
@@ -265,6 +233,34 @@ export const projects: Project[] = [
       "React",
     ],
     date: "2025-3-3",
+  },
+  {
+    title: "Personal Website",
+    description:
+      "Performant portfolio with Next.js App Router, MDX blog, ISR, and i18n. 95+ Lighthouse scores across all metrics. Dynamic OG images, structured data, and RSS feed for search visibility.",
+    image: "/images/projects/portfolio.jpg",
+    github: "https://github.com/KelvinYou/portfolio-website",
+    demo: "https://kelvinyou.vercel.app/",
+    status: "Maintaining",
+    techStacks: ["Next.js", "TailwindCSS", "Shadcn", "React"],
+    date: "2025-3-3",
+    blogSlugs: ["personal-website"],
+  },
+  {
+    title: "Zync - Meeting Scheduling SaaS",
+    description:
+      "Real-time meeting scheduling SaaS (Calendly + Doodle reimagined). Architecting sync engine for 1000+ concurrent users with Supabase subscriptions. Stripe recurring billing, sub-200ms availability checks via PostgreSQL optimization and Redis caching.",
+    status: "Focusing",
+    techStacks: [
+      "React.js",
+      "Nest.js",
+      "Supabase",
+      "PostgreSQL",
+      "Shadcn",
+      "Stripe",
+      "Redis",
+    ],
+    date: "2025-8-8",
   },
   {
     title: "Travel Guide: Tourist App",
@@ -356,15 +352,8 @@ export const certifications = [
 ];
 
 export const skills = {
-  languages: ["TypeScript", "JavaScript", "Java", "Go"],
-  frameworks: [
-    "Next.js",
-    "React",
-    "Express",
-    "Node.js",
-    "React Native",
-    "Flutter",
-  ],
-  databases: ["PostgreSQL", "MySQL"],
-  tools: ["Git", "Docker", "Postman", "Supabase"],
+  languages: ["TypeScript", "JavaScript", "Python", "Java", "Go"],
+  frameworks: ["Next.js", "React", "Node.js", "NestJS", "Express"],
+  databases: ["PostgreSQL", "Supabase", "Redis"],
+  tools: ["Docker", "Git", "Vercel", "GitHub Actions"],
 };

@@ -11,9 +11,9 @@ import {
   X,
 } from "lucide-react";
 import React, { useEffect, useState, useRef, useCallback } from "react";
-import { PdfViewer } from "../../../components/pdf-renderer";
-import { Button } from "../../../components/ui/button";
-import { Dialog, DialogContent } from "../../../components/ui/dialog";
+import { PdfViewer } from "@/components/pdf-renderer";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 
 interface ResumeViewerProps {
   document: React.ReactElement<DocumentProps>;

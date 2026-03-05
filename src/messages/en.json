@@ -1,0 +1,73 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "experience": "Experience",
+    "education": "Education",
+    "projects": "Projects",
+    "contact": "Contact",
+    "blog": "Blog",
+    "resume": "Resume",
+    "more": "More"
+  },
+  "hero": {
+    "badge": "Previously built data platforms at Tencent scale",
+    "greeting": "Hi, I'm {name}",
+    "role_1": "Performance Engineer",
+    "role_2": "Scale Architect",
+    "role_3": "Product Builder",
+    "description_prefix": "I ship ",
+    "description_build": "35% faster loads and 500K-row dashboards",
+    "description_middle": " — from Tencent-scale analytics to ",
+    "description_suffix": "SaaS products generating real revenue",
+    "cta_primary": "Let's Talk",
+    "cta_secondary": "View Projects",
+    "stats_years": "Years Exp.",
+    "stats_projects": "Projects",
+    "stats_users": "Products' Users"
+  },
+  "sections": {
+    "about_title": "About Me",
+    "about_subtitle": "Learn more about my journey and what drives me as a developer",
+    "about_heading": "Engineer Who Ships",
+    "about_hook": "Frontend Engineer who ships fast without breaking things. Built dashboards serving 1M+ users at Tencent/MiHoYo scale.",
+    "about_current_label": "Currently Building",
+    "about_current_detail": "Full-stack SaaS with Next.js + Supabase. Exploring AI-assisted development, cloud architecture, and data-driven product thinking.",
+    "about_diff_1": "0-to-1 startups + enterprise experience. Knows when to move fast and when to architect for growth.",
+    "about_diff_2": "Specializing in performance (35% faster loads), architecture (GraphQL layers), and scale (500K-row tables at 60fps).",
+    "about_shipped_for": "Shipped for:",
+    "about_stats_companies": "Companies",
+    "about_stats_faster": "Faster Loads",
+    "about_stats_scale": "Rows at 60fps",
+    "about_stats_technologies": "Technologies",
+    "experience_title": "Experience",
+    "experience_subtitle": "Building products at scale. From Tencent's millions to startup MVPs.",
+    "education_title": "Education",
+    "education_subtitle": "My academic journey in computer science and software engineering.",
+    "projects_title": "Projects",
+    "projects_subtitle": "A collection of projects I've built and contributed to.",
+    "projects_see_all": "See All Projects",
+    "contact_title": "Let's Connect",
+    "contact_subtitle": "Interested in working together? Feel free to reach out!",
+    "skills_title": "Skills & Expertise",
+    "skills_subtitle": "Technologies and tools I've mastered throughout my professional journey.",
+    "skills_technical": "Technical Skills",
+    "skills_soft": "Soft Skills"
+  },
+  "common": {
+    "view_resume": "View Resume",
+    "contact": "Contact",
+    "present": "Present",
+    "view_project": "View Project",
+    "download": "Download",
+    "close": "Close"
+  },
+  "footer": {
+    "copyright": "© {year} {name}. All rights reserved."
+  },
+  "language": {
+    "en": "English",
+    "zh": "中文",
+    "ms": "Bahasa Melayu"
+  }
+}

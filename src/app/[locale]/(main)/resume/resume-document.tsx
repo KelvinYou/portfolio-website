@@ -2,7 +2,6 @@
 "use client";
 
 import {
-  certifications,
   educations,
   experiences,
   personalInfo,
@@ -11,7 +10,6 @@ import {
 } from "@/constants";
 import {
   capitalizeFirstLetter,
-  formatDate,
   formatStartEndDate,
   getGitHubName,
   getLinkedInName,
@@ -20,7 +18,7 @@ import {
 import { Document, Image, Link, Page, Text, View } from "@react-pdf/renderer";
 import { styles } from "./style";
 
-// Create Resume Document
+// Create Resume Document — single page
 const ResumeDocument = () => (
   <Document
     title={`${personalInfo.name} - Resume`}
@@ -119,11 +117,11 @@ const ResumeDocument = () => (
         </View>
       </View>
 
-      {/* Experience */}
+      {/* Experience — show top 3 roles (skip oldest internship) */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Professional Experience</Text>
 
-        {experiences.map((job, index) => (
+        {experiences.slice(0, 3).map((job, index) => (
           <View key={index} style={styles.itemContainer}>
             <View style={styles.itemHeader}>
               <Link src={job.companyUrl}>
@@ -152,7 +150,7 @@ const ResumeDocument = () => (
             <View style={styles.bulletItem}>
               <Text style={styles.bulletPoint}>•</Text>
               <Text style={styles.bulletText}>
-                <Text style={{ fontWeight: "bold" }}>Skills utilized: </Text>
+                <Text style={{ fontWeight: "bold" }}>Tech Stack: </Text>
                 {job.skills.join(", ")}
               </Text>
             </View>
@@ -160,37 +158,20 @@ const ResumeDocument = () => (
         ))}
       </View>
 
-      {/* Projects Section */}
+      {/* Projects — top 2 only */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Notable Projects</Text>
 
-        {projects.slice(0, 3).map((project, index) => (
+        {projects.slice(0, 2).map((project, index) => (
           <View key={index} style={styles.itemContainer}>
             <View style={styles.itemHeader}>
               <Text style={styles.itemCompany}>{project.title}</Text>
-              <Text style={styles.itemDate}>
-                {project.status} • {formatDate(project.date || "", "short")}
-              </Text>
+              <Text style={styles.itemDate}>{project.status}</Text>
             </View>
 
             <Text style={styles.bulletText}>{project.description}</Text>
 
-            {/* Links section with better styling */}
-            <View style={styles.projectLinks}>
-              {project.github && (
-                <Link src={project.github} style={styles.projectLink}>
-                  GitHub Repository
-                </Link>
-              )}
-
-              {project.demo && (
-                <Link src={project.demo} style={styles.projectLink}>
-                  Live Demo
-                </Link>
-              )}
-            </View>
-
-            {/* Technologies as tags */}
+            {/* Technologies as inline tags */}
             <View style={styles.projectTech}>
               {project.techStacks.map((tech, techIndex) => (
                 <Text key={techIndex} style={styles.projectTechItem}>
@@ -219,44 +200,11 @@ const ResumeDocument = () => (
             <Text style={styles.itemLocation}>
               {edu.location} • CGPA: {edu.cgpa}
             </Text>
-
-            {edu.techStacks && (
-              <View style={styles.bulletItem}>
-                <Text style={styles.bulletPoint}>•</Text>
-                <Text style={styles.bulletText}>
-                  <Text style={{ fontWeight: "bold" }}>Skills utilized: </Text>
-                  {edu.techStacks.join(", ")}
-                </Text>
-              </View>
-            )}
           </View>
         ))}
-      </View>
-
-      {/* Certifications */}
-      <View style={{ ...styles.section, marginTop: 30 }}>
-        <Text style={styles.sectionTitle}>Certifications</Text>
-
-        <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
-          {certifications
-            .sort((a, b) => b.issueDate.localeCompare(a.issueDate))
-            .map((cert, index) => (
-              <Link
-                key={index}
-                src={cert.link}
-                style={{ ...styles.certContainer, width: "50%" }}
-              >
-                <Text style={styles.certName}>{cert.name}</Text>
-                <Text style={styles.certDetails}>
-                  {cert.issuingOrganization} •{" "}
-                  {formatDate(cert.issueDate, "short")}
-                </Text>
-              </Link>
-            ))}
-        </View>
       </View>
     </Page>
   </Document>
 );
 
-export default ResumeDocument;
+export { ResumeDocument };

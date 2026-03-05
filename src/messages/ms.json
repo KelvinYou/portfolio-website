@@ -1,0 +1,73 @@
+{
+  "nav": {
+    "home": "Utama",
+    "about": "Tentang",
+    "experience": "Pengalaman",
+    "education": "Pendidikan",
+    "projects": "Projek",
+    "contact": "Hubungi",
+    "blog": "Blog",
+    "resume": "Resume",
+    "more": "Lagi"
+  },
+  "hero": {
+    "badge": "Pernah membina platform data pada skala Tencent",
+    "greeting": "Hai, saya {name}",
+    "role_1": "Jurutera Prestasi",
+    "role_2": "Arkitek Skalabiliti",
+    "role_3": "Pembina Produk",
+    "description_prefix": "Saya menghasilkan ",
+    "description_build": "pemuatan 35% lebih pantas dan papan pemuka 500K baris",
+    "description_middle": " — dari analitik skala Tencent hingga ",
+    "description_suffix": "produk SaaS yang menjana pendapatan sebenar",
+    "cta_primary": "Hubungi Saya",
+    "cta_secondary": "Lihat Projek",
+    "stats_years": "Tahun Pengalaman",
+    "stats_projects": "Projek",
+    "stats_users": "Pengguna Produk"
+  },
+  "sections": {
+    "about_title": "Tentang Saya",
+    "about_subtitle": "Ketahui lebih lanjut tentang perjalanan saya dan apa yang mendorong saya sebagai pembangun",
+    "about_heading": "Jurutera Yang Menghasilkan",
+    "about_hook": "Jurutera Frontend yang menghasilkan dengan pantas tanpa merosakkan. Membina papan pemuka melayani 1M+ pengguna pada skala Tencent/MiHoYo.",
+    "about_current_label": "Sedang Membina",
+    "about_current_detail": "Produk SaaS dengan Next.js + Supabase. Meneroka corak reka bentuk sistem dan seni bina berskala.",
+    "about_diff_1": "Pengalaman dari permulaan 0-ke-1 + perusahaan. Tahu bila perlu bergerak pantas dan bila perlu mereka bentuk untuk pertumbuhan.",
+    "about_diff_2": "Mengkhusus dalam prestasi (pemuatan 35% lebih pantas), seni bina (lapisan GraphQL), dan skala (jadual 500K baris pada 60fps).",
+    "about_shipped_for": "Dihantar untuk:",
+    "about_stats_companies": "Syarikat",
+    "about_stats_faster": "Pemuatan Pantas",
+    "about_stats_scale": "Baris pada 60fps",
+    "about_stats_technologies": "Teknologi",
+    "experience_title": "Pengalaman",
+    "experience_subtitle": "Membina produk pada skala besar. Dari jutaan pengguna Tencent hingga MVP permulaan.",
+    "education_title": "Pendidikan",
+    "education_subtitle": "Perjalanan akademik saya dalam sains komputer dan kejuruteraan perisian.",
+    "projects_title": "Projek",
+    "projects_subtitle": "Koleksi projek yang telah saya bina dan sumbangkan.",
+    "projects_see_all": "Lihat Semua Projek",
+    "contact_title": "Hubungi Saya",
+    "contact_subtitle": "Berminat untuk bekerjasama? Jangan segan untuk menghubungi!",
+    "skills_title": "Kemahiran & Kepakaran",
+    "skills_subtitle": "Teknologi dan alatan yang saya kuasai sepanjang kerjaya profesional saya.",
+    "skills_technical": "Kemahiran Teknikal",
+    "skills_soft": "Kemahiran Insaniah"
+  },
+  "common": {
+    "view_resume": "Lihat Resume",
+    "contact": "Hubungi",
+    "present": "Kini",
+    "view_project": "Lihat Projek",
+    "download": "Muat Turun",
+    "close": "Tutup"
+  },
+  "footer": {
+    "copyright": "© {year} {name}. Hak cipta terpelihara."
+  },
+  "language": {
+    "en": "English",
+    "zh": "中文",
+    "ms": "Bahasa Melayu"
+  }
+}

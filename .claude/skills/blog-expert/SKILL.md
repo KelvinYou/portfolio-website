@@ -1,5 +1,5 @@
 ---
-name: add-blog-post
+name: blog-expert
 description: >
   Blog expert for the portfolio. Use when the user says "write a blog post", "add a new article",
   "create a post about...", "review my blog post", "improve this article", "enhance the writing",

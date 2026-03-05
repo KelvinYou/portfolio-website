@@ -28,15 +28,17 @@ export async function generateMetadata(props: PageProps) {
   try {
     const post = await getPostBySlug(params.slug);
 
+    const ogImageUrl = `/api/og?${new URLSearchParams({
+      title: post.frontmatter.title,
+      date: post.frontmatter.date,
+      tags: post.frontmatter.tags?.join(", ") ?? "",
+    }).toString()}`;
+
     const basicInfo = {
       title: `${post.frontmatter.title} | Blog`,
       description: post.frontmatter.description,
       keywords: `blog, ${post.frontmatter.tags?.join(", ")}`,
-      images: [
-        post.frontmatter?.image
-          ? post.frontmatter.image
-          : "/images/projects/portfolio.jpg",
-      ],
+      images: [post.frontmatter?.image ?? ogImageUrl],
     };
 
     return {

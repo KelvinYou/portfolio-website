@@ -1,7 +1,7 @@
-import ResumeViewerWithFallback from "@/app/(main)/resume/resume-viewer-fallback";
+import ResumeViewerWithFallback from "./resume-viewer-fallback";
 import { domainPath, personalInfo } from "@/constants";
 import { Metadata } from "next";
-import ResumeDocument from "./resume-document";
+import { ResumeDocument } from "./resume-document";
 
 export const metadata: Metadata = {
   title: `${personalInfo.name} | Resume`,

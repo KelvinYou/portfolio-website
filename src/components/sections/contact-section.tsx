@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { SocialLinks } from "@/components/base/social-links";
 import { UnifiedSectionHeader } from "@/components/base/unified-section-header";
+import { useTranslations } from "next-intl";
 
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
@@ -10,12 +11,14 @@ const fadeIn = {
 };
 
 export function ContactSection() {
+  const t = useTranslations("sections");
+
   return (
     <section id="contact" className="py-32 md:py-40">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <UnifiedSectionHeader
-          title="Let's Connect"
-          subtitle="Interested in working together or have questions? Feel free to reach out!"
+          title={t("contact_title")}
+          subtitle={t("contact_subtitle")}
         />
 
         <div className="mx-auto max-w-2xl">

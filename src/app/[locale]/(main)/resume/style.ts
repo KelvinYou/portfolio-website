@@ -18,23 +18,23 @@ Font.register({
   ],
 });
 
-// Create styles for the modern resume
+// Create styles for the modern resume — optimized for single A4 page
 export const styles = StyleSheet.create({
   page: {
     padding: 15,
     fontFamily: "Open Sans",
     fontSize: 10,
-    lineHeight: 1.5,
-    color: "#2d3748", // Darker text for better readability
+    lineHeight: 1.4,
+    color: "#2d3748",
   },
   section: {
-    marginBottom: 10,
+    marginBottom: 6,
   },
   // Header section with subtle accent
   header: {
-    marginBottom: 10,
+    marginBottom: 6,
     borderBottom: "2px solid #4a5568",
-    paddingBottom: 10,
+    paddingBottom: 6,
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
@@ -42,13 +42,13 @@ export const styles = StyleSheet.create({
   name: {
     fontSize: 16,
     fontWeight: "bold",
-    marginBottom: 10,
-    color: "#1a202c", // Almost black for better contrast
+    marginBottom: 4,
+    color: "#1a202c",
   },
   title: {
     fontSize: 12,
     color: "#4a5568",
-    marginBottom: 8,
+    marginBottom: 6,
     fontWeight: 600,
   },
   contactRow: {
@@ -67,7 +67,7 @@ export const styles = StyleSheet.create({
     color: "#4a5568",
   },
   contactLink: {
-    color: "#3182ce", // Professional blue
+    color: "#3182ce",
     textDecoration: "none",
   },
   contactIcon: {
@@ -78,39 +78,37 @@ export const styles = StyleSheet.create({
 
   // Modern section headers with subtle accent
   sectionTitle: {
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: "bold",
-    marginBottom: 10,
+    marginBottom: 6,
     color: "#1a202c",
     borderBottom: "1px solid #cbd5e0",
-    paddingBottom: 4,
+    paddingBottom: 3,
     textTransform: "uppercase",
     letterSpacing: 1,
   },
 
   summaryText: {
-    fontSize: 10,
+    fontSize: 9,
     color: "#4a5568",
     marginTop: 2,
   },
 
-  // Experience & Education items with improved spacing
+  // Experience & Education items with tight spacing
   itemContainer: {
-    marginBottom: 8,
-    paddingBottom: 2,
+    marginBottom: 6,
   },
   itemHeader: {
     flexDirection: "row",
     justifyContent: "space-between",
-    // marginBottom: 4,
   },
   itemTitle: {
     fontWeight: "bold",
-    fontSize: 11,
+    fontSize: 10,
     color: "#2d3748",
   },
   itemCompany: {
-    fontSize: 11,
+    fontSize: 10,
     fontWeight: "bold",
     color: "#2d3748",
   },
@@ -122,7 +120,7 @@ export const styles = StyleSheet.create({
   itemLocation: {
     fontSize: 9,
     color: "#4a5568",
-    marginBottom: 5,
+    marginBottom: 3,
   },
   companyLogo: {
     width: 24,
@@ -131,16 +129,16 @@ export const styles = StyleSheet.create({
 
   // Cleaner bullets
   bulletList: {
-    marginTop: 6,
+    marginTop: 3,
   },
   bulletItem: {
     flexDirection: "row",
-    marginBottom: 4,
+    marginBottom: 2,
   },
   bulletPoint: {
     width: 8,
     fontSize: 9,
-    color: "#3182ce", // Accent color for bullet points
+    color: "#3182ce",
   },
   bulletText: {
     flex: 1,
@@ -152,21 +150,21 @@ export const styles = StyleSheet.create({
   skillsContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
-    marginTop: 6,
+    marginTop: 4,
   },
   skillCategory: {
     width: "25%",
-    marginBottom: 10,
+    marginBottom: 6,
   },
   skillCategoryTitle: {
     fontWeight: "bold",
     fontSize: 10,
-    marginBottom: 4,
+    marginBottom: 3,
     color: "#2d3748",
   },
   skillItem: {
     fontSize: 9,
-    marginBottom: 3,
+    marginBottom: 2,
     color: "#4a5568",
   },
   skillContainer: {
@@ -174,7 +172,7 @@ export const styles = StyleSheet.create({
     color: "#4a5568",
     display: "flex",
     flexDirection: "row",
-    marginBottom: 2,
+    marginBottom: 1,
     fontFamily: "Open Sans",
   },
   skillTitle: {
@@ -185,27 +183,13 @@ export const styles = StyleSheet.create({
   // Projects section styling
   projectTitle: {
     fontWeight: "bold",
-    fontSize: 11,
+    fontSize: 10,
     color: "#2d3748",
-  },
-  projectLinks: {
-    flexDirection: "row",
-    marginTop: 16,
-    marginBottom: 4,
-  },
-  projectLink: {
-    fontSize: 9,
-    color: "#3182ce",
-    textDecoration: "none",
-    marginRight: 12,
-    padding: "2 6",
-    borderRadius: 3,
-    border: "1px solid #cbd5e0",
   },
   projectTech: {
     flexDirection: "row",
     flexWrap: "wrap",
-    marginTop: 4,
+    marginTop: 3,
   },
   projectTechItem: {
     fontSize: 8,
@@ -215,21 +199,5 @@ export const styles = StyleSheet.create({
     padding: "1 4",
     borderRadius: 2,
     color: "#4a5568",
-  },
-
-  // Certifications with better spacing
-  certContainer: {
-    marginBottom: 6,
-    paddingBottom: 4,
-  },
-  certName: {
-    fontWeight: "bold",
-    fontSize: 10,
-    color: "#2d3748",
-  },
-  certDetails: {
-    fontSize: 9,
-    color: "#4a5568",
-    marginTop: 2,
   },
 });

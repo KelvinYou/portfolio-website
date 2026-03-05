@@ -1,0 +1,73 @@
+{
+  "nav": {
+    "home": "首页",
+    "about": "关于",
+    "experience": "经验",
+    "education": "教育",
+    "projects": "项目",
+    "contact": "联系",
+    "blog": "博客",
+    "resume": "简历",
+    "more": "更多"
+  },
+  "hero": {
+    "badge": "曾在腾讯规模的平台上构建数据系统",
+    "greeting": "你好，我是 {name}",
+    "role_1": "性能工程师",
+    "role_2": "规模架构师",
+    "role_3": "产品构建者",
+    "description_prefix": "我交付",
+    "description_build": "快35%的加载速度和50万行数据看板",
+    "description_middle": " — 从腾讯规模的分析平台到",
+    "description_suffix": "创造真实收入的SaaS产品",
+    "cta_primary": "联系我",
+    "cta_secondary": "查看项目",
+    "stats_years": "年经验",
+    "stats_projects": "个项目",
+    "stats_users": "产品用户"
+  },
+  "sections": {
+    "about_title": "关于我",
+    "about_subtitle": "了解更多关于我的旅程以及是什么驱动我成为一名开发者",
+    "about_heading": "实干型工程师",
+    "about_hook": "快速交付、稳定可靠的前端工程师。曾为腾讯/米哈游构建服务百万级用户的数据看板。",
+    "about_current_label": "当前在做",
+    "about_current_detail": "使用 Next.js + Supabase 构建 SaaS 产品。深入研究系统设计模式和可扩展架构。",
+    "about_diff_1": "兼具从零到一创业经验与企业级开发经验，知道何时快速推进、何时架构先行。",
+    "about_diff_2": "专注于性能优化（加载速度提升35%）、架构设计（GraphQL层）、大规模数据处理（50万行表格60fps）。",
+    "about_shipped_for": "曾服务于：",
+    "about_stats_companies": "家公司",
+    "about_stats_faster": "加载提速",
+    "about_stats_scale": "行数据60fps",
+    "about_stats_technologies": "项技术",
+    "experience_title": "工作经验",
+    "experience_subtitle": "大规模构建产品。从腾讯的百万级用户到初创 MVP。",
+    "education_title": "教育背景",
+    "education_subtitle": "我在计算机科学和软件工程方面的学术旅程。",
+    "projects_title": "项目",
+    "projects_subtitle": "我构建和参与的项目合集。",
+    "projects_see_all": "查看所有项目",
+    "contact_title": "联系我",
+    "contact_subtitle": "有兴趣一起合作？欢迎联系我！",
+    "skills_title": "技能与专长",
+    "skills_subtitle": "我在职业生涯中掌握的技术和工具。",
+    "skills_technical": "技术技能",
+    "skills_soft": "软技能"
+  },
+  "common": {
+    "view_resume": "查看简历",
+    "contact": "联系",
+    "present": "至今",
+    "view_project": "查看项目",
+    "download": "下载",
+    "close": "关闭"
+  },
+  "footer": {
+    "copyright": "© {year} {name}。保留所有权利。"
+  },
+  "language": {
+    "en": "English",
+    "zh": "中文",
+    "ms": "Bahasa Melayu"
+  }
+}

@@ -8,17 +8,28 @@ import {
   Mail,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { MagneticButton } from "@/components/ui/magnetic-button";
+import { AnimatedCounter } from "@/components/ui/animated-counter";
 import Link from "next/link";
 import { TypeAnimation } from "react-type-animation";
 import { useMotionValue } from "framer-motion";
-import { personalInfo } from "@/constants";
+import { personalInfo, projects, experiences } from "@/constants";
 import { SocialLinks } from "@/components/base/social-links";
+import { getTotalWorkingExperiences } from "@/lib/utils";
+import { useTranslations } from "next-intl";
+
+const heroStats = [
+  { target: getTotalWorkingExperiences(experiences), suffix: "+", labelKey: "stats_years" as const },
+  { target: projects.length, suffix: "+", labelKey: "stats_projects" as const },
+  { target: 1, suffix: "M+", labelKey: "stats_users" as const },
+];
 
 export function HeroSection() {
   const ref = useRef<HTMLDivElement>(null);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const [isMounted, setIsMounted] = useState(false);
+  const t = useTranslations("hero");
 
   // Mouse parallax effect
   useEffect(() => {
@@ -53,7 +64,6 @@ export function HeroSection() {
 
       <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid items-center gap-12 lg:grid-cols-2">
-          {/* Enhanced Main Content with Modern UI but simplified animations */}
           <div className="max-w-3xl">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -62,14 +72,13 @@ export function HeroSection() {
               className="mb-6 inline-flex items-center gap-2 rounded-full bg-white/[0.03] backdrop-blur-md ring-1 ring-white/10 px-3 py-1.5"
             >
               <div className="flex items-center justify-center rounded-full bg-white/[0.05] p-1">
-                <Sparkles className="h-3.5 w-3.5 text-[#00F0FF]" />
+                <Sparkles className="h-3.5 w-3.5 text-primary" />
               </div>
               <p className="text-xs font-medium text-muted-foreground">
-                Previously built data platforms at Tencent scale
+                {t("badge")}
               </p>
             </motion.div>
 
-            {/* Vibrant block-based heading with large type */}
             <motion.h1
               className="hero-heading mb-8"
               initial={{ opacity: 0, y: 30 }}
@@ -86,21 +95,20 @@ export function HeroSection() {
                     className="inline-block bg-gradient-to-r from-primary via-indigo-500 to-primary bg-clip-text text-transparent"
                     style={{ backgroundSize: "200% 100%" }}
                   >
-                    Hi, I&apos;m {personalInfo.name}
+                    {t("greeting", { name: personalInfo.name })}
                   </span>
                 </motion.div>
               </div>
 
-              {/* Type animation kept as it's a key engagement element */}
               <div className="mt-2 h-[64px] overflow-hidden sm:h-[72px] md:h-[80px] lg:h-[100px]">
                 {isMounted && (
                   <TypeAnimation
                     sequence={[
-                      "Frontend Engineer",
+                      t("role_1"),
                       2500,
-                      "React Specialist",
+                      t("role_2"),
                       2500,
-                      "TypeScript Developer",
+                      t("role_3"),
                       2500,
                     ]}
                     wrapper="span"
@@ -112,7 +120,6 @@ export function HeroSection() {
               </div>
             </motion.h1>
 
-            {/* Simplified paragraph section */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -122,15 +129,13 @@ export function HeroSection() {
               <div>
 
               <p className="mb-10 max-w-xl pr-8 text-lg leading-relaxed text-muted-foreground md:text-xl">
-                I build{" "}
+                {t("description_prefix")}
                 <span className="font-medium text-foreground">
-                  high-performance React applications
-                </span>{" "}
-                that scale. From data platforms serving millions of users to
-                SaaS products that
+                  {t("description_build")}
+                </span>
+                {t("description_middle")}
                 <span className="font-medium text-foreground">
-                  {" "}
-                  drive real business outcomes
+                  {t("description_suffix")}
                 </span>
                 .
               </p>
@@ -149,31 +154,56 @@ export function HeroSection() {
               transition={{ duration: 0.7, delay: 0.6 }}
             >
               {/* Primary CTA - Bold block-based design */}
-              <Button
-                size="lg"
-                className="group relative w-full gap-3 overflow-hidden rounded-lg bg-primary px-8 py-6 text-lg font-bold text-primary-foreground shadow-xl shadow-primary/30 transition-all duration-200 hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary/40 sm:w-auto sm:px-12 sm:py-7 sm:text-xl btn-bold-hover"
-                asChild
-              >
-                <Link href="#contact">
-                  <Mail className="h-6 w-6 sm:h-7 sm:w-7" />
-                  <span className="relative z-10">
-                    Let&apos;s Talk
-                  </span>
-                </Link>
-              </Button>
+              <MagneticButton strength={12}>
+                <Button
+                  size="lg"
+                  className="group relative w-full gap-2.5 overflow-hidden rounded-lg bg-primary px-6 py-3 text-base font-bold text-primary-foreground shadow-lg shadow-primary/20 transition-all duration-200 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/30 sm:w-auto sm:px-8 sm:py-4 sm:text-lg btn-bold-hover"
+                  asChild
+                >
+                  <Link href="#contact">
+                    <Mail className="h-5 w-5" />
+                    <span className="relative z-10">
+                      {t("cta_primary")}
+                    </span>
+                  </Link>
+                </Button>
+              </MagneticButton>
 
               {/* Secondary CTA - Vibrant outline */}
-              <Button
-                size="lg"
-                variant="outline"
-                className="group w-full gap-3 rounded-lg border-3 border-foreground bg-background px-8 py-6 text-lg font-bold transition-all duration-200 hover:-translate-y-2 hover:border-primary hover:bg-primary hover:text-primary-foreground hover:shadow-lg sm:w-auto sm:px-12 sm:py-7 sm:text-xl"
-                asChild
-              >
-                <Link href="#projects">
-                  <span>View Projects</span>
-                  <ArrowRight className="h-6 w-6 transition-transform group-hover:translate-x-1 sm:h-7 sm:w-7" />
-                </Link>
-              </Button>
+              <MagneticButton strength={12}>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="group w-full gap-2.5 rounded-lg border-2 border-foreground bg-background px-6 py-3 text-base font-bold transition-all duration-200 hover:-translate-y-1 hover:border-primary hover:bg-primary hover:text-primary-foreground hover:shadow-lg sm:w-auto sm:px-8 sm:py-4 sm:text-lg"
+                  asChild
+                >
+                  <Link href="#projects">
+                    <span>{t("cta_secondary")}</span>
+                    <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+                  </Link>
+                </Button>
+              </MagneticButton>
+            </motion.div>
+
+            {/* Animated stats row */}
+            <motion.div
+              className="mb-8 flex gap-8 sm:gap-12"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.7 }}
+            >
+              {heroStats.map((stat) => (
+                <div key={stat.labelKey} className="flex flex-col">
+                  <AnimatedCounter
+                    target={stat.target}
+                    suffix={stat.suffix}
+                    className="text-2xl font-bold sm:text-3xl"
+                  />
+                  <span className="text-xs text-muted-foreground sm:text-sm">
+                    {t(stat.labelKey)}
+                  </span>
+                </div>
+              ))}
             </motion.div>
 
             {/* Social links with cyan hover states */}
@@ -207,100 +237,57 @@ export function HeroSection() {
                 transformStyle: "preserve-3d",
                 rotateX: cardRotateX,
                 rotateY: cardRotateY,
-                transition: "box-shadow 2s ease",
               }}
-              whileHover={{
-                scale: 1.02,
-                rotateZ: 1,
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
+              whileHover={{ scale: 1.02, rotateZ: 1 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
             >
-              {/* Card content with simplified animations */}
-              {(() => {
-                const codeContent = {
-                  skills: ["Next.js", "TypeScript", "Go"],
-                  passion:
-                    "I believe in writing clean, maintainable code and creating intuitive user experiences",
-                };
+              {/* Terminal header */}
+              <div
+                className="mb-4 flex items-center gap-2"
+                style={{ transform: "translateZ(25px)" }}
+              >
+                <div className="h-3 w-3 rounded-full bg-red-500/80" />
+                <div className="h-3 w-3 rounded-full bg-yellow-500/80" />
+                <div className="h-3 w-3 rounded-full bg-green-500/80" />
+                <span className="ml-2 font-mono text-xs text-muted-foreground">
+                  kelvin@portfolio ~ %
+                </span>
+              </div>
 
-                return (
-                  <motion.div
-                    className="mb-8 rounded-lg border border-border/30 bg-muted/40 p-4 font-mono text-sm"
-                    style={{ transform: "translateZ(25px)" }}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 1.6 }}
-                  >
-                    <div>
-                      <span className="font-medium text-pink-500 dark:text-pink-400">
-                        const
-                      </span>{" "}
-                      <span className="font-medium text-blue-500 dark:text-blue-400">
-                        developer
-                      </span>{" "}
-                      = {"{"}
+              {/* Terminal content */}
+              <div
+                className="rounded-lg border border-border/30 bg-muted/40 p-4 font-mono text-sm"
+                style={{ transform: "translateZ(25px)" }}
+              >
+                <div className="text-muted-foreground">
+                  <span className="text-foreground">$</span> kelvin --stats
+                </div>
+                <div className="mt-3 space-y-1.5">
+                  {[
+                    { label: "shipped", value: `${projects.length} projects` },
+                    { label: "fastest", value: "35% load reduction" },
+                    { label: "scale", value: "500K rows @ 60fps" },
+                    { label: "users", value: "1M+ products served" },
+                    { label: "stack", value: "Next.js + TS + GraphQL" },
+                  ].map((line) => (
+                    <div key={line.label} className="flex gap-3">
+                      <span className="w-16 text-right text-muted-foreground">
+                        {line.label}
+                      </span>
+                      <span className="text-primary">{line.value}</span>
                     </div>
-
-                    <div className="mt-1 pl-6">
-                      <div>
-                        <span className="text-purple-500 dark:text-purple-400">
-                          skills:
-                        </span>{" "}
-                        [
-                        <div className="pl-6">
-                          {codeContent.skills.map((skill, i) => (
-                            <span key={i} className="flex items-center">
-                              <span className="block text-green-500 dark:text-green-400">
-                                &apos;{skill}&apos;
-                                {i < codeContent.skills.length - 1 ? "," : ""}
-                              </span>
-                            </span>
-                          ))}
-                        </div>
-                        ],
-                      </div>
-
-                      <div className="mt-2">
-                        <span className="text-purple-500 dark:text-purple-400">
-                          passion:
-                        </span>{" "}
-                        <span className="text-green-500 dark:text-green-400">
-                          &apos;{codeContent.passion}&apos;
-                        </span>
-                        ,
-                      </div>
-                    </div>
-                    <div className="mt-1">{"}"}</div>
-                  </motion.div>
-                );
-              })()}
-
-              {/* Simplified decorative elements */}
-              <div className="bg-grid-pattern pointer-events-none absolute inset-0 opacity-[0.03]"></div>
-
-              {/* Reduced to just 2 decorative dots with simpler animations */}
-              {[
-                {
-                  position: "top-0 right-0 -mt-2 -mr-2",
-                  gradient: "from-primary to-indigo-500",
-                  delay: 0,
-                },
-                {
-                  position: "bottom-0 left-0 -mb-2 -ml-2",
-                  gradient: "from-indigo-500 to-primary",
-                  delay: 1.5,
-                },
-              ].map((decoration, i) => (
-                <div
-                  key={i}
-                  className={`absolute ${decoration.position} h-5 w-5 rounded-full bg-gradient-to-r ${decoration.gradient} shadow-lg`}
-                  style={{ transform: "translateZ(35px)" }}
-                />
-              ))}
+                  ))}
+                </div>
+                <div className="mt-3 flex gap-3">
+                  <span className="w-16 text-right text-muted-foreground">
+                    status
+                  </span>
+                  <span className="text-green-400">
+                    open to opportunities
+                    <span className="ml-0.5 inline-block h-4 w-1.5 animate-pulse bg-primary/80" />
+                  </span>
+                </div>
+              </div>
             </motion.div>
           </motion.div>
         </div>

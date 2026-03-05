@@ -9,14 +9,17 @@ import Link from "next/link";
 import { staggerContainer, defaultViewport } from "@/lib/animations";
 import { UnifiedSectionHeader } from "@/components/base/unified-section-header";
 import { fadeIn } from "@/lib/animations";
+import { useTranslations } from "next-intl";
 
 export function ProjectsSection() {
+  const t = useTranslations("sections");
+
   return (
     <section id="projects" className="py-32 md:py-40">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <UnifiedSectionHeader
-          title="Featured Projects"
-          subtitle="Here are some projects I've worked on that showcase my skills and approach to problem-solving."
+          title={t("projects_title")}
+          subtitle={t("projects_subtitle")}
         />
 
         {/* Portfolio Grid - Masonry-style layout */}
@@ -45,7 +48,7 @@ export function ProjectsSection() {
             asChild
           >
             <Link href="/projects">
-              See All Projects <ArrowRight className="ml-3 h-6 w-6" />
+              {t("projects_see_all")} <ArrowRight className="ml-3 h-6 w-6" />
             </Link>
           </Button>
         </motion.div>

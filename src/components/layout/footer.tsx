@@ -1,8 +1,12 @@
+"use client";
+
 import { personalInfo } from "@/constants";
 import dayjs from "dayjs";
 import { Github, Linkedin, Mail } from "lucide-react";
+import { useTranslations } from "next-intl";
 
-export default function Footer() {
+export function Footer() {
+  const t = useTranslations("footer");
   const socialLinks = [
     {
       href: personalInfo.contact.github,
@@ -25,7 +29,7 @@ export default function Footer() {
     <footer className="py-8 bg-muted/20 border-t border-border/40">
       <div className="container mx-auto px-4 text-center sm:px-6 lg:px-8">
         <p className="text-muted-foreground">
-          © {dayjs().year()} {personalInfo.name}. All rights reserved.
+          {t("copyright", { year: dayjs().year(), name: personalInfo.name })}
         </p>
         <div className="flex justify-center mt-4 gap-6">
           {socialLinks.map(({ href, icon: Icon, label }, index) => (

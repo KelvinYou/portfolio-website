@@ -5,18 +5,21 @@ import { experiences } from "@/constants";
 import { fadeIn, staggerContainer, defaultViewport } from "@/lib/animations";
 import { UnifiedSectionHeader } from "@/components/base/unified-section-header";
 import { Badge } from "@/components/ui/badge";
+import { useTranslations } from "next-intl";
 import { formatStartEndDate } from "@/lib/utils";
 import { Calendar, ExternalLink, MapPin } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 
 export function ExperiencesSection() {
+  const t = useTranslations("sections");
+
   return (
     <section id="experience" className="py-32 md:py-40">
       <div className="max-w-7xl mx-auto px-6 md:px-8">
         <UnifiedSectionHeader
-          title="Experience"
-          subtitle="Building products at scale. From Tencent's millions to startup MVPs."
+          title={t("experience_title")}
+          subtitle={t("experience_subtitle")}
         />
 
         <motion.div

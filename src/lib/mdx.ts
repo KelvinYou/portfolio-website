@@ -85,6 +85,46 @@ export async function getPostBySlug(slug: string): Promise<Post> {
   }
 }
 
+export type PostMeta = {
+  slug: string;
+  frontmatter: Post["frontmatter"];
+};
+
+export function getAllPostsMeta(): PostMeta[] {
+  try {
+    const slugs = getPostSlugs();
+    if (slugs.length === 0) return [];
+
+    return slugs
+      .map((file) => {
+        const realSlug = file.replace(/\.mdx$/, "");
+        const fullPath = path.join(postsDirectory, file);
+        const fileContents = fs.readFileSync(fullPath, "utf8");
+        const { data } = matter(fileContents);
+
+        return {
+          slug: realSlug,
+          frontmatter: {
+            title: data.title || "Untitled",
+            date: data.date || new Date().toISOString(),
+            description: data.description || "",
+            tags: data.tags || [],
+            image: data.image,
+            author: data.author || "Anonymous",
+          } as Post["frontmatter"],
+        };
+      })
+      .sort(
+        (a, b) =>
+          new Date(b.frontmatter.date).getTime() -
+          new Date(a.frontmatter.date).getTime(),
+      );
+  } catch (error) {
+    console.error("Error getting all posts meta:", error);
+    return [];
+  }
+}
+
 export async function getAllPosts(): Promise<Post[]> {
   try {
     const slugs = getPostSlugs();

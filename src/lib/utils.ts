@@ -80,7 +80,7 @@ export const getTotalWorkingExperiences = (
   });
 
   const totalYears = totalDays / 365;
-  return `${Math.floor(totalYears)}+ years`;
+  return Math.floor(totalYears);
 };
 
 export const capitalizeFirstLetter = (string: string): string =>
