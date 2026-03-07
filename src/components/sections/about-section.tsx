@@ -13,7 +13,6 @@ import { personalInfo, experiences, skills } from "@/constants";
 import { cn } from "@/lib/utils";
 import { fadeIn, staggerContainer, defaultViewport } from "@/lib/animations";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
 
 const totalTechnologies = Object.values(skills).flat().length;
 
@@ -36,15 +35,6 @@ const topTechs = ["React", "TypeScript", "Next.js", "GraphQL", "Node.js", "Postg
 export function AboutSection() {
   const t = useTranslations("sections");
   const tCommon = useTranslations("common");
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    setMousePosition({
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
-    });
-  };
 
   return (
     <section id="about" className="py-32 md:py-40">
@@ -55,28 +45,20 @@ export function AboutSection() {
         />
 
         <div className="grid items-center gap-12 md:grid-cols-2">
-          {/* Profile Image with Spotlight */}
+          {/* Profile Image - Neo-Brutal frame */}
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={defaultViewport}
             variants={fadeIn}
-            className="group relative overflow-hidden rounded-lg"
-            onMouseMove={handleMouseMove}
+            className="group relative overflow-hidden rounded-sm border-2 border-foreground dark:border-white/25 neo-shadow"
           >
-            <div className="absolute inset-0 rounded-lg ring-1 ring-white/10 group-hover:ring-[#00F0FF]/30 transition-all duration-500 z-10" />
-            <div
-              className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 z-10"
-              style={{
-                background: `radial-gradient(400px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(0,240,255,0.08), transparent 40%)`,
-              }}
-            />
             <Image
               src={personalInfo.profilePicture}
               alt="About Me"
               width={600}
               height={400}
-              className="relative h-[400px] rounded-lg object-cover"
+              className="relative h-[400px] rounded-none object-cover"
             />
           </motion.div>
 
@@ -95,7 +77,7 @@ export function AboutSection() {
                   <AnimatedCounter
                     target={stat.target}
                     suffix={stat.suffix}
-                    className="text-2xl font-bold sm:text-3xl"
+                    className="text-2xl font-extrabold sm:text-3xl"
                   />
                   <p className="mt-1 text-xs text-muted-foreground">{t(stat.labelKey)}</p>
                 </motion.div>
@@ -109,7 +91,7 @@ export function AboutSection() {
               variants={fadeIn}
             >
               {/* Heading */}
-              <h3 className="mb-4 font-heading text-2xl font-bold tracking-tight sm:text-3xl">
+              <h3 className="mb-4 font-heading text-2xl font-extrabold tracking-tight sm:text-3xl">
                 {t("about_heading")}
               </h3>
 
@@ -119,8 +101,8 @@ export function AboutSection() {
               </p>
 
               {/* Currently Building */}
-              <div className="mb-4 rounded-lg bg-muted/50 p-4 ring-1 ring-border/20 dark:bg-white/[0.03] dark:ring-white/10">
-                <p className="mb-1 text-sm font-semibold text-foreground">
+              <div className="mb-4 rounded-sm border-2 border-foreground dark:border-white/25 bg-card p-4">
+                <p className="mb-1 text-sm font-bold text-foreground">
                   {t("about_current_label")}
                 </p>
                 <p className="text-sm leading-relaxed text-muted-foreground">
@@ -132,7 +114,7 @@ export function AboutSection() {
               <div className="mb-6 space-y-2">
                 {[t("about_diff_1"), t("about_diff_2")].map((diff, i) => (
                   <div key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
-                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary/50" />
+                    <span className="mt-1.5 h-2 w-2 shrink-0 rounded-none bg-foreground" />
                     <span>{diff}</span>
                   </div>
                 ))}
@@ -141,7 +123,7 @@ export function AboutSection() {
               {/* Tech Badges */}
               <div className="mb-6 flex flex-wrap gap-2">
                 {topTechs.map((tech) => (
-                  <Badge key={tech} variant="outline" className="text-xs">
+                  <Badge key={tech} variant="outline" className="text-xs border-2 border-foreground dark:border-white/25">
                     {tech}
                   </Badge>
                 ))}
@@ -160,7 +142,7 @@ export function AboutSection() {
                       alt={company.name}
                       width={24}
                       height={24}
-                      className="h-6 w-6 rounded-full object-cover opacity-60 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0"
+                      className="h-6 w-6 rounded-sm border border-foreground dark:border-white/25 object-cover opacity-80 transition-all duration-150 hover:opacity-100"
                     />
                   ))}
                 </div>
@@ -173,7 +155,7 @@ export function AboutSection() {
                     href="/#contact"
                     className={cn(
                       buttonVariants(),
-                      "rounded-full px-6 py-3 font-bold cursor-pointer",
+                      "rounded-sm px-6 py-3 font-bold cursor-pointer border-2 border-foreground dark:border-white/25 neo-shadow-sm",
                     )}
                     aria-label="Contact me via email or social media"
                   >
@@ -185,7 +167,7 @@ export function AboutSection() {
                     href="/resume"
                     className={cn(
                       buttonVariants({ variant: "outline" }),
-                      "rounded-full px-6 py-3 cursor-pointer",
+                      "rounded-sm px-6 py-3 cursor-pointer border-2 border-foreground dark:border-white/25 neo-shadow-sm",
                     )}
                     aria-label="View my resume and download PDF"
                   >

@@ -17,8 +17,8 @@ export function Navbar() {
         className={cn(
           "fixed left-0 right-0 z-50 transition-all duration-300",
           state.scrolled
-            ? "bg-background/90 backdrop-blur-lg shadow-md"
-            : "bg-background/30 backdrop-blur-sm",
+            ? "bg-background border-b-2 border-foreground dark:border-white/25"
+            : "bg-background/80",
         )}
         animate={{
           paddingTop: state.scrolled ? "0.25rem" : "0.5rem",
@@ -28,7 +28,7 @@ export function Navbar() {
       >
         {/* Progress bar */}
         <div
-          className="absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"
+          className="absolute bottom-0 left-0 h-[3px] bg-primary"
           style={{
             width: `${state.scrollProgress * 100}%`,
             transition: state.isNavigating ? "none" : "width ease",

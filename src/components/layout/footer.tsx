@@ -26,7 +26,7 @@ export function Footer() {
   ];
 
   return (
-    <footer className="py-8 bg-muted/20 border-t border-border/40">
+    <footer className="py-8 bg-card border-t-2 border-foreground dark:border-white/25">
       <div className="container mx-auto px-4 text-center sm:px-6 lg:px-8">
         <p className="text-muted-foreground">
           {t("copyright", { year: dayjs().year(), name: personalInfo.name })}
@@ -36,7 +36,7 @@ export function Footer() {
             <a
               key={index}
               href={href}
-              className="text-muted-foreground hover:text-foreground transition-colors"
+              className="text-muted-foreground hover:text-primary transition-colors duration-150"
               aria-label={label}
             >
               <Icon className="h-5 w-5" />

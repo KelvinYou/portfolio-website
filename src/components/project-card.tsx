@@ -52,7 +52,7 @@ export const ProjectCard = React.memo(function ProjectCard({
       whileHover={{ y: -5 }}
       transition={{ type: "spring", stiffness: 300 }}
     >
-      <Card className="overflow-hidden border border-border/40 bg-muted/10 backdrop-blur-sm transition-all duration-300 h-full flex flex-col group card-hover-lift">
+      <Card className="overflow-hidden border-2 border-foreground dark:border-white/25 bg-card transition-all duration-150 h-full flex flex-col group card-hover-lift">
         <div className="relative h-52 overflow-hidden">
           {project.image ? (
             <Image
@@ -62,7 +62,7 @@ export const ProjectCard = React.memo(function ProjectCard({
               className="object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out"
             />
           ) : (
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/10 group-hover:from-primary/10 group-hover:to-secondary/20 transition-colors duration-500 flex items-center justify-center">
+            <div className="absolute inset-0 bg-muted group-hover:bg-muted/80 transition-colors duration-150 flex items-center justify-center">
               <div className="flex flex-col items-center gap-3">
                 <ImageIcon
                   className="w-12 h-12 opacity-40 group-hover:opacity-60 transition-opacity"
@@ -99,7 +99,7 @@ export const ProjectCard = React.memo(function ProjectCard({
             {project.techStacks.slice(0, 3).map((tech, i) => (
               <span
                 key={i}
-                className="text-xs px-2 py-1 bg-muted/30 rounded-md transition-all duration-300 group-hover:translate-y-[-2px] group-hover:bg-muted/50"
+                className="text-xs px-2 py-1 bg-muted border border-foreground dark:border-white/25 rounded-none transition-all duration-150"
                 style={{ transitionDelay: `${i * 50}ms` }}
               >
                 {tech}
@@ -107,7 +107,7 @@ export const ProjectCard = React.memo(function ProjectCard({
             ))}
             {project.techStacks.length > 3 && (
               <span
-                className="text-xs px-2 py-1 bg-muted/20 rounded-md transition-all duration-300 group-hover:translate-y-[-2px]"
+                className="text-xs px-2 py-1 bg-muted/50 border border-foreground dark:border-white/25 rounded-none transition-all duration-150"
                 style={{ transitionDelay: `150ms` }}
               >
                 +{project.techStacks.length - 3}
@@ -122,7 +122,7 @@ export const ProjectCard = React.memo(function ProjectCard({
               <Button
                 variant="outline"
                 size="sm"
-                className="group/button transition-all duration-300 hover:border-primary/50"
+                className="group/button transition-all duration-150 hover:border-primary"
                 asChild
               >
                 <a
@@ -131,10 +131,7 @@ export const ProjectCard = React.memo(function ProjectCard({
                   rel="noopener noreferrer"
                 >
                   <Github className="h-4 w-4 mr-1 group-hover/button:rotate-[-8deg] transition-transform" />
-                  <span className="relative">
-                    Code
-                    <span className="absolute inset-x-0 bottom-0 h-[1px] bg-primary/0 group-hover/button:bg-primary/50 transform scale-x-0 group-hover/button:scale-x-100 transition-transform origin-left duration-300"></span>
-                  </span>
+                  <span>Code</span>
                 </a>
               </Button>
             )}
@@ -161,7 +158,7 @@ export const ProjectCard = React.memo(function ProjectCard({
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="rounded-full text-xs gap-1.5 hover:bg-muted/50 ml-auto"
+                  className="rounded-sm text-xs gap-1.5 hover:bg-muted/50 ml-auto"
                 >
                   <span>Details</span>
                   <Info className="h-3.5 w-3.5" />

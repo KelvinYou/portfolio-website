@@ -13,7 +13,7 @@ interface SkillRingProps {
 export function SkillRing({ name, level, size = 110, index = 0 }: SkillRingProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const strokeWidth = 5;
+  const strokeWidth = 8;
   const radius = (size - strokeWidth * 2) / 2;
   const circumference = 2 * Math.PI * radius;
   const strokeDashoffset = circumference - (level / 100) * circumference;
@@ -45,7 +45,7 @@ export function SkillRing({ name, level, size = 110, index = 0 }: SkillRingProps
             cy={size / 2}
             r={radius}
             fill="none"
-            stroke="url(#skill-gradient)"
+            stroke="#00F0FF"
             strokeWidth={strokeWidth}
             strokeLinecap="round"
             strokeDasharray={circumference}
@@ -57,23 +57,12 @@ export function SkillRing({ name, level, size = 110, index = 0 }: SkillRingProps
             }
             transition={{ duration: 1.2, ease: "easeOut", delay: index * 0.1 }}
           />
-          <defs>
-            <linearGradient
-              id="skill-gradient"
-              x1="0%"
-              y1="0%"
-              x2="100%"
-              y2="0%"
-            >
-              <stop offset="0%" stopColor="#00F0FF" />
-              <stop offset="100%" stopColor="#6366F1" />
-            </linearGradient>
-          </defs>
+{/* gradient removed for neo-brutalism — solid cyan stroke */}
         </svg>
         {/* Center percentage */}
         <div className="absolute inset-0 flex items-center justify-center rotate-0">
           <motion.span
-            className="text-lg font-bold"
+            className="text-lg font-extrabold"
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : { opacity: 0 }}
             transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}

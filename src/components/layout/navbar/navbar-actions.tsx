@@ -35,10 +35,10 @@ export function NavbarActions({ state }: NavbarActionsProps) {
         <Button
           size="sm"
           className={cn(
-            "group relative overflow-hidden rounded-full border-0",
-            "bg-gradient-to-r from-primary/90 to-indigo-500/90",
-            "px-5 text-xs text-primary-foreground shadow-lg shadow-primary/20",
-            "transition-all hover:shadow-xl hover:shadow-primary/30 sm:text-sm",
+            "group relative overflow-hidden rounded-sm",
+            "border-2 border-foreground dark:border-white/25 bg-primary",
+            "px-5 text-xs text-primary-foreground neo-shadow-sm",
+            "transition-all duration-150 hover:border-primary sm:text-sm",
           )}
           asChild
         >
@@ -47,7 +47,7 @@ export function NavbarActions({ state }: NavbarActionsProps) {
             <span className={isSmallScreen ? "hidden lg:inline" : ""}>
               {t("resume")}
             </span>
-            <span className="animate-shimmer absolute inset-0 -z-10 rounded-full bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+{/* shimmer removed for neo-brutalism */}
           </Link>
         </Button>
       </div>
@@ -55,7 +55,7 @@ export function NavbarActions({ state }: NavbarActionsProps) {
       <Button
         variant="ghost"
         size="icon"
-        className="md:hidden text-foreground rounded-full h-8 w-8"
+        className="md:hidden text-foreground rounded-sm h-8 w-8"
         onClick={() => setMobileMenuOpen(true)}
         aria-label="Open mobile menu"
       >

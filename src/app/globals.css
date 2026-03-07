@@ -71,7 +71,7 @@
   --chart-3: #00B8CC;
   --chart-4: #009CB3;
   --chart-5: #008099;
-  --radius: 0.5rem;
+  --radius: 0.125rem; /* Neo-Brutalism: sharp corners */
   --sidebar: #FFFFFF;
   --sidebar-foreground: #000000;
   --sidebar-primary: #00F0FF;
@@ -100,8 +100,8 @@
   --accent-foreground: #000000;
   --destructive: #F87171;
   --destructive-foreground: #FFFFFF;
-  --border: rgba(255, 255, 255, 0.1); /* 10% white border */
-  --input: rgba(255, 255, 255, 0.1);
+  --border: rgba(255, 255, 255, 0.25); /* 25% white - visible structure */
+  --input: rgba(255, 255, 255, 0.25);
   --ring: #00F0FF; /* Cyan focus ring */
   --chart-1: #00F0FF;
   --chart-2: #00D4E6;
@@ -114,7 +114,7 @@
   --sidebar-primary-foreground: #000000;
   --sidebar-accent: #18181B;
   --sidebar-accent-foreground: #FFFFFF;
-  --sidebar-border: rgba(255, 255, 255, 0.1);
+  --sidebar-border: rgba(255, 255, 255, 0.25);
   --sidebar-ring: #00F0FF;
 }
 
@@ -235,7 +235,7 @@
 }
 
 .prose blockquote {
-  @apply border-l-4 border-primary/20 pl-4 italic;
+  @apply border-l-4 border-foreground pl-4 italic font-medium;
 }
 
 .prose h1, .prose h2, .prose h3, .prose h4 {
@@ -259,7 +259,7 @@
 }
 
 .shadow-glow {
-  box-shadow: 0 0 8px rgba(var(--color-primary), 0.3);
+  box-shadow: 3px 3px 0 0 #00F0FF;
 }
 
 @keyframes float {
@@ -375,10 +375,10 @@
 
 /* Vibrant Block-based Typography System */
 .section-heading {
-  @apply mb-8 text-center text-4xl font-bold md:text-5xl lg:text-6xl;
+  @apply mb-8 text-center text-4xl font-extrabold md:text-5xl lg:text-6xl;
   font-family: var(--font-space-grotesk), system-ui, sans-serif;
-  letter-spacing: -0.03em; /* Bold, impactful tracking */
-  line-height: 1.1;
+  letter-spacing: -0.04em; /* Neo-Brutalism: extra tight */
+  line-height: 1.05;
 }
 
 .section-subheading {
@@ -390,10 +390,10 @@
 
 /* Hero specific typography - Large type (32px+) */
 .hero-heading {
-  @apply text-5xl font-bold md:text-6xl lg:text-7xl xl:text-8xl;
+  @apply text-5xl font-black md:text-6xl lg:text-7xl xl:text-8xl;
   font-family: var(--font-space-grotesk), system-ui, sans-serif;
-  letter-spacing: -0.04em; /* Extra tight for maximum impact */
-  line-height: 1.05;
+  letter-spacing: -0.05em; /* Neo-Brutalism: maximum impact */
+  line-height: 1.0;
 }
 
 /* Body text improvements */
@@ -421,75 +421,144 @@ section {
   }
 }
 
-/* Neo-Brutalism Card Interactions - Neon Cyan Glow */
+/* Neo-Brutalism Card Interactions - Solid Offset Shadows */
 .card-hover-lift {
-  @apply cursor-pointer border-2 border-border transition-all duration-300 ease-out;
-  will-change: transform, border-color, background-color;
+  @apply cursor-pointer border-2 border-foreground transition-all duration-150;
+  box-shadow: 4px 4px 0 0 var(--foreground);
+  will-change: transform, border-color;
 }
 
 .card-hover-lift:hover {
-  transform: translateY(-8px);
-  border-color: #00F0FF; /* Neon cyan accent */
-  background-color: rgba(0, 240, 255, 0.02);
-  box-shadow:
-    0 24px 48px -12px rgba(0, 240, 255, 0.2),
-    0 12px 24px -8px rgba(0, 240, 255, 0.15),
-    0 0 0 2px rgba(0, 240, 255, 0.1),
-    0 0 32px rgba(0, 240, 255, 0.15);
+  transform: translate(-2px, -2px);
+  border-color: #00F0FF;
+  box-shadow: 6px 6px 0 0 #00F0FF;
 }
 
 .card-hover-lift:active {
-  transform: translateY(-4px);
-  transition-duration: 100ms;
+  transform: translate(2px, 2px);
+  box-shadow: 0px 0px 0 0 var(--foreground);
+  transition-duration: 50ms;
 }
 
-/* Dark mode - enhanced neon glow against void */
+/* Dark mode - offset shadow with visible contrast */
+.dark .card-hover-lift {
+  @apply border-white/25;
+  box-shadow: 4px 4px 0 0 rgba(255, 255, 255, 0.15);
+}
+
 .dark .card-hover-lift:hover {
   border-color: #00F0FF;
-  background-color: rgba(0, 240, 255, 0.05);
-  box-shadow:
-    0 24px 48px -12px rgba(0, 240, 255, 0.3),
-    0 12px 24px -8px rgba(0, 240, 255, 0.2),
-    0 0 0 2px rgba(0, 240, 255, 0.2),
-    0 0 48px rgba(0, 240, 255, 0.25);
+  box-shadow: 6px 6px 0 0 rgba(0, 240, 255, 0.4);
 }
 
-/* Bold button hover - color shift */
+/* Neo-Brutalism Button Hover - Offset Shadow */
 .btn-bold-hover {
-  @apply transition-all duration-200;
+  @apply transition-all duration-150;
+  box-shadow: 3px 3px 0 0 var(--foreground);
 }
 
 .btn-bold-hover:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 16px -4px rgba(37, 99, 235, 0.4);
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 0 #00F0FF;
+  border-color: #00F0FF;
 }
 
-/* Premium glassmorphism effect */
+.btn-bold-hover:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 0 var(--foreground);
+  transition-duration: 50ms;
+}
+
+/* Neo-Brutalism Glass Card - Solid, No Blur */
 .glass-card {
-  @apply backdrop-blur-xl bg-background/70 border border-border/50;
-  /* Subtle inner glow */
-  box-shadow: 
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.05),
-    0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  @apply border-2 border-foreground bg-card;
+  box-shadow: 3px 3px 0 0 var(--foreground);
 }
 
 .dark .glass-card {
-  @apply bg-background/60;
-  box-shadow: 
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.1),
-    0 1px 2px 0 rgba(0, 0, 0, 0.2);
+  @apply border-white/25 bg-card;
+  box-shadow: 3px 3px 0 0 rgba(255, 255, 255, 0.15);
 }
 
-/* Smooth micro-interactions - UX Pro Max: 150-300ms */
+/* Neo-Brutalism Micro-interactions - Snappy */
 .smooth-interaction {
-  @apply transition-all duration-200 ease-out;
+  @apply transition-all duration-150;
 }
 
 .smooth-interaction:hover {
-  @apply scale-105;
+  transform: translate(-1px, -1px);
 }
 
 .smooth-interaction:active {
-  @apply scale-95;
-  transition-duration: 100ms;
+  transform: translate(1px, 1px);
+  transition-duration: 50ms;
+}
+
+/* === NEO-BRUTALISM UTILITIES === */
+
+/* Solid offset shadows - the signature neo-brutal effect */
+.neo-shadow {
+  box-shadow: 4px 4px 0 0 var(--foreground);
+}
+
+.neo-shadow-sm {
+  box-shadow: 2px 2px 0 0 var(--foreground);
+}
+
+.neo-shadow-lg {
+  box-shadow: 6px 6px 0 0 var(--foreground);
+}
+
+.neo-shadow-primary {
+  box-shadow: 4px 4px 0 0 #00F0FF;
+}
+
+/* Neo-brutal border utility */
+.neo-border {
+  border: 2px solid var(--foreground);
+}
+
+.neo-border-3 {
+  border: 3px solid var(--foreground);
+}
+
+/* Neo-brutal card base */
+.neo-card {
+  @apply border-2 border-foreground bg-card transition-all duration-150;
+  box-shadow: 4px 4px 0 0 var(--foreground);
+}
+
+.neo-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 0 #00F0FF;
+  border-color: #00F0FF;
+}
+
+.neo-card:active {
+  transform: translate(2px, 2px);
+  box-shadow: 0px 0px 0 0 var(--foreground);
+  transition-duration: 50ms;
+}
+
+/* Dark mode neo-brutal shadows */
+.dark .neo-shadow {
+  box-shadow: 4px 4px 0 0 rgba(255, 255, 255, 0.2);
+}
+
+.dark .neo-shadow-sm {
+  box-shadow: 2px 2px 0 0 rgba(255, 255, 255, 0.2);
+}
+
+.dark .neo-shadow-lg {
+  box-shadow: 6px 6px 0 0 rgba(255, 255, 255, 0.2);
+}
+
+.dark .neo-card {
+  @apply border-2 border-white/25 bg-card;
+  box-shadow: 4px 4px 0 0 rgba(255, 255, 255, 0.15);
+}
+
+.dark .neo-card:hover {
+  border-color: #00F0FF;
+  box-shadow: 6px 6px 0 0 rgba(0, 240, 255, 0.4);
 }

@@ -21,11 +21,12 @@ export function UnifiedSectionHeader({
       className="mb-16 md:mb-24"
     >
       <h2
-        className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-foreground"
-        style={{ letterSpacing: "-0.03em" }}
+        className="font-heading text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground"
+        style={{ letterSpacing: "-0.04em" }}
       >
         {title}
       </h2>
+      <div className="mt-4 h-1 w-16 bg-primary" />
       {subtitle && (
         <p className="mt-6 max-w-2xl text-lg text-muted-foreground">{subtitle}</p>
       )}

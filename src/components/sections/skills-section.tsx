@@ -32,7 +32,7 @@ export function SkillsSection() {
   const t = useTranslations("sections");
 
   return (
-    <section id="skills" className="geometric-bg relative bg-muted/20">
+    <section id="skills" className="relative border-y-2 border-foreground dark:border-white/25">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial="hidden"
@@ -99,7 +99,7 @@ export function SkillsSection() {
                   variants={fadeIn}
                   className="flex items-center gap-3"
                 >
-                  <div className="h-2 w-2 rounded-full bg-primary"></div>
+                  <div className="h-2.5 w-2.5 rounded-none bg-foreground"></div>
                   <span>{skill}</span>
                 </motion.div>
               ))}

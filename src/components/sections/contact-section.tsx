@@ -28,7 +28,7 @@ export function ContactSection() {
             viewport={{ once: true, margin: "-100px" }}
             variants={fadeIn}
           >
-            <h3 className="mb-8 text-2xl font-heading font-semibold text-center text-foreground">Contact Information</h3>
+            <h3 className="mb-8 text-2xl font-heading font-extrabold text-center text-foreground">Contact Information</h3>
             <SocialLinks variant="full-card" />
           </motion.div>
         </div>

@@ -50,8 +50,8 @@ export function PostCard({ post, index, viewMode }: PostCardProps) {
       className="h-full"
     >
       <Card
-        className={`group h-full overflow-hidden transition-all duration-300 hover:shadow-lg bg-card/80 hover:bg-card
-        ${isList ? "md:flex" : ""} border border-border/40 hover:border-border/80`}
+        className={`group h-full overflow-hidden transition-all duration-150 bg-card
+        ${isList ? "md:flex" : ""} border-2 border-foreground dark:border-white/25 neo-shadow hover:border-primary`}
       >
         <Link
           href={`/blog/${slug}`}
@@ -68,7 +68,7 @@ export function PostCard({ post, index, viewMode }: PostCardProps) {
             <div className="absolute top-3 left-3 z-10">
               <Badge
                 variant="secondary"
-                className="bg-background/90 backdrop-blur-sm text-xs font-medium px-2 py-1 shadow-sm"
+                className="bg-card border border-foreground dark:border-white/25 text-xs font-medium px-2 py-1"
               >
                 {formatDate(frontmatter.date, "short")}
               </Badge>
@@ -110,7 +110,7 @@ export function PostCard({ post, index, viewMode }: PostCardProps) {
                       <Badge
                         key={tag}
                         variant="outline"
-                        className="text-xs font-medium text-muted-foreground border-primary/20 px-1.5 py-0"
+                        className="text-xs font-medium text-muted-foreground border-foreground dark:border-white/25 px-1.5 py-0"
                       >
                         {tag}
                       </Badge>
@@ -119,7 +119,7 @@ export function PostCard({ post, index, viewMode }: PostCardProps) {
                   frontmatter.tags.length > (isList ? 3 : 2) && (
                     <Badge
                       variant="outline"
-                      className="text-xs border-primary/20 text-muted-foreground px-1.5 py-0"
+                      className="text-xs border-foreground dark:border-white/25 text-muted-foreground px-1.5 py-0"
                     >
                       +{frontmatter.tags.length - (isList ? 3 : 2)}
                     </Badge>

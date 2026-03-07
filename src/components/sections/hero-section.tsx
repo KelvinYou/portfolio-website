@@ -69,9 +69,9 @@ export function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="mb-6 inline-flex items-center gap-2 rounded-full bg-white/[0.03] backdrop-blur-md ring-1 ring-white/10 px-3 py-1.5"
+              className="mb-6 inline-flex items-center gap-2 rounded-sm border-2 border-foreground dark:border-white/25 bg-card px-3 py-1.5 neo-shadow-sm"
             >
-              <div className="flex items-center justify-center rounded-full bg-white/[0.05] p-1">
+              <div className="flex items-center justify-center rounded-none bg-primary/10 p-1">
                 <Sparkles className="h-3.5 w-3.5 text-primary" />
               </div>
               <p className="text-xs font-medium text-muted-foreground">
@@ -92,8 +92,7 @@ export function HeroSection() {
                   transition={{ duration: 0.8, ease: [0.23, 1.0, 0.32, 1.0] }}
                 >
                   <span
-                    className="inline-block bg-gradient-to-r from-primary via-indigo-500 to-primary bg-clip-text text-transparent"
-                    style={{ backgroundSize: "200% 100%" }}
+                    className="inline-block text-primary"
                   >
                     {t("greeting", { name: personalInfo.name })}
                   </span>
@@ -141,7 +140,7 @@ export function HeroSection() {
               </p>
 
               {/* Static decorative element instead of animated */}
-                <div className="absolute -left-6 top-0 h-full w-1 rounded bg-gradient-to-b from-primary/50 via-primary/30 to-transparent" />
+                <div className="absolute -left-6 top-0 h-full w-1 bg-primary" />
               </div>
                 
             </motion.div>
@@ -157,7 +156,7 @@ export function HeroSection() {
               <MagneticButton strength={12}>
                 <Button
                   size="lg"
-                  className="group relative w-full gap-2.5 overflow-hidden rounded-lg bg-primary px-6 py-3 text-base font-bold text-primary-foreground shadow-lg shadow-primary/20 transition-all duration-200 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/30 sm:w-auto sm:px-8 sm:py-4 sm:text-lg btn-bold-hover"
+                  className="group relative w-full gap-2.5 overflow-hidden rounded-sm border-2 border-foreground dark:border-white/25 bg-primary px-6 py-3 text-base font-bold text-primary-foreground sm:w-auto sm:px-8 sm:py-4 sm:text-lg btn-bold-hover"
                   asChild
                 >
                   <Link href="#contact">
@@ -174,7 +173,7 @@ export function HeroSection() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="group w-full gap-2.5 rounded-lg border-2 border-foreground bg-background px-6 py-3 text-base font-bold transition-all duration-200 hover:-translate-y-1 hover:border-primary hover:bg-primary hover:text-primary-foreground hover:shadow-lg sm:w-auto sm:px-8 sm:py-4 sm:text-lg"
+                  className="group w-full gap-2.5 rounded-sm border-2 border-foreground dark:border-white/25 bg-background px-6 py-3 text-base font-bold transition-all duration-150 neo-shadow-sm hover:border-primary hover:bg-primary hover:text-primary-foreground sm:w-auto sm:px-8 sm:py-4 sm:text-lg"
                   asChild
                 >
                   <Link href="#projects">
@@ -197,7 +196,7 @@ export function HeroSection() {
                   <AnimatedCounter
                     target={stat.target}
                     suffix={stat.suffix}
-                    className="text-2xl font-bold sm:text-3xl"
+                    className="text-2xl font-extrabold sm:text-3xl"
                   />
                   <span className="text-xs text-muted-foreground sm:text-sm">
                     {t(stat.labelKey)}
@@ -232,7 +231,7 @@ export function HeroSection() {
             }}
           >
             <motion.div
-              className="w-[400px] overflow-hidden rounded-2xl border border-border/50 bg-background/80 p-6 shadow-xl backdrop-blur-xl"
+              className="w-[400px] overflow-hidden rounded-sm border-2 border-foreground dark:border-white/25 bg-card p-6 neo-shadow-lg"
               style={{
                 transformStyle: "preserve-3d",
                 rotateX: cardRotateX,
@@ -256,7 +255,7 @@ export function HeroSection() {
 
               {/* Terminal content */}
               <div
-                className="rounded-lg border border-border/30 bg-muted/40 p-4 font-mono text-sm"
+                className="rounded-none border-2 border-foreground dark:border-white/25 bg-muted p-4 font-mono text-sm"
                 style={{ transform: "translateZ(25px)" }}
               >
                 <div className="text-muted-foreground">

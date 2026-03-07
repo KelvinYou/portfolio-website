@@ -9,7 +9,6 @@ import { useTranslations } from "next-intl";
 import { formatStartEndDate } from "@/lib/utils";
 import { Calendar, ExternalLink, MapPin } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
 
 export function ExperiencesSection() {
   const t = useTranslations("sections");
@@ -39,43 +38,24 @@ export function ExperiencesSection() {
 }
 
 function ExperienceCard({ experience: exp }: { experience: typeof experiences[0] }) {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    setMousePosition({
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
-    });
-  };
-
   return (
     <motion.div variants={fadeIn}>
       <div
-        className="group relative rounded-2xl overflow-hidden bg-white/[0.03] backdrop-blur-md ring-1 ring-white/10 transition-all duration-500 hover:bg-white/[0.06] hover:ring-[#00F0FF]/20"
-        onMouseMove={handleMouseMove}
+        className="group relative rounded-sm overflow-hidden border-2 border-foreground dark:border-white/25 bg-card transition-all duration-150 hover:border-primary neo-shadow"
       >
-        {/* Mouse spotlight */}
-        <div
-          className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-          style={{
-            background: `radial-gradient(600px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(0,240,255,0.06), transparent 40%)`,
-          }}
-        />
-
         <div className="relative p-8">
           {/* Header row */}
           <div className="flex items-start justify-between mb-6">
             <div className="flex items-center gap-6">
               {/* Company logo */}
               {exp.logo && (
-                <div className="relative w-16 h-16 flex-shrink-0 rounded-xl overflow-hidden bg-white/[0.02] ring-1 ring-white/10 flex items-center justify-center transition-all duration-300 group-hover:ring-[#00F0FF]/30">
+                <div className="relative w-16 h-16 flex-shrink-0 rounded-sm overflow-hidden border-2 border-foreground dark:border-white/25 bg-card flex items-center justify-center transition-all duration-150 group-hover:border-primary">
                   <Image
                     src={exp.logo}
                     alt={exp.company}
                     width={48}
                     height={48}
-                    className="object-contain transition-transform duration-300 group-hover:scale-110"
+                    className="object-contain"
                   />
                 </div>
               )}
@@ -83,7 +63,7 @@ function ExperienceCard({ experience: exp }: { experience: typeof experiences[0]
               {/* Title and company */}
               <div>
                 <h3
-                  className="font-heading text-2xl font-bold tracking-tight text-foreground mb-2 transition-colors duration-300 group-hover:text-[#00F0FF]"
+                  className="font-heading text-2xl font-extrabold tracking-tight text-foreground mb-2 transition-colors duration-150 group-hover:text-primary"
                   style={{ letterSpacing: "-0.02em" }}
                 >
                   {exp.title}
@@ -94,7 +74,7 @@ function ExperienceCard({ experience: exp }: { experience: typeof experiences[0]
                       href={exp.companyUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="font-medium hover:text-[#00F0FF] transition-colors flex items-center gap-1.5"
+                      className="font-medium hover:text-primary transition-colors flex items-center gap-1.5"
                     >
                       {exp.company}
                       <ExternalLink className="h-3 w-3" />
@@ -102,7 +82,7 @@ function ExperienceCard({ experience: exp }: { experience: typeof experiences[0]
                   ) : (
                     <span className="font-medium">{exp.company}</span>
                   )}
-                  <span className="text-white/20">•</span>
+                  <span className="text-foreground/20">|</span>
                   <div className="flex items-center">
                     <MapPin className="h-3 w-3 mr-1.5 opacity-50" />
                     {exp.location}
@@ -115,7 +95,7 @@ function ExperienceCard({ experience: exp }: { experience: typeof experiences[0]
             <div className="flex flex-col items-end gap-2">
               <Badge
                 variant="outline"
-                className="bg-white/[0.02] border-white/10 text-[10px] uppercase tracking-wider text-neutral-400"
+                className="border-2 border-foreground dark:border-white/25 bg-card text-[10px] uppercase tracking-wider text-muted-foreground"
               >
                 {exp.type}
               </Badge>
@@ -139,7 +119,7 @@ function ExperienceCard({ experience: exp }: { experience: typeof experiences[0]
                   key={i}
                   className="text-sm flex items-start group/item"
                 >
-                  <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[#00F0FF]/40 mt-2 mr-3"></span>
+                  <span className="flex-shrink-0 w-2 h-2 rounded-none bg-foreground mt-1.5 mr-3"></span>
                   <span className="text-muted-foreground leading-relaxed">
                     {resp}
                   </span>
@@ -154,7 +134,7 @@ function ExperienceCard({ experience: exp }: { experience: typeof experiences[0]
               <Badge
                 key={i}
                 variant="secondary"
-                className="bg-white/[0.02] border border-white/10 text-xs text-neutral-400 hover:border-[#00F0FF]/30 hover:text-[#00F0FF] transition-all duration-300"
+                className="border-2 border-foreground dark:border-white/25 bg-card text-xs text-muted-foreground hover:border-primary hover:text-primary transition-all duration-150"
               >
                 {skill}
               </Badge>
@@ -163,12 +143,12 @@ function ExperienceCard({ experience: exp }: { experience: typeof experiences[0]
 
           {/* Projects - if any */}
           {exp.projects && exp.projects.length > 0 && (
-            <div className="pt-6 border-t border-white/5">
+            <div className="pt-6 border-t-2 border-foreground dark:border-white/25">
               <div className="space-y-4">
                 {exp.projects.map((project, i) => (
                   <div key={i} className="group/project">
                     <div className="flex items-start justify-between mb-2">
-                      <h4 className="font-heading font-semibold text-sm text-foreground group-hover/project:text-[#00F0FF] transition-colors">
+                      <h4 className="font-heading font-semibold text-sm text-foreground group-hover/project:text-primary transition-colors">
                         {project.title}
                       </h4>
                       {project.demo && (
@@ -176,7 +156,7 @@ function ExperienceCard({ experience: exp }: { experience: typeof experiences[0]
                           href={project.demo}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-muted-foreground hover:text-[#00F0FF] transition-colors"
+                          className="text-muted-foreground hover:text-primary transition-colors"
                         >
                           <ExternalLink className="h-3.5 w-3.5" />
                         </a>
@@ -189,7 +169,7 @@ function ExperienceCard({ experience: exp }: { experience: typeof experiences[0]
                       {project.techStacks.map((tech, j) => (
                         <span
                           key={j}
-                          className="text-[10px] px-2 py-0.5 rounded bg-white/[0.02] text-neutral-500"
+                          className="text-[10px] px-2 py-0.5 rounded-none bg-muted border border-foreground dark:border-white/25 text-muted-foreground"
                         >
                           {tech}
                         </span>

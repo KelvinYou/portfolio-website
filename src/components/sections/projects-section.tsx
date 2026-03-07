@@ -44,7 +44,7 @@ export function ProjectsSection() {
         >
           <Button 
             variant="outline" 
-            className="rounded-lg border-3 border-foreground px-8 py-6 text-lg font-bold transition-all duration-200 hover:-translate-y-2 hover:border-primary hover:bg-primary hover:text-primary-foreground" 
+            className="rounded-sm border-3 border-foreground dark:border-white/25 px-8 py-6 text-lg font-bold neo-shadow transition-all duration-150 hover:border-primary hover:bg-primary hover:text-primary-foreground"
             asChild
           >
             <Link href="/projects">

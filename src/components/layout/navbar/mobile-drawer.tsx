@@ -37,7 +37,7 @@ export function MobileDrawer({ state }: MobileDrawerProps) {
         >
           {/* Backdrop */}
           <motion.div
-            className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+            className="absolute inset-0 bg-black/60"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -46,7 +46,7 @@ export function MobileDrawer({ state }: MobileDrawerProps) {
 
           {/* Side drawer */}
           <motion.div
-            className="absolute top-0 right-0 h-full w-[85%] max-w-sm bg-background/95 backdrop-blur-md shadow-xl"
+            className="absolute top-0 right-0 h-full w-[85%] max-w-sm bg-background border-l-2 border-foreground dark:border-white/25"
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
@@ -54,7 +54,7 @@ export function MobileDrawer({ state }: MobileDrawerProps) {
           >
             <div className="flex flex-col h-full">
               {/* Header */}
-              <div className="flex justify-between items-center p-4 border-b border-border/30">
+              <div className="flex justify-between items-center p-4 border-b-2 border-foreground dark:border-white/25">
                 <Link
                   href="/"
                   className="flex items-center gap-2"
@@ -70,7 +70,7 @@ export function MobileDrawer({ state }: MobileDrawerProps) {
                     </AvatarFallback>
                   </Avatar>
                   <div className="flex flex-col">
-                    <span className="font-bold text-lg bg-clip-text text-transparent bg-gradient-to-r from-primary to-indigo-500">
+                    <span className="font-bold text-lg text-primary">
                       {personalInfo.name}
                     </span>
                     <span className="text-[10px] text-muted-foreground -mt-1">
@@ -82,7 +82,7 @@ export function MobileDrawer({ state }: MobileDrawerProps) {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="rounded-full h-8 w-8"
+                  className="rounded-sm h-8 w-8"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   <X size={isMobile ? 18 : 22} />
@@ -119,7 +119,7 @@ export function MobileDrawer({ state }: MobileDrawerProps) {
                       <Link
                         href={item.href}
                         className={cn(
-                          "flex items-center rounded-xl transition-all",
+                          "flex items-center rounded-sm transition-all duration-150",
                           isTinyScreen
                             ? "p-2 text-sm flex-col text-center gap-1"
                             : "p-3 text-base gap-2",
@@ -134,7 +134,7 @@ export function MobileDrawer({ state }: MobileDrawerProps) {
                       >
                         <div
                           className={cn(
-                            "rounded-full bg-background/80 border border-border/30 flex items-center justify-center shadow-sm",
+                            "rounded-sm bg-card border-2 border-foreground dark:border-white/25 flex items-center justify-center",
                             isTinyScreen ? "w-8 h-8" : "w-9 h-9 mr-3",
                             activeRoute === item.href.replace("/#", "")
                               ? "bg-primary/5 border-primary/20 text-primary"
@@ -154,11 +154,11 @@ export function MobileDrawer({ state }: MobileDrawerProps) {
               </motion.div>
 
               {/* Footer */}
-              <div className="p-4 border-t border-border/30 flex items-center justify-between">
+              <div className="p-4 border-t-2 border-foreground dark:border-white/25 flex items-center justify-between">
                 <ThemeToggle />
                 <Button
                   size="sm"
-                  className="group relative overflow-hidden rounded-full border-0 bg-gradient-to-r from-primary/90 to-indigo-500/90 px-5 text-xs text-primary-foreground shadow-lg shadow-primary/20 transition-all hover:shadow-xl hover:shadow-primary/30"
+                  className="group relative overflow-hidden rounded-sm border-2 border-foreground dark:border-white/25 bg-primary px-5 text-xs text-primary-foreground neo-shadow-sm transition-all duration-150"
                   asChild
                 >
                   <Link
@@ -169,7 +169,7 @@ export function MobileDrawer({ state }: MobileDrawerProps) {
                     <span className={isVeryTinyScreen ? "sr-only" : ""}>
                       Resume
                     </span>
-                    <span className="animate-shimmer absolute inset-0 -z-10 rounded-full bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+{/* shimmer removed for neo-brutalism */}
                   </Link>
                 </Button>
               </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import { personalInfo } from "@/constants";
-import { Github, Linkedin, Mail, FileText } from "lucide-react";
+import { Github, Linkedin, Mail } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface SocialLinksProps {
@@ -39,7 +39,7 @@ export function SocialLinks({ variant = "icon-only", className }: SocialLinksPro
             href={link.href}
             target={link.label !== "Email" ? "_blank" : undefined}
             rel={link.label !== "Email" ? "noopener noreferrer" : undefined}
-            className="group relative inline-flex h-12 w-12 items-center justify-center rounded-full border border-border/20 bg-muted/10 text-muted-foreground transition-all duration-300 hover:border-[#00F0FF]/30 hover:bg-muted/20 hover:text-[#00F0FF]"
+            className="group relative inline-flex h-12 w-12 items-center justify-center rounded-sm border-2 border-foreground dark:border-white/25 bg-card text-muted-foreground transition-all duration-150 neo-shadow-sm hover:border-primary hover:text-primary hover:-translate-y-1"
             aria-label={link.label}
           >
             <link.icon className="h-5 w-5" />
@@ -58,13 +58,13 @@ export function SocialLinks({ variant = "icon-only", className }: SocialLinksPro
           href={link.href}
           target={link.label !== "Email" ? "_blank" : undefined}
           rel={link.label !== "Email" ? "noopener noreferrer" : undefined}
-          className="group flex items-center gap-6 rounded-xl bg-card/50 p-6 ring-1 ring-border/20 transition-all duration-300 hover:bg-card hover:ring-[#00F0FF]/20"
+          className="group flex items-center gap-6 rounded-sm border-2 border-foreground dark:border-white/25 bg-card p-6 neo-shadow transition-all duration-150 hover:border-primary hover:-translate-x-0.5 hover:-translate-y-0.5"
         >
-          <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-muted/10 text-muted-foreground ring-1 ring-border/20 transition-all duration-300 group-hover:bg-muted/20 group-hover:text-[#00F0FF] group-hover:ring-[#00F0FF]/30">
+          <div className="flex h-14 w-14 items-center justify-center rounded-sm border-2 border-foreground dark:border-white/25 bg-card text-muted-foreground transition-all duration-150 group-hover:text-primary group-hover:border-primary">
             <link.icon className="h-6 w-6" />
           </div>
           <div className="flex-1">
-            <h3 className="font-heading text-lg font-semibold text-foreground transition-colors group-hover:text-[#00F0FF]">
+            <h3 className="font-heading text-lg font-semibold text-foreground transition-colors group-hover:text-primary">
               {link.label}
             </h3>
             <p className="text-sm text-muted-foreground">

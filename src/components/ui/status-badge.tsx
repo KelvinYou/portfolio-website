@@ -42,7 +42,7 @@ export function StatusBadge({
   return (
     <span
       className={cn(
-        "px-2 py-1 text-xs rounded-full backdrop-blur-sm",
+        "px-2 py-1 text-xs rounded-sm border border-foreground dark:border-white/25",
         style.base,
         withHoverEffect && style.hover,
         className

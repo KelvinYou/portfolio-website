@@ -36,7 +36,7 @@ export function DesktopNav({ state }: DesktopNavProps) {
   return (
     <div className="hidden md:block">
       <motion.div
-        className="bg-background/50 backdrop-blur-md rounded-full px-1 py-1 border border-border/50 shadow-sm"
+        className="bg-card rounded-sm px-1 py-1 border-2 border-foreground dark:border-white/25"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.1 }}
@@ -47,9 +47,9 @@ export function DesktopNav({ state }: DesktopNavProps) {
               <NavigationMenuItem key={item.name}>
                 <NavigationMenuLink
                   className={cn(
-                    "transition-all text-xs lg:text-sm rounded-full px-3 lg:px-4 py-1.5 flex items-center gap-1.5 hover:bg-accent/50 hover:text-foreground cursor-pointer",
+                    "transition-all duration-150 text-xs lg:text-sm rounded-sm px-3 lg:px-4 py-1.5 flex items-center gap-1.5 hover:bg-accent/50 hover:text-foreground cursor-pointer",
                     activeRoute === item.href.replace("/#", "")
-                      ? "bg-primary/15 text-primary font-medium shadow-sm"
+                      ? "bg-primary text-primary-foreground font-bold"
                       : "text-muted-foreground",
                   )}
                   onClick={() => handleLinkClick(item.href)}
@@ -89,7 +89,7 @@ export function DesktopNav({ state }: DesktopNavProps) {
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="rounded-full text-xs lg:text-sm px-3 hover:bg-accent/50"
+                      className="rounded-sm text-xs lg:text-sm px-3 hover:bg-accent/50"
                     >
                       <span className="hidden lg:inline">More</span>
                       <span className="lg:hidden">&bull;&bull;&bull;</span>
@@ -97,7 +97,7 @@ export function DesktopNav({ state }: DesktopNavProps) {
                   </DropdownMenuTrigger>
                   <DropdownMenuContent
                     align="end"
-                    className="w-40 rounded-xl backdrop-blur-md bg-background/80 border-border/40"
+                    className="w-40 rounded-sm bg-card border-2 border-foreground dark:border-white/25"
                   >
                     {moreItems().map((item) => (
                       <DropdownMenuItem key={item.name} asChild>
@@ -110,7 +110,7 @@ export function DesktopNav({ state }: DesktopNavProps) {
                               : "text-foreground hover:bg-accent/50",
                           )}
                         >
-                          <div className="w-6 h-6 rounded-full bg-background flex items-center justify-center">
+                          <div className="w-6 h-6 rounded-sm bg-card flex items-center justify-center">
                             {getIcon(item.icon)}
                           </div>
                           <span>{item.name}</span>
