@@ -6,12 +6,37 @@ export const domainPath = "https://kelvinyou.vercel.app";
 export const experiences: Experience[] = [
   {
     title: "Frontend Engineer",
+    company: "DTCPay (FinTech)",
+    companyUrl: "https://www.dtcpay.com/",
+    location: "Kuala Lumpur, Malaysia",
+    type: "Full-time",
+    startDate: "2025-7-7",
+    endDate: undefined,
+    description:
+      "Restructuring frontend architecture for a digital payments platform. JS→TS migration, AI-augmented dev workflows.",
+    responsibilities: [
+      "Architecture overhaul: folder structure, React framework migration (JS→TS), ESLint setup. Improved readability and maintainability.",
+      "AI agent skills: auto-generate Playwright tests + auto-debug, PRD + Figma conflict analysis, auto-apply to codebase.",
+      "Defined Claude rules and AI-assisted workflows for team-wide developer productivity.",
+    ],
+    skills: [
+      "React",
+      "TypeScript",
+      "Playwright",
+      "ESLint",
+      "AI Agents",
+      "Claude",
+    ],
+    logo: "/images/companies/dtcpay.jpeg",
+  },
+  {
+    title: "Frontend Engineer",
     company: "Simpletruss",
     companyUrl: "https://www.simpletruss.com/",
     location: "Kuala Lumpur, Malaysia",
     type: "Full-time",
     startDate: "2024-6-10",
-    endDate: undefined,
+    endDate: "2025-7-7",
     description:
       "Building enterprise property management SaaS. 500+ properties, 10K+ maintenance tickets monthly.",
     responsibilities: [
