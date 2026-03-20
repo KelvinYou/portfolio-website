@@ -11,11 +11,7 @@ interface PdfDownloaderProps {
   children?: ReactNode;
 }
 
-const PdfDownloader = ({
-  document,
-  fileName,
-  children,
-}: PdfDownloaderProps) => {
+function PdfDownloader({ document, fileName, children }: PdfDownloaderProps) {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
@@ -43,13 +39,13 @@ const PdfDownloader = ({
           ) : (
             <>
               <FileText className="mr-2 h-4 w-4" />
-              {"Download " + children || "Download PDF"}
+              {"Download " + (children || "PDF")}
             </>
           )}
         </Button>
       )}
     </PDFDownloadLink>
   );
-};
+}
 
-export default PdfDownloader;
+export { PdfDownloader };

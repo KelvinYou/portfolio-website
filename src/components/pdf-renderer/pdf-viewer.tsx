@@ -7,7 +7,7 @@ interface PdfViewerProps {
   children: React.ReactElement<DocumentProps>;
 }
 
-const PdfViewer = ({ children }: PdfViewerProps) => {
+function PdfViewer({ children }: PdfViewerProps) {
   const [isClient, setIsClient] = React.useState(false);
 
   React.useEffect(() => {
@@ -38,6 +38,6 @@ const PdfViewer = ({ children }: PdfViewerProps) => {
       {children}
     </PDFViewer>
   );
-};
+}
 
-export default PdfViewer;
+export { PdfViewer };
