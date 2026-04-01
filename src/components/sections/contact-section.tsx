@@ -4,11 +4,7 @@ import { motion } from "framer-motion";
 import { SocialLinks } from "@/components/base/social-links";
 import { UnifiedSectionHeader } from "@/components/base/unified-section-header";
 import { useTranslations } from "next-intl";
-
-const fadeIn = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-};
+import { fadeIn } from "@/lib/animations";
 
 export function ContactSection() {
   const t = useTranslations("sections");

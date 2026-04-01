@@ -98,7 +98,7 @@ export const ProjectCard = React.memo(function ProjectCard({
           <div className="flex flex-wrap gap-1 mt-3">
             {project.techStacks.slice(0, 3).map((tech, i) => (
               <span
-                key={i}
+                key={tech}
                 className="text-xs px-2 py-1 bg-muted border border-foreground dark:border-white/25 rounded-none transition-all duration-150"
                 style={{ transitionDelay: `${i * 50}ms` }}
               >
@@ -204,9 +204,9 @@ export const ProjectCard = React.memo(function ProjectCard({
                       <Code className="h-4 w-4" /> Technologies
                     </h4>
                     <div className="flex flex-wrap gap-2">
-                      {project.techStacks.map((tech, i) => (
+                      {project.techStacks.map((tech) => (
                         <Badge
-                          key={i}
+                          key={tech}
                           variant="secondary"
                           className="bg-background/50"
                         >

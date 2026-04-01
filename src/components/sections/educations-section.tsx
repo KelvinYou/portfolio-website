@@ -14,22 +14,7 @@ import { formatStartEndDate, cn } from "@/lib/utils";
 import Image from "next/image";
 import { UnifiedSectionHeader } from "@/components/base/unified-section-header";
 import { useTranslations } from "next-intl";
-
-// Animation variants
-const fadeIn = {
-  hidden: { opacity: 0, y: 12 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.4 } },
-};
-
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.12,
-    },
-  },
-};
+import { fadeIn, staggerContainer } from "@/lib/animations";
 
 const timelineVariants = {
   hidden: { opacity: 0, height: 0 },
