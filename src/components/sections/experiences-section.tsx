@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import { experiences } from "@/constants";
 import { fadeIn, staggerContainer, defaultViewport } from "@/lib/animations";
 import { UnifiedSectionHeader } from "@/components/base/unified-section-header";
-import { Badge } from "@/components/ui/badge";
 import { useTranslations } from "next-intl";
 import { formatStartEndDate } from "@/lib/utils";
 import { Calendar, ExternalLink, MapPin } from "lucide-react";
@@ -26,7 +25,7 @@ export function ExperiencesSection() {
           initial="hidden"
           whileInView="visible"
           viewport={defaultViewport}
-          className="space-y-6"
+          className="space-y-4"
         >
           {experiences.map((exp, index) => (
             <ExperienceCard key={index} experience={exp} />
@@ -40,41 +39,39 @@ export function ExperiencesSection() {
 function ExperienceCard({ experience: exp }: { experience: typeof experiences[0] }) {
   return (
     <motion.div variants={fadeIn}>
-      <div
-        className="group relative rounded-sm overflow-hidden border-2 border-foreground dark:border-white/25 bg-card transition-all duration-150 hover:border-primary neo-shadow"
-      >
-        <div className="relative p-8">
-          {/* Header row */}
-          <div className="flex items-start justify-between mb-6">
-            <div className="flex items-center gap-6">
-              {/* Company logo */}
+      <div className="group relative overflow-hidden rounded-2xl border border-border bg-card transition-all duration-300 hover:border-primary/25 hover:shadow-[0_0_0_1px_rgba(0,240,255,0.08),0_12px_40px_rgba(0,0,0,0.15)]">
+        {/* Top gradient accent */}
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+
+        <div className="relative p-6 md:p-8">
+          {/* Header */}
+          <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between mb-6">
+            <div className="flex items-start gap-4">
               {exp.logo && (
-                <div className="relative w-16 h-16 flex-shrink-0 rounded-sm overflow-hidden border-2 border-foreground dark:border-white/25 bg-card flex items-center justify-center transition-all duration-150 group-hover:border-primary">
+                <div className="relative flex-shrink-0 h-12 w-12 overflow-hidden rounded-xl border border-border bg-card transition-all duration-300 group-hover:border-primary/30">
                   <Image
                     src={exp.logo}
                     alt={exp.company}
-                    width={48}
-                    height={48}
-                    className="object-contain"
+                    fill
+                    className="object-contain p-1"
                   />
                 </div>
               )}
 
-              {/* Title and company */}
               <div>
                 <h3
-                  className="font-heading text-2xl font-extrabold tracking-tight text-foreground mb-2 transition-colors duration-150 group-hover:text-primary"
+                  className="font-heading text-xl font-extrabold text-foreground transition-colors duration-300 group-hover:text-primary md:text-2xl"
                   style={{ letterSpacing: "-0.02em" }}
                 >
                   {exp.title}
                 </h3>
-                <div className="flex items-center gap-3 text-sm text-muted-foreground">
+                <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-muted-foreground">
                   {exp.companyUrl ? (
                     <a
                       href={exp.companyUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="font-medium hover:text-primary transition-colors flex items-center gap-1.5"
+                      className="flex items-center gap-1 font-medium hover:text-primary transition-colors"
                     >
                       {exp.company}
                       <ExternalLink className="h-3 w-3" />
@@ -82,73 +79,68 @@ function ExperienceCard({ experience: exp }: { experience: typeof experiences[0]
                   ) : (
                     <span className="font-medium">{exp.company}</span>
                   )}
-                  <span className="text-foreground/20">|</span>
-                  <div className="flex items-center">
-                    <MapPin className="h-3 w-3 mr-1.5 opacity-50" />
+                  <span className="text-border">·</span>
+                  <span className="flex items-center gap-1">
+                    <MapPin className="h-3 w-3 opacity-50" />
                     {exp.location}
-                  </div>
+                  </span>
                 </div>
               </div>
             </div>
 
-            {/* Date and type */}
-            <div className="flex flex-col items-end gap-2">
-              <Badge
-                variant="outline"
-                className="border-2 border-foreground dark:border-white/25 bg-card text-[10px] uppercase tracking-wider text-muted-foreground"
-              >
+            {/* Date & type badges */}
+            <div className="flex items-center gap-2 sm:flex-col sm:items-end sm:gap-2">
+              <span className="rounded-full border border-border bg-muted px-3 py-1 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
                 {exp.type}
-              </Badge>
-              <div className="flex items-center text-xs text-muted-foreground whitespace-nowrap">
-                <Calendar className="h-3 w-3 mr-1.5 opacity-50" />
+              </span>
+              <span className="flex items-center gap-1.5 text-xs text-muted-foreground whitespace-nowrap">
+                <Calendar className="h-3 w-3 opacity-50" />
                 {formatStartEndDate(exp.startDate, exp.endDate)}
-              </div>
+              </span>
             </div>
           </div>
 
           {/* Description */}
-          <p className="text-base text-muted-foreground mb-6 leading-relaxed">
+          <p className="mb-5 text-sm leading-relaxed text-muted-foreground md:text-base">
             {exp.description}
           </p>
 
-          {/* Key achievements - clean bullet list */}
-          <div className="mb-6">
-            <ul className="space-y-3">
-              {exp.responsibilities.map((resp, i) => (
-                <li
-                  key={i}
-                  className="text-sm flex items-start group/item"
-                >
-                  <span className="flex-shrink-0 w-2 h-2 rounded-none bg-foreground mt-1.5 mr-3"></span>
-                  <span className="text-muted-foreground leading-relaxed">
-                    {resp}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {/* Responsibilities */}
+          <ul className="mb-6 space-y-2.5">
+            {exp.responsibilities.map((resp, i) => (
+              <li key={i} className="flex items-start gap-3 text-sm">
+                <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-primary/60" />
+                <span className="leading-relaxed text-muted-foreground">{resp}</span>
+              </li>
+            ))}
+          </ul>
 
-          {/* Tech stack - clean tags */}
-          <div className="flex flex-wrap gap-2 mb-6">
+          {/* Skills */}
+          <div className="flex flex-wrap gap-2 mb-0">
             {exp.skills.slice(0, 8).map((skill, i) => (
-              <Badge
+              <span
                 key={i}
-                variant="secondary"
-                className="border-2 border-foreground dark:border-white/25 bg-card text-xs text-muted-foreground hover:border-primary hover:text-primary transition-all duration-150"
+                className="rounded-full border border-border bg-muted/50 px-3 py-1 text-xs font-medium text-muted-foreground transition-all duration-200 hover:border-primary/30 hover:text-primary"
               >
                 {skill}
-              </Badge>
+              </span>
             ))}
           </div>
 
-          {/* Projects - if any */}
+          {/* Projects */}
           {exp.projects && exp.projects.length > 0 && (
-            <div className="pt-6 border-t-2 border-foreground dark:border-white/25">
+            <div className="mt-6 pt-6 border-t border-border">
+              <p className="mb-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                Key Projects
+              </p>
               <div className="space-y-4">
                 {exp.projects.map((project, i) => (
-                  <div key={i} className="group/project">
+                  <div
+                    key={i}
+                    className="rounded-xl border border-border bg-muted/30 p-4 transition-colors duration-200 hover:border-primary/20"
+                  >
                     <div className="flex items-start justify-between mb-2">
-                      <h4 className="font-heading font-semibold text-sm text-foreground group-hover/project:text-primary transition-colors">
+                      <h4 className="font-heading font-semibold text-sm text-foreground">
                         {project.title}
                       </h4>
                       {project.demo && (
@@ -162,14 +154,14 @@ function ExperienceCard({ experience: exp }: { experience: typeof experiences[0]
                         </a>
                       )}
                     </div>
-                    <p className="text-xs text-muted-foreground mb-2">
+                    <p className="text-xs text-muted-foreground mb-3 leading-relaxed">
                       {project.description}
                     </p>
                     <div className="flex flex-wrap gap-1.5">
                       {project.techStacks.map((tech, j) => (
                         <span
                           key={j}
-                          className="text-[10px] px-2 py-0.5 rounded-none bg-muted border border-foreground dark:border-white/25 text-muted-foreground"
+                          className="rounded-full bg-background px-2.5 py-0.5 text-[10px] font-medium text-muted-foreground border border-border"
                         >
                           {tech}
                         </span>

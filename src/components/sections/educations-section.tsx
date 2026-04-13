@@ -1,13 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import {
-  School,
-  Calendar,
-  Award,
-  ExternalLink,
-  MapPin,
-} from "lucide-react";
+import { School, Calendar, Award, ExternalLink, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { educations } from "@/constants";
 import { formatStartEndDate, cn } from "@/lib/utils";
@@ -17,11 +11,11 @@ import { useTranslations } from "next-intl";
 import { fadeIn, staggerContainer } from "@/lib/animations";
 
 const timelineVariants = {
-  hidden: { opacity: 0, height: 0 },
+  hidden: { opacity: 0, scaleY: 0 },
   visible: {
     opacity: 1,
-    height: "100%",
-    transition: { duration: 1.5 },
+    scaleY: 1,
+    transition: { duration: 1.2, ease: "easeOut" as const },
   },
 };
 
@@ -37,15 +31,15 @@ export function EducationsSection() {
         />
 
         <div className="relative mx-auto max-w-4xl">
-          {/* Timeline line - solid, no gradient */}
+          {/* Timeline line */}
           <motion.div
-            className="absolute left-0 h-full w-1 transform md:left-1/2 md:-translate-x-1/2"
+            className="absolute left-0 h-full w-px origin-top md:left-1/2 md:-translate-x-1/2"
             variants={timelineVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
           >
-            <div className="h-full w-full bg-foreground"></div>
+            <div className="h-full w-full bg-gradient-to-b from-primary/40 via-border to-transparent" />
           </motion.div>
 
           <motion.div
@@ -59,97 +53,90 @@ export function EducationsSection() {
               <motion.div
                 key={index}
                 variants={fadeIn}
-                className={`mb-12 flex flex-col md:mb-24 ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"}`}
+                className={`mb-10 flex flex-col md:mb-20 ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"}`}
               >
-                {/* Timeline node - square, solid */}
-                <div className="absolute left-0 hidden h-8 w-8 transform items-center justify-center rounded-none border-2 border-foreground bg-primary md:left-1/2 md:flex md:-translate-x-1/2">
-                  <div className="h-3 w-3 rounded-none bg-card"></div>
+                {/* Timeline node */}
+                <div className="absolute left-0 hidden h-7 w-7 transform items-center justify-center rounded-full border-2 border-primary/40 bg-background md:left-1/2 md:flex md:-translate-x-1/2">
+                  <div className="h-2.5 w-2.5 rounded-full bg-primary" />
                 </div>
 
-                {/* Date tag */}
+                {/* Date label */}
                 <div
                   className={cn(
                     "hidden md:flex absolute md:left-1/2 transform items-center",
                     index % 2 === 0
-                      ? "md:translate-x-12"
-                      : "md:-translate-x-[calc(100%+48px)] flex-row-reverse",
+                      ? "md:translate-x-10"
+                      : "md:-translate-x-[calc(100%+40px)] flex-row-reverse"
                   )}
                 >
                   <div
                     className={cn(
-                      "flex items-center border-2 border-foreground dark:border-white/25 bg-card rounded-sm py-1 px-3 text-xs font-mono hover:border-primary transition-colors duration-150",
-                      index % 2 === 0 ? "pl-3 pr-4" : "pl-4 pr-3",
+                      "flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-muted-foreground",
+                      index % 2 === 0 ? "pl-3 pr-4" : "pl-4 pr-3"
                     )}
                   >
-                    <Calendar className="h-3 w-3 shrink-0 text-primary" />
-                    <span className="ml-1.5">
-                      {formatStartEndDate(edu.startDate, edu.endDate)}
-                    </span>
+                    <Calendar className="h-3 w-3 text-primary/70" />
+                    {formatStartEndDate(edu.startDate, edu.endDate)}
                   </div>
                 </div>
 
-                {/* Timeline content */}
-                <div
-                  className={`relative ml-6 md:ml-0 md:w-1/2 ${index % 2 === 0 ? "md:pr-12" : "md:pl-12"}`}
-                >
+                {/* Card */}
+                <div className={`relative ml-5 md:ml-0 md:w-1/2 ${index % 2 === 0 ? "md:pr-12" : "md:pl-12"}`}>
                   <motion.div
-                    className="relative rounded-sm border-2 border-foreground dark:border-white/25 bg-card p-6 transition-all duration-150 hover:border-primary neo-shadow"
-                    whileHover={{ y: -4 }}
+                    className="group relative overflow-hidden rounded-2xl border border-border bg-card p-6 transition-all duration-300 hover:border-primary/25 hover:shadow-[0_0_0_1px_rgba(0,240,255,0.07),0_8px_32px_rgba(0,0,0,0.12)]"
+                    whileHover={{ y: -3 }}
+                    transition={{ duration: 0.3, ease: "easeOut" }}
                   >
-                    {/* Mobile timeline marker */}
-                    <div className="absolute -left-8 top-8 flex flex-col items-center md:hidden">
-                      <div className="flex h-4 w-4 items-center justify-center rounded-none border-2 border-foreground bg-primary">
-                        <div className="h-1.5 w-1.5 rounded-none bg-card"></div>
+                    {/* Top accent */}
+                    <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+
+                    {/* Mobile marker */}
+                    <div className="absolute -left-6 top-6 flex flex-col items-center md:hidden">
+                      <div className="flex h-4 w-4 items-center justify-center rounded-full border-2 border-primary/40 bg-background">
+                        <div className="h-1.5 w-1.5 rounded-full bg-primary" />
                       </div>
-                      <div className="h-full w-0.5 bg-foreground"></div>
+                      <div className="h-full w-px bg-border" />
                     </div>
 
-                    {/* Content header */}
+                    {/* Header */}
                     <div className="mb-4">
-                      <div className="flex items-start justify-between">
-                        <h3 className="text-xl font-extrabold text-foreground">
-                          {edu.degree}
-                        </h3>
-                      </div>
-
-                      <div className="mt-2 flex flex-wrap items-center text-muted-foreground">
-                        <div className="mr-4 flex items-center">
-                          <School className="mr-1 h-3.5 w-3.5 text-primary" />
-                          <span className="text-sm">{edu.institution}</span>
-                        </div>
-                        <div className="mt-1 flex items-center sm:mt-0">
-                          <MapPin className="mr-1 h-3.5 w-3.5 text-primary/70" />
-                          <span className="text-sm">{edu.location}</span>
-                        </div>
-                        <div className="mt-1 flex items-center sm:mt-0 md:hidden">
-                          <Calendar className="mr-1 h-3.5 w-3.5 text-primary/70" />
-                          <span className="text-sm">
-                            {formatStartEndDate(edu.startDate, edu.endDate)}
-                          </span>
-                        </div>
+                      <h3 className="text-lg font-extrabold text-foreground" style={{ letterSpacing: "-0.02em" }}>
+                        {edu.degree}
+                      </h3>
+                      <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-muted-foreground">
+                        <span className="flex items-center gap-1">
+                          <School className="h-3.5 w-3.5 text-primary/70" />
+                          {edu.institution}
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <MapPin className="h-3.5 w-3.5 text-primary/50" />
+                          {edu.location}
+                        </span>
+                        <span className="flex items-center gap-1 md:hidden">
+                          <Calendar className="h-3.5 w-3.5 text-primary/50" />
+                          {formatStartEndDate(edu.startDate, edu.endDate)}
+                        </span>
                       </div>
                     </div>
 
-                    <div className="relative">
-                      {/* Decorative line - solid */}
-                      <div className="absolute left-0 top-0 h-full w-0.5 bg-primary"></div>
-                      <p className="my-4 pl-3 text-sm text-muted-foreground">
+                    {/* Description with left accent */}
+                    <div className="relative mb-4 pl-3">
+                      <div className="absolute left-0 top-0 h-full w-0.5 rounded-full bg-primary/30" />
+                      <p className="text-sm leading-relaxed text-muted-foreground">
                         {edu.description}
                       </p>
                     </div>
 
+                    {/* Achievements */}
                     {edu.achievements.length > 0 && (
-                      <div className="mt-5 border-t-2 border-foreground dark:border-white/25 pt-4">
-                        <h4 className="mb-2 flex items-center text-sm font-bold">
-                          <Award className="mr-1.5 h-4 w-4 text-primary" />{" "}
-                          Achievements & Honors
+                      <div className="mt-4 rounded-xl border border-border bg-muted/30 p-4">
+                        <h4 className="mb-3 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-primary">
+                          <Award className="h-3.5 w-3.5" /> Achievements & Honors
                         </h4>
-                        <ul className="grid gap-x-4 gap-y-1 sm:grid-cols-2">
+                        <ul className="grid gap-1.5 sm:grid-cols-2">
                           {edu.achievements.map((achievement, i) => (
-                            <li
-                              key={i}
-                              className="relative pl-5 text-xs before:absolute before:left-1.5 before:top-1.5 before:h-1.5 before:w-1.5 before:rounded-none before:bg-foreground"
-                            >
+                            <li key={i} className="flex items-start gap-2 text-xs text-muted-foreground">
+                              <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-primary/50" />
                               {achievement}
                             </li>
                           ))}
@@ -157,32 +144,22 @@ export function EducationsSection() {
                       </div>
                     )}
 
-                    <div className="mt-4 flex items-center justify-between border-t-2 border-foreground dark:border-white/25 pt-4">
-                      <div className="text-xs text-muted-foreground">
-                        {edu.logo && (
-                          <Image
-                            src={edu.logo}
-                            alt={edu.institution}
-                            className="h-6 opacity-70"
-                            width={42}
-                            height={24}
-                          />
-                        )}
-                      </div>
+                    {/* Footer */}
+                    <div className="mt-4 flex items-center justify-between border-t border-border pt-4">
+                      {edu.logo ? (
+                        <Image
+                          src={edu.logo}
+                          alt={edu.institution}
+                          className="h-6 opacity-60"
+                          width={42}
+                          height={24}
+                        />
+                      ) : <div />}
                       {edu.certificateUrl && (
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="h-8 px-2 text-xs rounded-sm"
-                          asChild
-                        >
-                          <a
-                            href={edu.certificateUrl}
-                            target="_blank"
-                            className="group flex items-center"
-                          >
-                            <span>View certificate</span>
-                            <ExternalLink className="ml-1 h-3 w-3 transition-transform group-hover:translate-x-0.5" />
+                        <Button variant="ghost" size="sm" className="h-7 rounded-lg px-3 text-xs hover:text-primary" asChild>
+                          <a href={edu.certificateUrl} target="_blank" className="flex items-center gap-1">
+                            View certificate
+                            <ExternalLink className="h-3 w-3" />
                           </a>
                         </Button>
                       )}

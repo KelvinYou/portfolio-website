@@ -20,46 +20,58 @@ const skills = [
   .sort((a, b) => b.level - a.level)
   .slice(0, 5);
 
-const softSkills = [
-  "Team Collaboration",
-  "Problem Solving",
-  "Time Management",
-  "Adaptability",
-  "Leadership",
+const softSkillsData = [
+  { name: "Team Collaboration", icon: "🤝" },
+  { name: "Problem Solving", icon: "🧩" },
+  { name: "Time Management", icon: "⏱" },
+  { name: "Adaptability", icon: "🔄" },
+  { name: "Leadership", icon: "🧭" },
 ];
 
 export function SkillsSection() {
   const t = useTranslations("sections");
 
   return (
-    <section id="skills" className="relative border-y-2 border-foreground dark:border-white/25">
+    <section
+      id="skills"
+      className="relative border-y border-border bg-muted/20"
+    >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={defaultViewport}
           variants={fadeIn}
-          className="mb-16 text-center"
+          className="mb-14 text-center"
         >
-          <h2 className="section-heading !mb-4">
+          <h2
+            className="font-heading text-4xl font-extrabold md:text-5xl lg:text-6xl"
+            style={{ letterSpacing: "-0.03em", lineHeight: "1.05" }}
+          >
             {t("skills_title")}
           </h2>
-          <p className="section-subheading !mb-0">
+          {/* Accent line */}
+          <div className="mt-5 flex justify-center gap-1">
+            <div className="h-0.5 w-12 rounded-full bg-primary" />
+            <div className="h-0.5 w-4 rounded-full bg-primary/40" />
+            <div className="h-0.5 w-2 rounded-full bg-primary/20" />
+          </div>
+          <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground">
             {t("skills_subtitle")}
           </p>
         </motion.div>
 
         <Tabs defaultValue="technical" className="mx-auto max-w-3xl">
-          <TabsList className="mb-8 grid w-full grid-cols-2">
+          <TabsList className="mb-10 grid w-full grid-cols-2 rounded-xl border border-border bg-muted/40 p-1">
             <TabsTrigger
               value="technical"
-              className="cursor-pointer text-foreground"
+              className="cursor-pointer rounded-lg text-sm font-medium transition-all data-[state=active]:bg-card data-[state=active]:shadow-sm"
             >
               {t("skills_technical")}
             </TabsTrigger>
             <TabsTrigger
               value="soft"
-              className="cursor-pointer text-foreground"
+              className="cursor-pointer rounded-lg text-sm font-medium transition-all data-[state=active]:bg-card data-[state=active]:shadow-sm"
             >
               {t("skills_soft")}
             </TabsTrigger>
@@ -71,15 +83,11 @@ export function SkillsSection() {
               initial="hidden"
               whileInView="visible"
               viewport={defaultViewport}
-              className="flex flex-wrap justify-center gap-6 sm:gap-8"
+              className="flex flex-wrap justify-center gap-8"
             >
               {skills.map((skill, index) => (
                 <motion.div key={index} variants={fadeIn}>
-                  <SkillRing
-                    name={skill.name}
-                    level={skill.level}
-                    index={index}
-                  />
+                  <SkillRing name={skill.name} level={skill.level} index={index} />
                 </motion.div>
               ))}
             </motion.div>
@@ -91,16 +99,16 @@ export function SkillsSection() {
               initial="hidden"
               whileInView="visible"
               viewport={defaultViewport}
-              className="grid gap-6 sm:grid-cols-2"
+              className="grid gap-4 sm:grid-cols-2 md:grid-cols-3"
             >
-              {softSkills.map((skill, index) => (
+              {softSkillsData.map((skill, index) => (
                 <motion.div
                   key={index}
                   variants={fadeIn}
-                  className="flex items-center gap-3"
+                  className="flex items-center gap-4 rounded-xl border border-border bg-card p-5 transition-all duration-300 hover:border-primary/25 hover:shadow-[0_4px_20px_rgba(0,0,0,0.1)]"
                 >
-                  <div className="h-2.5 w-2.5 rounded-none bg-foreground"></div>
-                  <span>{skill}</span>
+                  <span className="text-2xl">{skill.icon}</span>
+                  <span className="font-medium text-foreground">{skill.name}</span>
                 </motion.div>
               ))}
             </motion.div>

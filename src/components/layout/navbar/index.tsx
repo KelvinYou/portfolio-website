@@ -17,8 +17,8 @@ export function Navbar() {
         className={cn(
           "fixed left-0 right-0 z-50 transition-all duration-300",
           state.scrolled
-            ? "bg-background border-b-2 border-foreground dark:border-white/25"
-            : "bg-background/80",
+            ? "bg-background/95 backdrop-blur-xl border-b border-border"
+            : "bg-background/80 backdrop-blur-sm",
         )}
         animate={{
           paddingTop: state.scrolled ? "0.25rem" : "0.5rem",

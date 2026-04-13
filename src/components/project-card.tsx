@@ -1,14 +1,6 @@
 "use client";
 
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,
@@ -44,141 +36,126 @@ export const ProjectCard = React.memo(function ProjectCard({
   index?: number;
 }) {
   const [dialogOpen, setDialogOpen] = useState(false);
-  const fadeIn = fadeInWithDelay(index * 0.1);
+  const fadeIn = fadeInWithDelay(index * 0.08);
 
   return (
     <motion.div
       variants={fadeIn}
-      whileHover={{ y: -5 }}
-      transition={{ type: "spring", stiffness: 300 }}
+      whileHover={{ y: -4 }}
+      transition={{ type: "spring", stiffness: 400, damping: 28 }}
+      className="h-full"
     >
-      <Card className="overflow-hidden border-2 border-foreground dark:border-white/25 bg-card transition-all duration-150 h-full flex flex-col group card-hover-lift">
-        <div className="relative h-52 overflow-hidden">
+      <div className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all duration-300 hover:border-primary/28 hover:shadow-[0_0_0_1px_rgba(0,240,255,0.07),0_16px_48px_rgba(0,0,0,0.18)]">
+        {/* Top edge accent on hover */}
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+
+        {/* Image area */}
+        <div className="relative h-48 overflow-hidden rounded-t-2xl">
           {project.image ? (
             <Image
               src={project.image}
               alt={project.title}
               fill
-              className="object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out"
+              className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
             />
           ) : (
-            <div className="absolute inset-0 bg-muted group-hover:bg-muted/80 transition-colors duration-150 flex items-center justify-center">
-              <div className="flex flex-col items-center gap-3">
-                <ImageIcon
-                  className="w-12 h-12 opacity-40 group-hover:opacity-60 transition-opacity"
-                  aria-label="Project placeholder"
-                  width={48}
-                  height={48}
-                />
-                <div className="text-sm font-medium text-muted-foreground/50">
-                  Project Preview
-                </div>
-              </div>
+            <div className="absolute inset-0 flex flex-col items-center justify-center bg-muted/60">
+              <ImageIcon className="h-10 w-10 text-muted-foreground/30" />
+              <span className="mt-2 text-xs text-muted-foreground/40 font-medium">Project Preview</span>
             </div>
           )}
-          <div className="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent" />
 
-          {/* Status badge with glow effect on hover */}
+          {/* Gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-card/95 via-card/20 to-transparent" />
+
+          {/* Status badge */}
           {project.status && (
-            <div className="absolute top-3 right-3 transition-transform duration-300 group-hover:scale-110 group-hover:translate-x-1">
-              <StatusBadge status={project.status} className="group-hover:shadow-glow" />
+            <div className="absolute top-3 right-3">
+              <StatusBadge status={project.status} className="transition-transform duration-300 group-hover:scale-105" />
             </div>
           )}
         </div>
 
-        <CardHeader>
-          <CardTitle className="group-hover:text-primary transition-colors duration-300">
+        {/* Content */}
+        <div className="flex flex-1 flex-col p-5 md:p-6">
+          <h3
+            className="mb-2 font-heading text-lg font-bold text-foreground transition-colors duration-300 group-hover:text-primary"
+            style={{ letterSpacing: "-0.01em" }}
+          >
             {project.title}
-          </CardTitle>
-          <CardDescription className="line-clamp-2">
+          </h3>
+          <p className="mb-4 flex-1 text-sm leading-relaxed text-muted-foreground line-clamp-2">
             {project.description}
-          </CardDescription>
+          </p>
 
-          {/* Animated tech stack tags */}
-          <div className="flex flex-wrap gap-1 mt-3">
-            {project.techStacks.slice(0, 3).map((tech, i) => (
+          {/* Tech stack */}
+          <div className="mb-5 flex flex-wrap gap-1.5">
+            {project.techStacks.slice(0, 3).map((tech) => (
               <span
                 key={tech}
-                className="text-xs px-2 py-1 bg-muted border border-foreground dark:border-white/25 rounded-none transition-all duration-150"
-                style={{ transitionDelay: `${i * 50}ms` }}
+                className="rounded-full border border-border bg-muted/50 px-2.5 py-0.5 text-xs font-medium text-muted-foreground"
               >
                 {tech}
               </span>
             ))}
             {project.techStacks.length > 3 && (
-              <span
-                className="text-xs px-2 py-1 bg-muted/50 border border-foreground dark:border-white/25 rounded-none transition-all duration-150"
-                style={{ transitionDelay: `150ms` }}
-              >
+              <span className="rounded-full border border-border bg-muted/50 px-2.5 py-0.5 text-xs font-medium text-muted-foreground">
                 +{project.techStacks.length - 3}
               </span>
             )}
           </div>
-        </CardHeader>
 
-        <CardFooter className="pt-2 mt-auto flex-col gap-3">
-          <div className="flex gap-3 w-full">
+          {/* Actions */}
+          <div className="flex items-center gap-2">
             {project.github && (
               <Button
                 variant="outline"
                 size="sm"
-                className="group/button transition-all duration-150 hover:border-primary"
+                className="rounded-xl border-border text-xs transition-all duration-200 hover:border-primary/40 hover:text-primary"
                 asChild
               >
-                <a
-                  href={project.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Github className="h-4 w-4 mr-1 group-hover/button:rotate-[-8deg] transition-transform" />
-                  <span>Code</span>
+                <a href={project.github} target="_blank" rel="noopener noreferrer">
+                  <Github className="h-3.5 w-3.5 mr-1.5" />
+                  Code
                 </a>
               </Button>
             )}
             {project.demo && (
               <Button
                 size="sm"
-                className="group/button transition-all duration-300"
+                className="rounded-xl text-xs btn-bold-hover"
                 asChild
               >
-                <a
-                  href={project.demo}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <ExternalLink className="h-4 w-4 mr-1 group-hover/button:translate-x-1 group-hover/button:-translate-y-1 transition-transform" />
+                <a href={project.demo} target="_blank" rel="noopener noreferrer">
+                  <ExternalLink className="h-3.5 w-3.5 mr-1.5" />
                   Demo
                 </a>
               </Button>
             )}
 
-            {/* Dialog trigger button */}
             <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
               <DialogTrigger asChild>
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="rounded-sm text-xs gap-1.5 hover:bg-muted/50 ml-auto"
+                  className="ml-auto rounded-xl text-xs gap-1.5 text-muted-foreground hover:text-foreground"
                 >
-                  <span>Details</span>
                   <Info className="h-3.5 w-3.5" />
+                  Details
                 </Button>
               </DialogTrigger>
-              <DialogContent className="sm:max-w-[425px] md:max-w-[600px]">
+              <DialogContent className="sm:max-w-[425px] md:max-w-[600px] rounded-2xl border-border">
                 <DialogHeader>
                   <DialogTitle className="text-xl flex items-center gap-2">
                     {project.title}
-                    {project.status && (
-                      <StatusBadge status={project.status} className="ml-2" withHoverEffect={false} />
-                    )}
+                    {project.status && <StatusBadge status={project.status} withHoverEffect={false} />}
                   </DialogTitle>
-                  <DialogDescription className="text-base mt-2">
+                  <DialogDescription className="text-base mt-2 leading-relaxed">
                     {project.description}
                   </DialogDescription>
                 </DialogHeader>
 
-                <div className="mt-4 grid gap-6">
-                  {/* Created Date */}
+                <div className="mt-4 grid gap-5">
                   {project.date && (
                     <div className="flex items-center gap-2 text-sm text-muted-foreground">
                       <Calendar className="h-4 w-4" />
@@ -186,40 +163,31 @@ export const ProjectCard = React.memo(function ProjectCard({
                     </div>
                   )}
 
-                  {/* Project Image */}
                   {project.image && (
-                    <div className="relative w-full h-48 overflow-hidden rounded-md">
-                      <Image
-                        src={project.image}
-                        alt={project.title}
-                        fill
-                        className="object-cover"
-                      />
+                    <div className="relative w-full h-48 overflow-hidden rounded-xl border border-border">
+                      <Image src={project.image} alt={project.title} fill className="object-cover" />
                     </div>
                   )}
 
-                  {/* Technologies */}
-                  <div className="space-y-2">
-                    <h4 className="text-sm font-medium flex items-center gap-2">
+                  <div className="space-y-3">
+                    <h4 className="text-sm font-semibold flex items-center gap-2">
                       <Code className="h-4 w-4" /> Technologies
                     </h4>
                     <div className="flex flex-wrap gap-2">
                       {project.techStacks.map((tech) => (
-                        <Badge
+                        <span
                           key={tech}
-                          variant="secondary"
-                          className="bg-background/50"
+                          className="rounded-full border border-border bg-muted/50 px-3 py-1 text-xs font-medium"
                         >
                           {tech}
-                        </Badge>
+                        </span>
                       ))}
                     </div>
                   </div>
 
-                  {/* Related blog posts */}
                   {project.blogSlugs && project.blogSlugs.length > 0 && (
-                    <div className="space-y-2">
-                      <h4 className="text-sm font-medium flex items-center gap-2">
+                    <div className="space-y-3">
+                      <h4 className="text-sm font-semibold flex items-center gap-2">
                         <Sparkles className="h-4 w-4" /> Related Articles
                       </h4>
                       <RelatedBlogLinks blogSlugs={project.blogSlugs} />
@@ -229,33 +197,16 @@ export const ProjectCard = React.memo(function ProjectCard({
 
                 <DialogFooter className="mt-6 flex flex-col sm:flex-row gap-3">
                   {project.github && (
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="w-full sm:w-auto"
-                      asChild
-                    >
-                      <a
-                        href={project.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center justify-center"
-                      >
-                        <Github className="h-4 w-4 mr-2" />
-                        View Source Code
+                    <Button variant="outline" size="sm" className="w-full sm:w-auto rounded-xl" asChild>
+                      <a href={project.github} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center">
+                        <Github className="h-4 w-4 mr-2" /> View Source Code
                       </a>
                     </Button>
                   )}
                   {project.demo && (
-                    <Button size="sm" className="w-full sm:w-auto" asChild>
-                      <a
-                        href={project.demo}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center justify-center"
-                      >
-                        <ExternalLink className="h-4 w-4 mr-2" />
-                        View Demo
+                    <Button size="sm" className="w-full sm:w-auto rounded-xl" asChild>
+                      <a href={project.demo} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center">
+                        <ExternalLink className="h-4 w-4 mr-2" /> View Demo
                       </a>
                     </Button>
                   )}
@@ -263,8 +214,8 @@ export const ProjectCard = React.memo(function ProjectCard({
               </DialogContent>
             </Dialog>
           </div>
-        </CardFooter>
-      </Card>
+        </div>
+      </div>
     </motion.div>
   );
 });

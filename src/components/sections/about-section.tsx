@@ -3,7 +3,6 @@
 import { motion } from "framer-motion";
 import { FileText, Mail } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { AnimatedCounter } from "@/components/ui/animated-counter";
 import { MagneticButton } from "@/components/ui/magnetic-button";
 import { UnifiedSectionHeader } from "@/components/base/unified-section-header";
@@ -45,35 +44,45 @@ export function AboutSection() {
         />
 
         <div className="grid items-center gap-12 md:grid-cols-2">
-          {/* Profile Image - Neo-Brutal frame */}
+          {/* Profile Image */}
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={defaultViewport}
             variants={fadeIn}
-            className="group relative overflow-hidden rounded-sm border-2 border-foreground dark:border-white/25 neo-shadow"
+            className="group relative overflow-hidden rounded-2xl border border-border transition-all duration-500 hover:border-primary/30"
+            style={{
+              boxShadow: "0 0 0 0 rgba(0,240,255,0)",
+              transition: "all 0.4s ease",
+            }}
           >
             <Image
               src={personalInfo.profilePicture}
               alt="About Me"
               width={600}
               height={400}
-              className="relative h-[400px] rounded-none object-cover"
+              className="h-[400px] w-full rounded-2xl object-cover transition-transform duration-700 group-hover:scale-[1.02]"
             />
+            {/* Subtle gradient overlay */}
+            <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-background/30 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
           </motion.div>
 
           {/* Content Stack */}
           <div>
-            {/* Stats Bar */}
+            {/* Stats Grid */}
             <motion.div
               variants={staggerContainer}
               initial="hidden"
               whileInView="visible"
               viewport={defaultViewport}
-              className="mb-8 grid grid-cols-2 gap-4 sm:grid-cols-4"
+              className="mb-8 grid grid-cols-2 gap-4"
             >
               {aboutStats.map((stat) => (
-                <motion.div key={stat.labelKey} variants={fadeIn} className="text-center sm:text-left">
+                <motion.div
+                  key={stat.labelKey}
+                  variants={fadeIn}
+                  className="rounded-xl border border-border bg-card p-4 transition-colors duration-300 hover:border-primary/25"
+                >
                   <AnimatedCounter
                     target={stat.target}
                     suffix={stat.suffix}
@@ -91,18 +100,19 @@ export function AboutSection() {
               variants={fadeIn}
             >
               {/* Heading */}
-              <h3 className="mb-4 font-heading text-2xl font-extrabold tracking-tight sm:text-3xl">
+              <h3 className="mb-4 font-heading text-2xl font-extrabold tracking-tight sm:text-3xl"
+                style={{ letterSpacing: "-0.02em" }}>
                 {t("about_heading")}
               </h3>
 
               {/* Hook */}
-              <p className="mb-4 text-base font-medium leading-relaxed text-foreground sm:text-lg">
+              <p className="mb-5 text-base leading-relaxed text-foreground/85 sm:text-lg">
                 {t("about_hook")}
               </p>
 
               {/* Currently Building */}
-              <div className="mb-4 rounded-sm border-2 border-foreground dark:border-white/25 bg-card p-4">
-                <p className="mb-1 text-sm font-bold text-foreground">
+              <div className="mb-5 rounded-xl border border-primary/20 bg-primary/5 p-4">
+                <p className="mb-1 text-xs font-semibold uppercase tracking-wider text-primary">
                   {t("about_current_label")}
                 </p>
                 <p className="text-sm leading-relaxed text-muted-foreground">
@@ -111,10 +121,10 @@ export function AboutSection() {
               </div>
 
               {/* Differentiators */}
-              <div className="mb-6 space-y-2">
+              <div className="mb-6 space-y-2.5">
                 {[t("about_diff_1"), t("about_diff_2")].map((diff, i) => (
-                  <div key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
-                    <span className="mt-1.5 h-2 w-2 shrink-0 rounded-none bg-foreground" />
+                  <div key={i} className="flex items-start gap-3 text-sm text-muted-foreground">
+                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary/60" />
                     <span>{diff}</span>
                   </div>
                 ))}
@@ -123,9 +133,12 @@ export function AboutSection() {
               {/* Tech Badges */}
               <div className="mb-6 flex flex-wrap gap-2">
                 {topTechs.map((tech) => (
-                  <Badge key={tech} variant="outline" className="text-xs border-2 border-foreground dark:border-white/25">
+                  <span
+                    key={tech}
+                    className="rounded-full border border-border bg-card px-3 py-1 text-xs font-medium transition-colors duration-200 hover:border-primary/40 hover:text-primary"
+                  >
                     {tech}
-                  </Badge>
+                  </span>
                 ))}
               </div>
 
@@ -134,28 +147,28 @@ export function AboutSection() {
                 <span className="whitespace-nowrap text-xs text-muted-foreground">
                   {t("about_shipped_for")}
                 </span>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2">
                   {companyLogos.map((company) => (
                     <Image
                       key={company.name}
                       src={company.logo}
                       alt={company.name}
-                      width={24}
-                      height={24}
-                      className="h-6 w-6 rounded-sm border border-foreground dark:border-white/25 object-cover opacity-80 transition-all duration-150 hover:opacity-100"
+                      width={28}
+                      height={28}
+                      className="h-7 w-7 rounded-full border border-border object-cover opacity-70 transition-all duration-200 hover:opacity-100 hover:border-primary/40"
                     />
                   ))}
                 </div>
               </div>
 
-              {/* CTAs — Contact primary, Resume secondary */}
+              {/* CTAs */}
               <div className="flex flex-wrap gap-3">
                 <MagneticButton>
                   <Link
                     href="/#contact"
                     className={cn(
                       buttonVariants(),
-                      "rounded-sm px-6 py-3 font-bold cursor-pointer border-2 border-foreground dark:border-white/25 neo-shadow-sm",
+                      "rounded-xl px-6 py-3 font-semibold cursor-pointer btn-bold-hover"
                     )}
                     aria-label="Contact me via email or social media"
                   >
@@ -167,7 +180,7 @@ export function AboutSection() {
                     href="/resume"
                     className={cn(
                       buttonVariants({ variant: "outline" }),
-                      "rounded-sm px-6 py-3 cursor-pointer border-2 border-foreground dark:border-white/25 neo-shadow-sm",
+                      "rounded-xl px-6 py-3 cursor-pointer border-border transition-all duration-300 hover:border-primary/40 hover:bg-card"
                     )}
                     aria-label="View my resume and download PDF"
                   >

@@ -6,9 +6,8 @@ import { Button } from "@/components/ui/button";
 import { projects } from "@/constants";
 import { ProjectCard } from "@/components/project-card";
 import Link from "next/link";
-import { staggerContainer, defaultViewport } from "@/lib/animations";
+import { staggerContainer, defaultViewport, fadeIn } from "@/lib/animations";
 import { UnifiedSectionHeader } from "@/components/base/unified-section-header";
-import { fadeIn } from "@/lib/animations";
 import { useTranslations } from "next-intl";
 
 export function ProjectsSection() {
@@ -22,9 +21,8 @@ export function ProjectsSection() {
           subtitle={t("projects_subtitle")}
         />
 
-        {/* Portfolio Grid - Masonry-style layout */}
         <motion.div
-          className="grid gap-12 md:grid-cols-2 lg:grid-cols-3"
+          className="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
@@ -36,19 +34,20 @@ export function ProjectsSection() {
         </motion.div>
 
         <motion.div
-          className="mt-16 text-center"
+          className="mt-14 text-center"
           initial="hidden"
           whileInView="visible"
           viewport={defaultViewport}
           variants={fadeIn}
         >
-          <Button 
-            variant="outline" 
-            className="rounded-sm border-3 border-foreground dark:border-white/25 px-8 py-6 text-lg font-bold neo-shadow transition-all duration-150 hover:border-primary hover:bg-primary hover:text-primary-foreground"
+          <Button
+            variant="outline"
+            className="rounded-xl border-border px-8 py-5 text-base font-semibold transition-all duration-300 hover:border-primary/40 hover:bg-card"
             asChild
           >
             <Link href="/projects">
-              {t("projects_see_all")} <ArrowRight className="ml-3 h-6 w-6" />
+              {t("projects_see_all")}
+              <ArrowRight className="ml-2.5 h-5 w-5" />
             </Link>
           </Button>
         </motion.div>
