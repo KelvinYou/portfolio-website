@@ -1,17 +1,9 @@
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+"use client";
+
 import type { Post } from "@/lib/mdx";
 import { formatDate } from "@/lib/utils";
 import { motion } from "framer-motion";
-import { ArrowRight, Clock, ImageIcon, User } from "lucide-react";
+import { ArrowUpRight, Clock } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -19,160 +11,151 @@ interface PostCardProps {
   post: Post;
   index: number;
   viewMode: "grid" | "list";
+  featured?: boolean;
 }
 
-export function PostCard({ post, index, viewMode }: PostCardProps) {
+export function PostCard({ post, index, viewMode, featured = false }: PostCardProps) {
   const { frontmatter, slug } = post;
   const isList = viewMode === "list";
+  const readingTime = Math.max(1, Math.ceil(post.content.split(/\s+/).length / 200));
 
-  // Extract a preview from the content
-  const contentPreview =
-    post.content
-      .replace(/---(.|\n)*?---/, "")
-      .replace(/#+\s.*\n/g, "")
-      .replace(/!\[.*\]\(.*\)/g, "")
-      .replace(/\[.*\]\(.*\)/g, "")
-      .replace(/```(.|\n)*?```/g, "")
-      .trim()
-      .slice(0, 120) + "...";
+  if (featured) {
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+      >
+        <Link href={`/blog/${slug}`} className="group block">
+          <article className="relative overflow-hidden rounded-2xl border border-white/[0.07] bg-card">
+            {/* Hero image area */}
+            <div className="relative aspect-[21/9] md:aspect-[3/1] overflow-hidden bg-gradient-to-br from-primary/10 via-card to-card">
+              {frontmatter.image && (
+                <Image
+                  src={frontmatter.image}
+                  alt={frontmatter.title}
+                  fill
+                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                  priority
+                />
+              )}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/10" />
+              {/* Cyan accent glow on hover */}
+              <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            </div>
 
-  // Estimate reading time
-  const readingTime = Math.max(
-    1,
-    Math.ceil(post.content.split(/\s+/).length / 200),
-  );
+            {/* Content overlay */}
+            <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10">
+              <div className="flex items-center gap-2 mb-4">
+                <span className="text-[10px] font-mono tracking-[0.18em] uppercase text-primary/80">
+                  Featured
+                </span>
+                <span className="h-px w-8 bg-primary/40" />
+                {frontmatter.tags?.slice(0, 2).map((tag) => (
+                  <span
+                    key={tag}
+                    className="text-[10px] font-medium px-2.5 py-1 rounded-full bg-white/[0.08] backdrop-blur-sm text-white/60 border border-white/[0.10]"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-3 leading-tight group-hover:text-primary transition-colors duration-300 max-w-3xl">
+                {frontmatter.title}
+              </h2>
+
+              {frontmatter.description && (
+                <p className="text-white/50 max-w-2xl line-clamp-2 text-sm md:text-base mb-5 hidden sm:block">
+                  {frontmatter.description}
+                </p>
+              )}
+
+              <div className="flex items-center gap-4 text-white/35 text-xs font-medium">
+                <span>{formatDate(frontmatter.date)}</span>
+                <span>·</span>
+                <span className="flex items-center gap-1.5">
+                  <Clock className="h-3 w-3" />
+                  {readingTime} min read
+                </span>
+                <span className="ml-auto flex items-center gap-1.5 text-white/50 group-hover:text-primary transition-colors duration-200">
+                  Read article
+                  <ArrowUpRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </span>
+              </div>
+            </div>
+          </article>
+        </Link>
+      </motion.div>
+    );
+  }
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, delay: index * 0.1 }}
-      className="h-full"
+      transition={{ duration: 0.4, delay: Math.min(index * 0.05, 0.35), ease: "easeOut" }}
+      className={isList ? "w-full" : "h-full"}
     >
-      <Card
-        className={`group h-full overflow-hidden transition-all duration-150 bg-card
-        ${isList ? "md:flex" : ""} border-2 border-foreground dark:border-white/25 neo-shadow hover:border-primary`}
-      >
-        <Link
-          href={`/blog/${slug}`}
-          className={`${isList ? "md:flex md:flex-row" : "flex flex-col"} h-full`}
+      <Link href={`/blog/${slug}`} className="group block h-full">
+        <article
+          className={`h-full overflow-hidden rounded-xl border border-border/40 bg-card
+            hover:border-primary/25 hover:shadow-[0_0_24px_rgba(0,240,255,0.04)]
+            transition-all duration-300 ${isList ? "flex" : "flex flex-col"}`}
         >
-          {/* Featured image container */}
+          {/* Thumbnail / placeholder */}
           <div
-            className={`relative bg-gradient-to-br from-primary/5 to-primary/10 overflow-hidden
-              ${isList ? "md:w-48 md:shrink-0" : "w-full"}
-              ${isList ? "md:h-full" : "aspect-[16/10]"}
-            `}
+            className={`relative overflow-hidden bg-muted/30 flex-shrink-0
+              ${isList ? "w-36 sm:w-44" : "aspect-video"}`}
           >
-            {/* Publication date chip */}
-            <div className="absolute top-3 left-3 z-10">
-              <Badge
-                variant="secondary"
-                className="bg-card border border-foreground dark:border-white/25 text-xs font-medium px-2 py-1"
-              >
-                {formatDate(frontmatter.date, "short")}
-              </Badge>
-            </div>
-
             {frontmatter.image ? (
               <Image
                 src={frontmatter.image}
                 alt={frontmatter.title}
                 fill
-                className="object-cover transition-transform duration-700 group-hover:scale-105 group-hover:saturate-110"
+                className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
               />
             ) : (
-              <div className="w-full h-full flex items-center justify-center p-4">
-                <div className="text-center opacity-90">
-                  <ImageIcon
-                    className="h-10 w-10 mx-auto mb-2 text-primary/40"
-                    strokeWidth={1.5}
-                  />
-                  <p className="text-xs italic line-clamp-2 text-muted-foreground max-w-[85%] mx-auto">
-                    {contentPreview}
-                  </p>
-                </div>
+              <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-muted/60 to-card">
+                <span className="text-4xl font-bold text-primary/[0.06] font-mono select-none">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
               </div>
             )}
-
-            {/* Image overlay gradient */}
-            <div className="absolute inset-0 bg-gradient-to-t from-background/50 to-transparent opacity-70 group-hover:opacity-40 transition-opacity duration-300"></div>
           </div>
 
-          <div className="flex flex-col h-full flex-grow">
-            <CardHeader className="p-4 pb-2">
-              {/* Tags row */}
-              <div className="mb-2 flex flex-wrap gap-1.5">
-                {frontmatter.tags &&
-                  frontmatter.tags
-                    .slice(0, isList ? 3 : 2)
-                    .map((tag: string) => (
-                      <Badge
-                        key={tag}
-                        variant="outline"
-                        className="text-xs font-medium text-muted-foreground border-foreground dark:border-white/25 px-1.5 py-0"
-                      >
-                        {tag}
-                      </Badge>
-                    ))}
-                {frontmatter.tags &&
-                  frontmatter.tags.length > (isList ? 3 : 2) && (
-                    <Badge
-                      variant="outline"
-                      className="text-xs border-foreground dark:border-white/25 text-muted-foreground px-1.5 py-0"
-                    >
-                      +{frontmatter.tags.length - (isList ? 3 : 2)}
-                    </Badge>
-                  )}
-              </div>
+          {/* Content */}
+          <div className="flex flex-col flex-grow p-4 md:p-5">
+            <div className="flex flex-wrap gap-1.5 mb-2.5">
+              {frontmatter.tags?.slice(0, isList ? 3 : 2).map((tag) => (
+                <span
+                  key={tag}
+                  className="text-[10px] font-medium px-2 py-0.5 rounded-full border border-border/60 text-muted-foreground"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
 
-              {/* Post title */}
-              <CardTitle className="leading-tight tracking-tight mb-1 group-hover:text-primary transition-colors duration-300">
-                {frontmatter.title}
-              </CardTitle>
+            <h3 className="font-bold leading-snug text-sm md:text-[15px] mb-2 group-hover:text-primary transition-colors duration-200 line-clamp-2">
+              {frontmatter.title}
+            </h3>
 
-              {/* Post description */}
-              <CardDescription
-                className={`text-sm mt-1.5 text-muted-foreground/90 ${isList ? "line-clamp-2" : "line-clamp-2"}`}
-              >
-                {frontmatter.description || contentPreview}
-              </CardDescription>
-            </CardHeader>
+            {frontmatter.description && (
+              <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed mb-auto">
+                {frontmatter.description}
+              </p>
+            )}
 
-            <CardContent className="p-4 pt-1 pb-2 mt-auto">
-              <div className="flex items-center justify-between text-xs text-muted-foreground">
-                {/* Author info */}
-                <div className="flex items-center gap-3">
-                  <div className="flex items-center gap-1.5">
-                    <User className="h-3.5 w-3.5 text-primary/70" />
-                    <span>{frontmatter.author}</span>
-                  </div>
-
-                  <div className="flex items-center gap-1.5">
-                    <Clock className="h-3.5 w-3.5 text-primary/70" />
-                    <span>{readingTime} min read</span>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-
-            <CardFooter className="p-4 pt-1 pb-4 mt-auto">
-              <div className="w-full">
-                <div className="flex items-center justify-between">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="text-xs font-medium text-primary/80 hover:text-primary group-hover:underline decoration-primary/30 underline-offset-4 transition-all p-0"
-                  >
-                    Read article
-                  </Button>
-                  <ArrowRight className="h-3.5 w-3.5 text-primary/70 transition-transform duration-300 group-hover:translate-x-1" />
-                </div>
-              </div>
-            </CardFooter>
+            <div className="flex items-center gap-2.5 mt-4 pt-3.5 border-t border-border/40 text-[11px] text-muted-foreground">
+              <span>{formatDate(frontmatter.date, "short")}</span>
+              <span className="opacity-30">·</span>
+              <span>{readingTime} min</span>
+              <ArrowUpRight className="h-3.5 w-3.5 ml-auto opacity-0 group-hover:opacity-100 group-hover:text-primary transition-all duration-200" />
+            </div>
           </div>
-        </Link>
-      </Card>
+        </article>
+      </Link>
     </motion.div>
   );
 }

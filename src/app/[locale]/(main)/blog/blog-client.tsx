@@ -1,385 +1,217 @@
 "use client";
 
 import { PostCard } from "@/components/blog/post-card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
 import type { Post } from "@/lib/mdx";
 import { motion } from "framer-motion";
-import {
-  Filter,
-  LayoutGrid,
-  List as ListIcon,
-  Search,
-  SlidersHorizontal,
-  Sparkles,
-  X,
-} from "lucide-react";
+import { LayoutGrid, List as ListIcon, Search, X } from "lucide-react";
 import { useEffect, useState } from "react";
 
-type SortOption = "newest" | "oldest" | "az" | "za";
+type SortOption = "newest" | "oldest";
 type ViewMode = "grid" | "list";
-
-const fadeInUp = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.5,
-    },
-  },
-};
-
-const fadeIn = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-};
 
 export default function BlogClient({ posts: initialPosts }: { posts: Post[] }) {
   const [posts, setPosts] = useState<Post[]>(initialPosts);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const [sortOption, setSortOption] = useState<SortOption>("newest");
-  const [isFiltersOpen, setIsFiltersOpen] = useState(false);
+  const [sortOption] = useState<SortOption>("newest");
   const [viewMode, setViewMode] = useState<ViewMode>("grid");
-  const [searchFocused, setSearchFocused] = useState(false);
 
-  // Get all unique tags from posts
   const allTags = Array.from(
-    new Set(initialPosts.flatMap((post) => post.frontmatter.tags || [])),
+    new Set(initialPosts.flatMap((p) => p.frontmatter.tags || []))
   ).sort();
 
-  // Sort and filter posts based on current filters
   useEffect(() => {
     let filtered = [...initialPosts];
-
-    // Filter by search query
     if (searchQuery) {
-      const query = searchQuery.toLowerCase();
+      const q = searchQuery.toLowerCase();
       filtered = filtered.filter(
-        (post) =>
-          post.frontmatter.title.toLowerCase().includes(query) ||
-          post.frontmatter.description?.toLowerCase().includes(query) ||
-          post.content.toLowerCase().includes(query),
+        (p) =>
+          p.frontmatter.title.toLowerCase().includes(q) ||
+          p.frontmatter.description?.toLowerCase().includes(q) ||
+          p.content.toLowerCase().includes(q)
       );
     }
-
-    // Filter by selected tags
     if (selectedTags.length > 0) {
-      filtered = filtered.filter((post) =>
-        selectedTags.every(
-          (tag) => post.frontmatter.tags && post.frontmatter.tags.includes(tag),
-        ),
+      filtered = filtered.filter((p) =>
+        selectedTags.every((tag) => p.frontmatter.tags?.includes(tag))
       );
     }
-
-    // Sort posts
-    filtered.sort((a, b) => {
-      if (sortOption === "newest") {
-        return (
-          new Date(b.frontmatter.date).getTime() -
-          new Date(a.frontmatter.date).getTime()
-        );
-      }
-      if (sortOption === "oldest") {
-        return (
-          new Date(a.frontmatter.date).getTime() -
-          new Date(b.frontmatter.date).getTime()
-        );
-      }
-      if (sortOption === "az") {
-        return a.frontmatter.title.localeCompare(b.frontmatter.title);
-      }
-      if (sortOption === "za") {
-        return b.frontmatter.title.localeCompare(a.frontmatter.title);
-      }
-      return 0;
-    });
-
+    filtered.sort((a, b) =>
+      sortOption === "newest"
+        ? new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime()
+        : new Date(a.frontmatter.date).getTime() - new Date(b.frontmatter.date).getTime()
+    );
     setPosts(filtered);
   }, [initialPosts, searchQuery, selectedTags, sortOption]);
 
-  // Toggle a tag in the filter
-  const toggleTag = (tag: string) => {
+  const toggleTag = (tag: string) =>
     setSelectedTags((prev) =>
-      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag],
+      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
     );
-  };
 
-  // Clear all filters
   const clearFilters = () => {
     setSearchQuery("");
     setSelectedTags([]);
-    setSortOption("newest");
   };
 
+  const hasFilters = !!(searchQuery || selectedTags.length > 0);
+  const [featured, ...rest] = posts;
+
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      {/* Page Header Section */}
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-        variants={fadeIn}
-        className="text-center mb-16"
-      >
-        <motion.div variants={fadeInUp}>
-          <div className="inline-block p-1.5 px-3 mb-4 rounded-full bg-primary/10 border border-primary/20">
-            <Sparkles className="h-4 w-4 text-primary inline mr-1" />
-            <span className="text-xs font-medium">Tech Blog</span>
-          </div>
-          <h1 className="md:text-4xl font-bold mb-4 flex items-center justify-center gap-2">
-            My Blog
+    <div>
+      {/* ── Editorial Masthead ─────────────────────────────── */}
+      <div className="border-b border-border/30 mb-12 pb-12">
+        <motion.div
+          initial={{ opacity: 0, y: 28 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <p className="text-[11px] font-mono tracking-[0.22em] uppercase text-primary/70 mb-5 flex items-center gap-3">
+            <span className="h-px w-6 bg-primary/40 inline-block" />
+            Personal Journal
+          </p>
+          <h1 className="text-6xl md:text-8xl font-extrabold tracking-tight leading-none mb-6 text-foreground">
+            Writings
           </h1>
-          <p className="text-muted-foreground mx-auto mb-8">
-            Thoughts, insights, and guides on web development, design, and
-            modern technologies. Browse through my articles to learn something
-            new or find solutions to common challenges.
+          <p className="text-muted-foreground max-w-md text-base leading-relaxed">
+            Notes on frontend engineering, product building, and the occasional deep dive.
           </p>
         </motion.div>
+      </div>
 
-        {/* Search and filter controls */}
-        <motion.div className="flex flex-col gap-4 mx-auto" variants={fadeInUp}>
-          <div className="w-full flex flex-col gap-4">
-            {/* Search input - full width on all screens */}
-            <motion.div
-              className="relative w-full"
-              animate={
-                searchFocused
-                  ? {
-                      scale: 1.01,
-                      boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
-                    }
-                  : {}
-              }
-              transition={{ duration: 0.2 }}
-            >
-              <Search
-                className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${searchFocused ? "text-primary" : "text-muted-foreground"} h-4 w-4 transition-colors`}
-              />
-              <Input
-                type="text"
-                placeholder="Search articles..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-9 bg-card"
-                onFocus={() => setSearchFocused(true)}
-                onBlur={() => setSearchFocused(false)}
-              />
-              {searchQuery && (
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="absolute right-1 top-1/2 transform -translate-y-1/2 h-7 w-7"
-                  onClick={() => setSearchQuery("")}
-                >
-                  <X className="h-3.5 w-3.5 text-muted-foreground" />
-                </Button>
-              )}
-            </motion.div>
-
-            {/* Control buttons - responsive layout */}
-            <div className="flex flex-wrap gap-2 justify-between">
-              {/* Filter controls - grow to use available space */}
-              <div className="flex flex-wrap items-center gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setIsFiltersOpen(!isFiltersOpen)}
-                  className={`flex items-center gap-1.5 transition-colors ${isFiltersOpen ? "bg-muted border-primary/40" : ""}`}
-                >
-                  <Filter
-                    className={`h-4 w-4 ${isFiltersOpen ? "text-primary" : ""}`}
-                  />
-                  <span className="hidden sm:inline">Filters</span>
-                  {selectedTags.length > 0 && (
-                    <span className="ml-1 text-xs py-0.5 px-1.5 rounded-full bg-primary/10">
-                      {selectedTags.length}
-                    </span>
-                  )}
-                </Button>
-
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="flex items-center gap-1.5"
-                    >
-                      <SlidersHorizontal className="h-4 w-4" />
-                      <span className="hidden sm:inline">Sort</span>
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="start" className="min-w-[160px]">
-                    <DropdownMenuItem
-                      onClick={() => setSortOption("newest")}
-                      className={
-                        sortOption === "newest" ? "bg-muted font-medium" : ""
-                      }
-                    >
-                      Newest first
-                    </DropdownMenuItem>
-                    <DropdownMenuItem
-                      onClick={() => setSortOption("oldest")}
-                      className={
-                        sortOption === "oldest" ? "bg-muted font-medium" : ""
-                      }
-                    >
-                      Oldest first
-                    </DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem
-                      onClick={() => setSortOption("az")}
-                      className={
-                        sortOption === "az" ? "bg-muted font-medium" : ""
-                      }
-                    >
-                      A-Z
-                    </DropdownMenuItem>
-                    <DropdownMenuItem
-                      onClick={() => setSortOption("za")}
-                      className={
-                        sortOption === "za" ? "bg-muted font-medium" : ""
-                      }
-                    >
-                      Z-A
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-
-                {selectedTags.length > 0 && (
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={clearFilters}
-                    className="text-muted-foreground text-sm"
-                  >
-                    Clear
-                  </Button>
-                )}
-              </div>
-
-              {/* View mode buttons */}
-              <div className="flex items-center rounded-md border border-border/40 overflow-hidden h-9">
-                <Button
-                  variant={viewMode === "grid" ? "default" : "ghost"}
-                  size="icon"
-                  className="h-full w-9 rounded-none"
-                  onClick={() => setViewMode("grid")}
-                >
-                  <LayoutGrid className="h-4 w-4" />
-                </Button>
-                <Button
-                  variant={viewMode === "list" ? "default" : "ghost"}
-                  size="icon"
-                  className="h-full w-9 rounded-none"
-                  onClick={() => setViewMode("list")}
-                >
-                  <ListIcon className="h-4 w-4" />
-                </Button>
-              </div>
-            </div>
+      {/* ── Controls ───────────────────────────────────────── */}
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+        className="flex flex-col gap-4 mb-10"
+      >
+        {/* Search + view toggle */}
+        <div className="flex items-center gap-3">
+          <div className="relative flex-1 max-w-xs">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
+            <input
+              type="text"
+              placeholder="Search articles…"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-9 pr-8 py-2.5 rounded-lg bg-muted/40 border border-border/40 text-sm focus:outline-none focus:border-primary/40 focus:ring-1 focus:ring-primary/15 transition-all placeholder:text-muted-foreground/50"
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery("")}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <X className="h-3.5 w-3.5" />
+              </button>
+            )}
           </div>
 
-          {/* Tag filters */}
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{
-              opacity: isFiltersOpen ? 1 : 0,
-              height: isFiltersOpen ? "auto" : 0,
-              marginTop: isFiltersOpen ? 8 : 0,
-            }}
-            transition={{ duration: 0.3 }}
-            className="flex flex-wrap gap-2 overflow-hidden"
-          >
-            {allTags.map((tag, index) => (
-              <motion.div
-                key={tag}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.03 }}
-              >
-                <Badge
-                  variant={selectedTags.includes(tag) ? "default" : "outline"}
-                  className="cursor-pointer hover:bg-muted/50 transition-colors"
-                  onClick={() => toggleTag(tag)}
-                >
-                  {tag}
-                </Badge>
-              </motion.div>
-            ))}
-          </motion.div>
-        </motion.div>
-      </motion.div>
-
-      {/* Results summary */}
-      <motion.div
-        className="mb-6 text-sm text-muted-foreground"
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3 }}
-      >
-        Showing {posts.length} {posts.length === 1 ? "article" : "articles"}
-        {selectedTags.length > 0 && (
-          <>
-            {" "}
-            filtered by{" "}
-            <span className="font-medium text-foreground">
-              {selectedTags.join(", ")}
-            </span>
-          </>
-        )}
-        {searchQuery && (
-          <>
-            {" "}
-            containing{" "}
-            <span className="font-medium text-foreground">
-              &quot;{searchQuery}&quot;
-            </span>
-          </>
-        )}
-      </motion.div>
-
-      {/* Blog posts grid/list */}
-      {posts.length === 0 ? (
-        <div className="text-center py-12">
-          <h3 className="text-xl mb-2">No articles found</h3>
-          <p className="text-muted-foreground">
-            Try adjusting your search or filter criteria
-          </p>
-          {(selectedTags.length > 0 || searchQuery) && (
-            <Button variant="outline" onClick={clearFilters} className="mt-4">
-              Clear filters
-            </Button>
-          )}
+          <div className="flex items-center gap-0.5 p-1 rounded-lg bg-muted/40 border border-border/40">
+            <button
+              onClick={() => setViewMode("grid")}
+              className={`p-1.5 rounded-md transition-all duration-150 ${
+                viewMode === "grid"
+                  ? "bg-card text-foreground shadow-sm"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+              aria-label="Grid view"
+            >
+              <LayoutGrid className="h-4 w-4" />
+            </button>
+            <button
+              onClick={() => setViewMode("list")}
+              className={`p-1.5 rounded-md transition-all duration-150 ${
+                viewMode === "list"
+                  ? "bg-card text-foreground shadow-sm"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+              aria-label="List view"
+            >
+              <ListIcon className="h-4 w-4" />
+            </button>
+          </div>
         </div>
+
+        {/* Tag chips */}
+        {allTags.length > 0 && (
+          <div className="flex items-center gap-2 flex-wrap">
+            {allTags.map((tag) => (
+              <button
+                key={tag}
+                onClick={() => toggleTag(tag)}
+                className={`text-xs px-3 py-1.5 rounded-full border transition-all duration-200 font-medium ${
+                  selectedTags.includes(tag)
+                    ? "border-primary/60 bg-primary/10 text-primary"
+                    : "border-border/50 text-muted-foreground hover:border-border hover:text-foreground"
+                }`}
+              >
+                {tag}
+              </button>
+            ))}
+            {hasFilters && (
+              <button
+                onClick={clearFilters}
+                className="text-xs px-3 py-1.5 rounded-full border border-border/40 text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1.5"
+              >
+                <X className="h-3 w-3" /> Clear
+              </button>
+            )}
+          </div>
+        )}
+
+        <p className="text-[11px] text-muted-foreground/60 font-mono">
+          {posts.length} {posts.length === 1 ? "article" : "articles"}
+          {hasFilters && " found"}
+        </p>
+      </motion.div>
+
+      {/* ── Posts ──────────────────────────────────────────── */}
+      {posts.length === 0 ? (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="text-center py-24"
+        >
+          <p className="text-3xl font-bold mb-3">Nothing found</p>
+          <p className="text-muted-foreground text-sm mb-8">Try different search terms or remove filters</p>
+          <button
+            onClick={clearFilters}
+            className="text-sm text-primary hover:underline underline-offset-4"
+          >
+            Clear all filters
+          </button>
+        </motion.div>
       ) : (
         <motion.div
-          className={
-            viewMode === "grid"
-              ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-              : "flex flex-col gap-4"
-          }
           initial="hidden"
           animate="visible"
-          variants={{ visible: { transition: { staggerChildren: 0.05 } } }}
+          variants={{ visible: { transition: { staggerChildren: 0.06 } } }}
         >
-          {posts.map((post, index) => (
-            <PostCard
-              key={post.slug}
-              post={post}
-              index={index}
-              viewMode={viewMode}
-            />
-          ))}
+          {/* Featured hero (grid mode, first post) */}
+          {viewMode === "grid" && featured && (
+            <div className="mb-8">
+              <PostCard post={featured} index={0} viewMode="grid" featured />
+            </div>
+          )}
+
+          {/* Articles grid / list */}
+          <div
+            className={
+              viewMode === "grid"
+                ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
+                : "flex flex-col gap-4"
+            }
+          >
+            {(viewMode === "grid" ? rest : posts).map((post, i) => (
+              <PostCard
+                key={post.slug}
+                post={post}
+                index={viewMode === "grid" ? i + 1 : i}
+                viewMode={viewMode}
+              />
+            ))}
+          </div>
         </motion.div>
       )}
     </div>
