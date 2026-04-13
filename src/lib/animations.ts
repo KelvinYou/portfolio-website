@@ -1,29 +1,29 @@
 import { Variants } from "framer-motion";
 
 /**
- * Shared animation variants — Neo-Brutalism: snappy, immediate feel
+ * Shared animation variants — Prismatic: smooth, elegant, dimensional
  */
 
-// Standard fade in with upward movement
+// Standard fade in with gentle upward drift
 export const fadeIn: Variants = {
-  hidden: { opacity: 0, y: 12 },
+  hidden: { opacity: 0, y: 16 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.4, ease: [0.25, 0.1, 0.25, 1.0] },
+    transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
   },
 };
 
 // Fade in with configurable delay (for staggered items)
 export const fadeInWithDelay = (delay: number = 0): Variants => ({
-  hidden: { opacity: 0, y: 12 },
+  hidden: { opacity: 0, y: 16 },
   visible: {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.35,
+      duration: 0.45,
       delay,
-      ease: [0.25, 0.1, 0.25, 1.0],
+      ease: [0.16, 1, 0.3, 1],
     },
   },
 });
@@ -34,14 +34,15 @@ export const staggerContainer: Variants = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.12,
+      staggerChildren: 0.1,
+      delayChildren: 0.05,
     },
   },
 };
 
 // Container with configurable stagger timing
 export const staggerContainerWithTiming = (
-  staggerChildren: number = 0.12,
+  staggerChildren: number = 0.1,
   delayChildren: number = 0
 ): Variants => ({
   hidden: { opacity: 0 },
@@ -54,10 +55,10 @@ export const staggerContainerWithTiming = (
   },
 });
 
-// Slide in from direction
+// Slide in from direction with smooth spring
 export const slideIn = (
   direction: "left" | "right" | "up" | "down",
-  distance: number = 50
+  distance: number = 40
 ): Variants => {
   const directions = {
     left: { x: -distance, y: 0 },
@@ -72,38 +73,38 @@ export const slideIn = (
       opacity: 1,
       x: 0,
       y: 0,
-      transition: { duration: 0.35, ease: [0.25, 0.1, 0.25, 1.0] },
+      transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
     },
   };
 };
 
-// Scale animation for cards/buttons
+// Scale in for cards/modals
 export const scaleIn: Variants = {
-  hidden: { opacity: 0, scale: 0.95 },
+  hidden: { opacity: 0, scale: 0.94 },
   visible: {
     opacity: 1,
     scale: 1,
-    transition: { duration: 0.3, ease: [0.25, 0.1, 0.25, 1.0] },
+    transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] },
   },
 };
 
-// Page transition animation for route changes
+// Page transition for route changes
 export const pageTransition: Variants = {
-  hidden: { opacity: 0, y: 4 },
+  hidden: { opacity: 0, y: 6 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.2, ease: [0.25, 0.1, 0.25, 1.0] },
+    transition: { duration: 0.3, ease: [0.16, 1, 0.3, 1] },
   },
   exit: {
     opacity: 0,
-    y: -4,
-    transition: { duration: 0.15 },
+    y: -6,
+    transition: { duration: 0.2, ease: [0.4, 0, 1, 1] },
   },
 };
 
-// Common viewport settings for scroll-triggered animations
+// Viewport settings for scroll-triggered animations
 export const defaultViewport = {
   once: true,
-  margin: "-100px" as const,
+  margin: "-80px" as const,
 };
