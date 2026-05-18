@@ -108,7 +108,7 @@ export default async function BlogPostPage(props: PageProps) {
 
   try {
     const post = await getPostBySlug(params.slug);
-    return <BlogPostClient post={post} />;
+    return <BlogPostClient post={post} slug={params.slug} />;
   } catch (error) {
     console.error("Error fetching blog post:", error);
     notFound();

@@ -1,5 +1,6 @@
 "use client";
 
+import { useBlogViews } from "@/components/blog/blog-data-provider";
 import { PostCard } from "@/components/blog/post-card";
 import type { Post } from "@/lib/mdx";
 import { motion } from "framer-motion";
@@ -15,6 +16,7 @@ export default function BlogClient({ posts: initialPosts }: { posts: Post[] }) {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [sortOption] = useState<SortOption>("newest");
   const [viewMode, setViewMode] = useState<ViewMode>("grid");
+  const viewsBySlug = useBlogViews();
 
   const allTags = Array.from(
     new Set(initialPosts.flatMap((p) => p.frontmatter.tags || []))
@@ -191,7 +193,13 @@ export default function BlogClient({ posts: initialPosts }: { posts: Post[] }) {
           {/* Featured hero (grid mode, first post) */}
           {viewMode === "grid" && featured && (
             <div className="mb-8">
-              <PostCard post={featured} index={0} viewMode="grid" featured />
+              <PostCard
+                post={featured}
+                index={0}
+                viewMode="grid"
+                featured
+                views={viewsBySlug.get(featured.slug)}
+              />
             </div>
           )}
 
@@ -209,6 +217,7 @@ export default function BlogClient({ posts: initialPosts }: { posts: Post[] }) {
                 post={post}
                 index={viewMode === "grid" ? i + 1 : i}
                 viewMode={viewMode}
+                views={viewsBySlug.get(post.slug)}
               />
             ))}
           </div>

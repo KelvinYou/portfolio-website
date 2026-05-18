@@ -1,5 +1,7 @@
 "use client";
 
+import { Comments } from "@/components/blog/comments";
+import { ViewCounter } from "@/components/blog/view-counter";
 import { MdxRemoteRender } from "@/components/mdx";
 import type { Post } from "@/lib/mdx";
 import { formatDate, createSlug } from "@/lib/utils";
@@ -30,7 +32,7 @@ const ShareButton = ({
   </button>
 );
 
-export default function BlogPostClient({ post }: { post: Post }) {
+export default function BlogPostClient({ post, slug }: { post: Post; slug: string }) {
   const [readingTime, setReadingTime] = useState("5 min");
   const [copied, setCopied] = useState(false);
   const [activeId, setActiveId] = useState<string | null>(null);
@@ -160,6 +162,7 @@ export default function BlogPostClient({ post }: { post: Post }) {
                     <Clock className="h-3.5 w-3.5 text-primary/60" />
                     {readingTime}
                   </span>
+                  <ViewCounter slug={slug} />
                 </div>
               </motion.header>
 
@@ -240,6 +243,9 @@ export default function BlogPostClient({ post }: { post: Post }) {
                   </div>
                 </div>
               </motion.div>
+
+              {/* Comments */}
+              <Comments slug={slug} />
             </motion.div>
 
             {/* ── TOC Sidebar (desktop) ─────────────────── */}

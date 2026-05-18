@@ -86,6 +86,24 @@ export const getTotalWorkingExperiences = (
 export const capitalizeFirstLetter = (string: string): string =>
   string.charAt(0).toUpperCase() + string.slice(1);
 
+const compactNumberFormatter = new Intl.NumberFormat("en", {
+  notation: "compact",
+  maximumFractionDigits: 1,
+});
+
+export function formatCompactNumber(n: number): string {
+  return compactNumberFormatter.format(n);
+}
+
+export function formatRelativeTime(date: Date): string {
+  const diff = (Date.now() - date.getTime()) / 1000;
+  if (diff < 60) return "just now";
+  if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
+  if (diff < 86_400) return `${Math.floor(diff / 3600)}h ago`;
+  if (diff < 604_800) return `${Math.floor(diff / 86_400)}d ago`;
+  return formatDate(date.toISOString(), "short");
+}
+
 // Helper function to decode HTML entities
 const decodeHtmlEntities = (text: string): string => {
   const htmlEntities: Record<string, string> = {

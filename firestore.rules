@@ -1,0 +1,53 @@
+// Firestore security rules for blog views + comments.
+// Paste these into the Firestore Rules tab in the Firebase console.
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Blog posts: each doc = one slug. Stores aggregate view count.
+    match /blog-posts/{slug} {
+      // Anyone can read the view count.
+      allow read: if true;
+
+      // Anyone can create/update — but only the `views` field, and it must
+      // increase by exactly 1 per write (prevents tampering / arbitrary writes).
+      allow create: if isViewWrite(request.resource.data, 1);
+      allow update: if isViewWrite(request.resource.data, resource.data.get('views', 0) + 1);
+
+      // No deletes from client.
+      allow delete: if false;
+
+      // Comments live in a subcollection under each post slug.
+      match /comments/{commentId} {
+        allow read: if true;
+
+        // Anyone can post a comment, but content is validated.
+        allow create: if isValidComment(request.resource.data);
+
+        // No updates or deletes from clients (moderate manually in the console).
+        allow update, delete: if false;
+      }
+    }
+
+    // Default deny everything else.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+
+  // Helpers
+  function isViewWrite(data, expectedViews) {
+    return data.keys().hasOnly(['views'])
+      && data.views is int
+      && data.views == expectedViews;
+  }
+
+  function isValidComment(data) {
+    return data.keys().hasOnly(['name', 'email', 'message', 'createdAt'])
+      && data.name is string && data.name.size() >= 2 && data.name.size() <= 60
+      && (data.email == null || (data.email is string && data.email.size() <= 120))
+      && data.message is string && data.message.size() >= 2 && data.message.size() <= 2000
+      && data.createdAt == request.time;
+  }
+}

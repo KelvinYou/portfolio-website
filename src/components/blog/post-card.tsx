@@ -1,20 +1,28 @@
 "use client";
 
 import type { Post } from "@/lib/mdx";
-import { formatDate } from "@/lib/utils";
+import { formatCompactNumber, formatDate } from "@/lib/utils";
 import { motion } from "framer-motion";
-import { ArrowUpRight, Clock } from "lucide-react";
+import { ArrowUpRight, Clock, Eye } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { memo } from "react";
 
 interface PostCardProps {
   post: Post;
   index: number;
   viewMode: "grid" | "list";
   featured?: boolean;
+  views?: number;
 }
 
-export function PostCard({ post, index, viewMode, featured = false }: PostCardProps) {
+export const PostCard = memo(function PostCard({
+  post,
+  index,
+  viewMode,
+  featured = false,
+  views,
+}: PostCardProps) {
   const { frontmatter, slug } = post;
   const isList = viewMode === "list";
   const readingTime = Math.max(1, Math.ceil(post.content.split(/\s+/).length / 200));
@@ -78,6 +86,15 @@ export function PostCard({ post, index, viewMode, featured = false }: PostCardPr
                   <Clock className="h-3 w-3" />
                   {readingTime} min read
                 </span>
+                {typeof views === "number" && (
+                  <>
+                    <span>·</span>
+                    <span className="flex items-center gap-1.5">
+                      <Eye className="h-3 w-3" />
+                      {formatCompactNumber(views)} {views === 1 ? "view" : "views"}
+                    </span>
+                  </>
+                )}
                 <span className="ml-auto flex items-center gap-1.5 text-white/50 group-hover:text-primary transition-colors duration-200">
                   Read article
                   <ArrowUpRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -151,6 +168,15 @@ export function PostCard({ post, index, viewMode, featured = false }: PostCardPr
               <span>{formatDate(frontmatter.date, "short")}</span>
               <span className="opacity-30">·</span>
               <span>{readingTime} min</span>
+              {typeof views === "number" && (
+                <>
+                  <span className="opacity-30">·</span>
+                  <span className="flex items-center gap-1">
+                    <Eye className="h-3 w-3" />
+                    {formatCompactNumber(views)}
+                  </span>
+                </>
+              )}
               <ArrowUpRight className="h-3.5 w-3.5 ml-auto opacity-0 group-hover:opacity-100 group-hover:text-primary transition-all duration-200" />
             </div>
           </div>
@@ -158,4 +184,4 @@ export function PostCard({ post, index, viewMode, featured = false }: PostCardPr
       </Link>
     </motion.div>
   );
-}
+});
