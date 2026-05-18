@@ -13,19 +13,27 @@ export const experiences: Experience[] = [
     startDate: "2025-7-7",
     endDate: undefined,
     description:
-      "Restructuring frontend architecture for a digital payments platform. JS→TS migration, AI-augmented dev workflows.",
+      "Building agentic dev tools and LLM-powered workflows on a production fintech payment platform. Claude API + MCP-based agents, plus React JS→TS architecture migration.",
+    // TODO(kelvin): fill the bracketed numbers below — estimate E2E test time saved (% or hours/week),
+    // team size N, and count of internal AI workflows. Leaving placeholders is fine for now;
+    // recruiters skim — XYZ formula with concrete numbers ranks much higher.
     responsibilities: [
-      "Architecture overhaul: folder structure, React framework migration (JS→TS), ESLint setup. Improved readability and maintainability.",
-      "AI agent skills: auto-generate Playwright tests + auto-debug, PRD + Figma conflict analysis, auto-apply to codebase.",
-      "Defined Claude rules and AI-assisted workflows for team-wide developer productivity.",
+      "Built agentic test generation pipeline at fintech production scale: LLM-powered Playwright spec generator + auto-debug loop. Stack: Claude API + custom MCP tools + Playwright. Adopted by full team within [N] weeks.",
+      "Designed multi-agent PRD/Figma reconciliation system that flags spec conflicts pre-development and auto-applies fixes to codebase via structured tool calls.",
+      "Authored team-wide Claude rules + agent harness conventions, codifying prompt patterns and tool schemas across [N] internal AI workflows.",
+      "Frontend architecture overhaul: React JS→TS migration, ESLint setup, folder structure rewrite — supporting agent-assisted code generation downstream.",
     ],
     skills: [
-      "React",
-      "TypeScript",
+      "LLM Integration",
+      "Claude API",
+      "MCP (Model Context Protocol)",
+      "Agentic AI",
+      "Prompt Engineering",
+      "Multi-agent Systems",
       "Playwright",
-      "ESLint",
-      "AI Agents",
-      "Claude",
+      "TypeScript",
+      "React",
+      "AI-assisted Development",
     ],
     logo: "/images/companies/dtcpay.jpeg",
   },
@@ -116,7 +124,7 @@ export const experiences: Experience[] = [
     startDate: "2023-2-1",
     endDate: "2023-7-31",
     description:
-      "Payment gateway systems. Legacy Java/JSP monolith, thousands of daily transactions.",
+      "First exposure to fintech production payment systems — legacy Java/JSP monolith, thousands of daily transactions. Foundation for current fintech work at dtcpay.",
     responsibilities: [
       "Fixed connection pool bug causing peak-hour failures. HikariCP + JMX monitoring → 99.9% uptime.",
       "Deployment automation: Bash scripts for Tomcat WAR deploys. 4h → 2h per release.",
@@ -163,7 +171,7 @@ export const experiences: Experience[] = [
 
 export const personalInfo = {
   name: "Kelvin You",
-  title: "Frontend Engineer",
+  title: "AI Application Engineer | Building agentic dev tools & LLM-powered fintech apps",
   fullname: "Kelvin You Kok Eng",
   contact: {
     email: "ykekelvin0220@gmail.com",
@@ -175,7 +183,7 @@ export const personalInfo = {
   },
   profilePicture: "/images/profile-picture.jpg",
   memoji: "/images/memoji.png",
-  summary: `Frontend Engineer who ships fast without breaking things. ${getTotalWorkingExperiences(experiences)}+ years building at Tencent/MiHoYo scale (1M+ users). Performance (35% faster loads), component architecture (GraphQL layers), and scale (500K-row tables at 60fps). Currently building full-stack SaaS and exploring AI-assisted development workflows.`,
+  summary: `AI Application Engineer with ${getTotalWorkingExperiences(experiences)}+ years shipping at Tencent/MiHoYo scale (1M+ users). Currently building agentic dev tools at dtcpay — LLM-powered Playwright generators, multi-agent PRD/Figma conflict resolution, team-wide Claude workflows. Background spans frontend performance engineering (500K-row tables at 60fps, 35% faster loads), fintech payments (dtcpay, Finexus), and Solidity/web3 (Ethereum AMM). Exploring multi-agent systems on production fintech infra.`,
 };
 
 // Example education data
@@ -242,6 +250,24 @@ export const educations = [
 
 export const projects: Project[] = [
   {
+    title: "Personal-OS — Multi-Agent Personal Operating System",
+    description:
+      "Production agentic system built on Claude Code skill architecture + MCP servers (Figma, Google Calendar). Custom agents: weekly-review (data-driven self-management with circuit breakers), wealth-manager (portfolio analysis across MY/SG/US markets), learning-agent (job-market scraping + skill-radar synthesis), profile-optimizer (LLM-driven LinkedIn/resume optimization), coach-planner (real-time decision support and timetable scheduling). Demonstrates production agent design: tool schemas, prompt rules, structured outputs, hot-reloadable skill registry, multi-source data orchestration.",
+    status: "In Progress",
+    techStacks: [
+      "Claude Code",
+      "MCP",
+      "LLM Integration",
+      "Multi-agent Systems",
+      "Python",
+      "TypeScript",
+      "Agent Skills",
+    ],
+    date: "2026-04-01",
+    // TODO(kelvin): consider publishing a sanitized public version (framework only,
+    // exclude data/ submodule). If you do, add github: "https://github.com/KelvinYou/personal-os" here.
+  },
+  {
     title: "PTIB - Tuition Center Management SaaS",
     description:
       "Multi-tenant SaaS digitizing a 200-student tuition center. Role-based portals, Stripe billing, QR attendance, row-level security in Supabase. Saved 5 hrs/week, $500 MRR from 3 pilot centers.",
@@ -260,18 +286,6 @@ export const projects: Project[] = [
     date: "2025-3-3",
   },
   {
-    title: "Personal Website",
-    description:
-      "Performant portfolio with Next.js App Router, MDX blog, ISR, and i18n. 95+ Lighthouse scores across all metrics. Dynamic OG images, structured data, and RSS feed for search visibility.",
-    image: "/images/projects/portfolio.jpg",
-    github: "https://github.com/KelvinYou/portfolio-website",
-    demo: "https://kelvinyou.vercel.app/",
-    status: "Maintaining",
-    techStacks: ["Next.js", "TailwindCSS", "Shadcn", "React"],
-    date: "2025-3-3",
-    blogSlugs: ["personal-website"],
-  },
-  {
     title: "Zync - Meeting Scheduling SaaS",
     description:
       "Real-time meeting scheduling SaaS (Calendly + Doodle reimagined). Architecting sync engine for 1000+ concurrent users with Supabase subscriptions. Stripe recurring billing, sub-200ms availability checks via PostgreSQL optimization and Redis caching.",
@@ -288,63 +302,44 @@ export const projects: Project[] = [
     date: "2025-8-8",
   },
   {
+    title: "Automated Market-Making System (Uniswap V2-style AMM)",
+    description:
+      "Built a constant-product AMM (x*y=k formula) as a blockchain course assignment. Solidity smart contracts: liquidity pools with LP token minting, slippage protection (max 2% deviation), front-running prevention with deadline checks. Handled integer overflow in Solidity 0.7 (SafeMath before 0.8 built-ins), implemented Babylonian square-root method in assembly for gas efficiency. MetaMask signing, deployed to Rinkeby testnet (~0.02 ETH gas). Combined with current fintech work, demonstrates crypto-fintech bridge for AI agent applications.",
+    demo: "https://github.com/KelvinYou/amm-assignment",
+    status: "Completed",
+    techStacks: ["Solidity", "Ethereum", "React", "MetaMask", "Smart Contracts"],
+    date: "2023-1-5",
+  },
+  {
+    title: "Personal Website",
+    description:
+      "Performant portfolio with Next.js App Router, MDX blog, ISR, and i18n. 95+ Lighthouse scores across all metrics. Dynamic OG images, structured data, and RSS feed for search visibility.",
+    image: "/images/projects/portfolio.jpg",
+    github: "https://github.com/KelvinYou/portfolio-website",
+    demo: "https://kelvinyou.vercel.app/",
+    status: "Maintaining",
+    techStacks: ["Next.js", "TailwindCSS", "Shadcn", "React"],
+    date: "2025-3-3",
+    blogSlugs: ["personal-website"],
+  },
+  {
     title: "Travel Guide: Tourist App",
     description:
-      "Final year capstone project: Built a cross-platform mobile app for tourists with real-time GPS tracking, offline-first architecture, and Firebase sync. Technical challenges: Handling 10MB+ map tiles for offline mode (implemented LRU cache with 100MB limit), optimizing battery drain from continuous location tracking (reduced polling from 1s → 10s intervals with geofencing), managing complex booking state machines across 5 screens. Architected custom state management using Provider pattern—chose this over Riverpod for simplicity. Presented to 50+ industry professionals, received commendation for UX design.",
+      "Final year capstone: cross-platform mobile app with real-time GPS tracking, offline-first architecture, and Firebase sync. Handled 10MB+ map tiles via LRU cache (100MB limit), reduced battery drain by switching from 1s polling to 10s + geofencing, managed booking state machines across 5 screens. Presented to 50+ industry professionals.",
     github: "https://github.com/KelvinYou/fyp_tour_guide_app",
     status: "Completed",
     techStacks: ["Flutter", "Dart", "Firebase"],
     date: "2023-11-14",
   },
   {
-    title: "Restaurant Landing",
-    description:
-      "Pixel-perfect restaurant landing page built as a React learning project. Focused on performance: Lazy loaded images with Intersection Observer (saved 400KB initial load), implemented smooth scroll with CSS scroll-behavior (no heavy libraries), optimized Bootstrap to include only used components (1.2MB → 180KB bundle). Achieved 95+ Lighthouse performance score with sub-2s First Contentful Paint. Learned: How small optimizations compound—every 100ms matters for conversion rates.",
-    image: "/images/projects/restaurant-landing.png",
-    github:
-      "https://github.com/KelvinYou/react-selflearn/tree/main/react-restaurant-landing",
-    demo: "https://restaurant-landing-kelvinyou.vercel.app/",
-    status: "Completed",
-    techStacks: ["React", "Bootstrap"],
-    date: "2023-2-21",
-  },
-  {
-    title: "Automated Market-Making System",
-    description:
-      "Built a Uniswap V2-style constant-product AMM (x*y=k formula) as a blockchain course assignment. Implemented Solidity smart contracts for: liquidity pools with LP token minting, slippage protection (max 2% deviation), front-running prevention with deadline checks. Technical challenges: Handling integer overflow in Solidity 0.7 (used SafeMath library before 0.8's built-in checks), calculating square roots on-chain for LP tokens (implemented Babylonian method in assembly for gas efficiency). Integrated MetaMask for transaction signing, deployed to Rinkeby testnet. Cost: ~0.02 ETH in deployment gas. Learned: Every operation costs money—optimization is mandatory, not optional.",
-    demo: "https://github.com/KelvinYou/amm-assignment",
-    status: "Completed",
-    techStacks: ["React", "Solidity", "Ethereum"],
-    date: "2023-1-5",
-  },
-  {
     title: "Edge Detection System",
     description:
-      "Parallelized image processing that took 45+ seconds per image on single thread. Implemented image chunking with Dask for distributed processing and Python threading for I/O operations. Achieved 8x speedup on 8-core machines, demonstrating Amdahl's Law in practice.",
+      "Parallelized image processing (45+ s/image on single thread). Image chunking with Dask + Python threading for I/O. Achieved 8x speedup on 8-core machines, demonstrating Amdahl's Law in practice.",
     github:
       "https://github.com/KelvinYou/react-selflearn/tree/main/react-restaurant-landing",
-    demo: "https://restaurant-landing-kelvinyou.vercel.app/",
     status: "Completed",
-    techStacks: ["Python", "Dask", "Threading", "Classified"],
+    techStacks: ["Python", "Dask", "Threading"],
     date: "2022-9-23",
-  },
-  {
-    title: "Donation System",
-    description:
-      "Data Structures & Algorithms course assignment: Built a donation management system from scratch in Java using custom-implemented doubly-linked list ADT (no ArrayList/LinkedList imports allowed). Achieved O(1) insertions/deletions at head/tail, O(n) for arbitrary position. Implemented bidirectional iteration, sorting (merge sort for linked lists), and search (binary search after sorting). Challenge: Managing pointers correctly—spent hours debugging null pointer exceptions and lost references. Learned: Why libraries exist, but also how they work under the hood. This assignment solidified my understanding of memory management and pointer manipulation.",
-    github: "https://github.com/KelvinYou/dsa-assignment",
-    status: "Completed",
-    techStacks: ["Java"],
-    date: "2023-2-21",
-  },
-  {
-    title: "Travel Guide: Admin App",
-    description:
-      "Companion admin dashboard for the Travel Guide app. Built real-time content management with Firebase, image upload with compression, and analytics dashboard for tracking user engagement metrics.",
-    github: "https://github.com/KelvinYou/fyp_admin_app",
-    status: "Completed",
-    techStacks: ["Flutter", "Dart", "Firebase"],
-    date: "2022-12-17",
   },
 ];
 
@@ -377,8 +372,17 @@ export const certifications = [
 ];
 
 export const skills = {
-  languages: ["TypeScript", "JavaScript", "Python", "Java", "Go"],
+  ai: [
+    "LLM Integration (Claude API)",
+    "Agentic AI",
+    "Multi-agent Systems",
+    "MCP (Model Context Protocol)",
+    "Prompt Engineering",
+    "AI-assisted Development",
+  ],
+  languages: ["TypeScript", "JavaScript", "Python", "Java", "Go", "Solidity"],
   frameworks: ["Next.js", "React", "Node.js", "NestJS", "Express"],
   databases: ["PostgreSQL", "Supabase", "Redis"],
-  tools: ["Docker", "Git", "Vercel", "GitHub Actions"],
+  blockchain: ["Solidity", "Ethereum", "MetaMask", "Smart Contracts"],
+  tools: ["Claude Code", "Docker", "Git", "Vercel", "GitHub Actions", "Playwright"],
 };

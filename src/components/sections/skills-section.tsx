@@ -7,13 +7,17 @@ import { fadeIn, staggerContainer, defaultViewport } from "@/lib/animations";
 import { useTranslations } from "next-intl";
 
 const skills = [
+  { name: "LLM Integration", level: 90 },
+  { name: "Agentic AI", level: 85 },
   { name: "TypeScript", level: 90 },
   { name: "Next.js (React)", level: 90 },
-  { name: "Gin (Go)", level: 80 },
-  { name: "Flutter", level: 70 },
-  { name: "Python", level: 60 },
-  { name: "Java", level: 70 },
-  { name: "C++", level: 60 },
+  { name: "Claude API", level: 85 },
+  { name: "Multi-agent Systems", level: 80 },
+  { name: "MCP", level: 75 },
+  { name: "Python", level: 65 },
+  { name: "Gin (Go)", level: 75 },
+  { name: "Solidity", level: 60 },
+  { name: "Java", level: 60 },
   { name: "Linux", level: 60 },
   { name: "Git", level: 80 },
 ]
