@@ -171,7 +171,7 @@ export const experiences: Experience[] = [
 
 export const personalInfo = {
   name: "Kelvin You",
-  title: "AI Application Engineer | Building agentic dev tools & LLM-powered fintech apps",
+  title: "AI Application Engineer",
   fullname: "Kelvin You Kok Eng",
   contact: {
     email: "ykekelvin0220@gmail.com",
