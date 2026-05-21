@@ -13,27 +13,22 @@ export const experiences: Experience[] = [
     startDate: "2025-7-7",
     endDate: undefined,
     description:
-      "Building agentic dev tools and LLM-powered workflows on a production fintech payment platform. Claude API + MCP-based agents, plus React JS→TS architecture migration.",
-    // TODO(kelvin): fill the bracketed numbers below — estimate E2E test time saved (% or hours/week),
-    // team size N, and count of internal AI workflows. Leaving placeholders is fine for now;
-    // recruiters skim — XYZ formula with concrete numbers ranks much higher.
+      "Building in-house web and mobile frontends for a production fintech payment platform.",
+    // TODO(kelvin): add concrete scale — merchants served, transaction volume,
+    // pages/flows shipped, team size. Recruiters skim — concrete numbers rank higher.
     responsibilities: [
-      "Built agentic test generation pipeline at fintech production scale: LLM-powered Playwright spec generator + auto-debug loop. Stack: Claude API + custom MCP tools + Playwright. Adopted by full team within [N] weeks.",
-      "Designed multi-agent PRD/Figma reconciliation system that flags spec conflicts pre-development and auto-applies fixes to codebase via structured tool calls.",
-      "Authored team-wide Claude rules + agent harness conventions, codifying prompt patterns and tool schemas across [N] internal AI workflows.",
-      "Frontend architecture overhaul: React JS→TS migration, ESLint setup, folder structure rewrite — supporting agent-assisted code generation downstream.",
+      "Shipping merchant-facing web and end-user mobile app frontends on a live payment platform.",
+      "React JS→TS migration: ESLint setup, folder structure rewrite, type-safe API boundaries.",
+      "Reusable component patterns and shared UI primitives for cross-product consistency.",
     ],
     skills: [
-      "LLM Integration",
-      "Claude API",
-      "MCP (Model Context Protocol)",
-      "Agentic AI",
-      "Prompt Engineering",
-      "Multi-agent Systems",
-      "Playwright",
-      "TypeScript",
       "React",
-      "AI-assisted Development",
+      "TypeScript",
+      "Next.js",
+      "Frontend Architecture",
+      "Fintech",
+      "Payment Systems",
+      "Mobile Web",
     ],
     logo: "/images/companies/dtcpay.jpeg",
   },
@@ -171,7 +166,7 @@ export const experiences: Experience[] = [
 
 export const personalInfo = {
   name: "Kelvin You",
-  title: "AI Application Engineer",
+  title: "Frontend Engineer · Building Agentic Systems",
   fullname: "Kelvin You Kok Eng",
   contact: {
     email: "ykekelvin0220@gmail.com",
@@ -183,7 +178,7 @@ export const personalInfo = {
   },
   profilePicture: "/images/profile-picture.jpg",
   memoji: "/images/memoji.png",
-  summary: `AI Application Engineer with ${getTotalWorkingExperiences(experiences)}+ years shipping at Tencent/MiHoYo scale (1M+ users). Currently building agentic dev tools at dtcpay — LLM-powered Playwright generators, multi-agent PRD/Figma conflict resolution, team-wide Claude workflows. Background spans frontend performance engineering (500K-row tables at 60fps, 35% faster loads), fintech payments (dtcpay, Finexus), and Solidity/web3 (Ethereum AMM). Exploring multi-agent systems on production fintech infra.`,
+  summary: `Frontend Engineer at dtcpay (FinTech), building in-house web and mobile frontends on a production payment platform. ${getTotalWorkingExperiences(experiences)}+ years across fintech, enterprise SaaS, and game analytics — including 1 year at Beyondsoft on Tencent/MiHoYo's analytics platform (500K-row tables at 60fps, sub-3s loads, millions of events/day). On the side, building agentic dev tools and multi-agent systems with Claude API + MCP — LLM-powered Playwright generators, multi-agent PRD/Figma reconciliation, Personal-OS. Bridging frontend craft + applied AI.`,
 };
 
 // Example education data
@@ -249,6 +244,21 @@ export const educations = [
 ];
 
 export const projects: Project[] = [
+  {
+    title: "Agentic Dev Tools — Claude API + MCP",
+    description:
+      "Side project exploring multi-agent systems applied to developer workflows. LLM-powered Playwright spec generator with auto-debug loop, multi-agent PRD/Figma reconciliation that flags spec conflicts pre-development, and reusable Claude rules + agent harness conventions. Stack: Claude API + custom MCP tools + Playwright + structured tool calls.",
+    status: "In Progress",
+    techStacks: [
+      "Claude API",
+      "MCP",
+      "Playwright",
+      "TypeScript",
+      "Multi-agent Systems",
+      "Prompt Engineering",
+    ],
+    date: "2025-9-1",
+  },
   {
     title: "Personal-OS — Multi-Agent Personal Operating System",
     description:
