@@ -1,13 +1,9 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import { motion, useTransform, useMotionValue } from "framer-motion";
-import { ArrowRight, Sparkles, Mail } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { MagneticButton } from "@/components/ui/magnetic-button";
+import { Sparkles } from "lucide-react";
 import { AnimatedCounter } from "@/components/ui/animated-counter";
-import Link from "next/link";
-import { TypeAnimation } from "react-type-animation";
 import { personalInfo, projects, experiences } from "@/constants";
 import { SocialLinks } from "@/components/base/social-links";
 import { getTotalWorkingExperiences } from "@/lib/utils";
@@ -16,18 +12,15 @@ import { useTranslations } from "next-intl";
 const heroStats = [
   { target: getTotalWorkingExperiences(experiences), suffix: "+", labelKey: "stats_years" as const },
   { target: projects.length, suffix: "+", labelKey: "stats_projects" as const },
-  { target: 1, suffix: "M+", labelKey: "stats_users" as const },
 ];
 
 export function HeroSection() {
   const ref = useRef<HTMLDivElement>(null);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-  const [isMounted, setIsMounted] = useState(false);
   const t = useTranslations("hero");
 
   useEffect(() => {
-    setIsMounted(true);
     const handleMouseMove = (e: MouseEvent) => {
       if (ref.current) {
         const { left, top, width, height } = ref.current.getBoundingClientRect();
@@ -94,69 +87,10 @@ export function HeroSection() {
                 </motion.div>
               </div>
 
-              <div className="mt-2 h-[64px] overflow-hidden sm:h-[72px] md:h-[80px] lg:h-[100px]">
-                {isMounted && (
-                  <TypeAnimation
-                    sequence={[t("role_1"), 2500, t("role_2"), 2500, t("role_3"), 2500]}
-                    wrapper="span"
-                    speed={50}
-                    repeat={Infinity}
-                    className="text-3xl text-foreground/85 sm:text-4xl md:text-5xl lg:text-6xl"
-                  />
-                )}
-              </div>
+              <span className="mt-2 block text-3xl text-foreground/85 sm:text-4xl md:text-5xl lg:text-6xl">
+                {t("role")}
+              </span>
             </motion.h1>
-
-            {/* Description */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="relative mb-10"
-            >
-              <div className="absolute -left-4 top-0 bottom-0 w-0.5 rounded-full bg-gradient-to-b from-primary via-primary/50 to-transparent" />
-              <p className="max-w-xl pl-4 text-lg leading-relaxed text-muted-foreground md:text-xl">
-                {t("description_prefix")}
-                <span className="font-medium text-foreground">{t("description_build")}</span>
-                {t("description_middle")}
-                <span className="font-medium text-foreground">{t("description_suffix")}</span>.
-              </p>
-            </motion.div>
-
-            {/* CTAs */}
-            <motion.div
-              className="mb-10 flex flex-col gap-4 sm:flex-row"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.45 }}
-            >
-              <MagneticButton strength={10}>
-                <Button
-                  size="lg"
-                  className="group relative w-full gap-2.5 overflow-hidden rounded-xl border-0 bg-primary px-7 py-3 text-base font-bold text-primary-foreground btn-bold-hover sm:w-auto sm:px-8 sm:py-4"
-                  asChild
-                >
-                  <Link href="#contact">
-                    <Mail className="h-4 w-4" />
-                    <span className="relative z-10">{t("cta_primary")}</span>
-                  </Link>
-                </Button>
-              </MagneticButton>
-
-              <MagneticButton strength={10}>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="group w-full gap-2.5 rounded-xl border border-border bg-background/50 px-7 py-3 text-base font-semibold backdrop-blur-sm transition-all duration-300 hover:border-primary/40 hover:bg-card sm:w-auto sm:px-8 sm:py-4"
-                  asChild
-                >
-                  <Link href="#projects">
-                    <span>{t("cta_secondary")}</span>
-                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                  </Link>
-                </Button>
-              </MagneticButton>
-            </motion.div>
 
             {/* Stats */}
             <motion.div

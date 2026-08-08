@@ -1,35 +1,22 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { FileText, Mail } from "lucide-react";
+import { FileText, Mail, Puzzle, Compass, Rocket } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
-import { AnimatedCounter } from "@/components/ui/animated-counter";
 import { MagneticButton } from "@/components/ui/magnetic-button";
 import { UnifiedSectionHeader } from "@/components/base/unified-section-header";
 import Link from "next/link";
-import Image from "next/image";
-import { personalInfo, experiences, skills } from "@/constants";
 import { cn } from "@/lib/utils";
 import { fadeIn, staggerContainer, defaultViewport } from "@/lib/animations";
 import { useTranslations } from "next-intl";
 
-const totalTechnologies = Object.values(skills).flat().length;
-
-const aboutStats = [
-  { target: experiences.length, suffix: "", labelKey: "about_stats_companies" as const },
-  { target: 35, suffix: "%", labelKey: "about_stats_faster" as const },
-  { target: 500, suffix: "K+", labelKey: "about_stats_scale" as const },
-  { target: totalTechnologies, suffix: "+", labelKey: "about_stats_technologies" as const },
-];
-
-const companyLogos = [
-  { name: "Simpletruss", logo: "/images/companies/simpletruss.jpeg" },
-  { name: "Beyondsoft (Tencent)", logo: "/images/companies/beyondsoft.jpeg" },
-  { name: "Finexus", logo: "/images/companies/finexus.png" },
-  { name: "Techtics", logo: "/images/companies/techtics.png" },
-];
-
 const topTechs = ["React", "TypeScript", "Next.js", "GraphQL", "Node.js", "PostgreSQL"];
+
+const workSteps = [
+  { icon: Puzzle, labelKey: "about_step_1" as const },
+  { icon: Compass, labelKey: "about_step_2" as const },
+  { icon: Rocket, labelKey: "about_step_3" as const },
+];
 
 export function AboutSection() {
   const t = useTranslations("sections");
@@ -44,55 +31,36 @@ export function AboutSection() {
         />
 
         <div className="grid items-center gap-12 md:grid-cols-2">
-          {/* Profile Image */}
+          {/* How-I-Work process visual */}
           <motion.div
+            variants={staggerContainer}
             initial="hidden"
             whileInView="visible"
             viewport={defaultViewport}
-            variants={fadeIn}
-            className="group relative overflow-hidden rounded-2xl border border-border transition-all duration-500 hover:border-primary/30"
-            style={{
-              boxShadow: "0 0 0 0 rgba(0,240,255,0)",
-              transition: "all 0.4s ease",
-            }}
+            className="relative flex flex-col gap-4 py-4"
           >
-            <Image
-              src={personalInfo.profilePicture}
-              alt="About Me"
-              width={600}
-              height={400}
-              className="h-[400px] w-full rounded-2xl object-cover transition-transform duration-700 group-hover:scale-[1.02]"
-            />
-            {/* Subtle gradient overlay */}
-            <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-background/30 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+            <div className="absolute left-[27px] top-10 bottom-10 w-px bg-gradient-to-b from-primary/40 via-border to-transparent" />
+            {workSteps.map((step) => {
+              const Icon = step.icon;
+              return (
+                <motion.div
+                  key={step.labelKey}
+                  variants={fadeIn}
+                  className="group relative z-10 flex items-center gap-4 rounded-2xl border border-border bg-card/60 p-5 backdrop-blur-sm transition-colors duration-300 hover:border-primary/30"
+                >
+                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-border bg-background/60 transition-colors duration-300 group-hover:border-primary/40">
+                    <Icon className="h-6 w-6 text-primary" />
+                  </div>
+                  <p className="text-base font-medium text-foreground/90 sm:text-lg">
+                    {t(step.labelKey)}
+                  </p>
+                </motion.div>
+              );
+            })}
           </motion.div>
 
           {/* Content Stack */}
           <div>
-            {/* Stats Grid */}
-            <motion.div
-              variants={staggerContainer}
-              initial="hidden"
-              whileInView="visible"
-              viewport={defaultViewport}
-              className="mb-8 grid grid-cols-2 gap-4"
-            >
-              {aboutStats.map((stat) => (
-                <motion.div
-                  key={stat.labelKey}
-                  variants={fadeIn}
-                  className="rounded-xl border border-border bg-card p-4 transition-colors duration-300 hover:border-primary/25"
-                >
-                  <AnimatedCounter
-                    target={stat.target}
-                    suffix={stat.suffix}
-                    className="text-2xl font-extrabold sm:text-3xl"
-                  />
-                  <p className="mt-1 text-xs text-muted-foreground">{t(stat.labelKey)}</p>
-                </motion.div>
-              ))}
-            </motion.div>
-
             <motion.div
               initial="hidden"
               whileInView="visible"
@@ -120,16 +88,6 @@ export function AboutSection() {
                 </p>
               </div>
 
-              {/* Differentiators */}
-              <div className="mb-6 space-y-2.5">
-                {[t("about_diff_1"), t("about_diff_2")].map((diff, i) => (
-                  <div key={i} className="flex items-start gap-3 text-sm text-muted-foreground">
-                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary/60" />
-                    <span>{diff}</span>
-                  </div>
-                ))}
-              </div>
-
               {/* Tech Badges */}
               <div className="mb-6 flex flex-wrap gap-2">
                 {topTechs.map((tech) => (
@@ -140,25 +98,6 @@ export function AboutSection() {
                     {tech}
                   </span>
                 ))}
-              </div>
-
-              {/* Company Logos */}
-              <div className="mb-8 flex items-center gap-4">
-                <span className="whitespace-nowrap text-xs text-muted-foreground">
-                  {t("about_shipped_for")}
-                </span>
-                <div className="flex items-center gap-2">
-                  {companyLogos.map((company) => (
-                    <Image
-                      key={company.name}
-                      src={company.logo}
-                      alt={company.name}
-                      width={28}
-                      height={28}
-                      className="h-7 w-7 rounded-full border border-border object-cover opacity-70 transition-all duration-200 hover:opacity-100 hover:border-primary/40"
-                    />
-                  ))}
-                </div>
               </div>
 
               {/* CTAs */}

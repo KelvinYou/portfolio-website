@@ -69,14 +69,9 @@ export function MobileDrawer({ state }: MobileDrawerProps) {
                       {personalInfo.name.charAt(0)}
                     </AvatarFallback>
                   </Avatar>
-                  <div className="flex flex-col">
-                    <span className="font-bold text-lg text-primary">
-                      {personalInfo.name}
-                    </span>
-                    <span className="text-[10px] text-muted-foreground -mt-1">
-                      {personalInfo.title}
-                    </span>
-                  </div>
+                  <span className="font-bold text-lg text-primary">
+                    {personalInfo.name}
+                  </span>
                 </Link>
 
                 <Button

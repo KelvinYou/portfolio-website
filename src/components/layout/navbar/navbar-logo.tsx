@@ -39,17 +39,12 @@ export function NavbarLogo({ onLogoClick }: NavbarLogoProps) {
             transition={{ repeat: Infinity, duration: 2 }}
           />
         </div>
-        <motion.div className="flex flex-col">
-          <motion.span
-            className="font-bold text-base sm:text-xl bg-clip-text text-transparent bg-gradient-to-r from-primary to-indigo-500"
-            transition={{ type: "spring", stiffness: 400, damping: 10 }}
-          >
-            {personalInfo.name}
-          </motion.span>
-          <span className="text-[10px] text-muted-foreground -mt-1 hidden sm:block">
-            {personalInfo.title}
-          </span>
-        </motion.div>
+        <motion.span
+          className="font-bold text-base sm:text-xl bg-clip-text text-transparent bg-gradient-to-r from-primary to-indigo-500"
+          transition={{ type: "spring", stiffness: 400, damping: 10 }}
+        >
+          {personalInfo.name}
+        </motion.span>
       </Link>
     </motion.div>
   );

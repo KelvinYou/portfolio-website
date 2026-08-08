@@ -178,7 +178,7 @@ export const personalInfo = {
   },
   profilePicture: "/images/profile-picture.jpg",
   memoji: "/images/memoji.png",
-  summary: `Frontend Engineer at dtcpay (FinTech), building in-house web and mobile frontends on a production payment platform. ${getTotalWorkingExperiences(experiences)}+ years across fintech, enterprise SaaS, and game analytics — including 1 year at Beyondsoft on Tencent/MiHoYo's analytics platform (500K-row tables at 60fps, sub-3s loads, millions of events/day). On the side, building agentic dev tools and multi-agent systems with Claude API + MCP — LLM-powered Playwright generators, multi-agent PRD/Figma reconciliation, Personal-OS. Bridging frontend craft + applied AI.`,
+  summary: `Frontend Engineer at dtcpay (FinTech), shipping a production payment platform. Same throughline runs through every role: take a messy, high-scale problem and design it into a system that runs itself — a Tencent/MiHoYo analytics platform, a payment platform's frontend, and now agentic dev tooling (Claude API + MCP): Personal-OS, multi-agent PRD/Figma reconciliation. Frontend craft, systems thinking, applied AI.`,
 };
 
 // Example education data
