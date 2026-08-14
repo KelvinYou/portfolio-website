@@ -3,7 +3,6 @@
 import { motion } from "framer-motion";
 import { fadeIn, defaultViewport } from "@/lib/animations";
 import { ResumeViewerWithFallback } from "./resume-viewer-fallback";
-import { ResumeDocument } from "./resume-document";
 
 export function ResumePageContent() {
   return (
@@ -16,7 +15,7 @@ export function ResumePageContent() {
           variants={fadeIn}
           className="mx-auto"
         >
-          <ResumeViewerWithFallback document={<ResumeDocument />} />
+          <ResumeViewerWithFallback pdfUrl="/api/resume/pdf" />
         </motion.div>
       </div>
     </div>

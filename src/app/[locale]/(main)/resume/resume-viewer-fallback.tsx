@@ -1,149 +1,73 @@
 "use client";
 
-import { DocumentProps, PDFDownloadLink } from "@react-pdf/renderer";
-import { Download, FileSearch, Maximize2, Minimize2 } from "lucide-react";
-import React, { useEffect, useState, useRef, useCallback } from "react";
-import { PdfViewer } from "@/components/pdf-renderer";
 import { Button } from "@/components/ui/button";
+import { Download, Maximize2, Minimize2 } from "lucide-react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { ResumeFullscreenDialog } from "./resume-fullscreen-dialog";
-import { ResumeMobileFallback } from "./resume-mobile-fallback";
 
 interface ResumeViewerProps {
-  document: React.ReactElement<DocumentProps>;
+  pdfUrl: string;
 }
 
-export function ResumeViewerWithFallback({ document }: ResumeViewerProps) {
-  const [hasPdfSupport, setHasPdfSupport] = useState<boolean | null>(null);
-  const [isClient, setIsClient] = useState(false);
-  const [deviceType, setDeviceType] = useState<"desktop" | "mobile" | null>(
-    null,
-  );
+export function ResumeViewerWithFallback({ pdfUrl }: ResumeViewerProps) {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isNativeFullscreen, setIsNativeFullscreen] = useState(false);
   const fullscreenRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setIsClient(true);
-
-    const isMobile =
-      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-        navigator.userAgent,
-      );
-
-    if (isMobile) {
-      setDeviceType("mobile");
-      setHasPdfSupport(false);
-    } else {
-      setDeviceType("desktop");
-      checkPdfSupport();
-    }
-  }, []);
-
-  useEffect(() => {
     const handleFullscreenChange = () => {
-      const isCurrentlyFullscreen = !!window.document.fullscreenElement;
-      setIsNativeFullscreen(isCurrentlyFullscreen);
-      if (!isCurrentlyFullscreen && isFullscreen) {
+      const isCurrentElementFullscreen =
+        document.fullscreenElement === fullscreenRef.current;
+
+      setIsNativeFullscreen(isCurrentElementFullscreen);
+
+      if (!document.fullscreenElement) {
         setIsFullscreen(false);
       }
     };
 
-    window.document.addEventListener(
-      "fullscreenchange",
-      handleFullscreenChange,
-    );
-    return () => {
-      window.document.removeEventListener(
-        "fullscreenchange",
-        handleFullscreenChange,
-      );
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isFullscreen]);
-
-  const checkPdfSupport = () => {
-    try {
-      const hasBuiltInViewer = "application/pdf" in navigator.mimeTypes;
-      const isModernBrowser = /Chrome|Firefox|Safari|Edge/.test(
-        navigator.userAgent,
-      );
-      setHasPdfSupport(hasBuiltInViewer || isModernBrowser);
-    } catch {
-      setHasPdfSupport(false);
-    }
-  };
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+    return () =>
+      document.removeEventListener("fullscreenchange", handleFullscreenChange);
+  }, []);
 
   const enterFullscreen = useCallback(async () => {
-    if (!fullscreenRef.current) return;
+    const element = fullscreenRef.current;
+    if (!element) return;
+
+    setIsFullscreen(true);
+
+    if (!element.requestFullscreen) return;
 
     try {
-      if (fullscreenRef.current.requestFullscreen) {
-        await fullscreenRef.current.requestFullscreen();
-        setIsFullscreen(true);
-        setIsNativeFullscreen(true);
-      } else {
-        setIsFullscreen(true);
-        setIsNativeFullscreen(false);
-      }
+      await element.requestFullscreen();
+      setIsNativeFullscreen(true);
     } catch {
-      setIsFullscreen(true);
       setIsNativeFullscreen(false);
     }
   }, []);
 
   const exitFullscreen = useCallback(async () => {
-    try {
-      if (isNativeFullscreen && window.document.exitFullscreen) {
-        await window.document.exitFullscreen();
+    if (document.fullscreenElement === fullscreenRef.current) {
+      try {
+        await document.exitFullscreen();
+      } catch {
+        // The browser may already have exited fullscreen.
       }
-    } catch {
-      // Fullscreen exit failed silently
     }
 
     setIsFullscreen(false);
     setIsNativeFullscreen(false);
-  }, [isNativeFullscreen]);
+  }, []);
 
-  if (!isClient) {
-    return (
-      <div className="glass-card rounded-xl p-8 mb-8 h-[80vh] flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-12 h-12 border-4 border-primary/30 border-t-primary rounded-full animate-spin motion-reduce:animate-none mx-auto mb-4" />
-          <p className="text-xl font-medium mb-2">Loading resume viewer...</p>
-          <p className="text-muted-foreground">Please wait a moment</p>
-        </div>
-      </div>
-    );
-  }
+  const iframeSrc = `${pdfUrl}#toolbar=0&view=FitH`;
 
-  if (
-    deviceType === null ||
-    (deviceType === "desktop" && hasPdfSupport === null)
-  ) {
-    return (
-      <div className="glass-card rounded-xl p-8 mb-8 h-[80vh] flex items-center justify-center">
-        <div className="text-center">
-          <FileSearch className="w-16 h-16 mx-auto mb-4 text-primary animate-pulse motion-reduce:animate-none" />
-          <p className="text-xl font-medium mb-2">Preparing resume view...</p>
-        </div>
-      </div>
-    );
-  }
-
-  // Mobile device or desktop without PDF support
-  if (deviceType === "mobile" || !hasPdfSupport) {
-    return (
-      <ResumeMobileFallback document={document} deviceType={deviceType!} />
-    );
-  }
-
-  // Desktop with PDF support
   return (
     <>
-      <div className="flex justify-between items-center mb-10">
+      <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <h1 className="section-heading !mb-0">Resume</h1>
 
-        <div className="flex gap-3">
+        <div className="flex flex-wrap gap-3">
           <Button
             onClick={enterFullscreen}
             size="lg"
@@ -155,36 +79,29 @@ export function ResumeViewerWithFallback({ document }: ResumeViewerProps) {
             Fullscreen
           </Button>
 
-          <PDFDownloadLink
-            document={document}
-            fileName="KelvinYou-Resume.pdf"
-            className="inline-flex"
-          >
-            {({ loading }) => (
-              <Button
-                disabled={loading}
-                size="lg"
-                className="gap-2"
-                aria-label={loading ? "Preparing PDF download" : "Download resume as PDF"}
-              >
-                <Download className="h-4 w-4" />
-                {loading ? "Preparing PDF..." : "Download Resume"}
-              </Button>
-            )}
-          </PDFDownloadLink>
+          <Button asChild size="lg" className="gap-2">
+            <a
+              href={pdfUrl}
+              download="KelvinYou-Resume.pdf"
+              aria-label="Download resume as PDF"
+            >
+              <Download className="h-4 w-4" />
+              Download Resume
+            </a>
+          </Button>
         </div>
       </div>
 
       <div
         ref={fullscreenRef}
-        className={`glass-card rounded-xl p-8 mb-8 transition-all duration-300 ${
+        className={`relative mb-8 rounded-xl p-4 transition-all duration-300 sm:p-6 ${
           isNativeFullscreen
-            ? "fixed inset-0 z-50 rounded-none border-none m-0 bg-black"
-            : "h-[80vh]"
+            ? "fixed inset-0 z-50 m-0 rounded-none border-none bg-black"
+            : "glass-card h-[70vh] min-h-[520px]"
         }`}
       >
         {isNativeFullscreen && (
-          <div className="absolute top-4 right-4 z-10 flex gap-2">
+          <div className="absolute right-4 top-4 z-10">
             <Button
               onClick={exitFullscreen}
               size="sm"
@@ -197,15 +114,19 @@ export function ResumeViewerWithFallback({ document }: ResumeViewerProps) {
             </Button>
           </div>
         )}
-        <PdfViewer>{document}</PdfViewer>
+
+        <iframe
+          src={iframeSrc}
+          title="Kelvin You resume"
+          className="h-full min-h-0 w-full rounded-lg border-0 bg-white"
+        />
       </div>
 
-      {/* Modal Fullscreen Fallback */}
       {isFullscreen && !isNativeFullscreen && (
         <ResumeFullscreenDialog
-          document={document}
+          pdfUrl={pdfUrl}
           open={isFullscreen}
-          onClose={() => exitFullscreen()}
+          onClose={exitFullscreen}
         />
       )}
     </>
