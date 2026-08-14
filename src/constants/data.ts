@@ -13,22 +13,20 @@ export const experiences: Experience[] = [
     startDate: "2025-7-7",
     endDate: undefined,
     description:
-      "Building in-house web and mobile frontends for a production fintech payment platform.",
-    // TODO(kelvin): add concrete scale — merchants served, transaction volume,
-    // pages/flows shipped, team size. Recruiters skim — concrete numbers rank higher.
+      "React/TypeScript web and mobile frontends for a production fintech platform, 9,000+ users.",
     responsibilities: [
-      "Shipping merchant-facing web and end-user mobile app frontends on a live payment platform.",
-      "React JS→TS migration: ESLint setup, folder structure rewrite, type-safe API boundaries.",
+      "Built bulk payment, swap, eKYC onboarding, transaction record flows for 9,000+ active users.",
+      "Led Flutter to React Native migration, unifying mobile + web to cut duplicate maintenance.",
       "Reusable component patterns and shared UI primitives for cross-product consistency.",
     ],
     skills: [
       "React",
+      "React Native",
       "TypeScript",
       "Next.js",
       "Frontend Architecture",
       "Fintech",
       "Payment Systems",
-      "Mobile Web",
     ],
     logo: "/images/companies/dtcpay.jpeg",
   },
@@ -149,7 +147,6 @@ export const experiences: Experience[] = [
     responsibilities: [
       "Solidity contracts: Reentrancy guards, gas estimation UI, MetaMask signing. Deployed to mainnet.",
       "Gas optimization: IPFS storage, batched transactions. 65K → 38K gas (40% savings).",
-      "jQuery → React: 5K lines → 40 components, Redux state. 60% fewer bugs.",
     ],
     skills: [
       "React",
@@ -166,7 +163,7 @@ export const experiences: Experience[] = [
 
 export const personalInfo = {
   name: "Kelvin You",
-  title: "Frontend Engineer · Building Agentic Systems",
+  title: "AI-native Full-stack Engineer (Frontend-focused)",
   fullname: "Kelvin You Kok Eng",
   contact: {
     email: "ykekelvin0220@gmail.com",
@@ -178,7 +175,7 @@ export const personalInfo = {
   },
   profilePicture: "/images/profile-picture.jpg",
   memoji: "/images/memoji.png",
-  summary: `Frontend Engineer at dtcpay (FinTech), shipping a production payment platform. Same throughline runs through every role: take a messy, high-scale problem and design it into a system that runs itself — a Tencent/MiHoYo analytics platform, a payment platform's frontend, and now agentic dev tooling (Claude API + MCP): Personal-OS, multi-agent PRD/Figma reconciliation. Frontend craft, systems thinking, applied AI.`,
+  summary: `Frontend Engineer at dtcpay (FinTech), shipping a production payment platform serving 9,000+ active users. Same throughline runs through every role: take a messy, high-scale problem and design it into a system that runs itself — a Tencent/MiHoYo analytics platform, a payment platform's frontend and mobile stack, and now agentic dev tooling (Claude API + MCP): Personal-OS, multi-agent PRD/Figma reconciliation. Frontend craft, systems thinking, applied AI.`,
 };
 
 // Example education data
@@ -262,7 +259,7 @@ export const projects: Project[] = [
   {
     title: "Personal-OS — Multi-Agent Personal Operating System",
     description:
-      "Production agentic system built on Claude Code skill architecture + MCP servers (Figma, Google Calendar). Custom agents: weekly-review (data-driven self-management with circuit breakers), wealth-manager (portfolio analysis across MY/SG/US markets), learning-agent (job-market scraping + skill-radar synthesis), profile-optimizer (LLM-driven LinkedIn/resume optimization), coach-planner (real-time decision support and timetable scheduling). Demonstrates production agent design: tool schemas, prompt rules, structured outputs, hot-reloadable skill registry, multi-source data orchestration.",
+      "Production agentic system (12 Claude Code skills + MCP servers) for self-management, health, and finance. Guardrail design over raw model output: only a single acute bad-sleep night is a hard, non-overridable rule; for the noisier 7-day rolling sleep-debt trend, real-time HRV is allowed to override an automated deload call — so the agent catches genuine acute risk without crying wolf every week on a lagging metric. Weekly-review, wealth-manager, learning-agent, profile-optimizer, and coach-planner skills run on a weekly cadence, replacing manual self-planning with structured, data-driven review.",
     status: "In Progress",
     techStacks: [
       "Claude Code",
@@ -314,7 +311,7 @@ export const projects: Project[] = [
   {
     title: "Automated Market-Making System (Uniswap V2-style AMM)",
     description:
-      "Built a constant-product AMM (x*y=k formula) as a blockchain course assignment. Solidity smart contracts: liquidity pools with LP token minting, slippage protection (max 2% deviation), front-running prevention with deadline checks. Handled integer overflow in Solidity 0.7 (SafeMath before 0.8 built-ins), implemented Babylonian square-root method in assembly for gas efficiency. MetaMask signing, deployed to Rinkeby testnet (~0.02 ETH gas). Combined with current fintech work, demonstrates crypto-fintech bridge for AI agent applications.",
+      "Constant-product AMM (x*y=k) course assignment. Solidity liquidity pools, slippage protection, gas-optimized math.",
     demo: "https://github.com/KelvinYou/amm-assignment",
     status: "Completed",
     techStacks: ["Solidity", "Ethereum", "React", "MetaMask", "Smart Contracts"],
@@ -361,18 +358,6 @@ export const certifications = [
     issueDate: "2021-6-20",
   },
   {
-    name: "HTML, CSS, and Javascript for Web Developers",
-    link: `${domainPath}pdf/TDA-html_css_js.pdf`,
-    issuingOrganization: "The Digital Adda",
-    issueDate: "2023-12-11",
-  },
-  {
-    name: "ReactJS",
-    link: `${domainPath}pdf/TDA-reactjs.pdf`,
-    issuingOrganization: "The Digital Adda",
-    issueDate: "2023-12-12",
-  },
-  {
     name: "Rust Workshop 2024 - Parallel Programming",
     link: "https://credsverse.com/credentials/af37b752-6f6d-4f6d-9368-34f56c1242e5",
     issuingOrganization: "",
@@ -390,7 +375,7 @@ export const skills = {
     "Prompt Engineering",
     "AI-assisted Development",
   ],
-  languages: ["TypeScript", "JavaScript", "Python", "Java", "Go", "Solidity"],
+  languages: ["TypeScript", "JavaScript", "Python", "Java", "Go"],
   frameworks: ["Next.js", "React", "Node.js", "NestJS", "Express"],
   databases: ["PostgreSQL", "Supabase", "Redis"],
   blockchain: ["Solidity", "Ethereum", "MetaMask", "Smart Contracts"],

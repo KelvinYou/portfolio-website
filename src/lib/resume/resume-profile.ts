@@ -13,11 +13,22 @@ const featuredExperienceCompanies = [
 ] as const;
 
 const featuredProjectTitles = [
-  "Agentic Dev Tools — Claude API + MCP",
   "Personal-OS — Multi-Agent Personal Operating System",
+  "PTIB - Tuition Center Management SaaS",
+  "Agentic Dev Tools — Claude API + MCP",
 ] as const;
 
 const normalizePdfText = (text: string) => text.replace(/[—–]/g, "-");
+
+const techStack = [
+  "React",
+  "TypeScript",
+  "Next.js",
+  "Node.js",
+  "Python",
+  "Java",
+  "Go",
+];
 
 const selectByName = <T extends { company: string }>(
   items: T[],
@@ -46,7 +57,7 @@ export const resumeProfile = {
     ...personalInfo,
     summary: normalizePdfText(personalInfo.summary),
   },
-  title: "Frontend Engineer | AI-native Full-stack Builder",
+  title: "AI-native Full-stack Engineer (Frontend-focused)",
   experiences: selectByName(experiences, featuredExperienceCompanies),
   projects: selectProjects(featuredProjectTitles).map((project) => ({
     ...project,
@@ -57,8 +68,7 @@ export const resumeProfile = {
   })),
   educations: educations.slice(0, 1),
   skillGroups: [
-    { label: "Frameworks", items: skills.frameworks },
-    { label: "Languages", items: skills.languages },
+    { label: "Tech Stack", items: techStack },
     { label: "AI / Agents", items: skills.ai },
     { label: "Data", items: skills.databases },
     { label: "Tools", items: skills.tools },
