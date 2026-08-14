@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Archivo, Space_Grotesk } from "next/font/google";
+import localFont from "next/font/local";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { domainPath, experiences, personalInfo } from "@/constants";
@@ -10,17 +10,41 @@ import { notFound } from "next/navigation";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
-const archivo = Archivo({
+const archivo = localFont({
+  src: [
+    {
+      path: "../../../public/assets/fonts/open-sans-v17-latin-regular.ttf",
+      weight: "400",
+    },
+    {
+      path: "../../../public/assets/fonts/open-sans-v17-latin-600.ttf",
+      weight: "600",
+    },
+    {
+      path: "../../../public/assets/fonts/open-sans-v17-latin-700.ttf",
+      weight: "700",
+    },
+  ],
   variable: "--font-archivo",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
   display: "swap",
 });
 
-const spaceGrotesk = Space_Grotesk({
+const spaceGrotesk = localFont({
+  src: [
+    {
+      path: "../../../public/assets/fonts/quicksand-v20-latin-300.ttf",
+      weight: "300",
+    },
+    {
+      path: "../../../public/assets/fonts/quicksand-v20-latin-regular.ttf",
+      weight: "400",
+    },
+    {
+      path: "../../../public/assets/fonts/quicksand-v20-latin-600.ttf",
+      weight: "600",
+    },
+  ],
   variable: "--font-space-grotesk",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
   display: "swap",
 });
 
