@@ -2,16 +2,25 @@
 
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { projects } from "@/constants";
-import { ProjectCard } from "@/components/project-card";
 import Link from "next/link";
-import { staggerContainer, defaultViewport, fadeIn } from "@/lib/animations";
-import { UnifiedSectionHeader } from "@/components/base/unified-section-header";
 import { useTranslations } from "next-intl";
+import { projects } from "@/constants";
+import { ProjectLead, ProjectRow } from "@/components/project-row";
+import { UnifiedSectionHeader } from "@/components/base/unified-section-header";
+import { staggerContainer, defaultViewport, fadeIn } from "@/lib/animations";
+import type { ProjectKind } from "@/types";
+
+const featured = projects.filter((project) => project.featured);
+const [lead, ...supporting] = featured;
 
 export function ProjectsSection() {
   const t = useTranslations("sections");
+
+  const kindLabel: Record<ProjectKind, string> = {
+    system: t("projects_kind_system"),
+    product: t("projects_kind_product"),
+    coursework: t("projects_kind_coursework"),
+  };
 
   return (
     <section id="projects" className="py-32 md:py-40">
@@ -22,34 +31,40 @@ export function ProjectsSection() {
         />
 
         <motion.div
-          className="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
+          className="max-w-5xl"
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
           viewport={defaultViewport}
         >
-          {projects.slice(0, 3).map((project, index) => (
-            <ProjectCard key={index} project={project} index={index} />
-          ))}
+          {lead && (
+            <ProjectLead project={lead} eyebrow={kindLabel[lead.kind]} />
+          )}
+
+          <div className="mt-14 md:mt-16">
+            {supporting.map((project) => (
+              <ProjectRow key={project.title} project={project} />
+            ))}
+          </div>
         </motion.div>
 
         <motion.div
-          className="mt-14 text-center"
+          className="mt-12 max-w-5xl border-t border-border pt-8"
           initial="hidden"
           whileInView="visible"
           viewport={defaultViewport}
           variants={fadeIn}
         >
-          <Button
-            variant="outline"
-            className="rounded-xl border-border px-8 py-5 text-base font-semibold transition-all duration-300 hover:border-primary/40 hover:bg-card"
-            asChild
+          <Link
+            href="/projects"
+            className="group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.16em] text-foreground underline decoration-border underline-offset-4 transition-colors hover:text-primary hover:decoration-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4 focus-visible:ring-offset-background"
           >
-            <Link href="/projects">
-              {t("projects_see_all")}
-              <ArrowRight className="ml-2.5 h-5 w-5" />
-            </Link>
-          </Button>
+            {t("projects_see_all", { count: projects.length })}
+            <ArrowRight
+              className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1"
+              aria-hidden="true"
+            />
+          </Link>
         </motion.div>
       </div>
     </section>

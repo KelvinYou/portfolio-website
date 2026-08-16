@@ -122,7 +122,7 @@ export function HeroSection() {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.65 }}
             >
-              <SocialLinks variant="icon-only" />
+              <SocialLinks />
             </motion.div>
           </div>
 

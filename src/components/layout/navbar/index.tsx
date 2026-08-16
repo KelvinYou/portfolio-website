@@ -1,50 +1,66 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
-import { DesktopNav } from "./desktop-nav";
-import { MobileDrawer } from "./mobile-drawer";
+import { useTranslations } from "next-intl";
+import { useEffect, useState } from "react";
+import { MobileSheet } from "./mobile-sheet";
 import { NavbarActions } from "./navbar-actions";
 import { NavbarLogo } from "./navbar-logo";
-import { useNavbarState } from "./use-navbar-state";
+import { SectionIndexRule, SectionIndexTrack } from "./section-index";
+import { useSectionIndex } from "./use-section-index";
 
 export function Navbar() {
-  const state = useNavbarState();
+  const index = useSectionIndex();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [lifted, setLifted] = useState(false);
+  const t = useTranslations("nav");
+
+  useEffect(() => {
+    const onScroll = () => setLifted(window.scrollY > 8);
+    const frame = requestAnimationFrame(onScroll);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    const close = () => setMenuOpen(false);
+    const mq = window.matchMedia("(min-width: 768px)");
+    mq.addEventListener("change", close);
+    return () => mq.removeEventListener("change", close);
+  }, []);
 
   return (
     <>
-      <motion.header
+      <header
         className={cn(
-          "fixed left-0 right-0 z-50 transition-all duration-300",
-          state.scrolled
-            ? "bg-background/95 backdrop-blur-xl border-b border-border"
-            : "bg-background/80 backdrop-blur-sm",
+          "fixed inset-x-0 top-0 z-50 transition-colors duration-200",
+          lifted
+            ? "border-b border-border bg-background/85 backdrop-blur-xl"
+            : "border-b border-transparent bg-background/60 backdrop-blur-sm",
         )}
-        animate={{
-          paddingTop: state.scrolled ? "0.25rem" : "0.5rem",
-          paddingBottom: state.scrolled ? "0.25rem" : "0.5rem",
-        }}
-        transition={{ duration: 0.3 }}
       >
-        {/* Progress bar */}
-        <div
-          className="absolute bottom-0 left-0 h-[3px] bg-primary"
-          style={{
-            width: `${state.scrollProgress * 100}%`,
-            transition: state.isNavigating ? "none" : "width ease",
-          }}
-        />
-
-        <div className="container mx-auto px-3 sm:px-6 lg:px-8">
-          <nav className="flex items-center justify-between h-14 sm:h-16">
-            <NavbarLogo onLogoClick={() => state.setMobileMenuOpen(false)} />
-            <DesktopNav state={state} />
-            <NavbarActions state={state} />
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <nav
+            className="flex h-14 items-center justify-between gap-6"
+            aria-label={t("primary")}
+          >
+            <NavbarLogo onNavigate={() => setMenuOpen(false)} />
+            <SectionIndexTrack index={index} />
+            <NavbarActions onOpenMenu={() => setMenuOpen(true)} />
           </nav>
         </div>
-      </motion.header>
 
-      <MobileDrawer state={state} />
+        <SectionIndexRule index={index} />
+      </header>
+
+      <MobileSheet
+        open={menuOpen}
+        onClose={() => setMenuOpen(false)}
+        index={index}
+      />
     </>
   );
 }

@@ -13,9 +13,9 @@ const featuredExperienceCompanies = [
 ] as const;
 
 const featuredProjectTitles = [
-  "Personal-OS — Multi-Agent Personal Operating System",
-  "PTIB - Tuition Center Management SaaS",
-  "Agentic Dev Tools — Claude API + MCP",
+  "Personal-OS",
+  "PTIB",
+  "Agentic Dev Tools",
 ] as const;
 
 const normalizePdfText = (text: string) => text.replace(/[—–]/g, "-");
@@ -29,16 +29,23 @@ const selectByName = <T extends { company: string }>(
     return item ? [item] : [];
   });
 
+// Throws rather than skipping: these titles are matched by string, so a rename
+// in data.ts would otherwise drop the project from the resume in silence.
 const selectProjects = (titles: readonly string[]) =>
-  titles.flatMap((title) => {
+  titles.map((title) => {
     const project = projects.find((item) => item.title === title);
-    return project ? [project] : [];
+    if (!project) {
+      throw new Error(
+        `resumeProfile: no project titled "${title}" in constants/data.ts`,
+      );
+    }
+    return project;
   });
 
 const projectDescriptions: Record<string, string> = {
-  "Agentic Dev Tools — Claude API + MCP":
+  "Agentic Dev Tools":
     "Built LLM-powered Playwright spec generation and multi-agent PRD/Figma reconciliation tooling with Claude API, MCP, and structured tool calls.",
-  "Personal-OS — Multi-Agent Personal Operating System":
+  "Personal-OS":
     "Built a production agent system with custom skills, MCP servers, circuit breakers, and structured workflows for self-management, finance, learning, and career tooling.",
 };
 
@@ -55,7 +62,7 @@ export const resumeProfile = {
     ...project,
     title: normalizePdfText(project.title),
     description: normalizePdfText(
-      projectDescriptions[project.title] ?? project.description,
+      projectDescriptions[project.title] ?? project.claim,
     ),
   })),
   educations: educations.slice(0, 1),

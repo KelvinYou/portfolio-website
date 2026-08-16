@@ -120,7 +120,7 @@ const ResumeDocument = () => {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Selected Projects</Text>
           {resumeProfile.projects.map((project) => {
-            const projectUrl = project.demo ?? project.github;
+            const projectUrl = project.links?.demo ?? project.links?.repo;
 
             return (
               <View key={project.title} style={styles.itemContainer}>
@@ -132,7 +132,7 @@ const ResumeDocument = () => {
                   ) : (
                     <Text style={styles.itemCompany}>{project.title}</Text>
                   )}
-                  <Text style={styles.itemDate}>{project.status}</Text>
+                  <Text style={styles.itemDate}>{project.year}</Text>
                 </View>
 
                 <Text style={styles.projectDescription}>

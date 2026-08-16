@@ -181,6 +181,37 @@ export const personalInfo = {
   summary: `AI-native software engineer, frontend-focused. React/TypeScript on a production payment platform serving 9,000+ users at dtcpay; off the clock, multi-agent LLM systems on the Claude Agent SDK — MCP tool servers, agent debate, and evals that grade past calls.`,
 };
 
+export type SocialId = "github" | "linkedin" | "email";
+
+// Single owner for the outbound links. The hero, the contact section, and the
+// footer all render these; they used to keep three separate hardcoded copies
+// that drifted. Icons live in the component (this module stays React-free).
+export const socialLinks: {
+  id: SocialId;
+  label: string;
+  href: string;
+  external: boolean;
+}[] = [
+  {
+    id: "github",
+    label: "GitHub",
+    href: personalInfo.contact.github,
+    external: true,
+  },
+  {
+    id: "linkedin",
+    label: "LinkedIn",
+    href: personalInfo.contact.linkedin,
+    external: true,
+  },
+  {
+    id: "email",
+    label: "Email",
+    href: `mailto:${personalInfo.contact.email}`,
+    external: false,
+  },
+];
+
 // Example education data
 export const educations = [
   {
@@ -243,12 +274,26 @@ export const educations = [
   },
 ];
 
+/**
+ * Ordered newest-first. `/projects` regroups these by `kind`; the homepage
+ * lifts the three marked `featured` (first one leads).
+ */
 export const projects: Project[] = [
   {
-    title: "Multi-Agent Stock Analysis — Claude Agent SDK",
-    description:
-      "Four analyst agents (fundamentals, technical, sentiment, macro), each with its own MCP tool server, argued through a debate stage and merged by a synthesizer. Outcome memory scores past calls against what actually happened — gated by exit date so backtests can't see the future. Calibration is reported, never fed back as a coefficient.",
-    status: "In Progress",
+    title: "Multi-Agent Stock Analysis",
+    kind: "system",
+    featured: true,
+    claim:
+      "Four analyst desks — fundamentals, technical, sentiment, macro — each on its own MCP server, argued through a debate stage and merged by a synthesizer. Calibration is reported, never fed back as a coefficient.",
+    outcome: [
+      { value: "4", label: "analyst desks, each with its own tool server" },
+      { value: "0", label: "lookahead — outcome memory gated by exit date" },
+    ],
+    // TODO(kelvin): publish the repo and add `links.repo` here. This is the
+    // strongest AI-engineering artifact you have and it is currently private,
+    // which makes it indistinguishable from a claim.
+    access: "private",
+    year: 2026,
     techStacks: [
       "Python",
       "Claude Agent SDK",
@@ -258,31 +303,22 @@ export const projects: Project[] = [
       "FastAPI",
       "Backtesting",
     ],
-    date: "2026-06-01",
-    // TODO(kelvin): publish the repo and add `github:` here. This is the
-    // strongest AI-engineering artifact you have and it is currently private,
-    // which makes it indistinguishable from a claim.
   },
   {
-    title: "Agentic Dev Tools — Claude API + MCP",
-    description:
-      "Side project exploring multi-agent systems applied to developer workflows. LLM-powered Playwright spec generator with auto-debug loop, multi-agent PRD/Figma reconciliation that flags spec conflicts pre-development, and reusable Claude rules + agent harness conventions. Stack: Claude API + custom MCP tools + Playwright + structured tool calls.",
-    status: "In Progress",
-    techStacks: [
-      "Claude API",
-      "MCP",
-      "Playwright",
-      "TypeScript",
-      "Multi-agent Systems",
-      "Prompt Engineering",
+    title: "Personal-OS",
+    kind: "system",
+    featured: true,
+    claim:
+      "Guardrail design over raw model output. Only an acute bad-sleep night is non-overridable; on the noisier 7-day trend, live HRV overrides the automated deload — so it catches real risk without crying wolf every week on a lagging metric.",
+    outcome: [
+      { value: "12", label: "agent skills running on a weekly cadence" },
+      { value: "1", label: "non-overridable rule; the rest defer to live HRV" },
     ],
-    date: "2025-9-1",
-  },
-  {
-    title: "Personal-OS — Multi-Agent Personal Operating System",
-    description:
-      "Production agentic system (12 Claude Code skills + MCP servers) for self-management, health, and finance. Guardrail design over raw model output: only a single acute bad-sleep night is a hard, non-overridable rule; for the noisier 7-day rolling sleep-debt trend, real-time HRV is allowed to override an automated deload call — so the agent catches genuine acute risk without crying wolf every week on a lagging metric. Weekly-review, wealth-manager, learning-agent, profile-optimizer, and coach-planner skills run on a weekly cadence, replacing manual self-planning with structured, data-driven review.",
-    status: "In Progress",
+    // TODO(kelvin): consider publishing a sanitized public version (framework
+    // only, exclude the data/ submodule). If you do, set links.repo to
+    // "https://github.com/KelvinYou/personal-os" and flip access to "public".
+    access: "private",
+    year: 2026,
     techStacks: [
       "Claude Code",
       "MCP",
@@ -292,33 +328,19 @@ export const projects: Project[] = [
       "TypeScript",
       "Agent Skills",
     ],
-    date: "2026-04-01",
-    // TODO(kelvin): consider publishing a sanitized public version (framework only,
-    // exclude data/ submodule). If you do, add github: "https://github.com/KelvinYou/personal-os" here.
   },
   {
-    title: "PTIB - Tuition Center Management SaaS",
-    description:
-      "Multi-tenant SaaS digitizing a 200-student tuition center. Role-based portals, Stripe billing, QR attendance, row-level security in Supabase. Saved 5 hrs/week, $500 MRR from 3 pilot centers.",
-    image: "/images/projects/tms.png",
-    demo: "https://ptib.vercel.app/",
-    status: "In Progress",
-    techStacks: [
-      "Next.js",
-      "TailwindCSS",
-      "Supabase",
-      "PostgreSQL",
-      "Stripe",
-      "Shadcn",
-      "React",
+    title: "Zync",
+    kind: "product",
+    featured: true,
+    claim:
+      "Meeting scheduling on a real-time sync engine — Supabase subscriptions for presence, PostgreSQL query tuning and Redis caching underneath the availability check.",
+    outcome: [
+      { value: "<200ms", label: "availability check, Postgres + Redis" },
+      { value: "1000+", label: "concurrent users the sync engine targets" },
     ],
-    date: "2025-3-3",
-  },
-  {
-    title: "Zync - Meeting Scheduling SaaS",
-    description:
-      "Real-time meeting scheduling SaaS (Calendly + Doodle reimagined). Architecting sync engine for 1000+ concurrent users with Supabase subscriptions. Stripe recurring billing, sub-200ms availability checks via PostgreSQL optimization and Redis caching.",
-    status: "Focusing",
+    access: "building",
+    year: 2025,
     techStacks: [
       "React.js",
       "Nest.js",
@@ -328,49 +350,107 @@ export const projects: Project[] = [
       "Stripe",
       "Redis",
     ],
-    date: "2025-8-8",
   },
   {
-    title: "Automated Market-Making System (Uniswap V2-style AMM)",
-    description:
-      "Constant-product AMM (x*y=k) course assignment. Solidity liquidity pools, slippage protection, gas-optimized math.",
-    demo: "https://github.com/KelvinYou/amm-assignment",
-    status: "Completed",
-    techStacks: ["Solidity", "Ethereum", "React", "MetaMask", "Smart Contracts"],
-    date: "2023-1-5",
+    title: "Agentic Dev Tools",
+    kind: "system",
+    claim:
+      "Multi-agent systems pointed at developer workflows: a Playwright spec generator that debugs its own output, and a PRD/Figma reconciler that flags spec conflicts before development starts.",
+    // No measured result yet — the row shows that gap rather than dressing it up.
+    access: "private",
+    year: 2025,
+    techStacks: [
+      "Claude API",
+      "MCP",
+      "Playwright",
+      "TypeScript",
+      "Multi-agent Systems",
+      "Prompt Engineering",
+    ],
+  },
+  {
+    title: "PTIB",
+    kind: "product",
+    claim:
+      "Multi-tenant SaaS that digitised a 200-student tuition centre: role-based portals, Stripe billing, QR attendance, row-level security in Supabase.",
+    outcome: [
+      { value: "$500", label: "MRR from 3 pilot centres" },
+      { value: "5 hrs", label: "of admin saved per week" },
+    ],
+    links: { demo: "https://ptib.vercel.app/" },
+    access: "public",
+    year: 2025,
+    techStacks: [
+      "Next.js",
+      "TailwindCSS",
+      "Supabase",
+      "PostgreSQL",
+      "Stripe",
+      "Shadcn",
+      "React",
+    ],
   },
   {
     title: "Personal Website",
-    description:
-      "Performant portfolio with Next.js App Router, MDX blog, ISR, and i18n. 95+ Lighthouse scores across all metrics. Dynamic OG images, structured data, and RSS feed for search visibility.",
-    image: "/images/projects/portfolio.jpg",
-    github: "https://github.com/KelvinYou/portfolio-website",
-    demo: "https://kelvinyou.vercel.app/",
-    status: "Maintaining",
+    kind: "product",
+    claim:
+      "Next.js App Router with an MDX blog, ISR and i18n — plus dynamic OG images, structured data and an RSS feed for search visibility.",
+    outcome: [{ value: "95+", label: "Lighthouse across all four metrics" }],
+    links: {
+      repo: "https://github.com/KelvinYou/portfolio-website",
+      demo: "https://kelvinyou.vercel.app/",
+    },
+    access: "public",
+    year: 2025,
     techStacks: ["Next.js", "TailwindCSS", "Shadcn", "React"],
-    date: "2025-3-3",
     blogSlugs: ["personal-website"],
   },
   {
-    title: "Travel Guide: Tourist App",
-    description:
-      "Final year capstone: cross-platform mobile app with real-time GPS tracking, offline-first architecture, and Firebase sync. Handled 10MB+ map tiles via LRU cache (100MB limit), reduced battery drain by switching from 1s polling to 10s + geofencing, managed booking state machines across 5 screens. Presented to 50+ industry professionals.",
-    github: "https://github.com/KelvinYou/fyp_tour_guide_app",
-    status: "Completed",
+    title: "Travel Guide",
+    kind: "coursework",
+    claim:
+      "Final-year capstone: offline-first mobile app with live GPS. Map tiles cached under an LRU limit, battery reclaimed by trading 1s polling for geofencing, booking state machines across five screens.",
+    outcome: [
+      { value: "10×", label: "less GPS polling — 1s to 10s plus geofencing" },
+      { value: "100MB", label: "LRU cap over 10MB+ of map tiles" },
+    ],
+    links: { repo: "https://github.com/KelvinYou/fyp_tour_guide_app" },
+    access: "public",
+    year: 2023,
     techStacks: ["Flutter", "Dart", "Firebase"],
-    date: "2023-11-14",
+  },
+  {
+    title: "Automated Market Maker",
+    kind: "coursework",
+    claim:
+      "Uniswap V2-style constant-product AMM: Solidity liquidity pools, slippage protection, gas-optimised math.",
+    outcome: [{ value: "x·y=k", label: "constant-product invariant" }],
+    links: { repo: "https://github.com/KelvinYou/amm-assignment" },
+    access: "public",
+    year: 2023,
+    techStacks: [
+      "Solidity",
+      "Ethereum",
+      "React",
+      "MetaMask",
+      "Smart Contracts",
+    ],
   },
   {
     title: "Edge Detection System",
-    description:
-      "Parallelized image processing (45+ s/image on single thread). Image chunking with Dask + Python threading for I/O. Achieved 8x speedup on 8-core machines, demonstrating Amdahl's Law in practice.",
+    kind: "coursework",
+    claim:
+      "Image processing that took 45s per image single-threaded, parallelised — Dask chunking for the compute, Python threading for the I/O.",
+    outcome: [
+      { value: "8×", label: "speedup on 8 cores — Amdahl's law in practice" },
+    ],
     // TODO(kelvin): the previous github link here pointed at
     // react-selflearn/react-restaurant-landing — a React landing page, not this
     // Python project. Removed rather than left wrong: one dead link discounts
     // every other link on the page. Restore with the correct repo URL.
-    status: "Completed",
+    access: "private",
+    year: 2022,
     techStacks: ["Python", "Dask", "Threading"],
-    date: "2022-9-23",
   },
 ];
 
@@ -403,7 +483,14 @@ export const skills = {
   frameworks: ["Next.js", "React", "Node.js", "NestJS", "Express"],
   databases: ["PostgreSQL", "Supabase", "Redis"],
   blockchain: ["Solidity", "Ethereum", "MetaMask", "Smart Contracts"],
-  tools: ["Claude Code", "Docker", "Git", "Vercel", "GitHub Actions", "Playwright"],
+  tools: [
+    "Claude Code",
+    "Docker",
+    "Git",
+    "Vercel",
+    "GitHub Actions",
+    "Playwright",
+  ],
 };
 
 // Single source of truth for how skills are grouped and ordered. Both the
@@ -412,7 +499,15 @@ export const skills = {
 export const skillGroups: { label: string; items: readonly string[] }[] = [
   {
     label: "Tech Stack",
-    items: ["React", "TypeScript", "Next.js", "Node.js", "Python", "Java", "Go"],
+    items: [
+      "React",
+      "TypeScript",
+      "Next.js",
+      "Node.js",
+      "Python",
+      "Java",
+      "Go",
+    ],
   },
   { label: "AI / Agents", items: skills.ai },
   { label: "Data", items: skills.databases },

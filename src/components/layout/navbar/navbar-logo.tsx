@@ -1,51 +1,21 @@
 "use client";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { personalInfo } from "@/constants";
-import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
 import Link from "next/link";
 
-interface NavbarLogoProps {
-  onLogoClick: () => void;
-}
-
-export function NavbarLogo({ onLogoClick }: NavbarLogoProps) {
+export function NavbarLogo({ onNavigate }: { onNavigate?: () => void }) {
   return (
-    <motion.div
-      initial={{ opacity: 0, x: -20 }}
-      animate={{ opacity: 1, x: 0 }}
-      whileHover={{ scale: 1.05 }}
-      transition={{ duration: 0.5 }}
-      className="flex-shrink-0"
+    <Link
+      href="/"
+      onClick={onNavigate}
+      className={cn(
+        "shrink-0 rounded-sm font-mono text-[13px] font-semibold uppercase tracking-[0.09em]",
+        "text-foreground transition-opacity duration-150 hover:opacity-60",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+      )}
     >
-      <Link
-        href="/"
-        className="flex items-center gap-1 sm:gap-2"
-        onClick={onLogoClick}
-      >
-        <div className="relative">
-          <Avatar className="h-7 w-7 sm:h-9 sm:w-9 border-2 border-primary/30 shadow-lg">
-            <AvatarImage
-              src={personalInfo.profileAvatar}
-              alt={`${personalInfo.name}'s profile picture`}
-            />
-            <AvatarFallback className="bg-primary/10 text-xs sm:text-sm">
-              {personalInfo.name.charAt(0)}
-            </AvatarFallback>
-          </Avatar>
-          <motion.div
-            className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-background"
-            animate={{ scale: [1, 1.2, 1] }}
-            transition={{ repeat: Infinity, duration: 2 }}
-          />
-        </div>
-        <motion.span
-          className="font-bold text-base sm:text-xl bg-clip-text text-transparent bg-gradient-to-r from-primary to-indigo-500"
-          transition={{ type: "spring", stiffness: 400, damping: 10 }}
-        >
-          {personalInfo.name}
-        </motion.span>
-      </Link>
-    </motion.div>
+      {personalInfo.name}
+    </Link>
   );
 }
