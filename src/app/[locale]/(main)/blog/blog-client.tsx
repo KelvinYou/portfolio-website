@@ -5,13 +5,12 @@ import { PostCard } from "@/components/blog/post-card";
 import type { Post } from "@/lib/mdx";
 import { motion } from "framer-motion";
 import { LayoutGrid, List as ListIcon, Search, X } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 
 type SortOption = "newest" | "oldest";
 type ViewMode = "grid" | "list";
 
 export default function BlogClient({ posts: initialPosts }: { posts: Post[] }) {
-  const [posts, setPosts] = useState<Post[]>(initialPosts);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [sortOption] = useState<SortOption>("newest");
@@ -22,7 +21,7 @@ export default function BlogClient({ posts: initialPosts }: { posts: Post[] }) {
     new Set(initialPosts.flatMap((p) => p.frontmatter.tags || []))
   ).sort();
 
-  useEffect(() => {
+  const posts = useMemo<Post[]>(() => {
     let filtered = [...initialPosts];
     if (searchQuery) {
       const q = searchQuery.toLowerCase();
@@ -43,7 +42,7 @@ export default function BlogClient({ posts: initialPosts }: { posts: Post[] }) {
         ? new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime()
         : new Date(a.frontmatter.date).getTime() - new Date(b.frontmatter.date).getTime()
     );
-    setPosts(filtered);
+    return filtered;
   }, [initialPosts, searchQuery, selectedTags, sortOption]);
 
   const toggleTag = (tag: string) =>

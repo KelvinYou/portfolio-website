@@ -33,16 +33,12 @@ const ShareButton = ({
 );
 
 export default function BlogPostClient({ post, slug }: { post: Post; slug: string }) {
-  const [readingTime, setReadingTime] = useState("5 min");
   const [copied, setCopied] = useState(false);
   const [activeId, setActiveId] = useState<string | null>(null);
   const articleRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll();
 
-  useEffect(() => {
-    const words = post.content.split(/\s+/).length;
-    setReadingTime(`${Math.ceil(words / 200)} min read`);
-  }, [post.content]);
+  const readingTime = `${Math.ceil(post.content.split(/\s+/).length / 200)} min read`;
 
   useEffect(() => {
     const observer = new IntersectionObserver(

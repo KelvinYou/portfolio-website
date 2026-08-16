@@ -1,6 +1,6 @@
 // Server Component
 import { domainPath, personalInfo } from "@/constants";
-import { getAllPosts, getPostBySlug } from "@/lib/mdx";
+import { getAllPosts, getPostBySlug, type Post } from "@/lib/mdx";
 import { notFound } from "next/navigation";
 import BlogPostClient from "./client";
 
@@ -106,11 +106,13 @@ export async function generateMetadata(props: PageProps) {
 export default async function BlogPostPage(props: PageProps) {
   const params = await props.params;
 
+  let post: Post;
   try {
-    const post = await getPostBySlug(params.slug);
-    return <BlogPostClient post={post} slug={params.slug} />;
+    post = await getPostBySlug(params.slug);
   } catch (error) {
     console.error("Error fetching blog post:", error);
     notFound();
   }
+
+  return <BlogPostClient post={post} slug={params.slug} />;
 }
