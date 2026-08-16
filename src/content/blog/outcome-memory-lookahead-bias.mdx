@@ -1,0 +1,196 @@
+---
+title: "Giving an LLM Pipeline a Memory Without Breaking the Backtest"
+date: "2026-08-16"
+description: "How outcome memory was added to a multi-agent stock-analysis pipeline: an exit-date leakage guard that keeps backtests honest, and why calibration is reported but never applied."
+tags: ["Python", "LLM", "Backtesting", "System Design", "Multi-Agent"]
+author: "Kelvin You"
+---
+
+I maintain a multi-agent stock research pipeline: four analyst agents run concurrently, a bull/bear debate engine argues over their reports, a research manager adjudicates, and a synthesizer merges everything into a briefing with a signal and a conviction score.
+
+For a long time it had one embarrassing property. **Every run was a cold start.**
+
+The pipeline already produced the raw material for a track record. Backtest trials carried a `realized_return`. The scorer computed hit rates. But nothing fed any of it back. The same wrong call on the same ticker could be made indefinitely and the system would never notice.
+
+Closing that loop is easy to describe and easy to get subtly, silently wrong. This post is about the two decisions that made it safe.
+
+## The naive version
+
+The obvious design: append every resolved call to a per-ticker log, and inject the recent history into the synthesis prompt.
+
+```python
+class OutcomeRecord(BaseModel):
+    ticker: str
+    as_of_date: date          # when the call was made
+    horizon_days: int
+    signal: Signal
+    conviction_score: float
+    signal_convergence: float
+    entry_price: float | None = None
+    exit_date: date | None = None
+    exit_price: float | None = None
+    realized_return: float | None = None
+    source: str = "backtest"
+```
+
+Storage is append-only JSONL under `data/<TICKER>/outcomes.jsonl`, deduplicated by `(as_of_date, horizon_days, source)`. That part is boring and correct.
+
+The interesting part is the read. In live use you want everything. In a **backtest** you must only see what was knowable at the time — and this is where the naive filter shows up:
+
+```python
+# WRONG
+def visible_on(self, as_of: date | None) -> bool:
+    if as_of is None:
+        return True
+    return self.as_of_date < as_of   # "the call was made in the past, so it's fine"
+```
+
+It reads like the right thing. The record was created before the analysis date, so surely it's historical.
+
+It isn't.
+
+## Why gating on entry date destroys the backtest
+
+Consider a trial dated **2024-01-01**. A prior record has:
+
+- `as_of_date = 2023-12-01` — the call was made a month before
+- `exit_date = 2024-05-01` — the 150-day horizon resolves five months *after*
+
+The entry-date filter admits it. The record then hands the synthesizer a `realized_return` measured on 2024-05-01, while the model is pretending it's January. The prompt is now literally telling the model what the stock did over the next four months.
+
+The position was *opened* in the past. Its **outcome** had not happened yet. Those are different facts, and only the second one matters.
+
+What makes this bug nasty is that it doesn't crash, doesn't warn, and doesn't look wrong in the output. The backtest still runs. The report still prints a hit rate. That hit rate is now partly a measurement of how well the pipeline can read a number it was handed. Every downstream metric — directional Sharpe, information coefficient, the conviction-vs-return correlation — inherits the contamination. You would ship it, and it would look *better* than before.
+
+The correct guard is one line different and gates on the exit:
+
+```python
+def visible_on(self, as_of: date | None) -> bool:
+    """Whether this record is knowable when analyzing `as_of`.
+
+    Gated on exit date: a trade entered before `as_of` but closed after it
+    has an outcome that had not happened yet.
+    """
+    if as_of is None:
+        return True
+    if self.exit_date is None:
+        return False
+    return self.exit_date < as_of
+```
+
+Three details in there are deliberate:
+
+- **`exit_date is None` → hidden.** An unresolved record has no outcome to learn from. It contributes nothing to a dated run and is excluded rather than treated as a pending zero.
+- **Strictly less than.** A record exiting *on* the analysis date is hidden. Same-day resolution is a coin flip on intraday timing, and the cost of being wrong here is silent contamination, so it loses.
+- **`as_of is None` means live.** A real-time run has no future to leak from and sees the full history.
+
+The store applies the filter at load time, so no caller can forget it:
+
+```python
+def load(self, ticker: str, before: date | None = None) -> list[OutcomeRecord]:
+    ...
+    records = [r for r in records if r.visible_on(before)]
+    return sorted(records, key=lambda r: (r.as_of_date, r.horizon_days))
+```
+
+And the orchestrator passes the trial's date straight through, so a backtested run and a live run take the same code path with a different argument:
+
+```python
+if self.settings.enable_outcome_memory:
+    outcome_store = OutcomeStore(self.settings.data_dir)
+    prior = outcome_store.load(ticker, before=self.as_of_date)
+    if prior:
+        memory_context = build_memory_context(
+            prior, outcome_store.calibration(ticker, before=self.as_of_date)
+        )
+```
+
+There is exactly one place that reads history without the filter — `save_calibration()`, which dumps a full-history summary to `calibration.json` for dashboards. Its docstring says why in as many words: *this file is for humans looking back, never an input to a dated analysis.* An unfiltered read that is easy to mistake for a filtered one deserves a comment explaining that it is intentional.
+
+The leakage tests are the ones I'd point a reviewer at first, because they encode the trap rather than the happy path:
+
+```python
+def test_entry_in_the_past_does_not_make_a_future_exit_visible(self):
+    # The trap this guard exists for: entry is old, but the outcome is not
+    # yet known on the analysis date.
+    record = _record("2023-12-01", "2024-05-01")
+    self.assertFalse(record.visible_on(date(2024, 1, 1)))
+
+def test_exit_on_the_analysis_date_itself_is_hidden(self):
+    record = _record("2024-01-01", "2024-03-01")
+    self.assertFalse(record.visible_on(date(2024, 3, 1)))
+```
+
+## The second decision: calibration is reported, never applied
+
+Once you have a track record, the tempting next step writes itself. You know the hit rate. You know whether high-conviction calls beat low-conviction ones. So scale the conviction score by it — a ticker where the system has been 40% right should produce weaker signals.
+
+Nothing in the module does this. `compute_calibration()` returns a `CalibrationSummary` and that summary is *rendered into prose*. It never touches a number in the briefing.
+
+```python
+class CalibrationSummary(BaseModel):
+    """Deterministic scoring of a ticker's resolved history."""
+
+    ticker: str
+    trials: int = 0
+    directional_trials: int = 0
+    neutral_trials: int = 0
+    hit_rate: float | None = None
+    mean_return: float | None = None
+    high_conviction_hit_rate: float | None = None
+    low_conviction_hit_rate: float | None = None
+    conviction_separates: bool | None = None
+    ...
+
+    @property
+    def sufficient_sample(self) -> bool:
+        return self.directional_trials >= MIN_TRIALS_FOR_SIGNAL
+```
+
+The argument for restraint is a sample-size argument. A ticker with fifteen resolved directional calls, spread over a couple of years and a few different market regimes, has a hit rate with an enormous confidence interval. Nine hits out of fifteen is 60%; ten is 67%. One trade moves the "coefficient" by seven points. Multiply live signals by that and you have built a system that overfits to a handful of historical accidents — and it will do it *invisibly*, because a rescaled conviction score looks exactly like an honest one.
+
+That would be a strictly worse failure than the cold start it replaced. A cold start is obviously ignorant. A confidently miscalibrated multiplier is ignorance with a decimal point on it.
+
+So the threshold exists only to change the wording, never the math:
+
+```python
+# Below this, a hit rate is noise. Reported with the count attached rather than
+# suppressed, but never described as a track record.
+MIN_TRIALS_FOR_SIGNAL = 8
+```
+
+Under eight directional trials, the prompt fragment appends a caveat instead of hiding the number:
+
+```python
+if calibration.hit_rate is not None:
+    confidence_note = (
+        "" if calibration.sufficient_sample else " — too few trials to be a track record"
+    )
+    lines.append(f"Directional hit rate: {calibration.hit_rate:.0%}{confidence_note}.")
+```
+
+The same restraint runs through the rest of the arithmetic:
+
+- **Neutral calls are excluded from the hit rate.** `correct` returns `None` for them. A neutral call has no direction to be right about, so scoring it either way would be inventing an opinion the pipeline explicitly declined to have. Neutral is a valid output in this system, and it's counted separately.
+- **Unresolved records are ignored, not counted as misses.** Missing data is missing, not evidence of failure.
+- **`conviction_separates` stays `None` on a tiny sample.** It's only computed when both the high- and low-conviction groups have at least three trials — and even then it's a boolean shown to the reader, not a weight.
+
+The injected prompt fragment ends by telling the model, in plain terms, what the data is and isn't:
+
+> How to use this: it is evidence about this system's past accuracy on this ticker, not evidence about the stock's future. Do not flip a view the current data supports merely because past calls missed, and do not extrapolate a small sample. If prior calls failed for a reason that is still present in today's data, say so explicitly in your uncertainties.
+
+One more small thing I like: with no history at all, `build_memory_context()` returns `None` rather than a "no track record available" paragraph. Telling a model it has no track record invites it to write a sentence about the absence of a track record. Silence is cheaper.
+
+## Keeping the backtest reproducible
+
+Recording outcomes is opt-in — `stock-analysis-backtest --record-outcomes`, off by default. Writing outcomes on every backtest would mean a second run over the same date range reads the first run's results, and two runs of the same experiment would stop being comparable. The feedback loop has to be something you switch on deliberately, not a side effect of measuring.
+
+This sits alongside a related guard in the scorer, which partitions trials against the models' approximate training cutoffs and reports the post-cutoff slice separately as the clean out-of-sample test. Different leak, same discipline: if the model could have known the answer, say so out loud rather than averaging it into the headline number.
+
+## What generalizes
+
+Two things I'd carry to any system that learns from its own history.
+
+**Ask what the timestamp actually means.** A record has several dates on it and only one of them answers "when did this become knowable?" Picking the wrong one produces a system that passes its tests, reports good numbers, and is measuring nothing.
+
+**A statistic you can compute is not a coefficient you should apply.** The gap between "here is the hit rate, with the trial count attached" and "conviction × hit rate" is the entire difference between reporting and overfitting. Surfacing the number to a human reader costs nothing if it's wrong. Wiring it into the output costs you the ability to tell that it's wrong.
