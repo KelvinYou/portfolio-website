@@ -62,7 +62,7 @@ export function MobileDrawer({ state }: MobileDrawerProps) {
                 >
                   <Avatar className="h-8 w-8 border-2 border-primary/20">
                     <AvatarImage
-                      src={personalInfo.profilePicture}
+                      src={personalInfo.profileAvatar}
                       alt={personalInfo.name}
                     />
                     <AvatarFallback className="bg-primary/10 text-xs">

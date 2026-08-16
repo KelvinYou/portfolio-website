@@ -45,8 +45,6 @@ export function ModernLightbox({
   const [rotation, setRotation] = useState(0);
   const [showInfo, setShowInfo] = useState(false);
   const [isSlideshow, setIsSlideshow] = useState(false);
-  const [slideshowInterval, setSlideshowInterval] =
-    useState<NodeJS.Timeout | null>(null);
   const [showControls, setShowControls] = useState(true);
   const [dragPosition, setDragPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
@@ -76,11 +74,10 @@ export function ModernLightbox({
   }, []);
 
   // Auto-hide controls
-  const resetControlsTimeout = useCallback(() => {
+  const scheduleHideControls = useCallback(() => {
     if (controlsTimeoutRef.current) {
       clearTimeout(controlsTimeoutRef.current);
     }
-    setShowControls(true);
     controlsTimeoutRef.current = setTimeout(
       () => {
         setShowControls(false);
@@ -89,13 +86,30 @@ export function ModernLightbox({
     ); // Longer timeout on mobile
   }, [isMobile]);
 
-  useEffect(() => {
+  const resetControlsTimeout = useCallback(() => {
+    setShowControls(true);
+    scheduleHideControls();
+  }, [scheduleHideControls]);
+
+  // Reset the view state when the lightbox opens or the current item changes.
+  // Done during render (not in an effect) so it happens before paint without a
+  // cascading re-render.
+  const viewKey = isOpen ? currentIndex : null;
+  const [prevViewKey, setPrevViewKey] = useState<number | null>(null);
+  if (viewKey !== prevViewKey) {
+    setPrevViewKey(viewKey);
     if (isOpen) {
       setIsLoading(true);
       setZoom(1);
       setRotation(0);
       setDragPosition({ x: 0, y: 0 });
-      resetControlsTimeout();
+      setShowControls(true);
+    }
+  }
+
+  useEffect(() => {
+    if (isOpen) {
+      scheduleHideControls();
 
       // Show swipe indicator on mobile for first-time users
       if (isMobile && isTouch && items.length > 1) {
@@ -109,7 +123,7 @@ export function ModernLightbox({
   }, [
     isOpen,
     currentIndex,
-    resetControlsTimeout,
+    scheduleHideControls,
     isMobile,
     isTouch,
     items.length,
@@ -143,13 +157,9 @@ export function ModernLightbox({
       const interval = setInterval(() => {
         handleNext();
       }, 4000);
-      setSlideshowInterval(interval);
       return () => clearInterval(interval);
-    } else if (slideshowInterval) {
-      clearInterval(slideshowInterval);
-      setSlideshowInterval(null);
     }
-  }, [isSlideshow, items.length, handleNext, slideshowInterval]);
+  }, [isSlideshow, items.length, handleNext]);
 
   const handleZoomIn = () => {
     setZoom((prev) => Math.min(prev * 1.5, 5));

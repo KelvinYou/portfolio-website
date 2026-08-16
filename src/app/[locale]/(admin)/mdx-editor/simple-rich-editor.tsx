@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Bold,
@@ -154,14 +154,14 @@ export default function SimpleRichEditor({
   onMDXChange,
 }: SimpleRichEditorProps) {
   const editorRef = useRef<HTMLDivElement>(null);
-  const [isInitialized, setIsInitialized] = useState(false);
+  const isInitializedRef = useRef(false);
 
   useEffect(() => {
-    if (editorRef.current && !isInitialized) {
+    if (editorRef.current && !isInitializedRef.current) {
       editorRef.current.innerHTML = mdxToHTML(content);
-      setIsInitialized(true);
+      isInitializedRef.current = true;
     }
-  }, [content, isInitialized]);
+  }, [content]);
 
   const handleInput = () => {
     if (editorRef.current) {
