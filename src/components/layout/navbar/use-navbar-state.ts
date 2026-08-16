@@ -4,7 +4,19 @@ import { navItems } from "@/constants";
 import { NavItem } from "@/types";
 import { useMotionValueEvent, useScroll } from "framer-motion";
 import { usePathname, useRouter } from "@/i18n/navigation";
-import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from "react";
+
+// Client-detection store: never emits, so the value flips from the server
+// snapshot (false) to the client snapshot (true) exactly once on hydration.
+const subscribeNoop = () => () => {};
+const getIsClientSnapshot = () => true;
+const getIsClientServerSnapshot = () => false;
 
 export interface NavbarState {
   mobileMenuOpen: boolean;
@@ -30,11 +42,9 @@ export function useNavbarState(): NavbarState {
   const [activeSection, setActiveSection] = useState("home");
   const [scrolled, setScrolled] = useState(false);
   const [windowWidth, setWindowWidth] = useState(0);
-  const [isClient, setIsClient] = useState(false);
   const prevScrollY = useRef(0);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [lastScrollY, setLastScrollY] = useState(0);
-  const [activeRoute, setActiveRoute] = useState("/");
   const [isNavigating, setIsNavigating] = useState(false);
 
   const { scrollY } = useScroll();
@@ -42,9 +52,11 @@ export function useNavbarState(): NavbarState {
   const router = useRouter();
 
   // Track if we're on the client side
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
+  const isClient = useSyncExternalStore(
+    subscribeNoop,
+    getIsClientSnapshot,
+    getIsClientServerSnapshot,
+  );
 
   // Track window size for responsive adjustments
   useEffect(() => {
@@ -117,19 +129,22 @@ export function useNavbarState(): NavbarState {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [windowWidth, isClient, activeSection]);
 
-  // Update active route when pathname changes
-  useEffect(() => {
+  // Reset scroll/navigation state when the pathname changes (during render, so
+  // it lands before paint without a cascading re-render)
+  const [prevPathname, setPrevPathname] = useState(pathname);
+  if (pathname !== prevPathname) {
+    setPrevPathname(pathname);
     setScrollProgress(0);
     setIsNavigating(false);
+  }
 
-    const matchedRoute = navItems.find((item) => {
+  // Active route is a pure derivation of the pathname
+  const activeRoute =
+    navItems.find((item) => {
       if (item.href === "/" && pathname === "/") return true;
       if (item.href !== "/" && pathname.startsWith(item.href)) return true;
       return false;
-    });
-
-    setActiveRoute(matchedRoute?.href || pathname);
-  }, [pathname]);
+    })?.href || pathname;
 
   // Calculate scroll progress
   useEffect(() => {

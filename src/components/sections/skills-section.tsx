@@ -1,44 +1,28 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { SkillRing } from "@/components/ui/skill-ring";
 import { fadeIn, staggerContainer, defaultViewport } from "@/lib/animations";
 import { useTranslations } from "next-intl";
+import { skillGroups } from "@/constants/data";
 
-const skills = [
-  { name: "LLM Integration", level: 90 },
-  { name: "Agentic AI", level: 85 },
-  { name: "TypeScript", level: 90 },
-  { name: "Next.js (React)", level: 90 },
-  { name: "Claude API", level: 85 },
-  { name: "Multi-agent Systems", level: 80 },
-  { name: "MCP", level: 75 },
-  { name: "Python", level: 65 },
-  { name: "Gin (Go)", level: 75 },
-  { name: "Solidity", level: 60 },
-  { name: "Java", level: 60 },
-  { name: "Linux", level: 60 },
-  { name: "Git", level: 80 },
-]
-  .sort((a, b) => b.level - a.level)
-  .slice(0, 5);
-
-const softSkillsData = [
-  { name: "Team Collaboration", icon: "🤝" },
-  { name: "Problem Solving", icon: "🧩" },
-  { name: "Time Management", icon: "⏱" },
-  { name: "Adaptability", icon: "🔄" },
-  { name: "Leadership", icon: "🧭" },
-];
-
+// Renders `skillGroups` from data.ts — the same array the resume PDF uses, so
+// the site and the resume cannot drift apart.
+//
+// Two things were deliberately dropped here:
+//   1. Self-assigned proficiency rings ("LLM Integration: 90"). An invented
+//      number is worse signal than no number; the projects and blog posts carry
+//      the evidence instead.
+//   2. The soft-skills tab ("Team Collaboration", "Adaptability", ...). Every
+//      candidate claims these and none of them are falsifiable, so they cost
+//      space and add nothing. Removing the tab left a single list, so the Tabs
+//      wrapper went with it.
 export function SkillsSection() {
   const t = useTranslations("sections");
 
   return (
     <section
       id="skills"
-      className="relative border-y border-border bg-muted/20"
+      className="relative border-y border-border bg-muted/20 py-32 md:py-40"
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
@@ -65,59 +49,35 @@ export function SkillsSection() {
           </p>
         </motion.div>
 
-        <Tabs defaultValue="technical" className="mx-auto max-w-3xl">
-          <TabsList className="mb-10 grid w-full grid-cols-2 rounded-xl border border-border bg-muted/40 p-1">
-            <TabsTrigger
-              value="technical"
-              className="cursor-pointer rounded-lg text-sm font-medium transition-all data-[state=active]:bg-card data-[state=active]:shadow-sm"
-            >
-              {t("skills_technical")}
-            </TabsTrigger>
-            <TabsTrigger
-              value="soft"
-              className="cursor-pointer rounded-lg text-sm font-medium transition-all data-[state=active]:bg-card data-[state=active]:shadow-sm"
-            >
-              {t("skills_soft")}
-            </TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="technical">
+        <motion.div
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={defaultViewport}
+          className="mx-auto max-w-3xl space-y-8"
+        >
+          {skillGroups.map((group) => (
             <motion.div
-              variants={staggerContainer}
-              initial="hidden"
-              whileInView="visible"
-              viewport={defaultViewport}
-              className="flex flex-wrap justify-center gap-8"
+              key={group.label}
+              variants={fadeIn}
+              className="grid gap-3 sm:grid-cols-[9rem_1fr] sm:gap-6"
             >
-              {skills.map((skill, index) => (
-                <motion.div key={index} variants={fadeIn}>
-                  <SkillRing name={skill.name} level={skill.level} index={index} />
-                </motion.div>
-              ))}
+              <h3 className="pt-1 text-sm font-semibold tracking-wide text-muted-foreground uppercase">
+                {group.label}
+              </h3>
+              <ul className="flex flex-wrap gap-2">
+                {group.items.map((item) => (
+                  <li
+                    key={item}
+                    className="rounded-lg border border-border bg-card px-3 py-1.5 text-sm text-foreground transition-colors duration-300 hover:border-primary/40"
+                  >
+                    {item}
+                  </li>
+                ))}
+              </ul>
             </motion.div>
-          </TabsContent>
-
-          <TabsContent value="soft">
-            <motion.div
-              variants={staggerContainer}
-              initial="hidden"
-              whileInView="visible"
-              viewport={defaultViewport}
-              className="grid gap-4 sm:grid-cols-2 md:grid-cols-3"
-            >
-              {softSkillsData.map((skill, index) => (
-                <motion.div
-                  key={index}
-                  variants={fadeIn}
-                  className="flex items-center gap-4 rounded-xl border border-border bg-card p-5 transition-all duration-300 hover:border-primary/25 hover:shadow-[0_4px_20px_rgba(0,0,0,0.1)]"
-                >
-                  <span className="text-2xl">{skill.icon}</span>
-                  <span className="font-medium text-foreground">{skill.name}</span>
-                </motion.div>
-              ))}
-            </motion.div>
-          </TabsContent>
-        </Tabs>
+          ))}
+        </motion.div>
       </div>
     </section>
   );

@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Project } from "@/types";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpDown, Check, Filter, Search, X } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 
 type SortOption = "newest" | "oldest" | "az" | "za";
 
@@ -34,7 +34,6 @@ export default function ProjectsClient({
 }: {
   initialProjects: Project[];
 }) {
-  const [projects, setProjects] = useState<Project[]>(initialProjects);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedTechs, setSelectedTechs] = useState<string[]>([]);
   const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
@@ -66,7 +65,7 @@ export default function ProjectsClient({
   );
 
   // Filter and sort projects
-  useEffect(() => {
+  const projects = useMemo<Project[]>(() => {
     let filteredProjects = [...initialProjects];
 
     // Apply search filter
@@ -114,7 +113,7 @@ export default function ProjectsClient({
       }
     });
 
-    setProjects(filteredProjects);
+    return filteredProjects;
   }, [initialProjects, searchQuery, selectedTechs, selectedStatus, sortOption]);
 
   // Clear all filters

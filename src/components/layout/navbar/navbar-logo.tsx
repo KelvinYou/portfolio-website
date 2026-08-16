@@ -26,7 +26,7 @@ export function NavbarLogo({ onLogoClick }: NavbarLogoProps) {
         <div className="relative">
           <Avatar className="h-7 w-7 sm:h-9 sm:w-9 border-2 border-primary/30 shadow-lg">
             <AvatarImage
-              src={personalInfo.memoji}
+              src={personalInfo.profileAvatar}
               alt={`${personalInfo.name}'s profile picture`}
             />
             <AvatarFallback className="bg-primary/10 text-xs sm:text-sm">

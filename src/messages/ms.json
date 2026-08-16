@@ -11,11 +11,11 @@
     "more": "Lagi"
   },
   "hero": {
-    "badge": "Pernah membina platform data pada skala Tencent",
+    "badge": "Frontend pembayaran waktu siang · sistem LLM multi-ejen waktu malam",
     "greeting": "Hai, saya {name}",
-    "role": "Jurutera Frontend · Pemikir Sistem",
+    "role": "Jurutera Perisian AI-native · Fokus Frontend",
     "description_prefix": "Saya ambil ",
-    "description_build": "masalah huru-hara berskala besar — papan pemuka skala Tencent, alatan pembangunan agentic",
+    "description_build": "masalah huru-hara berskala besar — aliran pembayaran produksi, sistem LLM multi-ejen",
     "description_middle": " dan reka bentuk menjadi ",
     "description_suffix": "sistem yang benar-benar dihantar",
     "stats_years": "Tahun Pengalaman",
@@ -27,12 +27,12 @@
     "about_heading": "Cara Saya Bekerja",
     "about_hook": "Saya mengejar corak di sebalik huru-hara — masalah kabur, sistem yang perlahan, aliran kerja manual — dan menjadikannya sesuatu yang berjalan sendiri.",
     "about_current_label": "Sedang Membina",
-    "about_current_detail": "Produk SaaS dengan Next.js + Supabase. Meneroka corak reka bentuk sistem dan seni bina berskala.",
+    "about_current_detail": "Saluran analisis saham multi-ejen atas Claude Agent SDK — empat ejen penganalisis, peringkat debat, dan gelung outcome memory yang menilai keputusan lampaunya sendiri.",
     "about_step_1": "Mula dengan masalah yang kabur dan huru-hara",
     "about_step_2": "Reka bentuk menjadi sistem, bukan tampung",
     "about_step_3": "Hantar supaya ia berjalan sendiri",
     "experience_title": "Pengalaman",
-    "experience_subtitle": "Membina produk pada skala besar. Dari jutaan pengguna Tencent hingga MVP permulaan.",
+    "experience_subtitle": "Dari platform fintech produksi hingga sistem agentic yang saya bina sendiri.",
     "education_title": "Pendidikan",
     "education_subtitle": "Perjalanan akademik saya dalam sains komputer dan kejuruteraan perisian.",
     "projects_title": "Projek",
@@ -41,9 +41,7 @@
     "contact_title": "Hubungi Saya",
     "contact_subtitle": "Berminat untuk bekerjasama? Jangan segan untuk menghubungi!",
     "skills_title": "Kemahiran & Kepakaran",
-    "skills_subtitle": "Teknologi dan alatan yang saya kuasai sepanjang kerjaya profesional saya.",
-    "skills_technical": "Kemahiran Teknikal",
-    "skills_soft": "Kemahiran Insaniah"
+    "skills_subtitle": "Timbunan teknologi yang benar-benar saya guna — kerja harian, projek sampingan, dan segala di antaranya."
   },
   "common": {
     "view_resume": "Lihat Resume",

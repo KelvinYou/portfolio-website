@@ -158,10 +158,10 @@ export function HeroSection() {
                 <div className="mt-4 space-y-2">
                   {[
                     { label: "shipped", value: `${projects.length} projects` },
+                    { label: "fintech", value: "9,000+ users in production" },
                     { label: "fastest", value: "35% load reduction" },
-                    { label: "scale", value: "500K rows @ 60fps" },
-                    { label: "users", value: "1M+ products served" },
-                    { label: "stack", value: "Next.js + TS + GraphQL" },
+                    { label: "agents", value: "4-agent debate pipeline" },
+                    { label: "stack", value: "TypeScript · Python · MCP" },
                   ].map((line) => (
                     <div key={line.label} className="flex gap-4">
                       <span className="w-14 shrink-0 text-right text-muted-foreground/70">

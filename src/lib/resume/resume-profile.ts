@@ -3,7 +3,7 @@ import {
   experiences,
   personalInfo,
   projects,
-  skills,
+  skillGroups,
 } from "@/constants";
 
 const featuredExperienceCompanies = [
@@ -19,16 +19,6 @@ const featuredProjectTitles = [
 ] as const;
 
 const normalizePdfText = (text: string) => text.replace(/[—–]/g, "-");
-
-const techStack = [
-  "React",
-  "TypeScript",
-  "Next.js",
-  "Node.js",
-  "Python",
-  "Java",
-  "Go",
-];
 
 const selectByName = <T extends { company: string }>(
   items: T[],
@@ -57,7 +47,9 @@ export const resumeProfile = {
     ...personalInfo,
     summary: normalizePdfText(personalInfo.summary),
   },
-  title: "AI-native Full-stack Engineer (Frontend-focused)",
+  // Mirrors personalInfo.title rather than repeating it — the two had already
+  // drifted once.
+  title: normalizePdfText(personalInfo.title),
   experiences: selectByName(experiences, featuredExperienceCompanies),
   projects: selectProjects(featuredProjectTitles).map((project) => ({
     ...project,
@@ -67,10 +59,6 @@ export const resumeProfile = {
     ),
   })),
   educations: educations.slice(0, 1),
-  skillGroups: [
-    { label: "Tech Stack", items: techStack },
-    { label: "AI / Agents", items: skills.ai },
-    { label: "Data", items: skills.databases },
-    { label: "Tools", items: skills.tools },
-  ],
+  // Shared with the website's Skills section — see data.ts.
+  skillGroups,
 };

@@ -163,7 +163,7 @@ export const experiences: Experience[] = [
 
 export const personalInfo = {
   name: "Kelvin You",
-  title: "AI-native Full-stack Engineer (Frontend-focused)",
+  title: "AI-native Software Engineer (Frontend-focused)",
   fullname: "Kelvin You Kok Eng",
   contact: {
     email: "ykekelvin0220@gmail.com",
@@ -173,9 +173,12 @@ export const personalInfo = {
     personalWebsite: domainPath,
     location: "Kuala Lumpur, Malaysia",
   },
-  profilePicture: "/images/profile-picture.jpg",
+  // Full-frame original; use for large-format placements.
+  profilePicture: "/images/profile.jpeg",
+  // Face-centred crop of the same photo, for the small circular avatars.
+  profileAvatar: "/images/profile-avatar.jpg",
   memoji: "/images/memoji.png",
-  summary: `Frontend Engineer at dtcpay (FinTech), shipping a production payment platform serving 9,000+ active users. Same throughline runs through every role: take a messy, high-scale problem and design it into a system that runs itself — a Tencent/MiHoYo analytics platform, a payment platform's frontend and mobile stack, and now agentic dev tooling (Claude API + MCP): Personal-OS, multi-agent PRD/Figma reconciliation. Frontend craft, systems thinking, applied AI.`,
+  summary: `AI-native software engineer, frontend-focused. React/TypeScript on a production payment platform serving 9,000+ users at dtcpay; off the clock, multi-agent LLM systems on the Claude Agent SDK — MCP tool servers, agent debate, and evals that grade past calls.`,
 };
 
 // Example education data
@@ -241,6 +244,25 @@ export const educations = [
 ];
 
 export const projects: Project[] = [
+  {
+    title: "Multi-Agent Stock Analysis — Claude Agent SDK",
+    description:
+      "Four analyst agents (fundamentals, technical, sentiment, macro), each with its own MCP tool server, argued through a debate stage and merged by a synthesizer. Outcome memory scores past calls against what actually happened — gated by exit date so backtests can't see the future. Calibration is reported, never fed back as a coefficient.",
+    status: "In Progress",
+    techStacks: [
+      "Python",
+      "Claude Agent SDK",
+      "MCP",
+      "Multi-agent Systems",
+      "Pydantic",
+      "FastAPI",
+      "Backtesting",
+    ],
+    date: "2026-06-01",
+    // TODO(kelvin): publish the repo and add `github:` here. This is the
+    // strongest AI-engineering artifact you have and it is currently private,
+    // which makes it indistinguishable from a claim.
+  },
   {
     title: "Agentic Dev Tools — Claude API + MCP",
     description:
@@ -342,8 +364,10 @@ export const projects: Project[] = [
     title: "Edge Detection System",
     description:
       "Parallelized image processing (45+ s/image on single thread). Image chunking with Dask + Python threading for I/O. Achieved 8x speedup on 8-core machines, demonstrating Amdahl's Law in practice.",
-    github:
-      "https://github.com/KelvinYou/react-selflearn/tree/main/react-restaurant-landing",
+    // TODO(kelvin): the previous github link here pointed at
+    // react-selflearn/react-restaurant-landing — a React landing page, not this
+    // Python project. Removed rather than left wrong: one dead link discounts
+    // every other link on the page. Restore with the correct repo URL.
     status: "Completed",
     techStacks: ["Python", "Dask", "Threading"],
     date: "2022-9-23",
@@ -381,3 +405,16 @@ export const skills = {
   blockchain: ["Solidity", "Ethereum", "MetaMask", "Smart Contracts"],
   tools: ["Claude Code", "Docker", "Git", "Vercel", "GitHub Actions", "Playwright"],
 };
+
+// Single source of truth for how skills are grouped and ordered. Both the
+// website's Skills section and the resume PDF render from this exact array, so
+// the two can never drift out of sync.
+export const skillGroups: { label: string; items: readonly string[] }[] = [
+  {
+    label: "Tech Stack",
+    items: ["React", "TypeScript", "Next.js", "Node.js", "Python", "Java", "Go"],
+  },
+  { label: "AI / Agents", items: skills.ai },
+  { label: "Data", items: skills.databases },
+  { label: "Tools", items: skills.tools },
+];

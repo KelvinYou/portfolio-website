@@ -10,7 +10,16 @@ import { cn } from "@/lib/utils";
 import { fadeIn, staggerContainer, defaultViewport } from "@/lib/animations";
 import { useTranslations } from "next-intl";
 
-const topTechs = ["React", "TypeScript", "Next.js", "GraphQL", "Node.js", "PostgreSQL"];
+const topTechs = [
+  "TypeScript",
+  "Next.js",
+  "React",
+  "Python",
+  "Claude Agent SDK",
+  "MCP",
+  "FastAPI",
+  "PostgreSQL",
+];
 
 const workSteps = [
   { icon: Puzzle, labelKey: "about_step_1" as const },

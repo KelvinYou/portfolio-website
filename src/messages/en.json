@@ -11,11 +11,11 @@
     "more": "More"
   },
   "hero": {
-    "badge": "Previously built data platforms at Tencent scale",
+    "badge": "Payments frontend by day · multi-agent LLM systems by night",
     "greeting": "Hi, I'm {name}",
-    "role": "Frontend Engineer · Systems Thinker",
+    "role": "AI-native Software Engineer · Frontend-focused",
     "description_prefix": "I take ",
-    "description_build": "messy, high-scale problems — Tencent-scale dashboards, agentic dev tooling",
+    "description_build": "messy, high-scale problems — production payment flows, multi-agent LLM systems",
     "description_middle": " and design them into ",
     "description_suffix": "systems that ship",
     "stats_years": "Years Exp.",
@@ -27,12 +27,12 @@
     "about_heading": "How I Work",
     "about_hook": "I chase the pattern under a mess — an ambiguous problem, a slow system, a manual workflow — and turn it into something that runs on its own.",
     "about_current_label": "Currently Building",
-    "about_current_detail": "Full-stack SaaS with Next.js + Supabase. Exploring AI-assisted development, cloud architecture, and data-driven product thinking.",
+    "about_current_detail": "A multi-agent stock-analysis pipeline on the Claude Agent SDK — four analyst agents, a debate stage, and an outcome-memory loop that scores its own past calls.",
     "about_step_1": "Start with a messy, ambiguous problem",
     "about_step_2": "Design it into a system, not a patch",
     "about_step_3": "Ship it so it runs on its own",
     "experience_title": "Experience",
-    "experience_subtitle": "Building products at scale. From Tencent's millions to startup MVPs.",
+    "experience_subtitle": "From production fintech platforms to agentic systems I build on my own time.",
     "education_title": "Education",
     "education_subtitle": "My academic journey in computer science and software engineering.",
     "projects_title": "Projects",
@@ -41,9 +41,7 @@
     "contact_title": "Let's Connect",
     "contact_subtitle": "Interested in working together? Feel free to reach out!",
     "skills_title": "Skills & Expertise",
-    "skills_subtitle": "Technologies and tools I've mastered throughout my professional journey.",
-    "skills_technical": "Technical Skills",
-    "skills_soft": "Soft Skills"
+    "skills_subtitle": "The stack I actually build with — day job, side projects, and everything in between."
   },
   "common": {
     "view_resume": "View Resume",

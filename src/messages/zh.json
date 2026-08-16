@@ -11,11 +11,11 @@
     "more": "更多"
   },
   "hero": {
-    "badge": "曾在腾讯规模的平台上构建数据系统",
+    "badge": "白天做支付前端 · 晚上写多智能体 LLM 系统",
     "greeting": "你好，我是 {name}",
-    "role": "前端工程师 · 系统思维者",
+    "role": "AI-native 软件工程师 · 前端方向",
     "description_prefix": "我把",
-    "description_build": "混乱、高规模的问题——腾讯级数据看板、agentic 开发工具",
+    "description_build": "混乱、高规模的问题——生产级支付流程、多智能体 LLM 系统",
     "description_middle": "，设计成",
     "description_suffix": "能落地运行的系统",
     "stats_years": "年经验",
@@ -27,12 +27,12 @@
     "about_heading": "我的工作方式",
     "about_hook": "我追一团混乱背后的规律——模糊的问题、缓慢的系统、手动的流程——把它变成能自己运转的东西。",
     "about_current_label": "当前在做",
-    "about_current_detail": "使用 Next.js + Supabase 构建 SaaS 产品。深入研究系统设计模式和可扩展架构。",
+    "about_current_detail": "基于 Claude Agent SDK 的多智能体股票分析流水线——四个分析师 agent、一个辩论环节，以及一套为自己过往判断打分的 outcome memory。",
     "about_step_1": "从一团模糊、混乱的问题开始",
     "about_step_2": "把它设计成系统，不是打补丁",
     "about_step_3": "交付出去，让它自己运转",
     "experience_title": "工作经验",
-    "experience_subtitle": "大规模构建产品。从腾讯的百万级用户到初创 MVP。",
+    "experience_subtitle": "从生产级金融科技平台，到我业余时间自己搭的 agentic 系统。",
     "education_title": "教育背景",
     "education_subtitle": "我在计算机科学和软件工程方面的学术旅程。",
     "projects_title": "项目",
@@ -41,9 +41,7 @@
     "contact_title": "联系我",
     "contact_subtitle": "有兴趣一起合作？欢迎联系我！",
     "skills_title": "技能与专长",
-    "skills_subtitle": "我在职业生涯中掌握的技术和工具。",
-    "skills_technical": "技术技能",
-    "skills_soft": "软技能"
+    "skills_subtitle": "我实际在用的技术栈——本职工作、side project，以及两者之间的一切。"
   },
   "common": {
     "view_resume": "查看简历",
