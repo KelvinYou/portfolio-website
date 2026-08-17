@@ -22,9 +22,9 @@
     "primary": "Utama"
   },
   "hero": {
-    "badge": "Frontend pembayaran waktu siang · sistem LLM multi-ejen waktu malam",
+    "badge": "Full-stack pembayaran waktu siang · sistem LLM multi-ejen waktu malam",
     "greeting": "Hai, saya {name}",
-    "role": "Jurutera Perisian · Pembayaran Fintech, Pematuhan & Sistem AI",
+    "role": "Jurutera Full-stack AI-native · Pembayaran Fintech & Sistem Agen",
     "description_prefix": "Saya ambil ",
     "description_build": "masalah huru-hara berskala besar — aliran pembayaran produksi, sistem LLM multi-ejen",
     "description_middle": " dan reka bentuk menjadi ",
@@ -58,7 +58,7 @@
     "projects_group_system_note": "Ejen dengan pagar keselamatan. Kerja reka bentuknya terletak pada menentukan apa yang model dibenarkan simpulkan, dan apa yang tidak.",
     "projects_group_coursework_note": "Kerja universiti, disimpan kerana masalah sistemnya, bukan skopnya.",
     "projects_page_title": "Projek",
-    "projects_page_intro": "Sembilan projek, dikumpulkan mengikut jenisnya. Terbaharu dahulu dalam setiap kumpulan.",
+    "projects_page_intro": "{count} projek, dikumpulkan mengikut jenisnya. Terbaharu dahulu dalam setiap kumpulan.",
     "projects_page_legend": "Lajur kanan: hasil terukur, dan sama ada anda boleh melihatnya sendiri.",
     "projects_kind_product": "Produk",
     "projects_group_product_note": "Dibina untuk digunakan, lengkap dengan pengebilan. Yang sudah langsung membawa URL di lajur kanan."
@@ -77,7 +77,7 @@
     "topic_project": "Sesuatu projek",
     "topic_hello": "Sekadar menyapa",
     "greeting": "Hai Kelvin —",
-    "body_role": "kami sedang mencari jurutera frontend dan pengalaman anda dalam bidang pembayaran nampak sesuai. Berikut pasukan dan skopnya —",
+    "body_role": "kami sedang mencari jurutera full-stack dan pengalaman anda dalam bidang pembayaran nampak sesuai. Berikut pasukan dan skopnya —",
     "body_freelance": "kami ada projek yang perlukan bantuan anda. Skop kasar dan jadualnya di bawah —",
     "body_project": "saya membaca tentang salah satu projek anda dan ingin tahu bagaimana ia dibina —",
     "body_hello": "tiada agenda. Saya suka apa yang anda bina dan ingin menyapa.",

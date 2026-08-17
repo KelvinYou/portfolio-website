@@ -22,9 +22,9 @@
     "primary": "主导航"
   },
   "hero": {
-    "badge": "白天做支付前端 · 晚上写多智能体 LLM 系统",
+    "badge": "白天做支付全栈 · 晚上写多智能体 LLM 系统",
     "greeting": "你好，我是 {name}",
-    "role": "软件工程师 · 支付、合规与 AI 系统",
+    "role": "AI 原生全栈工程师 · 支付系统与 Agent 架构",
     "description_prefix": "我把",
     "description_build": "混乱、高规模的问题——生产级支付流程、多智能体 LLM 系统",
     "description_middle": "，设计成",
@@ -58,7 +58,7 @@
     "projects_group_system_note": "带护栏的 Agent。设计的重点在于界定模型可以下什么结论、不可以下什么结论。",
     "projects_group_coursework_note": "大学时期的作业，保留下来是因为其中的系统问题，而非项目规模。",
     "projects_page_title": "项目",
-    "projects_page_intro": "九个项目，按类型分组，每组内按时间倒序排列。",
+    "projects_page_intro": "{count} 个项目，按类型分组，每组内按时间倒序排列。",
     "projects_page_legend": "右栏：可量化的结果，以及你能否亲自查看。",
     "projects_kind_product": "产品",
     "projects_group_product_note": "为真实使用而建，带付费流程。已上线的会在右栏给出链接。"
@@ -77,7 +77,7 @@
     "topic_project": "某个项目",
     "topic_hello": "打个招呼",
     "greeting": "Kelvin 你好 —",
-    "body_role": "我们在招前端工程师，看了你在支付方向的经历觉得挺合适。团队和职责如下 —",
+    "body_role": "我们在招全栈工程师，看了你在支付方向的经历觉得挺合适。团队和职责如下 —",
     "body_freelance": "我们有个项目想请你帮忙，大致范围和时间安排如下 —",
     "body_project": "看了你的项目介绍，想问问具体是怎么做的 —",
     "body_hello": "没什么事，就是喜欢你在做的东西，想打个招呼。",

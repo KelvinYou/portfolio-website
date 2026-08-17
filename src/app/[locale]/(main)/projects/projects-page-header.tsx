@@ -3,6 +3,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { staggerContainerWithTiming, fadeIn } from "@/lib/animations";
+import { projects } from "@/constants/data";
 
 export function ProjectsPageHeader() {
   const t = useTranslations("sections");
@@ -27,7 +28,10 @@ export function ProjectsPageHeader() {
         className="mt-6 max-w-[52ch] text-lg leading-relaxed text-muted-foreground"
         variants={reduceMotion ? undefined : fadeIn}
       >
-        {t("projects_page_intro")}
+        {/* Counted from the array, not spelled out in the copy — the number was
+            hardcoded as "Nine" in three locales and went stale the first time a
+            project was removed. */}
+        {t("projects_page_intro", { count: projects.length })}
       </motion.p>
 
       <motion.p

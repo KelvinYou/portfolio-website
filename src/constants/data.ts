@@ -15,20 +15,27 @@ export const experiences: Experience[] = [
     description:
       "Production payments platform, 9,000+ users. Led Flutter to React Native migration unifying mobile + web.",
     responsibilities: [
-      "Cross-currency bulk payments, React + Kotlin: FX rate lock, per-row settlement allocation, conservation tests.",
+      "Kotlin backend for cross-currency batch payments: FX quote lock, largest-remainder allocation, CAS-on-status duplicate guard.",
       "Fail-closed PII masking across 5 payment surfaces — unmask only on explicit corporate classification.",
       "KYT case review UI: maker-checker approval workflow, RFI state machine, scope-gated decisions.",
     ],
     skills: [
+      "Kotlin",
       "React",
       "React Native",
       "TypeScript",
-      "Kotlin",
       "Payment Systems",
+      "Concurrency",
+      "System Design",
       "Fintech",
-      "Frontend Architecture",
     ],
     logo: "/images/companies/dtcpay.jpeg",
+    // The two Kotlin write-ups are the only public evidence of server-side
+    // ownership — the rest of the site reads frontend-only without them.
+    blogSlugs: [
+      "cas-instead-of-idempotency-key",
+      "conserving-money-across-rows",
+    ],
   },
   {
     title: "Frontend Engineer",
@@ -163,7 +170,7 @@ export const experiences: Experience[] = [
 
 export const personalInfo = {
   name: "Kelvin You",
-  title: "Software Engineer · Fintech Payments, Compliance & AI Systems",
+  title: "AI-native Full-stack Engineer · Fintech Payments & Agent Systems",
   fullname: "Kelvin You Kok Eng",
   contact: {
     email: "ykekelvin0220@gmail.com",
@@ -178,7 +185,7 @@ export const personalInfo = {
   // Face-centred crop of the same photo, for the small circular avatars.
   profileAvatar: "/images/profile-avatar.jpg",
   memoji: "/images/memoji.png",
-  summary: `Software engineer on a production payment platform serving 9,000+ users at dtcpay — cross-currency bulk payments, fail-closed PII masking and AML review workflows, React/TypeScript through to Kotlin. Off the clock, multi-agent LLM systems on the Claude Agent SDK — MCP tool servers, agent debate, and evals that grade past calls.`,
+  summary: `Full-stack engineer on a production payment platform serving 9,000+ users at dtcpay — React and React Native at the front, Kotlin at the back: cross-currency batch payments, fail-closed PII masking, AML review workflows. Off the clock, multi-agent LLM systems on the Claude Agent SDK — MCP tool servers, agent debate, and walk-forward evals that grade past calls.`,
 };
 
 export type SocialId = "github" | "linkedin" | "email";
@@ -284,10 +291,16 @@ export const projects: Project[] = [
     kind: "system",
     featured: true,
     claim:
-      "Four analyst desks — fundamentals, technical, sentiment, macro — each on its own MCP server, argued through a debate stage and merged by a synthesizer. Calibration is reported, never fed back as a coefficient.",
+      "Four analyst desks — fundamentals, technical, sentiment, macro — each on its own MCP server, argued through a debate stage and merged by a synthesizer. Signals are validated walk-forward against a frozen holdout, with Wilson intervals and a deflated Sharpe on the strategy search — which is how I know the factor still lagged buy-and-hold.",
+    // Numbers from repos/ai-stock-analysis/docs/momentum-factor-sweep-aapl-2026-08-17.md
+    // — 20-bar lookback / 20-bar holding, parameters fixed on 2016-2022 and the
+    // 2023-2026 window kept frozen. Reported net of cost, never gross.
     outcome: [
-      { value: "4", label: "analyst desks, each with its own tool server" },
-      { value: "0", label: "lookahead — outcome memory gated by exit date" },
+      {
+        value: "1.32",
+        label: "Sharpe on a frozen 2023-26 holdout, net of cost",
+      },
+      { value: "10/12", label: "tickers still net-positive at 30 bps/side" },
     ],
     links: { repo: "https://github.com/KelvinYou/ai-stock-analysis" },
     access: "public",
@@ -297,9 +310,9 @@ export const projects: Project[] = [
       "Claude Agent SDK",
       "MCP",
       "Multi-agent Systems",
+      "Walk-forward Backtesting",
       "Pydantic",
       "FastAPI",
-      "Backtesting",
     ],
   },
   {
@@ -326,47 +339,9 @@ export const projects: Project[] = [
     ],
   },
   {
-    title: "Zync",
-    kind: "product",
-    featured: true,
-    claim:
-      "Meeting scheduling on a real-time sync engine — Supabase subscriptions for presence, PostgreSQL query tuning and Redis caching underneath the availability check.",
-    outcome: [
-      { value: "<200ms", label: "availability check, Postgres + Redis" },
-      { value: "1000+", label: "concurrent users the sync engine targets" },
-    ],
-    access: "building",
-    year: 2025,
-    techStacks: [
-      "React.js",
-      "Nest.js",
-      "Supabase",
-      "PostgreSQL",
-      "Shadcn",
-      "Stripe",
-      "Redis",
-    ],
-  },
-  {
-    title: "Agentic Dev Tools",
-    kind: "system",
-    claim:
-      "Multi-agent systems pointed at developer workflows: a Playwright spec generator that debugs its own output, and a PRD/Figma reconciler that flags spec conflicts before development starts.",
-    // No measured result yet — the row shows that gap rather than dressing it up.
-    access: "private",
-    year: 2025,
-    techStacks: [
-      "Claude API",
-      "MCP",
-      "Playwright",
-      "TypeScript",
-      "Multi-agent Systems",
-      "Prompt Engineering",
-    ],
-  },
-  {
     title: "PTIB",
     kind: "product",
+    featured: true,
     claim:
       "Multi-tenant SaaS that digitised a 200-student tuition centre: role-based portals, Stripe billing, QR attendance, row-level security in Supabase.",
     outcome: [
@@ -475,18 +450,23 @@ export const skills = {
     "Prompt Engineering",
     "AI-assisted Development",
   ],
-  languages: ["TypeScript", "JavaScript", "Python", "Java", "Go"],
-  frameworks: ["Next.js", "React", "Node.js", "NestJS", "Express"],
+  languages: ["TypeScript", "JavaScript", "Python", "Kotlin", "Java", "Go"],
+  frameworks: [
+    "Next.js",
+    "React",
+    "React Native",
+    "Node.js",
+    "NestJS",
+    "FastAPI",
+  ],
   databases: ["PostgreSQL", "Supabase", "Redis"],
   blockchain: ["Solidity", "Ethereum", "MetaMask", "Smart Contracts"],
-  tools: [
-    "Claude Code",
-    "Docker",
-    "Git",
-    "Vercel",
-    "GitHub Actions",
-    "Playwright",
-  ],
+  // Deliberately no AWS/GCP/Kubernetes here. Every one of those would be a
+  // claim with nothing behind it; this list is what has actually run something
+  // in production. Closing that gap is the current learning target, not a line
+  // to pad now.
+  delivery: ["Docker", "GitHub Actions (CI/CD)", "Vercel", "Firebase"],
+  tools: ["Claude Code", "Git", "Playwright"],
 };
 
 // Single source of truth for how skills are grouped and ordered. Both the
@@ -497,9 +477,11 @@ export const skillGroups: { label: string; items: readonly string[] }[] = [
     label: "Tech Stack",
     items: [
       "React",
+      "React Native",
       "TypeScript",
       "Next.js",
       "Node.js",
+      "Kotlin",
       "Python",
       "Java",
       "Go",
@@ -507,5 +489,8 @@ export const skillGroups: { label: string; items: readonly string[] }[] = [
   },
   { label: "AI / Agents", items: skills.ai },
   { label: "Data", items: skills.databases },
+  // Split out of "Tools": a reader scanning for deploy/CI signal was finding it
+  // mixed in with an editor and a test runner, and reading it as absent.
+  { label: "Cloud & Delivery", items: skills.delivery },
   { label: "Tools", items: skills.tools },
 ];

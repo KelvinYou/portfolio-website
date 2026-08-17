@@ -13,9 +13,9 @@ const featuredExperienceCompanies = [
 ] as const;
 
 const featuredProjectTitles = [
+  "Multi-Agent Stock Analysis",
   "Personal-OS",
   "PTIB",
-  "Agentic Dev Tools",
 ] as const;
 
 const normalizePdfText = (text: string) => text.replace(/[—–]/g, "-");
@@ -43,8 +43,8 @@ const selectProjects = (titles: readonly string[]) =>
   });
 
 const projectDescriptions: Record<string, string> = {
-  "Agentic Dev Tools":
-    "Built LLM-powered Playwright spec generation and multi-agent PRD/Figma reconciliation tooling with Claude API, MCP, and structured tool calls.",
+  "Multi-Agent Stock Analysis":
+    "Built a four-desk multi-agent research pipeline on the Claude Agent SDK with per-desk MCP tool servers, an adversarial debate stage, and walk-forward backtesting with Wilson intervals and a deflated Sharpe on the strategy search.",
   "Personal-OS":
     "Built a production agent system with custom skills, MCP servers, circuit breakers, and structured workflows for self-management, finance, learning, and career tooling.",
 };
