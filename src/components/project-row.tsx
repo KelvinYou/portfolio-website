@@ -3,6 +3,7 @@
 import React from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
+import { Icons } from "@/components/icons";
 import { cn } from "@/lib/utils";
 import { fadeIn } from "@/lib/animations";
 import type { Project, ProjectOutcome } from "@/types";
@@ -60,25 +61,64 @@ function Evidence({
   );
 }
 
+/**
+ * The two artifacts a project can expose. Label and mark are paired here
+ * because the pairing is the point: both links used to carry the same
+ * `ArrowUpRight`, so the glyph slot said nothing — it was decoration next to
+ * the word doing all the work.
+ *
+ * The GitHub mark names its destination, which "SOURCE" cannot, so it leads.
+ * The arrow means "this leaves the site", which is a footnote on the label
+ * rather than a destination, so it trails. Both keep their word: there is no
+ * conventional glyph for "live demo", and dropping the labels would also leave
+ * the `no public artifact` rows with nothing to be parallel to.
+ */
+const ARTIFACTS = {
+  repo: { label: "Source" },
+  demo: { label: "Demo" },
+} as const;
+
 function ArtifactLink({
   href,
-  children,
   title,
+  kind,
 }: {
   href: string;
-  children: React.ReactNode;
   title: string;
+  kind: keyof typeof ARTIFACTS;
 }) {
+  const { label } = ARTIFACTS[kind];
+
   return (
     <a
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label={`${children} — ${title} (opens in a new tab)`}
-      className="inline-flex items-center gap-1 font-mono text-xs uppercase tracking-[0.14em] text-foreground underline decoration-border underline-offset-4 transition-colors hover:text-primary hover:decoration-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+      aria-label={`${label} — ${title} (opens in a new tab)`}
+      // Hover moves the rule to cyan and leaves the text alone. As
+      // `hover:text-primary` the label measured 1.33:1 against the light
+      // background — the same fix the blog pages now use throughout.
+      // 16px of text + 14px padding either side = a 44px hit box, and the
+      // matching negative margin keeps the row height exactly where it was.
+      // The mobile 44px rule in globals.css covers `button` and
+      // `[role="button"]` but not a plain anchor, so these were 16px targets.
+      className="group -my-3.5 inline-flex items-center gap-1.5 py-3.5 font-mono text-xs uppercase tracking-[0.14em] text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4 focus-visible:ring-offset-background"
     >
-      {children}
-      <ArrowUpRight className="h-3 w-3" aria-hidden="true" />
+      {kind === "repo" && (
+        // The octocat carries interior detail that turns to mud below ~14px;
+        // the arrow is two strokes and holds at 12.
+        <Icons.gitHub className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+      )}
+
+      {/* The rule underlines the word only. On the `inline-flex` anchor it also
+          ran under the glyph, which put a brand mark on a baseline rule. */}
+      <span className="underline decoration-border underline-offset-4 transition-colors group-hover:decoration-primary">
+        {label}
+      </span>
+
+      {kind === "demo" && (
+        <ArrowUpRight className="h-3 w-3 shrink-0" aria-hidden="true" />
+      )}
     </a>
   );
 }
@@ -90,14 +130,10 @@ function Artifact({ project }: { project: Project }) {
     return (
       <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
         {links.demo && (
-          <ArtifactLink href={links.demo} title={title}>
-            Demo
-          </ArtifactLink>
+          <ArtifactLink href={links.demo} title={title} kind="demo" />
         )}
         {links.repo && (
-          <ArtifactLink href={links.repo} title={title}>
-            Source
-          </ArtifactLink>
+          <ArtifactLink href={links.repo} title={title} kind="repo" />
         )}
       </div>
     );
