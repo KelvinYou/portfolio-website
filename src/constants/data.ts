@@ -13,20 +13,20 @@ export const experiences: Experience[] = [
     startDate: "2025-7-7",
     endDate: undefined,
     description:
-      "React/TypeScript web and mobile frontends for a production fintech platform, 9,000+ users.",
+      "Production payments platform, 9,000+ users. Led Flutter to React Native migration unifying mobile + web.",
     responsibilities: [
-      "Built bulk payment, swap, eKYC onboarding, transaction record flows for 9,000+ active users.",
-      "Led Flutter to React Native migration, unifying mobile + web to cut duplicate maintenance.",
-      "Reusable component patterns and shared UI primitives for cross-product consistency.",
+      "Cross-currency bulk payments, React + Kotlin: FX rate lock, per-row settlement allocation, conservation tests.",
+      "Fail-closed PII masking across 5 payment surfaces — unmask only on explicit corporate classification.",
+      "KYT case review UI: maker-checker approval workflow, RFI state machine, scope-gated decisions.",
     ],
     skills: [
       "React",
       "React Native",
       "TypeScript",
-      "Next.js",
-      "Frontend Architecture",
-      "Fintech",
+      "Kotlin",
       "Payment Systems",
+      "Fintech",
+      "Frontend Architecture",
     ],
     logo: "/images/companies/dtcpay.jpeg",
   },
@@ -163,7 +163,7 @@ export const experiences: Experience[] = [
 
 export const personalInfo = {
   name: "Kelvin You",
-  title: "AI-native Software Engineer (Frontend-focused)",
+  title: "Software Engineer · Fintech Payments, Compliance & AI Systems",
   fullname: "Kelvin You Kok Eng",
   contact: {
     email: "ykekelvin0220@gmail.com",
@@ -178,7 +178,7 @@ export const personalInfo = {
   // Face-centred crop of the same photo, for the small circular avatars.
   profileAvatar: "/images/profile-avatar.jpg",
   memoji: "/images/memoji.png",
-  summary: `AI-native software engineer, frontend-focused. React/TypeScript on a production payment platform serving 9,000+ users at dtcpay; off the clock, multi-agent LLM systems on the Claude Agent SDK — MCP tool servers, agent debate, and evals that grade past calls.`,
+  summary: `Software engineer on a production payment platform serving 9,000+ users at dtcpay — cross-currency bulk payments, fail-closed PII masking and AML review workflows, React/TypeScript through to Kotlin. Off the clock, multi-agent LLM systems on the Claude Agent SDK — MCP tool servers, agent debate, and evals that grade past calls.`,
 };
 
 export type SocialId = "github" | "linkedin" | "email";
@@ -289,10 +289,8 @@ export const projects: Project[] = [
       { value: "4", label: "analyst desks, each with its own tool server" },
       { value: "0", label: "lookahead — outcome memory gated by exit date" },
     ],
-    // TODO(kelvin): publish the repo and add `links.repo` here. This is the
-    // strongest AI-engineering artifact you have and it is currently private,
-    // which makes it indistinguishable from a claim.
-    access: "private",
+    links: { repo: "https://github.com/KelvinYou/ai-stock-analysis" },
+    access: "public",
     year: 2026,
     techStacks: [
       "Python",
@@ -314,10 +312,8 @@ export const projects: Project[] = [
       { value: "12", label: "agent skills running on a weekly cadence" },
       { value: "1", label: "non-overridable rule; the rest defer to live HRV" },
     ],
-    // TODO(kelvin): consider publishing a sanitized public version (framework
-    // only, exclude the data/ submodule). If you do, set links.repo to
-    // "https://github.com/KelvinYou/personal-os" and flip access to "public".
-    access: "private",
+    links: { repo: "https://github.com/KelvinYou/personal-os" },
+    access: "public",
     year: 2026,
     techStacks: [
       "Claude Code",

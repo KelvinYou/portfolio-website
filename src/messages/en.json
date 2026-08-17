@@ -24,7 +24,7 @@
   "hero": {
     "badge": "Payments frontend by day · multi-agent LLM systems by night",
     "greeting": "Hi, I'm {name}",
-    "role": "AI-native Software Engineer · Frontend-focused",
+    "role": "Software Engineer · Fintech Payments, Compliance & AI Systems",
     "description_prefix": "I take ",
     "description_build": "messy, high-scale problems — production payment flows, multi-agent LLM systems",
     "description_middle": " and design them into ",

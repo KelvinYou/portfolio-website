@@ -157,11 +157,12 @@ export function HeroSection() {
                 </div>
                 <div className="mt-4 space-y-2">
                   {[
-                    { label: "shipped", value: `${projects.length} projects` },
+                    { label: "listed", value: `${projects.length} projects` },
                     { label: "fintech", value: "9,000+ users in production" },
+                    { label: "payments", value: "cross-currency bulk, FX rate lock" },
                     { label: "fastest", value: "35% load reduction" },
                     { label: "agents", value: "4-agent debate pipeline" },
-                    { label: "stack", value: "TypeScript · Python · MCP" },
+                    { label: "stack", value: "TypeScript · Kotlin · Python · MCP" },
                   ].map((line) => (
                     <div key={line.label} className="flex gap-4">
                       <span className="w-14 shrink-0 text-right text-muted-foreground/70">

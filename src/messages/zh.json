@@ -24,7 +24,7 @@
   "hero": {
     "badge": "白天做支付前端 · 晚上写多智能体 LLM 系统",
     "greeting": "你好，我是 {name}",
-    "role": "AI-native 软件工程师 · 前端方向",
+    "role": "软件工程师 · 支付、合规与 AI 系统",
     "description_prefix": "我把",
     "description_build": "混乱、高规模的问题——生产级支付流程、多智能体 LLM 系统",
     "description_middle": "，设计成",

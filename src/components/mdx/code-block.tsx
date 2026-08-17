@@ -9,6 +9,7 @@ import {
   oneLight,
 } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { useTheme } from "next-themes";
+import { MermaidDiagram } from "./mermaid-diagram";
 
 // Define proper types for the React element structure
 interface CodeProps {
@@ -55,6 +56,12 @@ export function CodeBlock({ children }: CodeBlockProps) {
 
   const language = getLanguage();
   const codeContent = getCodeContent();
+
+  // ```mermaid fences are diagrams, not code — render them rather than printing
+  // the source. Kept here so authors write a normal fence and nothing else.
+  if (language === "mermaid") {
+    return <MermaidDiagram chart={codeContent.trim()} />;
+  }
 
   // Choose theme based on current theme
   const syntaxTheme = theme === "dark" ? oneDark : oneLight;

@@ -17,12 +17,21 @@ export type Post = {
     tags: string[];
     image?: string;
     author: string;
+    draft?: boolean;
   };
   content: string;
   serializedContent: MDXRemoteSerializeResult;
 };
 
 const postsDirectory = path.join(process.cwd(), "src/content/blog");
+
+// Drafts stay on disk and stay reviewable via `npm run dev`, but must not be
+// reachable in production — filtering the listings is not enough, since the
+// slug is guessable and the route renders unknown params on demand.
+export const isDraft = (data: { draft?: boolean }) => data.draft === true;
+
+// Dev renders drafts so they can be reviewed; anywhere else they 404.
+export const draftsVisible = process.env.NODE_ENV !== "production";
 
 export function getPostSlugs() {
   try {
@@ -71,6 +80,7 @@ export async function getPostBySlug(slug: string): Promise<Post> {
       tags: data.tags || [],
       image: data.image,
       author: data.author || "Anonymous",
+      draft: data.draft === true,
     };
 
     return {
@@ -111,9 +121,11 @@ export function getAllPostsMeta(): PostMeta[] {
             tags: data.tags || [],
             image: data.image,
             author: data.author || "Anonymous",
+            draft: data.draft === true,
           } as Post["frontmatter"],
         };
       })
+      .filter(({ frontmatter }) => !frontmatter.draft)
       .sort(
         (a, b) =>
           new Date(b.frontmatter.date).getTime() -
@@ -134,7 +146,9 @@ export async function getAllPosts(): Promise<Post[]> {
 
     const posts = await Promise.all(slugs.map((slug) => getPostBySlug(slug)));
 
-    return posts.sort(
+    return posts
+      .filter((post) => !post.frontmatter.draft)
+      .sort(
       (post1, post2) =>
         new Date(post2.frontmatter.date).getTime() -
         new Date(post1.frontmatter.date).getTime(),

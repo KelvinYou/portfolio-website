@@ -1,6 +1,6 @@
 // Server Component
 import { domainPath, personalInfo } from "@/constants";
-import { getAllPosts, getPostBySlug, type Post } from "@/lib/mdx";
+import { draftsVisible, getAllPosts, getPostBySlug, type Post } from "@/lib/mdx";
 import { notFound } from "next/navigation";
 import BlogPostClient from "./client";
 
@@ -111,6 +111,12 @@ export default async function BlogPostPage(props: PageProps) {
     post = await getPostBySlug(params.slug);
   } catch (error) {
     console.error("Error fetching blog post:", error);
+    notFound();
+  }
+
+  // The slug is guessable and this route renders unknown params on demand, so
+  // keeping drafts out of the listings does not keep them unpublished.
+  if (post.frontmatter.draft && !draftsVisible) {
     notFound();
   }
 
