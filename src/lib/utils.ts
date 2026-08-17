@@ -27,6 +27,18 @@ export function formatDate(
   });
 }
 
+/**
+ * Month and day only. Used inside the blog index's year groups, where the
+ * group heading already states the year and repeating it in every row costs
+ * width the title needs.
+ */
+export function formatMonthDay(dateString: string): string {
+  return new Date(dateString).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+  });
+}
+
 export function formatStartEndDate(
   startDate: string,
   endDate: string | undefined,

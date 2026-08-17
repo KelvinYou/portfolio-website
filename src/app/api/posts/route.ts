@@ -1,9 +1,12 @@
-import { getAllPosts } from "@/lib/mdx";
+import { getAllPostsMeta } from "@/lib/mdx";
 import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
-    const posts = await getAllPosts();
+    // Metadata only. The single consumer (related blog links) reads `slug` and
+    // `frontmatter.title`; the endpoint used to serve every post's full body
+    // and compiled MDX alongside them.
+    const posts = getAllPostsMeta();
     return NextResponse.json(posts, {
       headers: {
         "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=86400",

@@ -1,81 +1,101 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
+import type { TocEntry } from "@/lib/blog-content";
+import { cn } from "@/lib/utils";
 
-interface TocItem {
-  text: string;
-  id: string;
-  level: number;
-}
-
-interface TableOfContentsProps {
-  toc: TocItem[];
+interface TocProps {
+  toc: TocEntry[];
   activeId: string | null;
   onItemClick: (id: string) => void;
 }
 
-function TocList({
-  toc,
-  activeId,
-  onItemClick,
-}: TableOfContentsProps) {
+/**
+ * The rail is anchor links, not buttons. Buttons cannot be opened in a new
+ * tab, copied, or reached by a screen reader's link list, and a table of
+ * contents is the one control where all three are things people do.
+ */
+function TocList({ toc, activeId, onItemClick }: TocProps) {
   return (
-    <ul className="space-y-0.5">
+    <ul className="space-y-px">
       {toc.map(({ text, id, level }) => (
-        <li
-          key={id}
-          style={{ paddingLeft: `${Math.max(0, (level - 1) * 12)}px` }}
-        >
-          <button
-            onClick={() => onItemClick(id)}
-            className={`text-left w-full text-xs py-1.5 px-3 rounded-md border-l-2 transition-all duration-200 leading-snug
-              ${
-                activeId === id
-                  ? "border-primary text-primary bg-primary/5 font-medium"
-                  : "border-transparent text-muted-foreground hover:text-foreground hover:border-border/60"
-              }`}
+        <li key={id}>
+          <a
+            href={`#${id}`}
+            onClick={(event) => {
+              // Let modified clicks (new tab, new window) behave normally.
+              if (event.metaKey || event.ctrlKey || event.shiftKey) return;
+              event.preventDefault();
+              onItemClick(id);
+            }}
+            aria-current={activeId === id ? "location" : undefined}
+            className={cn(
+              "block border-l py-1.5 text-xs leading-snug transition-colors duration-200",
+              level === 3 ? "pl-6" : "pl-3",
+              // The cyan rule marks the current section; the label itself goes
+              // to foreground. Cyan text on the light background is 1.33:1.
+              activeId === id
+                ? "border-primary text-foreground"
+                : "border-border text-muted-foreground hover:border-muted-foreground/50 hover:text-foreground",
+            )}
           >
             {text}
-          </button>
+          </a>
         </li>
       ))}
     </ul>
   );
 }
 
-export function TocDesktop({ toc, activeId, onItemClick }: TableOfContentsProps) {
+export function TocDesktop({ toc, activeId, onItemClick }: TocProps) {
+  const t = useTranslations("blog");
   if (toc.length === 0) return null;
+
   return (
-    <div className="sticky top-28 max-h-[calc(100vh-120px)] overflow-auto pr-1">
-      <p className="text-[10px] font-mono tracking-[0.18em] uppercase text-muted-foreground/60 mb-4 flex items-center gap-2">
-        <span className="h-px w-4 bg-border inline-block" />
-        Contents
+    <nav
+      aria-label={t("contents")}
+      className="sticky top-28 max-h-[calc(100vh-9rem)] overflow-y-auto"
+    >
+      <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+        {t("contents")}
       </p>
       <TocList toc={toc} activeId={activeId} onItemClick={onItemClick} />
-    </div>
+    </nav>
   );
 }
 
-export function TocMobile({ toc, activeId, onItemClick }: TableOfContentsProps) {
+export function TocMobile({ toc, activeId, onItemClick }: TocProps) {
+  const t = useTranslations("blog");
   const [open, setOpen] = useState(false);
+
   if (toc.length === 0) return null;
+
   return (
-    <div className="mb-10 rounded-xl border border-border/40 bg-card/50 overflow-hidden">
+    <nav aria-label={t("contents")} className="mb-12 border-y border-border">
       <button
-        onClick={() => setOpen((v) => !v)}
-        className="w-full flex items-center justify-between px-5 py-4 text-sm font-semibold hover:bg-muted/20 transition-colors"
+        type="button"
+        onClick={() => setOpen((value) => !value)}
+        aria-expanded={open}
+        className="flex w-full items-center justify-between py-4 text-left"
       >
-        <span className="flex items-center gap-2.5 text-foreground">
-          <span className="text-[10px] font-mono tracking-widest uppercase text-primary/70">
-            Contents
+        <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
+          {t("contents")}
+          <span className="ml-2 tabular-nums text-muted-foreground">
+            {toc.length}
           </span>
         </span>
         <ChevronDown
-          className={`h-4 w-4 text-muted-foreground transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+          className={cn(
+            "h-4 w-4 text-muted-foreground transition-transform duration-200",
+            open && "rotate-180",
+          )}
+          aria-hidden="true"
         />
       </button>
+
       <AnimatePresence initial={false}>
         {open && (
           <motion.div
@@ -83,14 +103,21 @@ export function TocMobile({ toc, activeId, onItemClick }: TableOfContentsProps) 
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.25, ease: "easeInOut" }}
-            className="overflow-hidden border-t border-border/30"
+            className="overflow-hidden"
           >
-            <div className="p-4">
-              <TocList toc={toc} activeId={activeId} onItemClick={onItemClick} />
+            <div className="pb-5">
+              <TocList
+                toc={toc}
+                activeId={activeId}
+                onItemClick={(id) => {
+                  onItemClick(id);
+                  setOpen(false);
+                }}
+              />
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </nav>
   );
 }

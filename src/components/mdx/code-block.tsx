@@ -1,14 +1,10 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { Check, Copy, Terminal } from "lucide-react";
+import { Check, Copy } from "lucide-react";
 import { useState } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import {
-  oneDark,
-  oneLight,
-} from "react-syntax-highlighter/dist/esm/styles/prism";
-import { useTheme } from "next-themes";
+import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { MermaidDiagram } from "./mermaid-diagram";
 
 // Define proper types for the React element structure
@@ -23,9 +19,17 @@ interface CodeBlockProps extends React.HTMLAttributes<HTMLPreElement> {
   children?: React.ReactNode;
 }
 
+/**
+ * The code plate is dark in both themes.
+ *
+ * It used to pick `oneDark` or `oneLight` from `useTheme()`, which returns
+ * `undefined` on the server — so the moment the article started being
+ * server-rendered, every code block hydrated with a different style object than
+ * it was sent with. One fixed palette makes the markup identical on both sides,
+ * and syntax colours stop shifting when the reader flips the theme.
+ */
 export function CodeBlock({ children }: CodeBlockProps) {
   const [copied, setCopied] = useState(false);
-  const { theme } = useTheme();
 
   const copyToClipboard = () => {
     if (!children || typeof children !== "object") return;
@@ -63,65 +67,55 @@ export function CodeBlock({ children }: CodeBlockProps) {
     return <MermaidDiagram chart={codeContent.trim()} />;
   }
 
-  // Choose theme based on current theme
-  const syntaxTheme = theme === "dark" ? oneDark : oneLight;
-
   return (
-    <div className="relative group my-6">
-      {/* Header with language and copy button */}
-      <div className="flex items-center justify-between px-4 py-2 bg-muted/30 border border-border/30 rounded-t-xl">
-        <div className="flex items-center gap-2">
-          <Terminal className="h-4 w-4 text-muted-foreground" />
-          <span className="text-sm font-medium text-muted-foreground capitalize">
-            {language === "text" ? "Code" : language}
-          </span>
-        </div>
+    <div className="group relative my-8 overflow-hidden rounded-xl border border-[var(--code-border)]">
+      {/* The language label was preceded by a terminal glyph on every block,
+          including the Kotlin and TypeScript ones. The label alone is accurate. */}
+      <div className="flex items-center justify-between border-b border-[var(--code-border)] bg-[var(--code-chrome)] px-4 py-2.5">
+        <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-[var(--code-label)]">
+          {language === "text" ? "Code" : language}
+        </span>
         <button
+          type="button"
           onClick={copyToClipboard}
-          className="flex items-center gap-2 px-3 py-1.5 text-sm rounded-lg opacity-70 hover:opacity-100 transition-all duration-200 hover:bg-muted/50"
-          title="Copy code"
+          aria-label={copied ? "Code copied" : "Copy code"}
+          className="flex h-8 w-8 items-center justify-center rounded-md text-[var(--code-label)] transition-colors hover:bg-white/[0.06] hover:text-white"
         >
           {copied ? (
-            <>
-              <Check className="h-4 w-4 text-green-500" />
-              <span className="text-green-500 font-medium">Copied!</span>
-            </>
+            <Check className="h-4 w-4 text-primary" aria-hidden="true" />
           ) : (
-            <>
-              <Copy className="h-4 w-4" />
-              <span className="font-medium">Copy</span>
-            </>
+            <Copy className="h-4 w-4" aria-hidden="true" />
           )}
         </button>
       </div>
 
-      {/* Code content with syntax highlighting */}
-      <div className="relative">
-        <SyntaxHighlighter
-          language={language}
-          style={syntaxTheme}
-          customStyle={{
-            margin: 0,
-            borderRadius: "0 0 0.75rem 0.75rem",
-            border: "1px solid hsl(var(--border) / 0.3)",
-            borderTop: "none",
-            fontSize: "0.875rem",
-            lineHeight: "1.5",
-          }}
-          showLineNumbers={codeContent.split("\n").length > 5}
-          lineNumberStyle={{
-            minWidth: "3em",
-            paddingRight: "1em",
-            color: "hsl(var(--muted-foreground) / 0.5)",
-            borderRight: "1px solid hsl(var(--border) / 0.2)",
-            marginRight: "1em",
-          }}
-          wrapLines={true}
-          wrapLongLines={true}
-        >
-          {codeContent}
-        </SyntaxHighlighter>
-      </div>
+      <SyntaxHighlighter
+        language={language}
+        style={oneDark}
+        customStyle={{
+          margin: 0,
+          borderRadius: 0,
+          border: "none",
+          // The previous values here read `hsl(var(--border) / 0.3)`, but
+          // `--border` is an `rgba()` string, not HSL channels — the whole
+          // declaration was invalid and dropped.
+          background: "var(--code-surface)",
+          fontSize: "0.8125rem",
+          lineHeight: "1.65",
+          padding: "1.125rem 1.25rem",
+          overflowX: "auto",
+        }}
+        codeTagProps={{ style: { fontSize: "inherit", lineHeight: "inherit" } }}
+        showLineNumbers={codeContent.split("\n").length > 5}
+        lineNumberStyle={{
+          minWidth: "2.5em",
+          paddingRight: "1.25em",
+          color: "var(--code-line-number)",
+          userSelect: "none",
+        }}
+      >
+        {codeContent}
+      </SyntaxHighlighter>
     </div>
   );
 }
@@ -135,9 +129,10 @@ export function InlineCode({
   return (
     <code
       className={cn(
-        "relative rounded-md bg-muted/50 px-2 py-1 font-mono text-sm font-medium",
-        "text-primary border border-border/20",
-        "before:content-[''] before:absolute before:inset-0 before:rounded-md before:bg-gradient-to-r before:from-primary/5 before:to-primary/10 before:-z-10",
+        // A flat plate. The gradient this used to carry lived on a `before`
+        // pseudo-element at `-z-10`, which put it behind the page background
+        // rather than behind the text.
+        "rounded border border-border bg-muted px-1.5 py-0.5 font-mono text-[0.875em] text-foreground",
         className,
       )}
       {...props}

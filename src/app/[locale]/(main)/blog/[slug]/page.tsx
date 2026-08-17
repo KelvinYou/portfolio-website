@@ -1,8 +1,16 @@
 // Server Component
 import { domainPath, personalInfo } from "@/constants";
-import { draftsVisible, getAllPosts, getPostBySlug, type Post } from "@/lib/mdx";
+import { PostBody } from "@/components/mdx";
+import { extractToc, measureReading } from "@/lib/blog-content";
+import {
+  draftsVisible,
+  getAdjacentPosts,
+  getPostBySlug,
+  getPostSlugs,
+  type Post,
+} from "@/lib/mdx";
 import { notFound } from "next/navigation";
-import BlogPostClient from "./client";
+import { BlogPostClient } from "./client";
 
 // Keep static generation settings
 export const dynamic = "force-static";
@@ -10,10 +18,9 @@ export const revalidate = 3600;
 
 export async function generateStaticParams() {
   try {
-    const posts = await getAllPosts();
-    return posts.map((post: { slug: string }) => ({
-      slug: post.slug,
-    }));
+    // Slugs come from the filenames. This used to call `getAllPosts()`, which
+    // compiles every post's MDX just to read the `slug` field off each result.
+    return getPostSlugs().map((file) => ({ slug: file.replace(/\.mdx$/, "") }));
   } catch (error) {
     console.error("Error generating static params:", error);
     return [];
@@ -120,5 +127,51 @@ export default async function BlogPostPage(props: PageProps) {
     notFound();
   }
 
-  return <BlogPostClient post={post} slug={params.slug} />;
+  const { minutes, units } = measureReading(post.content);
+  const { previous, next } = getAdjacentPosts(params.slug);
+
+  // Outline and reading length are derived here rather than in the client:
+  // the client used to re-scan the raw markdown with a regex that could not
+  // tell a heading from a `#` comment inside a fenced code sample.
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.frontmatter.title,
+    description: post.frontmatter.description,
+    datePublished: post.frontmatter.date,
+    dateModified: post.frontmatter.date,
+    keywords: post.frontmatter.tags,
+    wordCount: units,
+    author: { "@type": "Person", name: personalInfo.name, url: domainPath },
+    publisher: { "@type": "Person", name: personalInfo.name, url: domainPath },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `${domainPath}/blog/${params.slug}`,
+    },
+    ...(post.frontmatter.image && {
+      image: `${domainPath}${post.frontmatter.image}`,
+    }),
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        // Values come from this repo's own frontmatter, not user input.
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <BlogPostClient
+        frontmatter={post.frontmatter}
+        slug={params.slug}
+        toc={extractToc(post.content)}
+        readingMinutes={minutes}
+        previous={previous}
+        next={next}
+      >
+        {/* Rendered here, in the server component, so the static HTML for this
+            route actually contains the article. */}
+        <PostBody source={post.content} />
+      </BlogPostClient>
+    </>
+  );
 }

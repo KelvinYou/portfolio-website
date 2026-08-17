@@ -133,8 +133,8 @@ export function Comments({ slug }: { slug: string }) {
             className={cn(
               "text-[11px] font-mono",
               messageLength > 1800
-                ? "text-primary/70"
-                : "text-muted-foreground/60"
+                ? "text-foreground"
+                : "text-muted-foreground/60",
             )}
           >
             {messageLength}/2000
@@ -146,8 +146,8 @@ export function Comments({ slug }: { slug: string }) {
               "inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200",
               "border",
               isValid && !submitting
-                ? "border-primary/40 bg-primary/10 text-primary hover:bg-primary/15 hover:border-primary/60"
-                : "border-border/40 bg-muted/30 text-muted-foreground cursor-not-allowed"
+                ? "border-primary/60 bg-primary/10 text-foreground hover:bg-primary/20 hover:border-primary"
+                : "border-border/40 bg-muted/30 text-muted-foreground cursor-not-allowed",
             )}
           >
             <Send className="h-3.5 w-3.5" />

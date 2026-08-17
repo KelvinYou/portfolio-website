@@ -1,227 +1,224 @@
 "use client";
 
-import { useBlogViews } from "@/components/blog/blog-data-provider";
-import { PostCard } from "@/components/blog/post-card";
-import type { Post } from "@/lib/mdx";
 import { motion } from "framer-motion";
-import { LayoutGrid, List as ListIcon, Search, X } from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
+import { useBlogViews } from "@/components/blog/blog-data-provider";
+import { WritingRow } from "@/components/blog/writing-row";
+import { fadeIn, staggerContainer } from "@/lib/animations";
+import type { PostIndexEntry } from "@/lib/mdx";
+import { BlogFilters, type Topic } from "./blog-filters";
+import { BlogPageHeader } from "./blog-page-header";
 
-type SortOption = "newest" | "oldest";
-type ViewMode = "grid" | "list";
+/** A tag has to group this many posts before it is offered as a topic. */
+const MIN_TOPIC_POSTS = 2;
 
-export default function BlogClient({ posts: initialPosts }: { posts: Post[] }) {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const [sortOption] = useState<SortOption>("newest");
-  const [viewMode, setViewMode] = useState<ViewMode>("grid");
+/** How many tags a year's note names. */
+const NOTE_TOPICS = 2;
+
+export function BlogClient({ posts }: { posts: PostIndexEntry[] }) {
+  const t = useTranslations("blog");
+  const [query, setQuery] = useState("");
+  const [topic, setTopic] = useState<string | null>(null);
   const viewsBySlug = useBlogViews();
 
-  const allTags = Array.from(
-    new Set(initialPosts.flatMap((p) => p.frontmatter.tags || []))
-  ).sort();
+  const topics = useMemo<Topic[]>(() => {
+    const counts = countTags(posts);
+    return [...counts.entries()]
+      .filter(([, count]) => count >= MIN_TOPIC_POSTS)
+      .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+      .map(([tag, count]) => ({ tag, count }));
+  }, [posts]);
 
-  const posts = useMemo<Post[]>(() => {
-    let filtered = [...initialPosts];
-    if (searchQuery) {
-      const q = searchQuery.toLowerCase();
-      filtered = filtered.filter(
-        (p) =>
-          p.frontmatter.title.toLowerCase().includes(q) ||
-          p.frontmatter.description?.toLowerCase().includes(q) ||
-          p.content.toLowerCase().includes(q)
-      );
-    }
-    if (selectedTags.length > 0) {
-      filtered = filtered.filter((p) =>
-        selectedTags.every((tag) => p.frontmatter.tags?.includes(tag))
-      );
-    }
-    filtered.sort((a, b) =>
-      sortOption === "newest"
-        ? new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime()
-        : new Date(a.frontmatter.date).getTime() - new Date(b.frontmatter.date).getTime()
-    );
-    return filtered;
-  }, [initialPosts, searchQuery, selectedTags, sortOption]);
+  const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase();
 
-  const toggleTag = (tag: string) =>
-    setSelectedTags((prev) =>
-      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
-    );
+    return posts.filter((post) => {
+      if (topic && !post.tags.includes(topic)) return false;
+      if (!q) return true;
 
-  const clearFilters = () => {
-    setSearchQuery("");
-    setSelectedTags([]);
-  };
+      return [post.title, post.description, ...post.tags]
+        .join(" ")
+        .toLowerCase()
+        .includes(q);
+    });
+  }, [posts, query, topic]);
 
-  const hasFilters = !!(searchQuery || selectedTags.length > 0);
-  const [featured, ...rest] = posts;
+  // Measured against the whole archive rather than the current result set, so
+  // a bar means the same length before and after a filter is applied. Scaling
+  // to the filtered maximum would make a short note look long the moment it
+  // became the longest thing on screen.
+  const longestUnits = useMemo(
+    () => posts.reduce((max, post) => Math.max(max, post.readingUnits), 0),
+    [posts],
+  );
+
+  const years = useMemo(() => groupByYear(filtered), [filtered]);
 
   return (
-    <div>
-      {/* ── Editorial Masthead ─────────────────────────────── */}
-      <div className="border-b border-border/30 mb-12 pb-12">
-        <motion.div
-          initial={{ opacity: 0, y: 28 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <p className="text-[11px] font-mono tracking-[0.22em] uppercase text-primary/70 mb-5 flex items-center gap-3">
-            <span className="h-px w-6 bg-primary/40 inline-block" />
-            Personal Journal
+    <div className="max-w-5xl">
+      <BlogPageHeader />
+
+      <BlogFilters
+        query={query}
+        onQueryChange={setQuery}
+        topics={topics}
+        activeTopic={topic}
+        onTopicChange={setTopic}
+        total={posts.length}
+        matches={filtered.length}
+      />
+
+      {filtered.length === 0 ? (
+        <div className="border-t border-border py-20 text-center">
+          <p className="font-heading text-2xl font-semibold tracking-tight text-foreground">
+            {t("empty_title")}
           </p>
-          <h1 className="text-6xl md:text-8xl font-extrabold tracking-tight leading-none mb-6 text-foreground">
-            Writings
-          </h1>
-          <p className="text-muted-foreground max-w-md text-base leading-relaxed">
-            Notes on frontend engineering, product building, and the occasional deep dive.
+          <p className="mx-auto mt-3 max-w-[40ch] text-sm text-muted-foreground">
+            {t("empty_body")}
           </p>
-        </motion.div>
-      </div>
-
-      {/* ── Controls ───────────────────────────────────────── */}
-      <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
-        className="flex flex-col gap-4 mb-10"
-      >
-        {/* Search + view toggle */}
-        <div className="flex items-center gap-3">
-          <div className="relative flex-1 max-w-xs">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
-            <input
-              type="text"
-              placeholder="Search articles…"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-8 py-2.5 rounded-lg bg-muted/40 border border-border/40 text-sm focus:outline-none focus:border-primary/40 focus:ring-1 focus:ring-primary/15 transition-all placeholder:text-muted-foreground/50"
-            />
-            {searchQuery && (
-              <button
-                onClick={() => setSearchQuery("")}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
-              >
-                <X className="h-3.5 w-3.5" />
-              </button>
-            )}
-          </div>
-
-          <div className="flex items-center gap-0.5 p-1 rounded-lg bg-muted/40 border border-border/40">
-            <button
-              onClick={() => setViewMode("grid")}
-              className={`p-1.5 rounded-md transition-all duration-150 ${
-                viewMode === "grid"
-                  ? "bg-card text-foreground shadow-sm"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-              aria-label="Grid view"
-            >
-              <LayoutGrid className="h-4 w-4" />
-            </button>
-            <button
-              onClick={() => setViewMode("list")}
-              className={`p-1.5 rounded-md transition-all duration-150 ${
-                viewMode === "list"
-                  ? "bg-card text-foreground shadow-sm"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-              aria-label="List view"
-            >
-              <ListIcon className="h-4 w-4" />
-            </button>
-          </div>
-        </div>
-
-        {/* Tag chips */}
-        {allTags.length > 0 && (
-          <div className="flex items-center gap-2 flex-wrap">
-            {allTags.map((tag) => (
-              <button
-                key={tag}
-                onClick={() => toggleTag(tag)}
-                className={`text-xs px-3 py-1.5 rounded-full border transition-all duration-200 font-medium ${
-                  selectedTags.includes(tag)
-                    ? "border-primary/60 bg-primary/10 text-primary"
-                    : "border-border/50 text-muted-foreground hover:border-border hover:text-foreground"
-                }`}
-              >
-                {tag}
-              </button>
-            ))}
-            {hasFilters && (
-              <button
-                onClick={clearFilters}
-                className="text-xs px-3 py-1.5 rounded-full border border-border/40 text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1.5"
-              >
-                <X className="h-3 w-3" /> Clear
-              </button>
-            )}
-          </div>
-        )}
-
-        <p className="text-[11px] text-muted-foreground/60 font-mono">
-          {posts.length} {posts.length === 1 ? "article" : "articles"}
-          {hasFilters && " found"}
-        </p>
-      </motion.div>
-
-      {/* ── Posts ──────────────────────────────────────────── */}
-      {posts.length === 0 ? (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="text-center py-24"
-        >
-          <p className="text-3xl font-bold mb-3">Nothing found</p>
-          <p className="text-muted-foreground text-sm mb-8">Try different search terms or remove filters</p>
           <button
-            onClick={clearFilters}
-            className="text-sm text-primary hover:underline underline-offset-4"
+            type="button"
+            onClick={() => {
+              setQuery("");
+              setTopic(null);
+            }}
+            className="mt-8 font-mono text-[11px] uppercase tracking-[0.16em] text-foreground underline decoration-primary decoration-2 underline-offset-4 transition-opacity hover:opacity-70"
           >
-            Clear all filters
+            {t("clear")}
           </button>
-        </motion.div>
+        </div>
       ) : (
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={{ visible: { transition: { staggerChildren: 0.06 } } }}
-        >
-          {/* Featured hero (grid mode, first post) */}
-          {viewMode === "grid" && featured && (
-            <div className="mb-8">
-              <PostCard
-                post={featured}
-                index={0}
-                viewMode="grid"
-                featured
-                views={viewsBySlug.get(featured.slug)}
-              />
-            </div>
-          )}
-
-          {/* Articles grid / list */}
-          <div
-            className={
-              viewMode === "grid"
-                ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
-                : "flex flex-col gap-4"
-            }
-          >
-            {(viewMode === "grid" ? rest : posts).map((post, i) => (
-              <PostCard
-                key={post.slug}
-                post={post}
-                index={viewMode === "grid" ? i + 1 : i}
-                viewMode={viewMode}
-                views={viewsBySlug.get(post.slug)}
-              />
-            ))}
-          </div>
-        </motion.div>
+        years.map(([year, entries], index) => (
+          <YearGroup
+            key={year}
+            year={year}
+            posts={entries}
+            longestUnits={longestUnits}
+            viewsBySlug={viewsBySlug}
+            // Only the first group has an entrance. Every group used to fade in
+            // on scroll, which meant seven of twelve posts were at opacity 0 on
+            // load — and twelve individually-fading rows is scattered motion
+            // rather than a moment. The rest of the ledger is simply there.
+            animateOnLoad={index === 0}
+          />
+        ))
       )}
     </div>
   );
+}
+
+function YearGroup({
+  year,
+  posts,
+  longestUnits,
+  viewsBySlug,
+  animateOnLoad,
+}: {
+  year: number;
+  posts: PostIndexEntry[];
+  longestUnits: number;
+  viewsBySlug: Map<string, number>;
+  animateOnLoad: boolean;
+}) {
+  const t = useTranslations("blog");
+  const locale = useLocale();
+
+  // Derived from the posts rather than written per year, which would go stale
+  // every January. Intl.ListFormat rather than joining on "and" so the note
+  // reads correctly in all three locales.
+  const note = useMemo(() => {
+    const dominant = [...countTags(posts).entries()]
+      .filter(([, count]) => count >= MIN_TOPIC_POSTS)
+      .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+      .slice(0, NOTE_TOPICS)
+      .map(([tag]) => titleCaseTag(tag));
+
+    if (dominant.length === 0) return null;
+
+    const list = new Intl.ListFormat(locale, {
+      style: "long",
+      type: "conjunction",
+    }).format(dominant);
+
+    return t("year_note", { topics: list });
+  }, [posts, locale, t]);
+
+  return (
+    // A `div`, not a `section`: globals.css carries a bare `section { padding:
+    // 6rem/8rem }` rule outside any cascade layer, so it beats Tailwind's
+    // layered utilities and `py-0` cannot undo it.
+    <div className="mt-16 first:mt-0 md:mt-20 md:first:mt-0">
+      <motion.header
+        className="mb-8 md:mb-10"
+        initial={animateOnLoad ? "hidden" : false}
+        animate="visible"
+        variants={fadeIn}
+      >
+        <h2 className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
+          <span className="tabular-nums">{year}</span>
+          <span className="mx-2 text-muted-foreground/40" aria-hidden="true">
+            /
+          </span>
+          <span className="tabular-nums">{posts.length}</span>
+        </h2>
+        {note && (
+          <p className="mt-4 max-w-[54ch] font-heading text-lg font-semibold leading-snug tracking-tight text-foreground md:text-xl">
+            {note}
+          </p>
+        )}
+      </motion.header>
+
+      <motion.ul
+        variants={staggerContainer}
+        initial={animateOnLoad ? "hidden" : false}
+        animate="visible"
+        className="border-b border-border"
+      >
+        {posts.map((post) => (
+          <WritingRow
+            key={post.slug}
+            post={post}
+            longestUnits={longestUnits}
+            views={viewsBySlug.get(post.slug)}
+          />
+        ))}
+      </motion.ul>
+    </div>
+  );
+}
+
+/**
+ * Tags are cased inconsistently across four years of frontmatter — "System
+ * Design" next to "personal website" — and the year note reads them as prose,
+ * where the mismatch shows. A tag that already contains a capital was cased
+ * deliberately (`Next.js`, `TypeScript`) and is left exactly as written.
+ */
+function titleCaseTag(tag: string): string {
+  if (/[A-Z]/.test(tag)) return tag;
+  return tag.replace(/\b\p{Ll}/gu, (letter) => letter.toUpperCase());
+}
+
+function countTags(posts: PostIndexEntry[]): Map<string, number> {
+  const counts = new Map<string, number>();
+  for (const post of posts) {
+    for (const tag of post.tags) {
+      counts.set(tag, (counts.get(tag) ?? 0) + 1);
+    }
+  }
+  return counts;
+}
+
+/** Newest year first; posts inside a year keep the newest-first order they arrive in. */
+function groupByYear(posts: PostIndexEntry[]): [number, PostIndexEntry[]][] {
+  const groups = new Map<number, PostIndexEntry[]>();
+
+  for (const post of posts) {
+    const year = new Date(post.date).getFullYear();
+    const bucket = groups.get(year);
+    if (bucket) bucket.push(post);
+    else groups.set(year, [post]);
+  }
+
+  return [...groups.entries()].sort((a, b) => b[0] - a[0]);
 }

@@ -1,11 +1,7 @@
 import fs from "fs";
 import matter from "gray-matter";
-import { MDXRemoteSerializeResult } from "next-mdx-remote";
-import { serialize } from "next-mdx-remote/serialize";
 import path from "path";
-import rehypeExternalLinks from "rehype-external-links";
-import remarkSlug from "rehype-slug";
-import remarkGfm from "remark-gfm";
+import { measureReading } from "./blog-content";
 
 // Define the blog post type
 export type Post = {
@@ -19,8 +15,12 @@ export type Post = {
     author: string;
     draft?: boolean;
   };
+  /**
+   * Raw markdown. There is no `serializedContent` any more: compilation moved
+   * to `next-mdx-remote/rsc` at render time, so the loader no longer produces a
+   * compiled bundle for every post and no compiled bundle crosses to the client.
+   */
   content: string;
-  serializedContent: MDXRemoteSerializeResult;
 };
 
 const postsDirectory = path.join(process.cwd(), "src/content/blog");
@@ -61,17 +61,6 @@ export async function getPostBySlug(slug: string): Promise<Post> {
     const fileContents = fs.readFileSync(fullPath, "utf8");
     const { data, content } = matter(fileContents);
 
-    const mdxSource = await serialize(content, {
-      mdxOptions: {
-        remarkPlugins: [remarkGfm],
-        rehypePlugins: [
-          remarkSlug,
-          [rehypeExternalLinks, { target: "_blank" }],
-        ],
-      },
-      scope: data,
-    });
-
     // Ensure all required frontmatter fields exist
     const frontmatter = {
       title: data.title || "Untitled",
@@ -87,7 +76,6 @@ export async function getPostBySlug(slug: string): Promise<Post> {
       slug: realSlug,
       frontmatter: frontmatter as Post["frontmatter"],
       content,
-      serializedContent: mdxSource,
     };
   } catch (error) {
     console.error(`Error getting post ${slug}:`, error);
@@ -99,6 +87,65 @@ export type PostMeta = {
   slug: string;
   frontmatter: Post["frontmatter"];
 };
+
+/**
+ * What the listing needs and nothing more. The listing used to receive
+ * `Post[]` — every post's raw markdown plus its compiled MDX — so that a
+ * client component could count words and search bodies. That shipped the
+ * entire blog to the browser to render none of it. Reading length is measured
+ * here instead, and search runs over title/description/tags.
+ */
+export type PostIndexEntry = {
+  slug: string;
+  title: string;
+  date: string;
+  description: string;
+  tags: string[];
+  readingMinutes: number;
+  /** Length in Latin-word equivalents, for sizing one post against another. */
+  readingUnits: number;
+};
+
+export function getPostIndex(): PostIndexEntry[] {
+  return getAllPostsMeta().map(({ slug, frontmatter }) => {
+    const fullPath = path.join(postsDirectory, `${slug}.mdx`);
+    const { content } = matter(fs.readFileSync(fullPath, "utf8"));
+    const { minutes, units } = measureReading(content);
+
+    return {
+      slug,
+      title: frontmatter.title,
+      date: frontmatter.date,
+      description: frontmatter.description,
+      tags: frontmatter.tags,
+      readingMinutes: minutes,
+      readingUnits: units,
+    };
+  });
+}
+
+export type AdjacentPosts = {
+  /** The post published before this one — further back in the archive. */
+  previous: PostMeta | null;
+  /** The post published after this one. */
+  next: PostMeta | null;
+};
+
+/**
+ * Neighbours in publication order. `getAllPostsMeta` is newest-first, so the
+ * older post sits at the higher index.
+ */
+export function getAdjacentPosts(slug: string): AdjacentPosts {
+  const posts = getAllPostsMeta();
+  const i = posts.findIndex((post) => post.slug === slug);
+
+  if (i === -1) return { previous: null, next: null };
+
+  return {
+    previous: posts[i + 1] ?? null,
+    next: posts[i - 1] ?? null,
+  };
+}
 
 export function getAllPostsMeta(): PostMeta[] {
   try {
@@ -137,24 +184,9 @@ export function getAllPostsMeta(): PostMeta[] {
   }
 }
 
-export async function getAllPosts(): Promise<Post[]> {
-  try {
-    const slugs = getPostSlugs();
-    if (slugs.length === 0) {
-      return [];
-    }
-
-    const posts = await Promise.all(slugs.map((slug) => getPostBySlug(slug)));
-
-    return posts
-      .filter((post) => !post.frontmatter.draft)
-      .sort(
-      (post1, post2) =>
-        new Date(post2.frontmatter.date).getTime() -
-        new Date(post1.frontmatter.date).getTime(),
-    );
-  } catch (error) {
-    console.error("Error getting all posts:", error);
-    return [];
-  }
-}
+/**
+ * `getAllPosts` is gone. Every caller wanted metadata — slugs for
+ * `generateStaticParams`, titles for the related-links API, dates for the
+ * listing — and got every post's body read and compiled to obtain it. Use
+ * `getAllPostsMeta`, `getPostIndex`, or `getPostSlugs` instead.
+ */

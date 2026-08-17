@@ -1,7 +1,7 @@
 import { domainPath, personalInfo } from "@/constants";
-import { getAllPosts } from "@/lib/mdx";
+import { getPostIndex } from "@/lib/mdx";
 import { Metadata } from "next";
-import BlogClient from "./blog-client";
+import { BlogClient } from "./blog-client";
 
 export const metadata: Metadata = {
   title: `${personalInfo.name} | Blog`,
@@ -63,11 +63,12 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function BlogPage() {
-  const posts = await getAllPosts();
+export default function BlogPage() {
+  // Metadata plus a measured reading length per post — not the post bodies.
+  const posts = getPostIndex();
 
   return (
-    <div className="pt-28 pb-20 min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-background pb-24 pt-28 text-foreground md:pb-32">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <BlogClient posts={posts} />
       </div>
