@@ -1,4 +1,0 @@
-interface:
-  display_name: "Flow Diagrams"
-  short_description: "JSON-first pipeline diagram workflows"
-  default_prompt: "Use $flow to build or update a JSON-first pipeline diagram with SVG and Mermaid outputs."
