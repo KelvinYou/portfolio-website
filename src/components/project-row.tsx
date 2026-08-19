@@ -78,7 +78,7 @@ const ARTIFACTS = {
   demo: { label: "Demo" },
 } as const;
 
-function ArtifactLink({
+export function ArtifactLink({
   href,
   title,
   kind,

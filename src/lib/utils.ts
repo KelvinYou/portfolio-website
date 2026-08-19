@@ -57,6 +57,35 @@ export function formatStartEndDate(
   return `${start.format("MMM YYYY")} - ${end.format("MMM YYYY")}`;
 }
 
+/**
+ * How long a role lasted, in whole months, counting an open-ended role up to
+ * today. The experience section draws its left rail proportional to this, so a
+ * four-month internship and a two-year role can't read as the same commitment.
+ */
+export function tenureMonths(
+  startDate: string,
+  endDate: string | undefined,
+): number {
+  const start = dayjs(startDate);
+  const end = endDate ? dayjs(endDate) : dayjs();
+  // Rounded, not truncated: a Feb 1 → Jul 31 internship is six months, and
+  // dayjs' whole-month diff would call it five.
+  return Math.max(1, Math.round(end.diff(start, "month", true)));
+}
+
+/** `14` → `1 yr 2 mos`. Years lead once a role passes twelve months. */
+export function formatTenure(months: number): string {
+  const years = Math.floor(months / 12);
+  const rest = months % 12;
+
+  const parts = [
+    years > 0 && `${years} yr${years > 1 ? "s" : ""}`,
+    rest > 0 && `${rest} mo${rest > 1 ? "s" : ""}`,
+  ].filter(Boolean);
+
+  return parts.join(" ");
+}
+
 export function getLinkedInName(url: string): string | undefined {
   const urlObj = new URL(url);
   const pathname = urlObj.pathname;
