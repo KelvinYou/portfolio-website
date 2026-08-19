@@ -74,7 +74,7 @@ function AdjacentLink({
         />
         {isNext ? t("nav_later") : t("nav_earlier")}
       </span>
-      <span className="font-heading text-base font-semibold leading-snug tracking-tight text-foreground underline decoration-transparent decoration-2 underline-offset-4 transition-[text-decoration-color] duration-200 group-hover:decoration-primary md:text-lg">
+      <span className="font-heading text-base font-semibold leading-snug tracking-tight text-foreground underline decoration-transparent decoration-2 underline-offset-4 transition-[text-decoration-color] duration-200 group-hover:decoration-primary-ink md:text-lg">
         {post.frontmatter.title}
       </span>
     </Link>

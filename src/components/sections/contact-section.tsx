@@ -73,14 +73,14 @@ export function ContactSection() {
             variants={fadeIn}
             className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-xs text-muted-foreground"
           >
-            <span className="text-muted-foreground/70">{tc("also_here")}</span>
+            <span className="text-subtle">{tc("also_here")}</span>
             {secondary.map((link) => (
               <a
                 key={link.id}
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center gap-1 transition-colors duration-200 hover:text-primary"
+                className="group inline-flex items-center gap-1 transition-colors duration-200 hover:text-primary-ink"
               >
                 {link.label}
                 <ArrowUpRight className="h-3 w-3 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />

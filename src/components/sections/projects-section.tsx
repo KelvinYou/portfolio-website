@@ -57,7 +57,7 @@ export function ProjectsSection() {
         >
           <Link
             href="/projects"
-            className="group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.16em] text-foreground underline decoration-border underline-offset-4 transition-colors hover:text-primary hover:decoration-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+            className="group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.16em] text-foreground underline decoration-border underline-offset-4 transition-colors hover:text-primary-ink hover:decoration-primary-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background"
           >
             {t("projects_see_all", { count: projects.length })}
             <ArrowRight

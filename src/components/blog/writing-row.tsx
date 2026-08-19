@@ -88,7 +88,7 @@ export const WritingRow = React.memo(function WritingRow({
             {/* Hover is carried by the row tint, the arrow and the extent bar
                 rather than by recolouring the title: cyan text measures 1.33:1
                 on the light background. */}
-            <span className="underline decoration-transparent decoration-2 underline-offset-4 transition-[text-decoration-color] duration-200 group-hover:decoration-primary">
+            <span className="underline decoration-transparent decoration-2 underline-offset-4 transition-[text-decoration-color] duration-200 group-hover:decoration-primary-ink">
               {lede}
             </span>
             {qualifier && (

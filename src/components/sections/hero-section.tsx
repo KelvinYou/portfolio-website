@@ -60,7 +60,7 @@ export function HeroSection() {
               className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-card/80 px-4 py-1.5 backdrop-blur-sm"
             >
               <div className="flex items-center justify-center rounded-full bg-primary/15 p-1">
-                <Sparkles className="h-3 w-3 text-primary" />
+                <Sparkles className="h-3 w-3 text-primary-ink" />
               </div>
               <p className="text-xs font-medium text-muted-foreground">
                 {t("badge")}
@@ -81,7 +81,7 @@ export function HeroSection() {
                   animate={{ y: 0 }}
                   transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
                 >
-                  <span className="inline-block text-primary">
+                  <span className="inline-block text-primary-ink">
                     {t("greeting", { name: personalInfo.name })}
                   </span>
                 </motion.div>
@@ -165,15 +165,15 @@ export function HeroSection() {
                     { label: "stack", value: "TypeScript · Kotlin · Python · MCP" },
                   ].map((line) => (
                     <div key={line.label} className="flex gap-4">
-                      <span className="w-14 shrink-0 text-right text-muted-foreground/70">
+                      <span className="w-14 shrink-0 text-right text-subtle">
                         {line.label}
                       </span>
-                      <span className="text-primary">{line.value}</span>
+                      <span className="text-primary-ink">{line.value}</span>
                     </div>
                   ))}
                 </div>
                 <div className="mt-2 flex gap-4">
-                  <span className="w-14 shrink-0 text-right text-muted-foreground/70">status</span>
+                  <span className="w-14 shrink-0 text-right text-subtle">status</span>
                   <span className="text-emerald-400">
                     open to opportunities
                     <span className="ml-0.5 inline-block h-4 w-1.5 animate-pulse rounded-sm bg-emerald-400/80" />

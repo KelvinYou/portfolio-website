@@ -39,11 +39,24 @@
   --color-accent-foreground: var(--accent-foreground);
   --color-accent: var(--accent);
   --color-muted-foreground: var(--muted-foreground);
+  /* Two more steps below `muted-foreground`, so the ramp is made of tokens
+     rather than opacity. `text-muted-foreground/50` composited toward the
+     background and landed the 11px mono labels at 2.2:1 — the smallest type on
+     the page was also the faintest, which is backwards. Floors, both themes:
+     muted-foreground ≥ 8:1 (prose), subtle ≥ 5.5:1 (chrome and small caps),
+     faint ≥ 3.8:1 (aria-hidden separators only, never a word). */
+  --color-subtle: var(--subtle);
+  --color-faint: var(--faint);
   --color-muted: var(--muted);
   --color-secondary-foreground: var(--secondary-foreground);
   --color-secondary: var(--secondary);
   --color-primary-foreground: var(--primary-foreground);
   --color-primary: var(--primary);
+  /* The accent, as ink. `--primary` is a light-emitting cyan: 14.3:1 on the dark
+     void, 1.33:1 on the light background — so on paper every `hover:text-primary`,
+     cyan underline and focus ring was invisible. Glyphs and focus outlines use
+     this; glows, rules, dots and fills keep `--primary`. */
+  --color-primary-ink: var(--primary-ink);
   --color-popover-foreground: var(--popover-foreground);
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
@@ -67,14 +80,21 @@
   --secondary: #F0F0F8;
   --secondary-foreground: #0C0C14;
   --muted: #F2F2F8;
-  --muted-foreground: #6B6B82;
+  /* Text ramp — ratios against #F8F8FC: 8.15 / 5.51 / 3.94. */
+  --muted-foreground: #4A4A5E;
+  --subtle: #63637A;
+  --faint: #7A7A92;
   --accent: #00F0FF;
   --accent-foreground: #000000;
   --destructive: #EF4444;
   --destructive-foreground: #FFFFFF;
-  --border: rgba(0, 0, 0, 0.09);
-  --input: rgba(0, 0, 0, 0.09);
-  --ring: #00F0FF;
+  /* Lifted from 0.09: the ledger sections are built out of hairlines, and a rule
+     the reader can't find isn't structure. */
+  --border: rgba(0, 0, 0, 0.12);
+  --input: rgba(0, 0, 0, 0.12);
+  /* Deep cyan, 6.19:1. Same hue family as --primary, dark enough to be a glyph. */
+  --primary-ink: #056775;
+  --ring: #056775;
   --chart-1: #00F0FF;
   --chart-2: #00D4E6;
   --chart-3: #00B8CC;
@@ -115,13 +135,19 @@
   --secondary: #1A1A28;
   --secondary-foreground: #F0F0F6;
   --muted: #121220;
-  --muted-foreground: #86869A;
+  /* Text ramp — ratios against #07070C: 8.61 / 6.26 / 3.80. Prose was 5.64,
+     which is AA-legal and still tiring to read for a screenful. */
+  --muted-foreground: #A8A8BC;
+  --subtle: #8E8EA2;
+  --faint: #6A6A7C;
   --accent: #00F0FF;
   --accent-foreground: #000000;
   --destructive: #F87171;
   --destructive-foreground: #FFFFFF;
-  --border: rgba(255, 255, 255, 0.08);
-  --input: rgba(255, 255, 255, 0.08);
+  --border: rgba(255, 255, 255, 0.13);
+  --input: rgba(255, 255, 255, 0.13);
+  /* On the void the accent already reads as ink at 14.3:1 — no second colour. */
+  --primary-ink: #00F0FF;
   --ring: #00F0FF;
   --chart-1: #00F0FF;
   --chart-2: #00D4E6;
@@ -157,14 +183,16 @@
     scroll-margin-top: 4.5rem;
   }
 
+  /* Driven by --ring, not --primary: a focus outline has to clear 3:1 against
+     the page, and on the light background the raw cyan sits at 1.33:1. */
   *:focus-visible {
-    @apply outline-2 outline-offset-2 outline-primary ring-4 ring-primary/20;
+    @apply outline-2 outline-offset-2 outline-ring ring-4 ring-ring/20;
   }
 
   button:focus-visible,
   a:focus-visible,
   [role="button"]:focus-visible {
-    @apply outline-2 outline-offset-2 outline-primary ring-4 ring-primary/30;
+    @apply outline-2 outline-offset-2 outline-ring ring-4 ring-ring/30;
   }
 
   *:focus:not(:focus-visible) {
@@ -173,6 +201,13 @@
 
   p {
     line-height: 1.7;
+  }
+
+  /* Prose moved up to 8:1, which is close enough to typed input text that a
+     placeholder would read as a filled value. Placeholders take the step below. */
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--subtle);
   }
 }
 
@@ -455,10 +490,12 @@ section {
   @apply text-foreground;
 }
 .prose code {
-  @apply text-primary;
+  @apply text-primary-ink;
 }
+/* Hover moves the rule, not the colour: dimming an accent link on hover is the
+   one direction that can only lose contrast, and article links are body copy. */
 .prose a {
-  @apply text-primary hover:text-primary/80 transition-colors;
+  @apply text-primary-ink underline decoration-primary-ink/30 underline-offset-2 transition-colors hover:decoration-primary-ink;
 }
 .prose pre code {
   @apply text-muted-foreground bg-transparent p-0;

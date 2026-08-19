@@ -134,7 +134,7 @@ function TopicButton({
         // as the label's colour: #00F0FF text on the light background measures
         // 1.33:1, which is not a legible colour for words in any size.
         active
-          ? "text-foreground underline decoration-primary decoration-2 underline-offset-[6px]"
+          ? "text-foreground underline decoration-primary-ink decoration-2 underline-offset-[6px]"
           : "text-muted-foreground hover:text-foreground",
       )}
     >

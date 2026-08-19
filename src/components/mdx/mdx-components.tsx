@@ -85,7 +85,7 @@ export const mdxComponents = {
   ul: (props: React.ComponentPropsWithoutRef<"ul">) => (
     <ul
       {...props}
-      className="my-6 list-outside list-disc space-y-2.5 pl-7 text-[1.0625rem] leading-[1.75] text-foreground/90 marker:text-muted-foreground/60"
+      className="my-6 list-outside list-disc space-y-2.5 pl-7 text-[1.0625rem] leading-[1.75] text-foreground/90 marker:text-subtle"
     />
   ),
   li: (props: React.ComponentPropsWithoutRef<"li">) => (
@@ -104,10 +104,10 @@ export const mdxComponents = {
   a: (props: React.ComponentPropsWithoutRef<"a">) => (
     <a
       {...props}
-      // Cyan underline, foreground text. As `text-primary` the link measured
+      // Cyan underline, foreground text. As `text-primary-ink` the link measured
       // 1.33:1 against the light background — an in-body link is the one place
       // that is least survivable.
-      className="font-medium text-foreground underline decoration-primary decoration-2 underline-offset-[3px] transition-opacity hover:opacity-70"
+      className="font-medium text-foreground underline decoration-primary-ink decoration-2 underline-offset-[3px] transition-opacity hover:opacity-70"
     />
   ),
 

@@ -29,7 +29,7 @@ function Evidence({
 }) {
   if (!outcome?.length) {
     return (
-      <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground/50">
+      <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-subtle">
         no measured result
       </p>
     );
@@ -95,14 +95,14 @@ export function ArtifactLink({
       target="_blank"
       rel="noopener noreferrer"
       aria-label={`${label} — ${title} (opens in a new tab)`}
-      // Hover moves the rule to cyan and leaves the text alone. As
-      // `hover:text-primary` the label measured 1.33:1 against the light
-      // background — the same fix the blog pages now use throughout.
+      // Hover moves the rule to the accent and leaves the text alone: colouring
+      // the label itself with the raw `--primary` measured 1.33:1 against the
+      // light background, which is what `--primary-ink` now exists to fix.
       // 16px of text + 14px padding either side = a 44px hit box, and the
       // matching negative margin keeps the row height exactly where it was.
       // The mobile 44px rule in globals.css covers `button` and
       // `[role="button"]` but not a plain anchor, so these were 16px targets.
-      className="group -my-3.5 inline-flex items-center gap-1.5 py-3.5 font-mono text-xs uppercase tracking-[0.14em] text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+      className="group -my-3.5 inline-flex items-center gap-1.5 py-3.5 font-mono text-xs uppercase tracking-[0.14em] text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background"
     >
       {kind === "repo" && (
         // The octocat carries interior detail that turns to mud below ~14px;
@@ -112,7 +112,7 @@ export function ArtifactLink({
 
       {/* The rule underlines the word only. On the `inline-flex` anchor it also
           ran under the glyph, which put a brand mark on a baseline rule. */}
-      <span className="underline decoration-border underline-offset-4 transition-colors group-hover:decoration-primary">
+      <span className="underline decoration-border underline-offset-4 transition-colors group-hover:decoration-primary-ink">
         {label}
       </span>
 
@@ -140,7 +140,7 @@ function Artifact({ project }: { project: Project }) {
   }
 
   return (
-    <p className="font-mono text-xs uppercase tracking-[0.14em] text-muted-foreground/60">
+    <p className="font-mono text-xs uppercase tracking-[0.14em] text-subtle">
       <span aria-hidden="true">— </span>
       {accessLabel[access] || accessLabel.private}
     </p>
@@ -149,7 +149,7 @@ function Artifact({ project }: { project: Project }) {
 
 function TechList({ techStacks }: { techStacks: string[] }) {
   return (
-    <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground/70">
+    <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-subtle">
       {techStacks.join(" · ")}
     </p>
   );
@@ -167,7 +167,7 @@ export const ProjectRow = React.memo(function ProjectRow({
       variants={reduceMotion ? undefined : fadeIn}
       className="grid grid-cols-1 gap-x-10 gap-y-5 border-t border-border py-8 md:grid-cols-[3.5rem_minmax(0,1fr)_14rem] md:py-9"
     >
-      <p className="font-mono text-sm tabular-nums text-muted-foreground/70">
+      <p className="font-mono text-sm tabular-nums text-subtle">
         {project.year}
       </p>
 
@@ -212,7 +212,7 @@ export const ProjectLead = React.memo(function ProjectLead({
       <div className="min-w-0">
         <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
           {eyebrow}
-          <span className="mx-2 text-muted-foreground/40" aria-hidden="true">
+          <span className="mx-2 text-faint" aria-hidden="true">
             /
           </span>
           <span className="tabular-nums">{project.year}</span>

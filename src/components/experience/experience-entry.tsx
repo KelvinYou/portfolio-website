@@ -41,7 +41,7 @@ const MEASURE =
  * the credible part of a claim, and they were previously indistinguishable from
  * the filler around them.
  */
-function Measured({ text }: { text: string }) {
+export function Measured({ text }: { text: string }) {
   const parts: React.ReactNode[] = [];
   let cursor = 0;
 
@@ -114,7 +114,7 @@ function TenureRail({
       />
 
       <p className="flex items-center gap-1.5 font-mono text-sm tabular-nums text-muted-foreground md:text-foreground">
-        <span className="text-muted-foreground/40 md:hidden" aria-hidden="true">
+        <span className="text-faint md:hidden" aria-hidden="true">
           –
         </span>
         {endYear ?? "NOW"}
@@ -126,7 +126,7 @@ function TenureRail({
         )}
       </p>
 
-      <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground/70 md:mt-2">
+      <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-subtle md:mt-2">
         {formatTenure(months)}
       </p>
     </div>
@@ -161,7 +161,7 @@ function DeliveredProject({ project }: { project: WorkProject }) {
       <p className="mt-2 max-w-[58ch] text-sm leading-relaxed text-muted-foreground">
         <Measured text={project.description} />
       </p>
-      <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground/70">
+      <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.16em] text-subtle">
         {project.techStacks.join(" · ")}
       </p>
     </div>
@@ -177,16 +177,16 @@ function DeliveredProject({ project }: { project: WorkProject }) {
 function Writing({ slugs }: { slugs: string[] }) {
   return (
     <div className="mt-6 flex flex-col gap-2">
-      <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground/60">
+      <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-subtle">
         Wrote about this
       </p>
       {slugs.map((slug) => (
         <Link
           key={slug}
           href={`${Paths.Blog}/${slug}`}
-          className="group/post inline-flex w-fit items-center gap-1.5 font-mono text-xs text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+          className="group/post inline-flex w-fit items-center gap-1.5 font-mono text-xs text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background"
         >
-          <span className="underline decoration-border underline-offset-4 transition-colors group-hover/post:decoration-primary">
+          <span className="underline decoration-border underline-offset-4 transition-colors group-hover/post:decoration-primary-ink">
             /{slug}
           </span>
           <ArrowUpRight
@@ -221,7 +221,7 @@ export const ExperienceEntry = React.memo(function ExperienceEntry({
       <div className="min-w-0">
         <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
           {exp.type}
-          <span className="mx-2 text-muted-foreground/40" aria-hidden="true">
+          <span className="mx-2 text-faint" aria-hidden="true">
             /
           </span>
           {exp.location}
@@ -242,7 +242,7 @@ export const ExperienceEntry = React.memo(function ExperienceEntry({
               href={exp.companyUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 font-medium text-foreground underline decoration-border underline-offset-4 transition-colors hover:decoration-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+              className="inline-flex items-center gap-1 font-medium text-foreground underline decoration-border underline-offset-4 transition-colors hover:decoration-primary-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background"
             >
               {exp.company}
               <ArrowUpRight className="h-3 w-3 shrink-0" aria-hidden="true" />
@@ -269,7 +269,7 @@ export const ExperienceEntry = React.memo(function ExperienceEntry({
               key={resp}
               className="grid grid-cols-[1.25rem_minmax(0,1fr)] text-sm leading-relaxed text-muted-foreground"
             >
-              <span className="text-muted-foreground/40" aria-hidden="true">
+              <span className="text-faint" aria-hidden="true">
                 —
               </span>
               <span className="max-w-[62ch]">
@@ -279,7 +279,7 @@ export const ExperienceEntry = React.memo(function ExperienceEntry({
           ))}
         </ul>
 
-        <p className="mt-7 font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground/70">
+        <p className="mt-7 font-mono text-[11px] uppercase tracking-[0.16em] text-subtle">
           {exp.skills.join(" · ")}
         </p>
 

@@ -36,7 +36,7 @@ export function Footer() {
             <a
               key={index}
               href={href}
-              className="text-muted-foreground hover:text-primary transition-colors duration-150"
+              className="text-muted-foreground hover:text-primary-ink transition-colors duration-150"
               aria-label={label}
             >
               <Icon className="h-5 w-5" />

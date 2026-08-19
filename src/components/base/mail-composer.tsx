@@ -52,7 +52,7 @@ export function MailComposer() {
     <div className="overflow-hidden rounded-2xl border border-border bg-card">
       {/* To — the address, always visible and selectable */}
       <div className="flex items-center gap-4 border-b border-border px-5 py-4">
-        <span className="w-16 shrink-0 font-mono text-xs uppercase tracking-wider text-muted-foreground/70">
+        <span className="w-16 shrink-0 font-mono text-xs uppercase tracking-wider text-subtle">
           {t("to_label")}
         </span>
         <span className="flex-1 truncate font-mono text-sm text-foreground">
@@ -61,10 +61,10 @@ export function MailComposer() {
         <button
           type="button"
           onClick={copyAddress}
-          className="flex shrink-0 items-center gap-1.5 rounded-lg border border-border px-2.5 py-1.5 font-mono text-xs text-muted-foreground transition-colors duration-200 hover:border-primary/40 hover:text-primary"
+          className="flex shrink-0 items-center gap-1.5 rounded-lg border border-border px-2.5 py-1.5 font-mono text-xs text-muted-foreground transition-colors duration-200 hover:border-primary/40 hover:text-primary-ink"
         >
           {copied ? (
-            <Check className="h-3.5 w-3.5 text-primary" />
+            <Check className="h-3.5 w-3.5 text-primary-ink" />
           ) : (
             <Copy className="h-3.5 w-3.5" />
           )}
@@ -74,7 +74,7 @@ export function MailComposer() {
 
       {/* Re — subject presets */}
       <div className="flex flex-wrap items-center gap-x-4 gap-y-3 border-b border-border px-5 py-4">
-        <span className="w-16 shrink-0 font-mono text-xs uppercase tracking-wider text-muted-foreground/70">
+        <span className="w-16 shrink-0 font-mono text-xs uppercase tracking-wider text-subtle">
           {t("subject_label")}
         </span>
         <div
@@ -94,7 +94,7 @@ export function MailComposer() {
                 className={cn(
                   "rounded-full border px-3 py-1.5 font-mono text-xs transition-colors duration-200",
                   selected
-                    ? "border-primary/40 bg-primary/10 text-primary"
+                    ? "border-primary/40 bg-primary/10 text-primary-ink"
                     : "border-border text-muted-foreground hover:border-primary/25 hover:text-foreground",
                 )}
               >

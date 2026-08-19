@@ -31,7 +31,7 @@ const PRIMARY_CLASS =
   "btn-bold-hover inline-flex h-11 items-center justify-center rounded-full border border-foreground/15 bg-foreground px-6 font-heading text-sm font-semibold tracking-tight text-background";
 
 const SUGGESTION_CLASS =
-  "smooth-interaction inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-primary";
+  "smooth-interaction inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-primary-ink";
 
 export function NotFoundView({
   copy,
@@ -78,7 +78,7 @@ export function NotFoundView({
       >
         <motion.p
           variants={fadeIn}
-          className="font-heading text-xs font-semibold uppercase tracking-[0.28em] text-primary"
+          className="font-heading text-xs font-semibold uppercase tracking-[0.28em] text-primary-ink"
         >
           {copy.eyebrow}
         </motion.p>

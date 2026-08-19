@@ -83,7 +83,7 @@ export function BlogClient({ posts }: { posts: PostIndexEntry[] }) {
               setQuery("");
               setTopic(null);
             }}
-            className="mt-8 font-mono text-[11px] uppercase tracking-[0.16em] text-foreground underline decoration-primary decoration-2 underline-offset-4 transition-opacity hover:opacity-70"
+            className="mt-8 font-mono text-[11px] uppercase tracking-[0.16em] text-foreground underline decoration-primary-ink decoration-2 underline-offset-4 transition-opacity hover:opacity-70"
           >
             {t("clear")}
           </button>
@@ -157,7 +157,7 @@ function YearGroup({
       >
         <h2 className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
           <span className="tabular-nums">{year}</span>
-          <span className="mx-2 text-muted-foreground/40" aria-hidden="true">
+          <span className="mx-2 text-faint" aria-hidden="true">
             /
           </span>
           <span className="tabular-nums">{posts.length}</span>

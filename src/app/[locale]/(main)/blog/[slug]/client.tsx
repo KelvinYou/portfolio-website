@@ -170,7 +170,7 @@ export function BlogPostClient({
 
 function Dot() {
   return (
-    <span className="text-muted-foreground/40" aria-hidden="true">
+    <span className="text-faint" aria-hidden="true">
       ·
     </span>
   );

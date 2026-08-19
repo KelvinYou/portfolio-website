@@ -52,7 +52,7 @@ export function SectionIndexList({
                 className={cn(
                   MONO,
                   "tabular-nums",
-                  active ? "text-primary" : "text-foreground/35",
+                  active ? "text-primary-ink" : "text-subtle",
                 )}
               >
                 {ordinal(i)}
@@ -232,15 +232,15 @@ export function SectionIndexTrack({ index }: { index: SectionIndex }) {
           aria-haspopup="true"
           className={cn(
             MONO,
-            "flex shrink-0 items-center gap-1.5 rounded-sm py-1 text-foreground/70",
+            "flex shrink-0 items-center gap-1.5 rounded-sm py-1 text-muted-foreground",
             "transition-colors duration-150 hover:text-foreground",
             "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
           )}
         >
-          <span className="tabular-nums text-primary">
+          <span className="tabular-nums text-primary-ink">
             {ordinal(activeIndex < 0 ? 0 : activeIndex)}
           </span>
-          <span className="text-foreground/25">·</span>
+          <span className="text-faint">·</span>
           <span className="whitespace-nowrap">{activeLabel}</span>
         </button>
       </div>

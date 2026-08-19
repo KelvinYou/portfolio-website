@@ -23,7 +23,7 @@ export default function TemplatesSection({ templates }: TemplatesSectionProps) {
         >
           <Badge
             variant="outline"
-            className="mb-4 rounded-full border-primary/20 bg-primary/5 px-3 py-1 text-sm text-primary"
+            className="mb-4 rounded-full border-primary/20 bg-primary/5 px-3 py-1 text-sm text-primary-ink"
           >
             Premium Templates
           </Badge>

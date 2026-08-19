@@ -82,7 +82,7 @@ export function CodeBlock({ children }: CodeBlockProps) {
           className="flex h-8 w-8 items-center justify-center rounded-md text-[var(--code-label)] transition-colors hover:bg-white/[0.06] hover:text-white"
         >
           {copied ? (
-            <Check className="h-4 w-4 text-primary" aria-hidden="true" />
+            <Check className="h-4 w-4 text-primary-ink" aria-hidden="true" />
           ) : (
             <Copy className="h-4 w-4" aria-hidden="true" />
           )}

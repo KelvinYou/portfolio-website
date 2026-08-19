@@ -64,7 +64,7 @@ export function Comments({ slug }: { slug: string }) {
   if (!ready) {
     return (
       <section className="mt-12 pt-10 border-t border-border/30">
-        <p className="text-xs font-mono tracking-[0.16em] uppercase text-muted-foreground/60 mb-1">
+        <p className="text-xs font-mono tracking-[0.16em] uppercase text-subtle mb-1">
           Comments
         </p>
         <p className="text-sm text-muted-foreground">
@@ -84,11 +84,11 @@ export function Comments({ slug }: { slug: string }) {
     >
       <header className="mb-6 flex items-center justify-between flex-wrap gap-3">
         <div>
-          <p className="text-xs font-mono tracking-[0.16em] uppercase text-muted-foreground/60 mb-1">
+          <p className="text-xs font-mono tracking-[0.16em] uppercase text-subtle mb-1">
             Comments
           </p>
           <h2 className="text-xl font-bold flex items-center gap-2">
-            <MessageCircle className="h-5 w-5 text-primary/70" />
+            <MessageCircle className="h-5 w-5 text-primary-ink/70" />
             {loaded ? comments.length : "—"}{" "}
             {comments.length === 1 ? "response" : "responses"}
           </h2>
@@ -107,7 +107,7 @@ export function Comments({ slug }: { slug: string }) {
             placeholder="Your name *"
             maxLength={60}
             required
-            className="w-full px-3 py-2.5 rounded-lg bg-muted/40 border border-border/40 text-sm focus:outline-none focus:border-primary/40 focus:ring-1 focus:ring-primary/15 transition-all placeholder:text-muted-foreground/50"
+            className="w-full px-3 py-2.5 rounded-lg bg-muted/40 border border-border/40 text-sm focus:outline-none focus:border-primary/40 focus:ring-1 focus:ring-primary/15 transition-all placeholder:text-subtle"
           />
           <input
             type="email"
@@ -115,7 +115,7 @@ export function Comments({ slug }: { slug: string }) {
             onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
             placeholder="Email (optional, not shown)"
             maxLength={120}
-            className="w-full px-3 py-2.5 rounded-lg bg-muted/40 border border-border/40 text-sm focus:outline-none focus:border-primary/40 focus:ring-1 focus:ring-primary/15 transition-all placeholder:text-muted-foreground/50"
+            className="w-full px-3 py-2.5 rounded-lg bg-muted/40 border border-border/40 text-sm focus:outline-none focus:border-primary/40 focus:ring-1 focus:ring-primary/15 transition-all placeholder:text-subtle"
           />
         </div>
         <textarea
@@ -126,7 +126,7 @@ export function Comments({ slug }: { slug: string }) {
           placeholder="Share your thoughts…"
           rows={4}
           required
-          className="w-full px-3 py-2.5 rounded-lg bg-muted/40 border border-border/40 text-sm focus:outline-none focus:border-primary/40 focus:ring-1 focus:ring-primary/15 transition-all placeholder:text-muted-foreground/50 resize-y"
+          className="w-full px-3 py-2.5 rounded-lg bg-muted/40 border border-border/40 text-sm focus:outline-none focus:border-primary/40 focus:ring-1 focus:ring-primary/15 transition-all placeholder:text-subtle resize-y"
         />
         <div className="mt-3 flex items-center justify-between gap-3 flex-wrap">
           <span
@@ -134,7 +134,7 @@ export function Comments({ slug }: { slug: string }) {
               "text-[11px] font-mono",
               messageLength > 1800
                 ? "text-foreground"
-                : "text-muted-foreground/60",
+                : "text-subtle",
             )}
           >
             {messageLength}/2000
@@ -157,9 +157,9 @@ export function Comments({ slug }: { slug: string }) {
       </form>
 
       {!loaded ? (
-        <p className="text-sm text-muted-foreground/60">Loading comments…</p>
+        <p className="text-sm text-subtle">Loading comments…</p>
       ) : comments.length === 0 ? (
-        <p className="text-sm text-muted-foreground/60 text-center py-8">
+        <p className="text-sm text-subtle text-center py-8">
           Be the first to leave a comment.
         </p>
       ) : (
@@ -181,13 +181,13 @@ function CommentItem({ comment }: { comment: BlogComment }) {
     <li className="rounded-xl border border-border/40 bg-card/40 p-4">
       <div className="flex items-center gap-2.5 mb-2">
         <div className="h-7 w-7 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center">
-          <User className="h-3.5 w-3.5 text-primary/70" />
+          <User className="h-3.5 w-3.5 text-primary-ink/70" />
         </div>
         <div className="flex items-baseline gap-2 flex-wrap">
           <span className="text-sm font-semibold text-foreground">
             {comment.name}
           </span>
-          <span className="text-[11px] text-muted-foreground/60">
+          <span className="text-[11px] text-subtle">
             {dateLabel}
           </span>
         </div>

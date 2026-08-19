@@ -45,7 +45,7 @@ function ProjectGroup({
       >
         <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
           {label}
-          <span className="mx-2 text-muted-foreground/40" aria-hidden="true">
+          <span className="mx-2 text-faint" aria-hidden="true">
             /
           </span>
           <span className="tabular-nums">{projects.length}</span>

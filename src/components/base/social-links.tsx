@@ -35,7 +35,7 @@ export function SocialLinks({ size = "md", className }: SocialLinksProps) {
             rel={link.external ? "noopener noreferrer" : undefined}
             className={cn(
               box,
-              "flex items-center justify-center border border-border bg-card text-muted-foreground transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/40 hover:text-primary hover:shadow-[0_0_16px_rgba(0,240,255,0.12)]",
+              "flex items-center justify-center border border-border bg-card text-muted-foreground transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/40 hover:text-primary-ink hover:shadow-[0_0_16px_rgba(0,240,255,0.12)]",
             )}
             aria-label={link.label}
           >

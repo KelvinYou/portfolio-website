@@ -38,7 +38,7 @@ export function ViewCounter({ slug }: { slug: string }) {
   // dangling on every post Firebase has no number for yet.
   return (
     <>
-      <span className="text-muted-foreground/40" aria-hidden="true">
+      <span className="text-faint" aria-hidden="true">
         ·
       </span>
       <span className="tabular-nums">{t("views", { count: views })}</span>

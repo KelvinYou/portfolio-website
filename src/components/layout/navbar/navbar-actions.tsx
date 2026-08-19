@@ -55,7 +55,7 @@ function SettingsMenu() {
             className="justify-between text-[13px]"
           >
             {t(`theme_${option}`)}
-            {theme === option && <Check className="h-3.5 w-3.5 text-primary" />}
+            {theme === option && <Check className="h-3.5 w-3.5 text-primary-ink" />}
           </DropdownMenuItem>
         ))}
 
@@ -71,7 +71,7 @@ function SettingsMenu() {
             className="justify-between text-[13px]"
           >
             {tLang(loc)}
-            {locale === loc && <Check className="h-3.5 w-3.5 text-primary" />}
+            {locale === loc && <Check className="h-3.5 w-3.5 text-primary-ink" />}
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>

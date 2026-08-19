@@ -59,7 +59,7 @@ export function AboutSection() {
                   className="group relative z-10 flex items-center gap-4 rounded-2xl border border-border bg-card/60 p-5 backdrop-blur-sm transition-colors duration-300 hover:border-primary/30"
                 >
                   <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-border bg-background/60 transition-colors duration-300 group-hover:border-primary/40">
-                    <Icon className="h-6 w-6 text-primary" />
+                    <Icon className="h-6 w-6 text-primary-ink" />
                   </div>
                   <p className="text-base font-medium text-foreground/90 sm:text-lg">
                     {t(step.labelKey)}
@@ -90,7 +90,7 @@ export function AboutSection() {
 
               {/* Currently Building */}
               <div className="mb-5 rounded-xl border border-primary/20 bg-primary/5 p-4">
-                <p className="mb-1 text-xs font-semibold uppercase tracking-wider text-primary">
+                <p className="mb-1 text-xs font-semibold uppercase tracking-wider text-primary-ink">
                   {t("about_current_label")}
                 </p>
                 <p className="text-sm leading-relaxed text-muted-foreground">
@@ -103,7 +103,7 @@ export function AboutSection() {
                 {topTechs.map((tech) => (
                   <span
                     key={tech}
-                    className="rounded-full border border-border bg-card px-3 py-1 text-xs font-medium transition-colors duration-200 hover:border-primary/40 hover:text-primary"
+                    className="rounded-full border border-border bg-card px-3 py-1 text-xs font-medium transition-colors duration-200 hover:border-primary/40 hover:text-primary-ink"
                   >
                     {tech}
                   </span>
