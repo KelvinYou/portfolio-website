@@ -59,8 +59,8 @@ export const styles = StyleSheet.create({
     // 40pt ≈ 14mm side margins: inside every printer's safe area, and the
     // white edge is what stops the page reading as a wall of text.
     paddingHorizontal: 40,
-    paddingTop: 28,
-    paddingBottom: 24,
+    paddingTop: 24,
+    paddingBottom: 20,
     backgroundColor: "#FFFFFF",
     fontFamily: "Plex Sans",
     fontSize: 9.1,
@@ -70,8 +70,8 @@ export const styles = StyleSheet.create({
 
   // ---------------------------------------------------------------- masthead
   header: {
-    marginBottom: UNIT * 2.5,
-    paddingBottom: UNIT * 2.5,
+    marginBottom: UNIT * 2,
+    paddingBottom: UNIT * 2,
     borderBottomWidth: 0.9,
     borderBottomColor: ink,
   },
@@ -118,10 +118,10 @@ export const styles = StyleSheet.create({
 
   // ---------------------------------------------------------------- sections
   section: {
-    marginBottom: UNIT * 1.7,
+    marginBottom: UNIT * 1.3,
   },
   sectionLabel: {
-    marginBottom: UNIT * 2,
+    marginBottom: UNIT * 1.6,
     fontSize: 7.8,
     fontWeight: 600,
     letterSpacing: 1.4,
@@ -138,7 +138,7 @@ export const styles = StyleSheet.create({
   // ------------------------------------------------------------------- items
   item: {
     flexDirection: "row",
-    marginBottom: UNIT * 1.6,
+    marginBottom: UNIT * 1.3,
   },
   itemLast: {
     marginBottom: 0,
@@ -181,11 +181,11 @@ export const styles = StyleSheet.create({
 
   // ----------------------------------------------------------------- bullets
   bulletList: {
-    marginTop: UNIT * 0.8,
+    marginTop: UNIT * 0.6,
   },
   bulletItem: {
     flexDirection: "row",
-    marginBottom: UNIT * 0.6,
+    marginBottom: UNIT * 0.45,
   },
   bulletMarker: {
     width: 3,
