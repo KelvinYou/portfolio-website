@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
+import { bodyClassName } from "@/app/fonts";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { domainPath, experiences, personalInfo } from "@/constants";
@@ -9,44 +9,6 @@ import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-
-const archivo = localFont({
-  src: [
-    {
-      path: "../../../public/assets/fonts/open-sans-v17-latin-regular.ttf",
-      weight: "400",
-    },
-    {
-      path: "../../../public/assets/fonts/open-sans-v17-latin-600.ttf",
-      weight: "600",
-    },
-    {
-      path: "../../../public/assets/fonts/open-sans-v17-latin-700.ttf",
-      weight: "700",
-    },
-  ],
-  variable: "--font-archivo",
-  display: "swap",
-});
-
-const spaceGrotesk = localFont({
-  src: [
-    {
-      path: "../../../public/assets/fonts/quicksand-v20-latin-300.ttf",
-      weight: "300",
-    },
-    {
-      path: "../../../public/assets/fonts/quicksand-v20-latin-regular.ttf",
-      weight: "400",
-    },
-    {
-      path: "../../../public/assets/fonts/quicksand-v20-latin-600.ttf",
-      weight: "600",
-    },
-  ],
-  variable: "--font-space-grotesk",
-  display: "swap",
-});
 
 const basicInfo = {
   title: `${personalInfo.name} | Portfolio`,
@@ -147,9 +109,7 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} suppressHydrationWarning>
-      <body
-        className={`${archivo.variable} ${spaceGrotesk.variable} font-sans antialiased`}
-      >
+      <body className={bodyClassName}>
         <NextIntlClientProvider locale={locale} messages={messages}>
           <ThemeProvider
             attribute="class"
