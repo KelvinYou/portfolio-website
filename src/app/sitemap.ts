@@ -44,11 +44,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       alternates: alternates("/blog"),
     },
     {
+      // No `alternates`: /resume is a single PDF with no localized variants,
+      // so advertising /zh/resume would point crawlers at a 404.
       url: `${domainPath}/resume`,
       lastModified: now,
       changeFrequency: "monthly",
       priority: 0.7,
-      alternates: alternates("/resume"),
     },
   ];
 

@@ -156,29 +156,45 @@ export function MobileSheet({
               {t("pages")}
             </p>
             <ul className="flex flex-col">
-              {[...routes, { href: resumeRoute, labelKey: "resume" }].map(
-                (route) => {
-                  const active = pathname.startsWith(route.href);
-                  return (
-                    <li key={route.href}>
-                      <Link
-                        href={route.href}
-                        onClick={onClose}
-                        aria-current={active ? "page" : undefined}
-                        className={cn(
-                          "block rounded-md px-3 py-3 text-[15px]",
-                          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
-                          active
-                            ? "font-semibold text-foreground"
-                            : "text-muted-foreground",
-                        )}
-                      >
-                        {t(route.labelKey)}
-                      </Link>
-                    </li>
-                  );
-                },
-              )}
+              {routes.map((route) => {
+                const active = pathname.startsWith(route.href);
+                return (
+                  <li key={route.href}>
+                    <Link
+                      href={route.href}
+                      onClick={onClose}
+                      aria-current={active ? "page" : undefined}
+                      className={cn(
+                        "block rounded-md px-3 py-3 text-[15px]",
+                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                        active
+                          ? "font-semibold text-foreground"
+                          : "text-muted-foreground",
+                      )}
+                    >
+                      {t(route.labelKey)}
+                    </Link>
+                  </li>
+                );
+              })}
+
+              {/* Resume sits outside the loop because it is not a page: it is
+                  the PDF, opened in a new tab by the browser's own viewer. It
+                  therefore has no locale prefix and no active state. */}
+              <li>
+                <a
+                  href={resumeRoute}
+                  target="_blank"
+                  rel="noopener"
+                  onClick={onClose}
+                  className={cn(
+                    "block rounded-md px-3 py-3 text-[15px] text-muted-foreground",
+                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                  )}
+                >
+                  {t("resume")}
+                </a>
+              </li>
             </ul>
 
             <hr className="my-2 border-border" />

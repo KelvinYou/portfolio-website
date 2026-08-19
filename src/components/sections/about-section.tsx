@@ -6,6 +6,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { MagneticButton } from "@/components/ui/magnetic-button";
 import { UnifiedSectionHeader } from "@/components/base/unified-section-header";
 import Link from "next/link";
+import { resumeRoute } from "@/constants";
 import { cn } from "@/lib/utils";
 import { fadeIn, staggerContainer, defaultViewport } from "@/lib/animations";
 import { useTranslations } from "next-intl";
@@ -124,16 +125,20 @@ export function AboutSection() {
                   </Link>
                 </MagneticButton>
                 <MagneticButton>
-                  <Link
-                    href="/resume"
+                  {/* /resume is the PDF, so this leaves the app: plain anchor,
+                      new tab, no locale prefix. */}
+                  <a
+                    href={resumeRoute}
+                    target="_blank"
+                    rel="noopener"
                     className={cn(
                       buttonVariants({ variant: "outline" }),
                       "rounded-xl px-6 py-3 cursor-pointer border-border transition-all duration-300 hover:border-primary/40 hover:bg-card"
                     )}
-                    aria-label="View my resume and download PDF"
+                    aria-label="Open my resume PDF in a new tab"
                   >
                     <FileText className="mr-2 h-4 w-4" aria-hidden="true" /> {tCommon("view_resume")}
-                  </Link>
+                  </a>
                 </MagneticButton>
               </div>
             </motion.div>

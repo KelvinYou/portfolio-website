@@ -110,8 +110,12 @@ export function NavbarActions({ onOpenMenu }: { onOpenMenu: () => void }) {
         {/* The rule is the split: sections live in the index, pages live here. */}
         <span className="mx-1.5 h-4 w-px bg-border" aria-hidden />
 
-        <Link
+        {/* A plain anchor, not `Link`: /resume is the PDF itself, so this is a
+            document request to a new tab and not an in-app navigation. */}
+        <a
           href={resumeRoute}
+          target="_blank"
+          rel="noopener"
           className={cn(
             MONO,
             "rounded-md border border-primary/40 bg-primary/10 px-3 py-1.5",
@@ -121,14 +125,16 @@ export function NavbarActions({ onOpenMenu }: { onOpenMenu: () => void }) {
           )}
         >
           {t("resume")}
-        </Link>
+        </a>
 
         <SettingsMenu />
       </div>
 
       <div className="flex items-center gap-1 md:hidden">
-        <Link
+        <a
           href={resumeRoute}
+          target="_blank"
+          rel="noopener"
           className={cn(
             MONO,
             "rounded-md border border-primary/40 bg-primary/10 px-2.5 py-1.5 text-foreground",
@@ -136,7 +142,7 @@ export function NavbarActions({ onOpenMenu }: { onOpenMenu: () => void }) {
           )}
         >
           {t("resume")}
-        </Link>
+        </a>
         <button
           type="button"
           onClick={onOpenMenu}

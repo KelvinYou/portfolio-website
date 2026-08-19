@@ -18,8 +18,6 @@ const featuredProjectTitles = [
   "PTIB",
 ] as const;
 
-const normalizePdfText = (text: string) => text.replace(/[—–]/g, "-");
-
 const selectByName = <T extends { company: string }>(
   items: T[],
   names: readonly string[],
@@ -52,18 +50,16 @@ const projectDescriptions: Record<string, string> = {
 export const resumeProfile = {
   personalInfo: {
     ...personalInfo,
-    summary: normalizePdfText(personalInfo.summary),
+    summary: personalInfo.summary,
   },
   // Mirrors personalInfo.title rather than repeating it — the two had already
   // drifted once.
-  title: normalizePdfText(personalInfo.title),
+  title: personalInfo.title,
   experiences: selectByName(experiences, featuredExperienceCompanies),
   projects: selectProjects(featuredProjectTitles).map((project) => ({
     ...project,
-    title: normalizePdfText(project.title),
-    description: normalizePdfText(
-      projectDescriptions[project.title] ?? project.claim,
-    ),
+    title: project.title,
+    description: projectDescriptions[project.title] ?? project.claim,
   })),
   educations: educations.slice(0, 1),
   // Shared with the website's Skills section — see data.ts.
