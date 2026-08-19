@@ -224,7 +224,12 @@ const ResumeDocument = () => {
               </View>
 
               <View style={styles.itemBody}>
-                <Text style={styles.role}>{education.degree}</Text>
+                {/* `level` and `degree` are separate fields — the website sets
+                    the level as an eyebrow above the subject, but a resume line
+                    has to read as the credential's full name. */}
+                <Text style={styles.role}>
+                  {`${education.level} — ${education.degree}`}
+                </Text>
                 <Text style={styles.metaLine}>
                   <Text style={styles.company}>{education.institution}</Text>
                   <Text style={styles.companyMeta}>

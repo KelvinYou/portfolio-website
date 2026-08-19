@@ -3,78 +3,97 @@
 import { motion } from "framer-motion";
 import { fadeIn, staggerContainer, defaultViewport } from "@/lib/animations";
 import { useTranslations } from "next-intl";
-import { skillGroups } from "@/constants/data";
+import { skillTiers } from "@/constants/data";
+import { UnifiedSectionHeader } from "@/components/base/unified-section-header";
+import { cn } from "@/lib/utils";
 
-// Renders `skillGroups` from data.ts — the same array the resume PDF uses, so
-// the site and the resume cannot drift apart.
+// Skills as a depth ledger: each row is how far the tools in it have actually
+// gone, with the work that proves it named underneath.
 //
-// Two things were deliberately dropped here:
-//   1. Self-assigned proficiency rings ("LLM Integration: 90"). An invented
-//      number is worse signal than no number; the projects and blog posts carry
-//      the evidence instead.
-//   2. The soft-skills tab ("Team Collaboration", "Adaptability", ...). Every
-//      candidate claims these and none of them are falsifiable, so they cost
-//      space and add nothing. Removing the tab left a single list, so the Tabs
-//      wrapper went with it.
+// This replaced a five-row chip cloud of 33 equally-weighted pills. Three
+// problems it had, in the order they mattered:
+//
+//   1. Category grouping told the reader nothing. Nobody needs to be told
+//      PostgreSQL is a database; what they can't tell from a flat list is
+//      whether it ever carried a paying customer. Depth is the axis that
+//      answers a hiring question, and `skillList` already holds the ground
+//      truth for it.
+//   2. It restated, unsourced, what the projects ledger below already proves
+//      with numbers. The provenance line is the only thing here that the rest
+//      of the page doesn't say — so it's the thing worth rendering.
+//   3. The pills' `hover:border-primary/40` implied a control that never
+//      existed. Names now sit in a `·`-separated line, like the tech lists on
+//      the project rows.
+//
+// Two things stay deliberately absent: self-assigned proficiency numbers
+// ("LLM Integration: 90"), which are worse signal than none, and the
+// soft-skills tab, which nobody can falsify.
 export function SkillsSection() {
   const t = useTranslations("sections");
 
   return (
-    <section
-      id="skills"
-      className="relative border-y border-border bg-muted/20 py-32 md:py-40"
-    >
+    <section id="skills" className="py-32 md:py-40">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={defaultViewport}
-          variants={fadeIn}
-          className="mb-14 text-center"
-        >
-          <h2
-            className="font-heading text-4xl font-extrabold md:text-5xl lg:text-6xl"
-            style={{ letterSpacing: "-0.03em", lineHeight: "1.05" }}
-          >
-            {t("skills_title")}
-          </h2>
-          {/* Accent line */}
-          <div className="mt-5 flex justify-center gap-1">
-            <div className="h-0.5 w-12 rounded-full bg-primary" />
-            <div className="h-0.5 w-4 rounded-full bg-primary/40" />
-            <div className="h-0.5 w-2 rounded-full bg-primary/20" />
-          </div>
-          <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground">
-            {t("skills_subtitle")}
-          </p>
-        </motion.div>
+        <UnifiedSectionHeader
+          title={t("skills_title")}
+          subtitle={t("skills_subtitle")}
+        />
 
         <motion.div
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
           viewport={defaultViewport}
-          className="mx-auto max-w-3xl space-y-8"
+          className="max-w-5xl"
         >
-          {skillGroups.map((group) => (
+          {skillTiers.map(({ depth, items }) => (
             <motion.div
-              key={group.label}
+              key={depth}
               variants={fadeIn}
-              className="grid gap-3 sm:grid-cols-[9rem_1fr] sm:gap-6"
+              className="grid gap-x-10 gap-y-4 border-t border-border py-8 md:grid-cols-[11rem_minmax(0,1fr)] md:py-9"
             >
-              <h3 className="pt-1 text-sm font-semibold tracking-wide text-muted-foreground uppercase">
-                {group.label}
+              <h3 className="font-mono text-xs leading-relaxed tracking-[0.16em] text-muted-foreground uppercase">
+                {t(`skills_tier_${depth}_label`)}
               </h3>
-              <ul className="flex flex-wrap gap-2">
-                {group.items.map((item) => (
-                  <li
-                    key={item}
-                    className="rounded-lg border border-border bg-card px-3 py-1.5 text-sm text-foreground transition-colors duration-300 hover:border-primary/40"
-                  >
-                    {item}
-                  </li>
-                ))}
-              </ul>
+
+              <div className="min-w-0">
+                {/* The gap tier is set in muted text: the one row that isn't a
+                    claim shouldn't carry the weight of the ones that are. */}
+                {/* A flex row rather than a text paragraph: as running text,
+                    "Apollo Client" and "Claude Agent SDK" broke across lines
+                    and the reader lost where one item ended. Each item is its
+                    own non-wrapping child, and the separator travels inside it
+                    so a dot can never start a line. */}
+                <ul
+                  className={cn(
+                    "flex max-w-[64ch] flex-wrap gap-x-1 gap-y-1.5 text-[15px]",
+                    depth === "gap"
+                      ? "text-muted-foreground"
+                      : "text-foreground",
+                  )}
+                >
+                  {items.map((item, index) => (
+                    <li key={item} className="whitespace-nowrap">
+                      {item}
+                      {index < items.length - 1 && (
+                        <span
+                          className="pl-2 text-muted-foreground/40"
+                          aria-hidden="true"
+                        >
+                          ·
+                        </span>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+
+                {/* Where the tier's claim comes from. The rule reads as "this
+                    line is subordinate to the one above" without spending a
+                    glyph on saying so. */}
+                <p className="mt-4 border-l border-border pl-3 font-mono text-[11px] leading-relaxed tracking-[0.14em] text-muted-foreground/70 uppercase">
+                  {t(`skills_tier_${depth}_source`)}
+                </p>
+              </div>
             </motion.div>
           ))}
         </motion.div>

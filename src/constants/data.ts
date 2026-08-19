@@ -1,5 +1,12 @@
 import { getTotalWorkingExperiences } from "@/lib/utils";
-import { Experience, Project } from "@/types";
+import {
+  Education,
+  Experience,
+  Project,
+  Skill,
+  SkillDepth,
+  SkillDomain,
+} from "@/types";
 
 export const domainPath = "https://kelvinyou.vercel.app";
 
@@ -219,27 +226,47 @@ export const socialLinks: {
   },
 ];
 
-// Example education data
-export const educations = [
+/**
+ * Ordered newest-first — the highest credential leads and takes the heavier
+ * rule, the same weighting the experience and projects ledgers use.
+ */
+export const educations: Education[] = [
   {
-    degree: "Bachelor of Software Engineering (Honours)",
+    degree: "Software Engineering (Honours)",
+    level: "Bachelor (Hons)",
     institution: "Tunku Abdul Rahman University of Management and Technology",
+    institutionUrl: "https://tarc.edu.my/",
     location: "Kuala Lumpur, Malaysia",
     startDate: "2021-6-20",
     endDate: "2023-7-31",
-    description:
-      "Specialized in distributed systems, parallel computing, and performance optimization. Built 15+ projects ranging from blockchain dApps to mobile applications. Core coursework: Data Structures & Algorithms (Java), Distributed Systems, Parallel Computing, Human-Computer Interaction, Graphics Programming. Electives: Mobile Development (Flutter), Blockchain Development (Solidity), Data Science (Python).",
-    achievements: [
-      "Dean's List (Top 10% - GPA: 3.72/4.0)",
-      "Final Year Project: Travel Guide App presented to 50+ industry professionals",
-      "Secured Databrain Global (Beyondsoft) internship through university recommendation",
-      "Led student team of 4 for final year capstone project",
-    ],
-    logo: "/images/institutions/tarumt.png",
+    focus:
+      "Distributed systems, parallel computing and performance optimization, carried through 15+ builds — blockchain dApps, mobile apps, graphics.",
     cgpa: "3.72",
-    institutionUrl: "https://tarc.edu.my/",
-    certificateUrl: "/pdf/educations/degree-cert.pdf",
-    transcriptUrl: "/pdf/educations/degree-transcript.pdf",
+    honor: { label: "Dean's List", detail: "top 10% of cohort" },
+    achievements: [
+      "Final year project — a travel guide app — presented to 50+ industry professionals",
+      "Led a capstone team of 4",
+      "Earned the Databrain Global (Beyondsoft) internship on university recommendation",
+    ],
+    coursework: {
+      core: [
+        "Data Structures & Algorithms",
+        "Distributed Systems",
+        "Parallel Computing",
+        "Human-Computer Interaction",
+        "Graphics Programming",
+      ],
+      electives: [
+        "Mobile Development (Flutter)",
+        "Blockchain Development (Solidity)",
+        "Data Science (Python)",
+      ],
+    },
+    documents: {
+      certificate: "/pdf/educations/degree-cert.pdf",
+      transcript: "/pdf/educations/degree-transcript.pdf",
+    },
+    logo: "/images/institutions/tarumt.png",
     techStacks: [
       "Java",
       "Flutter",
@@ -252,22 +279,29 @@ export const educations = [
     ],
   },
   {
-    degree: "Diploma in Computer Science",
+    degree: "Computer Science",
+    level: "Diploma",
     institution: "Tunku Abdul Rahman University of Management and Technology",
+    institutionUrl: "https://tarc.edu.my/",
     location: "Kuala Lumpur, Malaysia",
     startDate: "2019-5-28",
     endDate: "2021-5-31",
-    description:
-      "Basic Programming Concepts through various languages such as Object-Oriented Programming in Java, C, and Assembly Language. Mathematics courses included Algebra, Calculus, Statistics, Discrete Math.",
-    achievements: [
-      // "Graduated Summa Cum Laude",
-      // "Innovation Award for Senior Project",
-      // "Coding Competition Winner (2017)"
-    ],
-    logo: "/images/institutions/tarumt.png",
+    focus:
+      "Where the fundamentals came from: object-oriented Java, then down to C and assembly, against a full mathematics track.",
     cgpa: "3.7439",
-    institutionUrl: "https://tarc.edu.my/",
-    transcriptUrl: "/pdf/educations/diploma-transcript.pdf",
+    achievements: [],
+    coursework: {
+      core: [
+        "Object-Oriented Programming (Java)",
+        "C & Assembly",
+        "Algebra",
+        "Calculus",
+        "Statistics",
+        "Discrete Mathematics",
+      ],
+    },
+    documents: { transcript: "/pdf/educations/diploma-transcript.pdf" },
+    logo: "/images/institutions/tarumt.png",
     techStacks: [
       "C lang",
       "Java",
@@ -442,57 +476,105 @@ export const certifications = [
   },
 ];
 
-export const skills = {
-  ai: [
-    "LLM Integration (Claude API)",
-    "Agentic AI",
-    "Multi-agent Systems",
-    "MCP (Model Context Protocol)",
-    "RAG",
-    "Prompt Engineering",
-    "AI-assisted Development",
-  ],
-  languages: ["TypeScript", "JavaScript", "Python", "Kotlin", "Java", "Go"],
-  frameworks: [
-    "Next.js",
-    "React",
-    "React Native",
-    "Node.js",
-    "NestJS",
-    "FastAPI",
-  ],
-  databases: ["PostgreSQL", "Supabase", "Redis"],
-  blockchain: ["Solidity", "Ethereum", "MetaMask", "Smart Contracts"],
-  // Deliberately no AWS/GCP/Kubernetes here. Every one of those would be a
-  // claim with nothing behind it; this list is what has actually run something
-  // in production. Closing that gap is the current learning target, not a line
-  // to pad now.
-  delivery: ["Docker", "GitHub Actions (CI/CD)", "Vercel", "Firebase"],
-  tools: ["Claude Code", "Git", "Playwright"],
-};
+/**
+ * Every skill, carrying both axes. This flat list is the single source of truth;
+ * `skillGroups` and `skillTiers` below are projections of it, so the resume and
+ * the website can present different cuts without drifting apart.
+ *
+ * `depth` is not self-assessment — each value is checkable against data in this
+ * same file. `shipped` means it appears in an `experiences[].skills` array or in
+ * a project with paying users; `built` means a public repo of mine runs on it;
+ * `coursework` means a 2022-23 assignment and nothing since; `gap` means
+ * studied, never shipped.
+ *
+ * Two entries were dropped rather than re-tiered: "Agentic AI" (a buzzword
+ * restatement of Multi-agent Systems + MCP, both of which are listed) and
+ * "AI-assisted Development" (not falsifiable — the same reason the soft-skills
+ * tab was deleted from the section).
+ */
+export const skillList: Skill[] = [
+  // Production — dtcpay (9,000+ users), Simpletruss, PTIB (3 paying centres).
+  { name: "TypeScript", domain: "core", depth: "shipped" },
+  { name: "React", domain: "core", depth: "shipped" },
+  { name: "React Native", domain: "core", depth: "shipped" },
+  { name: "Kotlin", domain: "core", depth: "shipped" },
+  { name: "Next.js", domain: "core", depth: "shipped" },
+  { name: "GraphQL", domain: "core", depth: "shipped" },
+  { name: "Apollo Client", domain: "core", depth: "shipped" },
+  { name: "PostgreSQL", domain: "data", depth: "shipped" },
+  { name: "Supabase", domain: "data", depth: "shipped" },
+  { name: "Vercel", domain: "delivery", depth: "shipped" },
+  { name: "Git", domain: "tools", depth: "shipped" },
 
-// Single source of truth for how skills are grouped and ordered. Both the
-// website's Skills section and the resume PDF render from this exact array, so
-// the two can never drift out of sync.
-export const skillGroups: { label: string; items: readonly string[] }[] = [
-  {
-    label: "Tech Stack",
-    items: [
-      "React",
-      "React Native",
-      "TypeScript",
-      "Next.js",
-      "Node.js",
-      "Kotlin",
-      "Python",
-      "Java",
-      "Go",
-    ],
-  },
-  { label: "AI / Agents", items: skills.ai },
-  { label: "Data", items: skills.databases },
+  // My own systems — public repos, no paying users behind them.
+  { name: "Python", domain: "core", depth: "built" },
+  { name: "Node.js", domain: "core", depth: "built" },
+  { name: "FastAPI", domain: "core", depth: "built" },
+  { name: "LLM Integration (Claude API)", domain: "ai", depth: "built" },
+  { name: "Claude Agent SDK", domain: "ai", depth: "built" },
+  { name: "MCP (Model Context Protocol)", domain: "ai", depth: "built" },
+  { name: "Multi-agent Systems", domain: "ai", depth: "built" },
+  { name: "RAG", domain: "ai", depth: "built" },
+  { name: "Prompt Engineering", domain: "ai", depth: "built" },
+  { name: "Docker", domain: "delivery", depth: "built" },
+  { name: "GitHub Actions (CI/CD)", domain: "delivery", depth: "built" },
+  { name: "Claude Code", domain: "tools", depth: "built" },
+  { name: "Playwright", domain: "tools", depth: "built" },
+
+  // Coursework — 2022-23 capstone and assignments, nothing since.
+  { name: "Java", domain: "core", depth: "coursework" },
+  { name: "Solidity", domain: "core", depth: "coursework" },
+  { name: "Flutter", domain: "core", depth: "coursework" },
+  { name: "Dask", domain: "core", depth: "coursework" },
+  { name: "Firebase", domain: "delivery", depth: "coursework" },
+
+  // Studied, never shipped. Rendered as a visible gap on the site and withheld
+  // from the resume — a keyword there would read as a claim of experience.
+  // Closing this is the current learning target, not a line to pad now.
+  { name: "Go", domain: "core", depth: "gap" },
+  { name: "Redis", domain: "data", depth: "gap" },
+  { name: "AWS", domain: "delivery", depth: "gap" },
+  { name: "Kubernetes", domain: "delivery", depth: "gap" },
+];
+
+/**
+ * The domain cut, for the resume PDF. A one-page scan wants "does he have the
+ * data layer" answered fast, and depth tiers on paper would read as hedging.
+ *
+ * `gap` skills are excluded: on a resume a bare keyword is read as a claim of
+ * experience, and the qualifier that makes it honest only exists on the site.
+ */
+const domainLabels: { domain: SkillDomain; label: string }[] = [
+  { domain: "core", label: "Tech Stack" },
+  { domain: "ai", label: "AI / Agents" },
+  { domain: "data", label: "Data" },
   // Split out of "Tools": a reader scanning for deploy/CI signal was finding it
   // mixed in with an editor and a test runner, and reading it as absent.
-  { label: "Cloud & Delivery", items: skills.delivery },
-  { label: "Tools", items: skills.tools },
+  { domain: "delivery", label: "Cloud & Delivery" },
+  { domain: "tools", label: "Tools" },
 ];
+
+export const skillGroups: { label: string; items: readonly string[] }[] =
+  domainLabels.map(({ domain, label }) => ({
+    label,
+    items: skillList
+      .filter((skill) => skill.domain === domain && skill.depth !== "gap")
+      .map((skill) => skill.name),
+  }));
+
+/**
+ * The depth cut, for the website. Order is strongest-first, and the weak tiers
+ * are kept — the honesty is what makes the top tier believable, the same rule
+ * the projects ledger follows with its "no measured result" rows.
+ *
+ * Labels and provenance lines are translated; look under `sections` for
+ * `skills_tier_<depth>_label` and `skills_tier_<depth>_source`.
+ */
+export const skillTiers: { depth: SkillDepth; items: readonly string[] }[] = (
+  ["shipped", "built", "coursework", "gap"] as const
+).map((depth) => ({
+  depth,
+  items: skillList
+    .filter((skill) => skill.depth === depth)
+    .map((skill) => skill.name),
+}));

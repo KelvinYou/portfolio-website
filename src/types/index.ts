@@ -94,3 +94,70 @@ export interface Project {
   techStacks: string[];
   blogSlugs?: string[];
 }
+
+/**
+ * What area a skill belongs to. This is the axis the resume PDF groups by,
+ * because a one-page scan wants "does he have the data layer" answered fast.
+ */
+export type SkillDomain = "core" | "ai" | "data" | "delivery" | "tools";
+
+/**
+ * How far a skill has actually gone. This is the axis the website groups by —
+ * a reader already knows PostgreSQL is a database, and can't tell from a flat
+ * list whether it ever carried a paying customer.
+ *
+ * The same honesty rule as `ProjectAccess`: the weak tiers are rendered, not
+ * hidden, because that is what makes the top tier believable.
+ */
+export type SkillDepth =
+  /** Ran in production with real users — a job, or a product people pay for. */
+  | "shipped"
+  /** Runs in something of mine with a public repo, but no paying users. */
+  | "built"
+  /** University capstone or assignment. No production hours. */
+  | "coursework"
+  /** Studied, never shipped. Rendered as a visible gap; kept off the resume. */
+  | "gap";
+
+export interface Skill {
+  name: string;
+  domain: SkillDomain;
+  depth: SkillDepth;
+}
+
+/**
+ * A credential, in the register a transcript uses. The old shape was a bag of
+ * strings — a 200-word `description` that pasted the whole syllabus, and an
+ * `achievements` array whose first entry restated the CGPA that was already
+ * sitting unrendered in the `cgpa` field.
+ *
+ * `cgpa` is kept as a string on purpose: it carries the transcript's own
+ * precision (`3.7439`, not `3.74`), and rounding it in the type would throw
+ * away the detail that makes it read as transcribed rather than claimed.
+ */
+export interface Education {
+  degree: string;
+  /** Mono eyebrow, e.g. `Bachelor (Hons)`. The credential's level, not its subject. */
+  level: string;
+  institution: string;
+  institutionUrl?: string;
+  location: string;
+  startDate: string;
+  endDate: string;
+  /** One line on what was actually studied. Not a syllabus. */
+  focus: string;
+  cgpa: string;
+  /**
+   * The one distinction worth setting beside the CGPA, e.g. `Dean's List`.
+   * Leaving it off renders nothing — the same honest-blank rule the projects
+   * ledger uses, and what keeps the entry that has one credible.
+   */
+  honor?: { label: string; detail: string };
+  /** Claims about the work. The CGPA never appears here — it has its own column. */
+  achievements: string[];
+  coursework: { core: string[]; electives?: string[] };
+  /** Documents on file. A credential nobody can check is a claim, not a record. */
+  documents: { certificate?: string; transcript?: string };
+  logo?: string;
+  techStacks: string[];
+}
