@@ -1,0 +1,94 @@
+---
+title: "Checking Idempotency Against the Wrong Clock"
+date: "2026-08-21"
+description: "A duplicate-transfer guard was redesigned to key off immutable inputs, evaluated before any resolution of current state — because checking a retry against current balance and eligibility could wrongly reject a transfer that had already succeeded."
+tags: ["System Design", "Concurrency", "Fintech"]
+author: "Kelvin You"
+---
+
+**TL;DR**
+
+- A transfer system needed to decide whether a retried request was "the same" as one already processed.
+- The instinct — re-check the request against *current* recipient and balance state — is wrong, because a retry of an already-successful transfer can look ineligible against state its own first attempt changed.
+- The fix keyed idempotency off the request's immutable inputs as of submission time, and separately widened the exclusivity lock to span the whole resolve-and-settle window rather than just the dedup check.
+
+The obvious way to check "have we already done this?" is to re-run the eligibility logic against current state and see whether the answer is still yes:
+
+```kotlin
+// Tempting, and wrong for a retry.
+val recipient = resolveRecipient(req.recipientId)      // current state
+if (!recipient.isEligible()) reject(INELIGIBLE)
+if (balanceOf(req.sender) < req.amount) reject(INSUFFICIENT)
+```
+
+For a transfer, that's backwards in one specific case: the first successful attempt *changes* the balance, and possibly the recipient's eligibility for further transfers, as a direct consequence of succeeding.
+
+## The failure this avoids
+
+```mermaid
+%% label: The retry is judged against state the first attempt already changed, so a successful transfer reports as ineligible.
+sequenceDiagram
+    participant C as Client
+    participant S as Transfer service
+    participant DB as Ledger
+    C->>S: transfer(ref-42, 100)
+    S->>DB: settle
+    DB-->>S: ok, balance 100 → 0
+    S--xC: response lost (timeout)
+    C->>S: retry transfer(ref-42, 100)
+    S->>DB: read CURRENT balance = 0
+    S--xC: rejected: INSUFFICIENT_FUNDS
+    Note over C: money already moved,<br/>caller told it failed
+```
+
+Rejecting the retry as ineligible is worse than either accepting it or correctly deduplicating it: it tells the caller something failed when in fact their money already moved.
+
+| Retry evaluated against… | Duplicate correctly detected? | Risk |
+| :--- | :--- | :--- |
+| Current balance / eligibility | no — state already moved | reports failure for a completed transfer |
+| Submission-time immutable inputs | yes | none for this case |
+
+## Why the fix keys off submission-time inputs
+
+The transfer's immutable inputs — sender, recipient, amount, client reference — describe *what was requested*, independent of how the world has changed since:
+
+```kotlin
+// Idempotency decided before any current-state resolution.
+val fingerprint = Fingerprint(req.senderId, req.recipientId, req.amount, req.clientRef)
+
+existingByFingerprint(fingerprint)?.let { prior ->
+    return prior.result          // replay the original outcome, don't re-judge
+}
+
+// Only now does current state matter — for doing the work, not for dedup.
+val recipient = resolveRecipient(req.recipientId)
+```
+
+Current state is still used for the actual transfer logic. It's just no longer part of the *duplicate-detection* decision.
+
+## The lock has to cover the whole window
+
+A related fix: the exclusivity lock preventing two concurrent attempts must be held from before the transactional boundary through the entire resolve-and-settle sequence — not released after the dedup check and re-acquired later.
+
+```mermaid
+%% label: A lock covering only the dedup check leaves a window where two retries both pass before either commits.
+flowchart TD
+    subgraph bad["Lock covers only the check"]
+        A1["acquire"] --> B1["dedup check"]
+        B1 --> C1["release"]
+        C1 --> D1["resolve + settle"]
+        D1 --> E1["two retries can<br/>both reach settle"]
+    end
+    subgraph good["Lock spans the critical section"]
+        A2["acquire"] --> B2["dedup check"]
+        B2 --> C2["resolve + settle"]
+        C2 --> D2["commit"]
+        D2 --> E2["release"]
+    end
+```
+
+## The transferable part
+
+Idempotency logic that reads current state to answer "have I seen this before?" is vulnerable whenever the operation being deduplicated is the thing that changes the state it's checked against. That's most of them, in a payments system.
+
+The safer design evaluates duplicate-ness against the request's own fixed inputs and replays the recorded outcome, treating current state as relevant only to performing the operation — never to deciding whether it already happened.

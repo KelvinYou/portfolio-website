@@ -1,151 +1,145 @@
 ---
-title: "Scaling Frontend at Tencent: My First Year as a Frontend Engineer"
+title: "Every Boundary Leaked: A Year of Micro-Frontends at Tencent Scale"
 date: "2024-06-04"
-description: "A deep dive into navigating micro-frontend architectures, cross-cultural communication, and performance optimization on enterprise-scale applications."
-tags: ["System Architecture", "React", "Performance Optimization", "Soft Skills"]
+description: "A year building analytics dashboards for Tencent and MiHoYo. Every serious bug came from the same mistake: trusting a boundary — a style sandbox, the main thread, a CDN edge, a translated word — to be stronger than it was."
+tags: ["Micro-frontends", "React", "TypeScript", "Performance", "System Design"]
 image: "/images/blogs/beyondsoft/hero.png"
 author: "Kelvin You"
 ---
 
-# 🚀 Scaling Frontend at Tencent
+**TL;DR**
 
-## **The Mission**
+- I spent a year on an analytics platform for Tencent, MiHoYo and other game studios — millions of events a day, dashboards users assemble themselves.
+- Every bug that cost me more than an afternoon came from assuming a boundary held: the style sandbox, the main thread, the CDN edge, the meaning of a word.
+- The fix was never cleverer code. It was learning where each boundary actually sits, and stopping treating it as someone else's problem.
 
-One year ago, I joined **Beyondsoft** to work on a dedicated engineering team for **Tencent**.
+The platform ingested telemetry from games you have heard of and turned it into dashboards that analysts assembled themselves — drag a chart in, pivot it, filter half a million rows, share the link. My first ticket was a CSS bug. It took two days, and the reason it took two days is the reason I am writing this post.
 
-This wasn't a standard junior role. I was immediately thrust into an environment serving **millions of users**. My mission was to build scalable, high-performance interfaces for enterprise analytics platforms.
+The stylesheet was scoped. The component was scoped. The bug was real anyway.
 
-This post breaks down the technical and professional leaps I took to survive and thrive in a Fortune 500 ecosystem.
+## The shape of the thing
 
----
-
-## **The Tech Stack** 🛠️
-
-I worked within a modern, complex ecosystem designed for massive scale.
-
-| Domain | Technologies |
+| Layer | What we ran |
 | :--- | :--- |
-| **Core Framework** | **React** (Umi.js for Web, Taro.js for Mini-apps) |
-| **Language** | **TypeScript** (Strict typing for maintainability) |
-| **Architecture** | **Micro-frontends** (Qiankun), SPA |
-| **State** | **Redux**, Context API |
-| **UI System** | Ant Design (Customized) |
+| Shell | A host container loading independent sub-apps at runtime (qiankun) |
+| Sub-apps | React + TypeScript, built on Umi.js; Taro.js for the mini-app surface |
+| State | Redux inside each app, an internal SDK for anything crossing between them |
+| UI | Ant Design, heavily themed |
+
+Nobody shipped "the app." Teams shipped sub-apps, and the shell composed them in the browser at load time. That single decision is where the first three boundaries come from.
+
+## Boundary 1: the sandbox is a convention, not a wall
+
+A micro-frontend shell promises isolation. What it actually gives you depends on which isolation you asked for, and the default is the weak one.
+
+qiankun's default style handling scopes a sub-app's stylesheets while it is mounted and rips them out on unmount. That is not the same as isolation. Two sub-apps mounted at once still share one `document`, one cascade, and — critically — one copy of the Ant Design theme, whose class names are global by design. A sub-app raising a modal's `z-index` raises everybody's. A team overriding `.ant-table-cell` padding to fit their layout changes a table three sub-apps away.
+
+Real isolation means opting into `strictStyleIsolation` (shadow DOM) or `experimentalStyleIsolation` (runtime selector prefixing), and both cost you something. Shadow DOM breaks any library that portals into `document.body` — which Ant Design's modals, dropdowns and tooltips all do. Selector prefixing handles that but doesn't touch styles injected at runtime.
+
+There is no setting that means "isolated, free." What I actually learned here is smaller and more useful than the config flag: **in a shared runtime, a global selector is an API you didn't document.** Once I started reading `.ant-table-cell` as a public interface rather than an implementation detail, the class of bug stopped surprising me.
+
+## Boundary 2: the main thread doesn't care whose code it is
+
+The dashboards let users pull real result sets — the pathological case being a table around 500,000 rows. Rendering that is the easy half; the DOM only ever holds the visible window once you virtualize it.
+
+The half that actually hurt was everything *before* render. Parsing the response, reshaping it for the grid, running the filter — all of it synchronous, all of it on the one thread that also owns scrolling. Virtualize a 500K-row table and you get a beautiful 60fps list that freezes solid for two seconds every time someone types in the filter box.
+
+So the fix came in three parts, and the order matters:
+
+1. **Profile first.** The React DevTools flame chart tells you which components re-render; the Performance panel tells you what actually blocked the frame. They disagree more often than you'd expect, and the second one is the one users feel.
+2. **Move the work off the thread.** Parsing and reshaping went to a Web Worker. Filters got debounced, so a burst of keystrokes costs one pass instead of eight.
+3. **Memoize last.** `useMemo` and `useCallback` on the heavy visualization components — genuinely useful, and genuinely the smallest of the three. Memoization stops you redoing work; it never makes the work cheap.
+
+That got us under three seconds to interactive at 60fps on the heavy dashboards. The habit I kept is the ordering: reach for the thread boundary before the render boundary, because a component that re-renders too often is annoying and a main thread that blocks is broken.
+
+## Boundary 3: your machine is not the deployment target
+
+Two versions of this, both humbling.
+
+The first is geography. Our stakeholders were in China; I was in Kuala Lumpur. A bundle that loads fine over my connection is a different artifact when it crosses into a network with its own routing and its own idea of which origins are reachable. Asset hosts that resolve instantly here can stall there. "It works locally" and "it works from Shenzhen" are separate claims, and only one of them was in my test loop for the first few months.
+
+The second is the browser matrix. Enterprise clients meant Safari and IE11 were in scope, which is less a technical constraint than a design one — it decides which CSS features you get to use before you write any. The lesson wasn't the polyfills. It was that "supported browsers" is a product decision that arrives disguised as a build config.
+
+## Boundary 4: a translated word is not the same word
+
+The most expensive boundary was the one I didn't think of as technical.
+
+Specs, review comments and half the design discussion were in Chinese. I could read it. That turned out to be the trap — reading it produced a translation that felt complete, so I never asked the follow-up.
+
+Two examples that cost me rework:
+
+- **落地 (luòdì)** — literally "to land." Every dictionary says "implement." But in a spec review it carries a stronger claim than the English word does: shipped, in production, and actually being used. I read it as "we'll build it." It meant "this is done when someone is using it."
+- **颗粒度 (kēlìdù)** — "granularity." In an architecture discussion this was almost always about component scope: how much responsibility one piece owns. I heard the abstract noun and nodded. The sentence was asking me to make a decision.
+
+Both times the English translation was correct and useless. So I started keeping a glossary — not a dictionary, a note of what each term meant *in our reviews*, with the sentence I first heard it in. It's the single highest-return thing I did that year, and it is roughly forty lines long.
+
+The general version: when you're the one working across the language boundary, passive comprehension feels like understanding right up until the sprint where it isn't. Restating the requirement back in your own words is the cheapest possible test, and it's the one I wasn't running.
+
+## What I'd tell first-year me
+
+Three things.
+
+**Read the system, not the file.** The instinct from university is to find the file with the bug in it. In a composed runtime the bug is usually in the space *between* two files that were each written correctly.
+
+**Find out where the boundary actually is before you trust it.** Not what the docs promise — what the config you're running actually enables. Style isolation, thread isolation, network reachability, shared vocabulary: in every case I was defended by something weaker than I assumed, and finding that out took ten minutes I kept not spending.
+
+**Boring infrastructure compounds.** The change with the best ratio of effort to payoff wasn't any of the above; it was containerizing the dev environment and cutting setup from about half a day to half an hour. Every new joiner got that back, permanently.
+
+The composed-runtime lesson is the one that transferred. I've since worked in stacks with no qiankun anywhere in them and hit the exact same shape of bug — two things sharing a namespace that each believed they owned.
 
 ---
 
-## **Challenge 1: Mastering Distributed Architecture**
+A few photos from that year — the Databrain team, the wider office, and the desk where most of the above got debugged.
 
-The biggest technical jump from university to Tencent was moving from "Monoliths" to **Micro-frontends**.
-
-We didn't have one app; we had a "Host" container loading multiple independent "Sub-apps" dynamically.
-
-**The Challenge:**
-* Global state management across isolated apps.
-* Debugging styles leaking between sub-applications.
-* Understanding internal SDKs that abstracted the communication layer.
-
-**My Solution:**
-I stopped treating code as isolated files and learned to visualize the **system architecture**. I audited the internal documentation to understand the message bus protocol, allowing me to debug integration issues 30% faster than typical onboarding times.
-
----
-
-## **Challenge 2: Cross-Cultural Communication**
-
-Engineering is 50% code and 50% communication. My team was distributed, with the core stakeholders in China. This created a high-context environment involving **Technical Chinese**.
-
-
-
-I realized that "passive listening" wasn't enough. To be effective, I had to drive clarity.
-
-**The "Dev-Speak" Bridge:**
-I created a personal glossary to bridge the gap between standard English docs and our internal shorthand:
-* **"Luòdì" (落地):** From "Landing" → *Feature Implementation.*
-* **"Kēlìdù" (颗粒度):** From "Granularity" → *Component Scope.*
-
-**The Result:** This proactive approach reduced misunderstandings in requirements and allowed me to participate in architectural reviews within my first 3 months.
-
----
-
-## **Challenge 3: Performance at Scale**
-
-When you have millions of users, "it works" isn't enough. It has to be fast. Our platform allowed users to customize complex dashboards, which often led to heavy rendering costs.
-
-**My Optimization Strategy:**
-1.  **Profiling:** Used Chrome DevTools to identify "wasted renders."
-2.  **Memoization:** Applied `useMemo` and `useCallback` strategically on heavy visualization components.
-3.  **Virtualization:** Implemented virtual scrolling for large data tables (Ant Design) to keep the DOM light.
-
----
-
-## **Key Career Wins** 🏆
-
-* **Delivered Core Features:** Successfully shipped the "Databrain" visualization module used by enterprise clients.
-* **Code Quality:** Adopted strict linting and PR workflows, learning that readable code is as important as functional code.
-* **Adaptability:** Proven ability to learn proprietary frameworks and legacy codebases rapidly.
-
----
-
-## **Closing Thoughts**
-
-My time working with Tencent taught me that **software engineering is a team sport.** It requires the humility to ask questions, the discipline to write clean code, and the resilience to solve problems across languages and time zones.
-
-I am now looking for my next challenge where I can apply these lessons in **performance engineering** and **full-stack development**.
-
----
-
-## **Photo Gallery** 📸
-
-<Gallery 
+<Gallery
   items={[
     {
       id: "1",
       type: "image",
-      src: "/images/blogs/beyondsoft/big-group.png",
-      alt: "Group photo with the entire team at Beyondsoft",
-      title: "Team Group Photo",
-      description: "A memorable group photo with all the amazing colleagues at Beyondsoft during our quarterly team building event",
-      width: 1200,
-      height: 800,
-      metadata: {
-        dateCreated: "June 2024",
-        location: "Beyondsoft Office, Kuala Lumpur",
-        dimensions: "1200 × 800 px"
-      }
-    },
-    {
-      id: "2", 
-      type: "image",
       src: "/images/blogs/beyondsoft/databrain-team.jpg",
-      alt: "Databrain team photo",
-      title: "Databrain Team",
-      description: "The core Databrain team responsible for building data visualization tools for Tencent's analytics platform",
+      alt: "The Databrain team at Beyondsoft",
+      title: "The Databrain team",
+      description: "The group behind the visualization module — the dashboards, the 500K-row tables, and the CSS bug in the opening paragraph.",
       width: 1000,
       height: 750,
       metadata: {
         dateCreated: "May 2024",
-        location: "Conference Room A, Beyondsoft",
+        location: "Beyondsoft, Kuala Lumpur",
         dimensions: "1000 × 750 px"
       }
     },
     {
+      id: "2",
+      type: "image",
+      src: "/images/blogs/beyondsoft/big-group.png",
+      alt: "Group photo with the wider Beyondsoft team",
+      title: "The wider team",
+      description: "Quarterly team building. Half the people in this photo have explained a Chinese spec term to me at some point.",
+      width: 1200,
+      height: 800,
+      metadata: {
+        dateCreated: "June 2024",
+        location: "Beyondsoft, Kuala Lumpur",
+        dimensions: "1200 × 800 px"
+      }
+    },
+    {
       id: "3",
-      type: "image", 
+      type: "image",
       src: "/images/blogs/beyondsoft/pc.png",
-      alt: "My workstation setup at Beyondsoft",
-      title: "My Battle Station",
-      description: "My development setup featuring dual monitors and a mechanical keyboard—essential tools for navigating complex codebases.",
+      alt: "My desk setup at Beyondsoft: dual monitors and a mechanical keyboard",
+      title: "The desk",
+      description: "Dual monitors, one for the flame chart and one for the thing that was on fire.",
       width: 1400,
       height: 900,
       metadata: {
         dateCreated: "April 2024",
-        location: "My Desk, Beyondsoft Office",
+        location: "Beyondsoft, Kuala Lumpur",
         dimensions: "1400 × 900 px",
         camera: "iPhone 15 Pro"
       }
     }
   ]}
   columns={3}
-  showTitles={true}
-  showDescriptions={true}
   gap="lg"
 />

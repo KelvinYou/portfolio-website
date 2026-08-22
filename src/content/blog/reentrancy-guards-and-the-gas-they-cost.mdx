@@ -1,0 +1,38 @@
+---
+title: "The Guard That Protects You Is Also the Guard You're Paying For"
+date: "2026-08-21"
+description: "Reentrancy guards on an Ethereum dApp are cheap to add and easy to justify. Getting from 65K to 38K gas meant treating every guard, storage write, and on-chain string as something with a price, not a default."
+tags: ["Solidity", "Ethereum", "Smart Contracts", "Performance", "System Design"]
+author: "Kelvin You"
+---
+
+**TL;DR**
+
+- A reentrancy guard is close to free correctness — it costs gas on every call, forever, to prevent a bug that only fires on one specific attack shape. That trade is obviously worth it, and it's also the wrong place to look for savings.
+- The actual 65K → 38K gas reduction came from where the *data* lived, not from the safety logic: moving large content off-chain to IPFS and storing only its hash, and batching what had been N separate transactions into one.
+- The mental shift: on every other platform, storage is cheap and compute is what you optimize. On Ethereum, storage is the most expensive thing you can touch, so the optimization order inverts.
+
+The dApp needed two properties that are easy to state and easy to under-build: it should be safe against reentrancy attacks, and it should be cheap enough to actually use during a period — the 2020 DeFi boom — when Ethereum gas prices spiked hard enough that a naive contract could cost more to interact with than the transaction was worth.
+
+## The safety half: checks-effects-interactions, not just a modifier
+
+`ReentrancyGuard`'s `nonReentrant` modifier is the well-known fix, and it was in there — but a modifier alone doesn't teach you why the vulnerability exists, and skipping the "why" is how you end up trusting the modifier on a function it doesn't fully protect.
+
+The actual defense is ordering: **checks, then effects (state updates), then interactions (external calls)**, in that order, in every function that moves value. Reentrancy happens when a contract calls out to an external address — a user's fallback function, a malicious contract impersonating a token — *before* it has updated its own state, so the callee can call back in and observe stale state (a balance that hasn't been decremented yet) and drain more than it's owed. `nonReentrant` blocks the re-entry itself; checks-effects-interactions is the version of the fix that holds even if a call site forgets the modifier, because the state is already correct by the time any external call happens.
+
+The gas estimation UI mattered here too, and not just as UX polish: MetaMask's own estimate is a simulation against current state, and it can be wrong by a meaningful margin if the transaction being estimated changes state that the simulation doesn't fully account for (a pending transaction from the same user, a price that moves between estimate and confirmation). Surfacing a *range*, not a point estimate, and re-simulating right before signing, avoided the specific failure mode of a transaction reverting after the user already paid for the gas to attempt it — a revert still costs gas up to the point of failure.
+
+## The gas half: storage is the expensive resource, not compute
+
+Solidity's cost model inverts what most engineers already know. An `SSTORE` writing a new value to storage costs on the order of 20,000 gas; reading is far cheaper; and a loop's compute cost is almost never the bottleneck compared to how much storage it touches. That means the highest-leverage optimization isn't a tighter loop — it's not storing the thing at all.
+
+Two changes did the actual work:
+
+1. **Content went to IPFS, the chain kept only a hash.** Anything that would have been stored as a string or blob on-chain — descriptive data, off-chain-verifiable content — moved to IPFS, with only the resulting content hash (a fixed 32-byte value) written to contract storage. A variable-length on-chain string scales its cost with length; a hash doesn't, regardless of how large the underlying content is.
+2. **Batched transactions instead of one-per-action.** Every transaction pays a fixed 21,000 gas base cost before any of its actual logic runs, on top of whichever `SSTORE`s it performs. Collapsing what had been separate calls into one batched transaction meant paying that base cost once instead of N times — the saving scales directly with how many actions get batched together.
+
+Between the two, going from roughly 65,000 to 38,000 gas per interaction wasn't one clever trick — it was removing an entire category of expensive operation (large on-chain writes) and amortizing the one fixed cost that scales with transaction count.
+
+## The transferable part
+
+The safety fix and the performance fix pulled in *different* directions and both had to hold at once: `nonReentrant` and checks-effects-interactions add a small, constant gas cost on every guarded call, and that cost is non-negotiable. The 40% reduction had to come entirely from elsewhere — which only works if you know which costs in your platform's model are fixed-and-worth-it versus variable-and-worth-hunting. On Ethereum specifically, that hierarchy is inverted from almost every other backend: assume storage is the expensive line item until proven otherwise, not compute.

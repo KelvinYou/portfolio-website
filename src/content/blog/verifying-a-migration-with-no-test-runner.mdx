@@ -1,0 +1,49 @@
+---
+title: "No Test Runner: Verifying a Migration by Triangulating Three Blind Tools"
+date: "2026-08-21"
+description: "A 788-file route migration on a React Native app with no test suite. tsc, the bundler export, and a route-inventory diff each caught a different class of break — and each was blind to what the other two caught."
+tags: ["React Native", "Migration", "System Design", "Testing"]
+author: "Kelvin You"
+---
+
+**TL;DR**
+
+- Moving ~280 route files into a new folder structure on a React Native app that has no test runner. "Did I break anything" has to be answered by static tools instead.
+- `tsc` alone is not that answer: it can't see `require('@/assets/icon.svg')` or a `Stack.Screen` pointing at a route that no longer exists.
+- Three checks, each blind to a different failure: a type-check baseline diff, a bundler export, and a route-inventory diff. None of the three alone would have shipped safely.
+
+The migration was mechanical on paper: flatten-to-nested folders, ~280 route files, same URLs. On a codebase with integration tests, you'd run the suite and trust green. This one had none — routing correctness had to come from static analysis, and static analysis turned out to have more blind spots than expected.
+
+## Why "tsc is clean" isn't the bar
+
+The obvious instinct is: run the type checker before and after, diff should be empty. Two problems showed up immediately.
+
+First, the codebase already had 62 pre-existing TypeScript errors before the migration touched anything. "Clean" was never the baseline — the actual signal is *the same 62 errors, no new ones*, which means every run has to diff against a recorded baseline instead of checking for zero.
+
+Second, and more important: `tsc` doesn't resolve everything the bundler resolves. `require('@/assets/logo.svg')` and other relative asset paths are invisible to the type checker — it doesn't touch anything that isn't imported as a module. A dozen icons could point at paths that moved during the migration and `tsc` would report nothing.
+
+## The bundler catches what the type-checker can't
+
+Running `expo export` (the actual production bundling step) on every phase closed that gap. Bundling forces real module resolution — if an asset path is wrong, the export fails loudly instead of type-checking fine and crashing at runtime on a specific screen.
+
+This mattered in practice: a handful of the moved files used relative `require()` paths for platform icons. `tsc` passed on all of them. `expo export --platform web` didn't, because the bundler actually walks the path.
+
+## What neither tool sees
+
+Both `tsc` and the bundler still missed one category: a `Stack.Screen name="old/path"` declaration whose target had already been renamed. React Navigation doesn't error on a screen name that doesn't resolve to a live route — it just silently never matches, so the screen becomes unreachable. No type error (the string is still a valid string), no bundle error (nothing failed to import), just a route that quietly stopped navigating.
+
+That class of bug only surfaces by reading every layout file by hand against the final route map, or by clicking through the actual navigation tree. On this migration it accounted for a double-digit number of stale declarations — the exact bugs a green CI pipeline would have shipped.
+
+## Triangulating instead of trusting one tool
+
+| Check | Catches | Blind to |
+| :--- | :--- | :--- |
+| `tsc` diff vs. recorded baseline | Type errors, broken imports of TS/JS modules | `require()` asset paths, string-based route names |
+| `expo export` (bundler) | Broken asset/module resolution at build time | Route names that resolve as strings but don't match a live screen |
+| Route-inventory script vs. `expo export` output | Missing/renamed/duplicated routes at the URL level | Anything inside a screen that isn't a routing change |
+
+None of the three is a superset of the others. The type checker verifies the code compiles; the bundler verifies the code builds; neither verifies the *navigation graph* is still connected. That third property needed its own check — a script enumerating expected routes and diffing it against what the bundler actually produced — plus, for the cases even that missed, a manual read of every layout declaration.
+
+## The transferable part
+
+"No test suite" doesn't mean "no way to verify." It means the verification has to be assembled from tools that were never designed to answer the question together, and each one has to be interrogated for what it's actually checking rather than trusted because it's green. A migration described as "just moving files" is exactly the kind of change where a passing compiler feels like proof and isn't — the bugs that got through were, in every case, the ones no single tool was ever responsible for catching.

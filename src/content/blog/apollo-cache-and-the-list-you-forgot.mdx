@@ -1,0 +1,64 @@
+---
+title: "The Cache Doesn't Know About Your List: Apollo Normalization in Practice"
+date: "2026-08-21"
+description: "Apollo's normalized cache updates a record everywhere it's referenced — except in the one place a create or delete actually breaks: the list it should now belong to, or no longer belong to."
+tags: ["GraphQL", "Apollo Client", "React", "Performance", "System Design"]
+author: "Kelvin You"
+---
+
+**TL;DR**
+
+- Apollo's normalized cache is genuinely automatic for updates to a single entity — every component reading that entity re-renders, everywhere, with zero code from you.
+- It is not automatic for membership: creating or deleting a row doesn't tell the cache which *lists* should now include or exclude it. That link only exists in a query response, and the mutation isn't one.
+- The fix is `cache.modify` on the parent field, not a `refetchQueries` — refetching a 10K-row query to add one row is the expensive way to solve a cheap problem, and it's the one juniors reach for first because it looks like it "just works."
+
+Apollo Client's pitch is that you stop thinking about caching. Mutate an entity, and every component anywhere in the tree that reads that entity re-renders with the new value — no manual invalidation, no Redux-style dispatch to a dozen reducers. For updates, that pitch is true, and it's the reason a component library built on hooks like `usePaginatedQuery` and `useOptimisticMutation` can stay thin: the cache does the propagation, the hook just shapes the query.
+
+The pitch stops being true at exactly one seam: **creating or removing a row.**
+
+## Why updates are free and creates aren't
+
+Apollo normalizes every object by `__typename:id` into a flat store. A ticket you're viewing in a detail panel and the same ticket sitting in a list are, to the cache, the *same cache entry* — update one, and both re-render, because both components are literally reading the same normalized record.
+
+A list, though, isn't a record. It's a field on a parent query — `maintenanceTickets(propertyId: X)` — and that field's value is just an array of references to normalized records. Apollo has no way to know that a newly created ticket belongs in that array. Nothing in the mutation response says "and also, append me to every list matching this filter." That relationship only ever existed inside the *original query's response shape*, and the mutation isn't that query.
+
+Delete has the same gap in the other direction: evicting the entity from the cache doesn't remove its reference from the array that pointed at it — you get a `null` slot or a dangling ID until something rewrites the list.
+
+## The trap: reaching for `refetchQueries`
+
+The obvious fix — and the one that ships first, because it requires no thought about cache internals — is `refetchQueries: ['GetMaintenanceTickets']` on the mutation. It works. It also means every create or delete re-runs a paginated, filtered, 10K-row-capable query in full, discarding whatever cache-hit rate you built the rest of the app around. On a screen where creates happen constantly (ticket intake), that turns a cheap local write into a network round-trip on every single action.
+
+## The actual fix: tell the cache what changed
+
+`cache.modify` on the parent's field is the surgical version — write to the *list itself*, not the query around it:
+
+```ts
+const [createTicket] = useMutation(CREATE_TICKET, {
+  update(cache, { data }) {
+    const newRef = cache.writeFragment({
+      data: data.createTicket,
+      fragment: TICKET_FRAGMENT,
+    });
+    cache.modify({
+      fields: {
+        maintenanceTickets(existingRefs = [], { readField }) {
+          if (existingRefs.some((ref) => readField("id", ref) === data.createTicket.id)) {
+            return existingRefs;
+          }
+          return [...existingRefs, newRef];
+        },
+      },
+    });
+  },
+});
+```
+
+Delete is the mirror: `cache.evict({ id: cache.identify(ticket) })` followed by `cache.gc()`, then a `modify` on the parent list to drop the now-dangling reference — evicting the entity alone leaves the list holding a reference to nothing.
+
+This is also where **optimistic updates earn their keep**, and where they most often go wrong: the `optimisticResponse` has to match the *exact shape* the `update` function expects, `__typename` included. Get the shape wrong and the UI flickers — cache write succeeds, re-render happens, then the real response arrives with a slightly different shape and the row visibly jumps. That flicker is almost always a shape mismatch between the optimistic guess and the real mutation response, not a timing bug.
+
+## Where virtualization fits in
+
+None of this is free to skip if the list is also virtualized. A virtualized 10K-row table renders maybe 30 DOM rows at a time based on scroll position — but it still subscribes to the *entire* underlying array reference from the cache. If a create appends via `refetchQueries`, the virtualizer's row-height cache and scroll-anchor state get invalidated by a wholesale array replacement, and the scroll position visibly jumps even though the visible rows didn't change. A `cache.modify` append, by contrast, is a single reference added to the end of an existing array — same array identity for every row the virtualizer already measured, so scroll position holds.
+
+The two problems compound in one direction: get list-membership updates wrong, and virtualization doesn't just re-render more than necessary, it also loses the exact position the user was looking at.
