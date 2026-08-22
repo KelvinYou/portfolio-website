@@ -1,7 +1,10 @@
 import { domainPath, personalInfo } from "@/constants";
 import { getPostIndex } from "@/lib/mdx";
+import { ogImageFor } from "@/lib/og";
 import { Metadata } from "next";
 import { BlogClient } from "./blog-client";
+
+const blogOgImage = ogImageFor({ title: "Writing" });
 
 export const metadata: Metadata = {
   title: `${personalInfo.name} | Blog`,
@@ -27,21 +30,14 @@ export const metadata: Metadata = {
       "Thoughts, ideas, and developments in technology and programming",
     url: `${domainPath}/blog`,
     siteName: `${personalInfo.name}'s Blog`,
-    images: [
-      {
-        url: "/images/projects/portfolio.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Blog | Kelvin You",
-      },
-    ],
+    images: [{ url: blogOgImage, width: 1200, height: 630, alt: "Blog" }],
     type: "article",
   },
   twitter: {
     title: `${personalInfo.name} | Blog`,
     description:
       "Thoughts, ideas, and developments in technology and programming",
-    images: ["/images/projects/portfolio.jpg"],
+    images: [blogOgImage],
     card: "summary_large_image",
     creator: personalInfo.name,
   },

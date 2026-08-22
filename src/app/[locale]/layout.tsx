@@ -1,9 +1,10 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { bodyClassName } from "@/app/fonts";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { domainPath, experiences, personalInfo } from "@/constants";
 import { routing } from "@/i18n/routing";
+import { siteOgImage } from "@/lib/og";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
@@ -15,9 +16,17 @@ const basicInfo = {
   description: `${personalInfo.summary}`,
 };
 
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#F8F8FC" },
+    { media: "(prefers-color-scheme: dark)", color: "#07070C" },
+  ],
+};
+
 export const metadata: Metadata = {
   metadataBase: new URL(domainPath),
   ...basicInfo,
+  manifest: "/manifest.webmanifest",
   keywords: [
     "AI Engineer",
     "AI Application Engineer",
@@ -42,25 +51,18 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: personalInfo.name, url: domainPath }],
   creator: personalInfo.name,
-  // No `icons` override: /logo.png does not exist in public/, which silently
-  // broke the favicon. Next resolves src/app/favicon.ico by convention.
+  // No `icons` override: Next resolves app/icon.tsx and app/apple-icon.tsx
+  // by convention, both drawing the KY mark via next/og.
   openGraph: {
     ...basicInfo,
     url: domainPath,
     siteName: `${personalInfo.name}'s Portfolio`,
-    images: [
-      {
-        url: "/images/projects/portfolio.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Portfolio",
-      },
-    ],
+    images: [siteOgImage],
     type: "website",
   },
   twitter: {
     ...basicInfo,
-    images: ["/images/projects/portfolio.jpg"],
+    images: [siteOgImage.url],
     card: "summary_large_image",
     creator: personalInfo.name,
   },

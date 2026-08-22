@@ -1,7 +1,10 @@
 import { domainPath, personalInfo, projects } from "@/constants";
+import { ogImageFor } from "@/lib/og";
 import { Metadata } from "next";
 import { ProjectsLedger } from "./projects-ledger";
 import { ProjectsPageHeader } from "./projects-page-header";
+
+const projectsOgImage = ogImageFor({ title: "Projects" });
 
 export const metadata: Metadata = {
   title: `${personalInfo.name} | Projects`,
@@ -24,12 +27,7 @@ export const metadata: Metadata = {
     url: `${domainPath}/projects`,
     siteName: `${personalInfo.name}'s Projects`,
     images: [
-      {
-        url: "/images/projects/portfolio.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Projects | Kelvin You",
-      },
+      { url: projectsOgImage, width: 1200, height: 630, alt: "Projects" },
     ],
     type: "website",
   },
@@ -37,7 +35,7 @@ export const metadata: Metadata = {
     title: `${personalInfo.name} | Projects`,
     description:
       "Explore my portfolio of software development projects, from web applications to mobile apps and more.",
-    images: ["/images/projects/portfolio.jpg"],
+    images: [projectsOgImage],
     card: "summary_large_image",
     creator: personalInfo.name,
   },

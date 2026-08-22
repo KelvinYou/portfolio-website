@@ -9,12 +9,15 @@ import {
   getPostSlugs,
   type Post,
 } from "@/lib/mdx";
+import { ogImageFor, siteOgImage } from "@/lib/og";
 import { notFound } from "next/navigation";
 import { BlogPostClient } from "./client";
 
-// Keep static generation settings
+// Posts are MDX files in this repository, so a rendered page can only change
+// when the bundle changes. The `revalidate = 3600` that used to sit here re-ran
+// all 36 pages every hour and could not produce different output — the content
+// it would re-read is the same content the build already read.
 export const dynamic = "force-static";
-export const revalidate = 3600;
 
 export async function generateStaticParams() {
   try {
@@ -35,11 +38,12 @@ export async function generateMetadata(props: PageProps) {
   try {
     const post = await getPostBySlug(params.slug);
 
-    const ogImageUrl = `/api/og?${new URLSearchParams({
+    // Absolute, because crawlers resolve og:image without a document base.
+    const ogImageUrl = ogImageFor({
       title: post.frontmatter.title,
       date: post.frontmatter.date,
-      tags: post.frontmatter.tags?.join(", ") ?? "",
-    }).toString()}`;
+      tags: post.frontmatter.tags,
+    });
 
     const basicInfo = {
       title: `${post.frontmatter.title} | Blog`,
@@ -96,14 +100,14 @@ export async function generateMetadata(props: PageProps) {
         description: basicInfo.description,
         url: `${domainPath}/blog/${params.slug}`,
         siteName: `${personalInfo.name}'s Blog`,
-        images: ["/images/projects/portfolio.jpg"],
+        images: [siteOgImage.url],
         type: "article",
       },
       twitter: {
         card: "summary_large_image",
         title: basicInfo.title,
         description: basicInfo.description,
-        images: ["/images/projects/portfolio.jpg"],
+        images: [siteOgImage.url],
         creator: personalInfo.name,
       },
     };
