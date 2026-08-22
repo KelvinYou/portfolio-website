@@ -1,6 +1,11 @@
 import { domainPath, personalInfo } from "@/constants";
 import { getAllPostsMeta } from "@/lib/mdx";
 
+// The feed reads local MDX and nothing per-request, so it belongs in the build
+// output rather than in a function. Route handlers default to dynamic, which
+// had a cold CDN paying an invocation for bytes that were already fixed.
+export const dynamic = "force-static";
+
 function escapeXml(str: string): string {
   return str
     .replace(/&/g, "&amp;")
