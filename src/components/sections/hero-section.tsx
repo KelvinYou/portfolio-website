@@ -81,8 +81,11 @@ export function HeroSection() {
                   animate={{ y: 0 }}
                   transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
                 >
+                  {/* The name itself, not a greeting around it. A name
+                      doesn't translate, so it lives in data.ts, not in the
+                      message catalogues. */}
                   <span className="inline-block text-primary-ink">
-                    {t("greeting", { name: personalInfo.name })}
+                    {personalInfo.name}
                   </span>
                 </motion.div>
               </div>

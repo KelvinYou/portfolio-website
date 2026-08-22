@@ -23,7 +23,6 @@
   },
   "hero": {
     "badge": "白天做支付全栈 · 晚上写多智能体 LLM 系统",
-    "greeting": "你好，我是 {name}",
     "role": "AI 原生全栈工程师 · 支付系统与 Agent 架构",
     "description_prefix": "我把",
     "description_build": "混乱、高规模的问题——生产级支付流程、多智能体 LLM 系统",
@@ -37,6 +36,9 @@
     "about_subtitle": "了解更多关于我的旅程以及是什么驱动我成为一名开发者",
     "about_heading": "我的工作方式",
     "about_hook": "我追一团混乱背后的规律——模糊的问题、缓慢的系统、手动的流程——把它变成能自己运转的东西。",
+    "about_proof_1": "生产环境用户数",
+    "about_proof_2": "已加固的支付入口",
+    "about_proof_3": "前后端都自己交付",
     "about_current_label": "当前在做",
     "about_current_detail": "基于 Claude Agent SDK 的多智能体股票分析流水线——四个分析师 agent、一个辩论环节，以及一套为自己过往判断打分的 outcome memory。",
     "about_step_1": "从一团模糊、混乱的问题开始",

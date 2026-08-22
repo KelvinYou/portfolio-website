@@ -23,7 +23,6 @@
   },
   "hero": {
     "badge": "Full-stack pembayaran waktu siang · sistem LLM multi-ejen waktu malam",
-    "greeting": "Hai, saya {name}",
     "role": "Jurutera Full-stack AI-native · Pembayaran Fintech & Sistem Agen",
     "description_prefix": "Saya ambil ",
     "description_build": "masalah huru-hara berskala besar — aliran pembayaran produksi, sistem LLM multi-ejen",
@@ -37,6 +36,9 @@
     "about_subtitle": "Ketahui lebih lanjut tentang perjalanan saya dan apa yang mendorong saya sebagai pembangun",
     "about_heading": "Cara Saya Bekerja",
     "about_hook": "Saya mengejar corak di sebalik huru-hara — masalah kabur, sistem yang perlahan, aliran kerja manual — dan menjadikannya sesuatu yang berjalan sendiri.",
+    "about_proof_1": "Pengguna dalam produksi",
+    "about_proof_2": "Permukaan pembayaran diperkukuh",
+    "about_proof_3": "Depan dan belakang, dihantar",
     "about_current_label": "Sedang Membina",
     "about_current_detail": "Saluran analisis saham multi-ejen atas Claude Agent SDK — empat ejen penganalisis, peringkat debat, dan gelung outcome memory yang menilai keputusan lampaunya sendiri.",
     "about_step_1": "Mula dengan masalah yang kabur dan huru-hara",

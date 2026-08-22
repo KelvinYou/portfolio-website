@@ -23,7 +23,6 @@
   },
   "hero": {
     "badge": "Full-stack payments by day · multi-agent LLM systems by night",
-    "greeting": "Hi, I'm {name}",
     "role": "AI-native Full-stack Engineer · Fintech Payments & Agent Systems",
     "description_prefix": "I take ",
     "description_build": "messy, high-scale problems — production payment flows, multi-agent LLM systems",
@@ -37,6 +36,9 @@
     "about_subtitle": "Learn more about my journey and what drives me as a developer",
     "about_heading": "How I Work",
     "about_hook": "I chase the pattern under a mess — an ambiguous problem, a slow system, a manual workflow — and turn it into something that runs on its own.",
+    "about_proof_1": "Users in production",
+    "about_proof_2": "Payment surfaces hardened",
+    "about_proof_3": "Front and back, shipped",
     "about_current_label": "Currently Building",
     "about_current_detail": "A multi-agent stock-analysis pipeline on the Claude Agent SDK — four analyst agents, a debate stage, and an outcome-memory loop that scores its own past calls.",
     "about_step_1": "Start with a messy, ambiguous problem",
