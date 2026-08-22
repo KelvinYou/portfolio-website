@@ -12,12 +12,29 @@ import { resumeRoute, routes } from "@/constants";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { locales } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
-import { Check, Menu, Settings2 } from "lucide-react";
+import { Check, Menu, Monitor, Moon, Settings2, Sun } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
 import { MONO } from "./section-index";
 
-const THEMES = ["light", "dark", "system"] as const;
+const THEMES = [
+  { value: "light", Icon: Sun },
+  { value: "dark", Icon: Moon },
+  { value: "system", Icon: Monitor },
+] as const;
+
+/** Fixed-width left rail: the glyph column is what makes the rows read as a list. */
+const RAIL = "flex w-4 shrink-0 items-center justify-center";
+
+/** One row geometry for both groups, so themes and locales share a spine. */
+/* `focus:` is Radix's highlight state (pointer + keyboard). Both overrides are
+   load-bearing: the shadcn base sets focus:bg-accent (raw #00F0FF) and
+   focus:text-accent-foreground (#000000 in BOTH themes) — the latter would paint
+   hovered rows black on a near-transparent dark background. */
+const ROW = cn(
+  "group h-8 gap-2.5 rounded-lg px-2 text-[13px]",
+  "focus:bg-foreground/[0.06] focus:text-foreground",
+);
 
 /**
  * Theme and language are set once and forgotten, so they sit behind a single
@@ -38,42 +55,101 @@ function SettingsMenu() {
           "flex h-8 w-8 items-center justify-center rounded-md",
           "text-muted-foreground transition-colors duration-150",
           "hover:bg-foreground/[0.06] hover:text-foreground",
+          "data-[state=open]:bg-foreground/[0.06] data-[state=open]:text-foreground",
           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
         )}
         aria-label={t("settings")}
       >
         <Settings2 className="h-4 w-4" />
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-44 rounded-lg">
-        <DropdownMenuLabel className={cn(MONO, "text-muted-foreground")}>
+
+      {/* min-w, not w-: the panel hugs the longest locale name instead of
+          stranding the checkmark in 80px of empty space. */}
+      <DropdownMenuContent
+        align="end"
+        sideOffset={10}
+        className={cn(
+          "w-auto min-w-[10.5rem] rounded-xl p-1.5",
+          "border-border/70 bg-popover/80 backdrop-blur-xl",
+          "shadow-[0_1px_2px_rgba(0,0,0,0.04),0_16px_40px_-12px_rgba(0,0,0,0.22)]",
+          "dark:shadow-[0_1px_2px_rgba(0,0,0,0.6),0_16px_40px_-12px_rgba(0,0,0,0.8)]",
+        )}
+      >
+        <DropdownMenuLabel
+          className={cn(MONO, "px-2 pb-1 pt-1 text-muted-foreground/70")}
+        >
           {t("theme")}
         </DropdownMenuLabel>
-        {THEMES.map((option) => (
-          <DropdownMenuItem
-            key={option}
-            onClick={() => setTheme(option)}
-            className="justify-between text-[13px]"
-          >
-            {t(`theme_${option}`)}
-            {theme === option && <Check className="h-3.5 w-3.5 text-primary-ink" />}
-          </DropdownMenuItem>
-        ))}
+        {THEMES.map(({ value, Icon }) => {
+          const active = theme === value;
+          return (
+            <DropdownMenuItem
+              key={value}
+              onClick={() => setTheme(value)}
+              className={cn(
+                ROW,
+                active ? "text-foreground" : "text-muted-foreground",
+              )}
+            >
+              <span className={RAIL}>
+                <Icon
+                  className={cn(
+                    "h-3.5 w-3.5",
+                    active ? "!text-primary-ink" : "text-current opacity-70",
+                  )}
+                />
+              </span>
+              <span className="flex-1">{t(`theme_${value}`)}</span>
+              <Check
+                className={cn(
+                  "h-3.5 w-3.5 !text-primary-ink transition-opacity duration-150",
+                  active ? "opacity-100" : "opacity-0",
+                )}
+              />
+            </DropdownMenuItem>
+          );
+        })}
 
-        <DropdownMenuSeparator />
+        <DropdownMenuSeparator className="-mx-1.5 my-1.5 bg-border/70" />
 
-        <DropdownMenuLabel className={cn(MONO, "text-muted-foreground")}>
+        <DropdownMenuLabel
+          className={cn(MONO, "px-2 pb-1 pt-1 text-muted-foreground/70")}
+        >
           {t("language")}
         </DropdownMenuLabel>
-        {locales.map((loc) => (
-          <DropdownMenuItem
-            key={loc}
-            onClick={() => router.replace(pathname, { locale: loc })}
-            className="justify-between text-[13px]"
-          >
-            {tLang(loc)}
-            {locale === loc && <Check className="h-3.5 w-3.5 text-primary-ink" />}
-          </DropdownMenuItem>
-        ))}
+        {locales.map((loc) => {
+          const active = locale === loc;
+          return (
+            <DropdownMenuItem
+              key={loc}
+              onClick={() => router.replace(pathname, { locale: loc })}
+              className={cn(
+                ROW,
+                active ? "text-foreground" : "text-muted-foreground",
+              )}
+            >
+              {/* The locale code fills the same rail the theme icons use. */}
+              <span
+                className={cn(
+                  RAIL,
+                  MONO,
+                  active
+                    ? "text-primary-ink"
+                    : "text-current opacity-60 group-focus:opacity-80",
+                )}
+              >
+                {loc}
+              </span>
+              <span className="flex-1">{tLang(loc)}</span>
+              <Check
+                className={cn(
+                  "h-3.5 w-3.5 !text-primary-ink transition-opacity duration-150",
+                  active ? "opacity-100" : "opacity-0",
+                )}
+              />
+            </DropdownMenuItem>
+          );
+        })}
       </DropdownMenuContent>
     </DropdownMenu>
   );
