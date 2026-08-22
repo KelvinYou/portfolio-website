@@ -2,13 +2,14 @@
 
 import { motion } from "framer-motion";
 import { useLocale, useTranslations } from "next-intl";
-import { useMemo, useState } from "react";
+import { Suspense, useMemo } from "react";
 import { useBlogViews } from "@/components/blog/blog-data-provider";
 import { WritingRow } from "@/components/blog/writing-row";
 import { fadeIn, staggerContainer } from "@/lib/animations";
 import type { PostIndexEntry } from "@/lib/mdx";
 import { BlogFilters, type Topic } from "./blog-filters";
 import { BlogPageHeader } from "./blog-page-header";
+import { useBlogFilters } from "./use-blog-filters";
 
 /** A tag has to group this many posts before it is offered as a topic. */
 const MIN_TOPIC_POSTS = 2;
@@ -16,10 +17,69 @@ const MIN_TOPIC_POSTS = 2;
 /** How many tags a year's note names. */
 const NOTE_TOPICS = 2;
 
+function noop() {}
+
+/**
+ * The filter state lives in the URL, so reading it needs a Suspense boundary —
+ * `useSearchParams` bails out of prerendering without one.
+ *
+ * The fallback is the same index with no filter applied, not a spinner. That
+ * keeps every post in the statically generated HTML, which is what a crawler
+ * and a slow connection see; a blank boundary would have traded the page's
+ * whole content for a feature that only exists once JS has run. The controls
+ * in the fallback are inert for the moment before hydration, which is the
+ * ordinary state of any button in server-rendered HTML.
+ */
 export function BlogClient({ posts }: { posts: PostIndexEntry[] }) {
+  return (
+    <Suspense
+      fallback={
+        <BlogIndex
+          posts={posts}
+          query=""
+          topic={null}
+          onQueryChange={noop}
+          onTopicChange={noop}
+          onClear={noop}
+        />
+      }
+    >
+      <FilteredBlogIndex posts={posts} />
+    </Suspense>
+  );
+}
+
+function FilteredBlogIndex({ posts }: { posts: PostIndexEntry[] }) {
+  const { query, setQuery, topic, setTopic, clear } = useBlogFilters();
+
+  return (
+    <BlogIndex
+      posts={posts}
+      query={query}
+      topic={topic}
+      onQueryChange={setQuery}
+      onTopicChange={setTopic}
+      onClear={clear}
+    />
+  );
+}
+
+function BlogIndex({
+  posts,
+  query,
+  topic,
+  onQueryChange,
+  onTopicChange,
+  onClear,
+}: {
+  posts: PostIndexEntry[];
+  query: string;
+  topic: string | null;
+  onQueryChange: (value: string) => void;
+  onTopicChange: (tag: string | null) => void;
+  onClear: () => void;
+}) {
   const t = useTranslations("blog");
-  const [query, setQuery] = useState("");
-  const [topic, setTopic] = useState<string | null>(null);
   const viewsBySlug = useBlogViews();
 
   const topics = useMemo<Topic[]>(() => {
@@ -61,10 +121,10 @@ export function BlogClient({ posts }: { posts: PostIndexEntry[] }) {
 
       <BlogFilters
         query={query}
-        onQueryChange={setQuery}
+        onQueryChange={onQueryChange}
         topics={topics}
         activeTopic={topic}
-        onTopicChange={setTopic}
+        onTopicChange={onTopicChange}
         total={posts.length}
         matches={filtered.length}
       />
@@ -79,10 +139,7 @@ export function BlogClient({ posts }: { posts: PostIndexEntry[] }) {
           </p>
           <button
             type="button"
-            onClick={() => {
-              setQuery("");
-              setTopic(null);
-            }}
+            onClick={onClear}
             className="mt-8 font-mono text-[11px] uppercase tracking-[0.16em] text-foreground underline decoration-primary-ink decoration-2 underline-offset-4 transition-opacity hover:opacity-70"
           >
             {t("clear")}
