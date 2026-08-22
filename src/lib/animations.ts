@@ -88,21 +88,6 @@ export const scaleIn: Variants = {
   },
 };
 
-// Page transition for route changes
-export const pageTransition: Variants = {
-  hidden: { opacity: 0, y: 6 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.3, ease: [0.16, 1, 0.3, 1] },
-  },
-  exit: {
-    opacity: 0,
-    y: -6,
-    transition: { duration: 0.2, ease: [0.4, 0, 1, 1] },
-  },
-};
-
 // Viewport settings for scroll-triggered animations
 export const defaultViewport = {
   once: true,
