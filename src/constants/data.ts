@@ -42,6 +42,9 @@ export const experiences: Experience[] = [
     blogSlugs: [
       "cas-instead-of-idempotency-key",
       "conserving-money-across-rows",
+      "fail-closed-pii-masking",
+      "maker-checker-state-machine",
+      "verifying-a-migration-with-no-test-runner",
     ],
   },
   {
@@ -69,6 +72,7 @@ export const experiences: Experience[] = [
       "Storybook",
     ],
     logo: "/images/companies/simpletruss.jpeg",
+    blogSlugs: ["apollo-cache-and-the-list-you-forgot"],
     projects: [
       {
         title: "LessenPro",
@@ -147,6 +151,7 @@ export const experiences: Experience[] = [
       "Jasper Reports",
     ],
     logo: "/images/companies/finexus.png",
+    blogSlugs: ["hikaricp-pool-exhaustion-jmx"],
   },
   {
     title: "Blockchain Engineer Intern",
@@ -172,6 +177,7 @@ export const experiences: Experience[] = [
       "Redux",
     ],
     logo: "/images/companies/techtics.png",
+    blogSlugs: ["reentrancy-guards-and-the-gas-they-cost"],
   },
 ];
 
@@ -194,6 +200,20 @@ export const personalInfo = {
   memoji: "/images/memoji.png",
   summary: `Full-stack engineer on a production payment platform serving 9,000+ users at dtcpay — React and React Native at the front, Kotlin at the back: cross-currency batch payments, fail-closed PII masking, AML review workflows. Off the clock, multi-agent LLM systems on the Claude Agent SDK — MCP tool servers, agent debate, and walk-forward evals that grade past calls.`,
 };
+
+// The About section's proof row. These are the same facts the resume summary
+// carries, reduced to three scannable figures — About stays voice-first while
+// still standing on evidence, and neither text has to be kept in sync with the
+// other by hand. Values are deliberately locale-neutral so only the short
+// labels go through i18n (`sections.about_proof_*`).
+export const aboutProofPoints: {
+  value: string;
+  labelKey: "about_proof_1" | "about_proof_2" | "about_proof_3";
+}[] = [
+  { value: "9,000+", labelKey: "about_proof_1" },
+  { value: "5", labelKey: "about_proof_2" },
+  { value: "RN + Kotlin", labelKey: "about_proof_3" },
+];
 
 export type SocialId = "github" | "linkedin" | "email";
 
@@ -244,9 +264,8 @@ export const educations: Education[] = [
     cgpa: "3.72",
     honor: { label: "Dean's List", detail: "top 10% of cohort" },
     achievements: [
-      "Final year project — a travel guide app — presented to 50+ industry professionals",
-      "Led a capstone team of 4",
-      "Earned the Databrain Global (Beyondsoft) internship on university recommendation",
+      "Final year project — an offline-first travel guide app, built as a two-person team",
+      "Earned the Finexus (fintech) internship on university recommendation",
     ],
     coursework: {
       core: [
@@ -450,13 +469,20 @@ export const projects: Project[] = [
     outcome: [
       { value: "8×", label: "speedup on 8 cores — Amdahl's law in practice" },
     ],
-    // TODO(kelvin): the previous github link here pointed at
-    // react-selflearn/react-restaurant-landing — a React landing page, not this
-    // Python project. Removed rather than left wrong: one dead link discounts
-    // every other link on the page. Restore with the correct repo URL.
-    access: "private",
+    links: { repo: "https://github.com/KelvinYou/dspc-assignment" },
+    access: "public",
     year: 2022,
     techStacks: ["Python", "Dask", "Threading"],
+  },
+  {
+    title: "Credit Card Fraud Detection",
+    kind: "coursework",
+    claim:
+      "Fraud detection on a heavily imbalanced transaction set — the hard part is that 99% accuracy is what a model that predicts 'never fraud' scores, so Random Forest, KNN and decision trees are compared on recall, not accuracy.",
+    links: { repo: "https://github.com/KelvinYou/ds-assignment" },
+    access: "public",
+    year: 2022,
+    techStacks: ["Python", "scikit-learn", "pandas", "Jupyter"],
   },
 ];
 
@@ -526,6 +552,8 @@ export const skillList: Skill[] = [
   { name: "Solidity", domain: "core", depth: "coursework" },
   { name: "Flutter", domain: "core", depth: "coursework" },
   { name: "Dask", domain: "core", depth: "coursework" },
+  { name: "scikit-learn", domain: "data", depth: "coursework" },
+  { name: "pandas", domain: "data", depth: "coursework" },
   { name: "Firebase", domain: "delivery", depth: "coursework" },
 
   // Studied, never shipped. Rendered as a visible gap on the site and withheld
