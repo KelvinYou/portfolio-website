@@ -36,8 +36,10 @@ export function Gallery({
 
   if (!items || items.length === 0) {
     return (
-      <div className="flex items-center justify-center p-8 text-muted-foreground">
-        <p>No media items to display</p>
+      <div className="rounded-sm border border-dashed border-foreground/15 px-6 py-14 text-center">
+        <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-faint">
+          No plates in this collection
+        </p>
       </div>
     );
   }
