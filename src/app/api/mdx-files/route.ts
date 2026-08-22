@@ -10,8 +10,27 @@ if (!fs.existsSync(BLOG_DIR)) {
   fs.mkdirSync(BLOG_DIR, { recursive: true });
 }
 
+/**
+ * This route backs the local MDX editor, and it writes to the content directory
+ * on disk. `(admin)/layout.tsx` already redirects the editor page away in any
+ * non-development build — but a route handler is not inside that layout, so the
+ * gate has to be repeated here. Without it, POST/PUT/DELETE stayed reachable in
+ * production; a read-only serverless filesystem is what made that harmless, not
+ * anything in this file.
+ *
+ * 404 rather than 403: in a deployed build this endpoint does not exist as far
+ * as a caller is concerned, and saying "forbidden" would confirm that it does.
+ */
+const isEditorEnabled = process.env.NODE_ENV === "development";
+
+function notFoundResponse() {
+  return NextResponse.json({ error: "Not found" }, { status: 404 });
+}
+
 // GET - List all MDX files
 export async function GET() {
+  if (!isEditorEnabled) return notFoundResponse();
+
   try {
     const files = fs
       .readdirSync(BLOG_DIR)
@@ -42,6 +61,8 @@ export async function GET() {
 
 // POST - Create new MDX file
 export async function POST(request: NextRequest) {
+  if (!isEditorEnabled) return notFoundResponse();
+
   try {
     const { filename, content } = await request.json();
 
@@ -79,6 +100,8 @@ export async function POST(request: NextRequest) {
 
 // PUT - Update existing MDX file
 export async function PUT(request: NextRequest) {
+  if (!isEditorEnabled) return notFoundResponse();
+
   try {
     const { filename, content } = await request.json();
 
@@ -113,6 +136,8 @@ export async function PUT(request: NextRequest) {
 
 // DELETE - Delete MDX file
 export async function DELETE(request: NextRequest) {
+  if (!isEditorEnabled) return notFoundResponse();
+
   try {
     const { filename } = await request.json();
 
