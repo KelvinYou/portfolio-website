@@ -39,7 +39,7 @@ function TemplateCard({ template }: TemplateCardProps) {
           <Button
             variant="outline"
             size="sm"
-            className="rounded-full border-white/20 text-black hover:bg-white/90 dark:border-black/20 dark:text-white dark:hover:bg-black/10"
+            className="rounded-full border-white/20 text-black hover:bg-white/90 hover:text-black dark:border-black/20 dark:text-white dark:hover:bg-black/10 dark:hover:text-white"
             asChild
           >
             <a

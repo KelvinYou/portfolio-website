@@ -38,7 +38,7 @@ export function SectionHeader({
       {badge && (
         <div className="mb-4 inline-block rounded-full border border-primary/20 bg-primary/10 p-1.5 px-3">
           {badge.icon && (
-            <badge.icon className="mr-1 inline h-4 w-4 text-primary" />
+            <badge.icon className="mr-1 inline h-4 w-4 text-primary-ink" />
           )}
           <span className="text-xs font-medium">{badge.text}</span>
         </div>
