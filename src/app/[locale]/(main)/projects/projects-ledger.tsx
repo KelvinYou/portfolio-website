@@ -19,10 +19,12 @@ function ProjectGroup({
   label,
   note,
   projects,
+  postTitles,
 }: {
   label: string;
   note: string;
   projects: Project[];
+  postTitles?: Record<string, string>;
 }) {
   const reduceMotion = useReducedMotion();
 
@@ -63,14 +65,24 @@ function ProjectGroup({
         className="border-b border-border"
       >
         {projects.map((project) => (
-          <ProjectRow key={project.title} project={project} />
+          <ProjectRow
+            key={project.title}
+            project={project}
+            postTitles={postTitles}
+          />
         ))}
       </motion.div>
     </div>
   );
 }
 
-export function ProjectsLedger({ projects }: { projects: Project[] }) {
+export function ProjectsLedger({
+  projects,
+  postTitles,
+}: {
+  projects: Project[];
+  postTitles?: Record<string, string>;
+}) {
   const t = useTranslations("sections");
 
   const copy: Record<ProjectKind, { label: string; note: string }> = {
@@ -98,6 +110,7 @@ export function ProjectsLedger({ projects }: { projects: Project[] }) {
           projects={projects
             .filter((project) => project.kind === kind)
             .sort((a, b) => b.year - a.year)}
+          postTitles={postTitles}
         />
       ))}
     </div>

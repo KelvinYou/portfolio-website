@@ -1,4 +1,5 @@
 import { domainPath, personalInfo, projects } from "@/constants";
+import { getPostTitles } from "@/lib/mdx";
 import { ogImageFor } from "@/lib/og";
 import { Metadata } from "next";
 import { ProjectsLedger } from "./projects-ledger";
@@ -65,7 +66,7 @@ export default function ProjectsPage() {
           {/* Animated header component */}
           <ProjectsPageHeader />
 
-          <ProjectsLedger projects={projects} />
+          <ProjectsLedger projects={projects} postTitles={getPostTitles()} />
         </div>
       </div>
     </div>

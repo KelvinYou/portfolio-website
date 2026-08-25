@@ -3,6 +3,7 @@
 import React from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
+import { WroteAbout } from "@/components/blog/wrote-about";
 import { Icons } from "@/components/icons";
 import { cn } from "@/lib/utils";
 import { fadeIn } from "@/lib/animations";
@@ -157,8 +158,10 @@ function TechList({ techStacks }: { techStacks: string[] }) {
 
 export const ProjectRow = React.memo(function ProjectRow({
   project,
+  postTitles,
 }: {
   project: Project;
+  postTitles?: Record<string, string>;
 }) {
   const reduceMotion = useReducedMotion();
 
@@ -181,6 +184,14 @@ export const ProjectRow = React.memo(function ProjectRow({
         <div className="mt-4">
           <TechList techStacks={project.techStacks} />
         </div>
+
+        {/* Only the /projects ledger passes `postTitles`, and passing it is what
+            turns the write-up links on. The homepage carries three projects as a
+            teaser into this page; a second link target there would compete with
+            the one path it exists to send the reader down. */}
+        {postTitles && project.blogSlugs && project.blogSlugs.length > 0 && (
+          <WroteAbout slugs={project.blogSlugs} titles={postTitles} />
+        )}
       </div>
 
       <div className="space-y-5">
