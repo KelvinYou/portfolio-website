@@ -219,13 +219,15 @@
    SECTION LAYOUT
    ============================== */
 
-section {
+/* :not([aria-live]) keeps sonner's always-mounted toast <section> out of the
+   layout — it would otherwise render as a 192px empty band above the footer. */
+section:not([aria-live]) {
   padding-top: 6rem;
   padding-bottom: 6rem;
 }
 
 @media (min-width: 768px) {
-  section {
+  section:not([aria-live]) {
     padding-top: 8rem;
     padding-bottom: 8rem;
   }

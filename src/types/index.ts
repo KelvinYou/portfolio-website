@@ -119,9 +119,27 @@ export type SkillDepth =
   /** Studied, never shipped. Rendered as a visible gap; kept off the resume. */
   | "gap";
 
+/**
+ * Which layer of a full-stack product the skill sits in. This is the axis the
+ * website's grid columns use, because the first question an "AI-native full
+ * stack" reader has is coverage — does he hold all three layers — and depth is
+ * only the second. `domain` stays the resume's axis; the two are deliberately
+ * different cuts of the same list.
+ */
+export type SkillLayer =
+  /** What the user touches: UI frameworks, client data layer. */
+  | "interface"
+  /** What holds the data: server languages, databases, analysis libraries. */
+  | "server"
+  /** Models, agents, and the plumbing around them. */
+  | "ai"
+  /** Getting it out and keeping it out: deploy, CI, containers, tests. */
+  | "ops";
+
 export interface Skill {
   name: string;
   domain: SkillDomain;
+  layer: SkillLayer;
   depth: SkillDepth;
 }
 

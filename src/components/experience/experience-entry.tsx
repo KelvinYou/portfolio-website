@@ -4,9 +4,8 @@ import React from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
+import { WroteAbout } from "@/components/blog/wrote-about";
 import { ArtifactLink } from "@/components/project-row";
-import { Paths } from "@/enums";
 import { fadeIn } from "@/lib/animations";
 import { cn, formatTenure, tenureMonths } from "@/lib/utils";
 import type { Experience, WorkProject } from "@/types";
@@ -168,43 +167,14 @@ function DeliveredProject({ project }: { project: WorkProject }) {
   );
 }
 
-/**
- * The write-ups are shown as their own paths rather than their titles: the
- * titles live in MDX frontmatter on the server, and fetching them client-side
- * to label two links would trade a request for nothing a reader can't already
- * read off the path.
- */
-function Writing({ slugs }: { slugs: string[] }) {
-  return (
-    <div className="mt-6 flex flex-col gap-2">
-      <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-subtle">
-        Wrote about this
-      </p>
-      {slugs.map((slug) => (
-        <Link
-          key={slug}
-          href={`${Paths.Blog}/${slug}`}
-          className="group/post inline-flex w-fit items-center gap-1.5 font-mono text-xs text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background"
-        >
-          <span className="underline decoration-border underline-offset-4 transition-colors group-hover/post:decoration-primary-ink">
-            /{slug}
-          </span>
-          <ArrowUpRight
-            className="h-3 w-3 shrink-0 transition-transform duration-300 group-hover/post:translate-x-0.5 group-hover/post:-translate-y-0.5"
-            aria-hidden="true"
-          />
-        </Link>
-      ))}
-    </div>
-  );
-}
-
 export const ExperienceEntry = React.memo(function ExperienceEntry({
   experience: exp,
   isCurrent = false,
+  postTitles,
 }: {
   experience: Experience;
   isCurrent?: boolean;
+  postTitles?: Record<string, string>;
 }) {
   const reduceMotion = useReducedMotion();
 
@@ -292,7 +262,7 @@ export const ExperienceEntry = React.memo(function ExperienceEntry({
         )}
 
         {exp.blogSlugs && exp.blogSlugs.length > 0 && (
-          <Writing slugs={exp.blogSlugs} />
+          <WroteAbout slugs={exp.blogSlugs} titles={postTitles} />
         )}
       </div>
     </motion.article>

@@ -3,33 +3,36 @@
 import { motion } from "framer-motion";
 import { fadeIn, staggerContainer, defaultViewport } from "@/lib/animations";
 import { useTranslations } from "next-intl";
-import { skillTiers } from "@/constants/data";
+import { skillGaps, skillStack } from "@/constants/data";
 import { UnifiedSectionHeader } from "@/components/base/unified-section-header";
 import { cn } from "@/lib/utils";
 
-// Skills as a depth ledger: each row is how far the tools in it have actually
-// gone, with the work that proves it named underneath.
+// Skills as a stack diagram: one column per layer of a full-stack product, in
+// the order the reader this section is written for cares about them — AI first,
+// then the two halves of the app it sits in, then how it ships.
 //
-// This replaced a five-row chip cloud of 33 equally-weighted pills. Three
-// problems it had, in the order they mattered:
+// This replaced a four-row depth ledger (shipped / built / coursework / gap).
+// The ledger's axis was honest and the axis was still wrong: a reader arriving
+// with "AI-native full stack" in their head is answering a *coverage* question
+// first — does he hold all three layers — and the ledger made them assemble
+// each layer out of names scattered across three separate rows. Depth didn't
+// have to be thrown away to fix that; it demoted to a marker on each name, so
+// coverage is read in one pass and provenance in the second.
 //
-//   1. Category grouping told the reader nothing. Nobody needs to be told
-//      PostgreSQL is a database; what they can't tell from a flat list is
-//      whether it ever carried a paying customer. Depth is the axis that
-//      answers a hiring question, and `skillList` already holds the ground
-//      truth for it.
-//   2. It restated, unsourced, what the projects ledger below already proves
-//      with numbers. The provenance line is the only thing here that the rest
-//      of the page doesn't say — so it's the thing worth rendering.
-//   3. The pills' `hover:border-primary/40` implied a control that never
-//      existed. Names now sit in a `·`-separated line, like the tech lists on
-//      the project rows.
-//
-// Two things stay deliberately absent: self-assigned proficiency numbers
-// ("LLM Integration: 90"), which are worse signal than none, and the
-// soft-skills tab, which nobody can falsify.
+// Three things are deliberately not here: self-assigned proficiency numbers
+// ("LLM Integration: 90"), a soft-skills tab (nobody can falsify it), and any
+// per-item hover affordance — these names are not controls, so nothing should
+// suggest they lead anywhere.
+const LAYERS = ["ai", "interface", "server"] as const;
+
+const DEPTH_MARK = { shipped: "●", built: "○" } as const;
+
 export function SkillsSection() {
   const t = useTranslations("sections");
+  const columns = LAYERS.map(
+    (layer) => skillStack.find((entry) => entry.layer === layer)!,
+  );
+  const ops = skillStack.find((entry) => entry.layer === "ops")!;
 
   return (
     <section id="skills" className="py-32 md:py-40">
@@ -46,56 +49,146 @@ export function SkillsSection() {
           viewport={defaultViewport}
           className="max-w-5xl"
         >
-          {skillTiers.map(({ depth, items }) => (
-            <motion.div
-              key={depth}
-              variants={fadeIn}
-              className="grid gap-x-10 gap-y-4 border-t border-border py-8 md:grid-cols-[11rem_minmax(0,1fr)] md:py-9"
-            >
-              <h3 className="font-mono text-xs leading-relaxed tracking-[0.16em] text-muted-foreground uppercase">
-                {t(`skills_tier_${depth}_label`)}
-              </h3>
+          {/* The legend carries the whole depth axis in one line, which is what
+              lets the columns below stay a single glyph wide on the point. */}
+          <motion.p
+            variants={fadeIn}
+            className="flex flex-wrap gap-x-6 gap-y-1 font-mono text-[11px] tracking-[0.14em] text-muted-foreground uppercase"
+          >
+            <span>
+              <span className="pr-2 text-primary">●</span>
+              {t("skills_legend_shipped")}
+            </span>
+            <span>
+              <span className="pr-2">○</span>
+              {t("skills_legend_built")}
+            </span>
+          </motion.p>
 
-              <div className="min-w-0">
-                {/* The gap tier is set in muted text: the one row that isn't a
-                    claim shouldn't carry the weight of the ones that are. */}
-                {/* A flex row rather than a text paragraph: as running text,
-                    "Apollo Client" and "Claude Agent SDK" broke across lines
-                    and the reader lost where one item ended. Each item is its
-                    own non-wrapping child, and the separator travels inside it
-                    so a dot can never start a line. */}
-                <ul
-                  className={cn(
-                    "flex max-w-[64ch] flex-wrap gap-x-1 gap-y-1.5 text-[15px]",
-                    depth === "gap"
-                      ? "text-muted-foreground"
-                      : "text-foreground",
-                  )}
-                >
-                  {items.map((item, index) => (
-                    <li key={item} className="whitespace-nowrap">
-                      {item}
-                      {index < items.length - 1 && (
-                        <span
-                          className="pl-2 text-muted-foreground/40"
-                          aria-hidden="true"
-                        >
-                          ·
+          <div className="mt-6 grid border-t border-border md:grid-cols-3">
+            {columns.map(({ layer, proven, coursework }, index) => (
+              <motion.div
+                key={layer}
+                variants={fadeIn}
+                className={cn(
+                  "border-b border-border py-8 md:border-b-0 md:py-9",
+                  // Vertical rules only between columns, and only once the grid
+                  // is actually side-by-side; stacked, they'd float unattached.
+                  index > 0 && "md:border-l md:border-border md:pl-8",
+                  index < columns.length - 1 && "md:pr-8",
+                )}
+              >
+                <h3 className="font-mono text-xs tracking-[0.16em] text-foreground uppercase">
+                  {t(`skills_layer_${layer}_label`)}
+                </h3>
+                {/* Where this column's strongest claim comes from. One line per
+                    column replaces four provenance paragraphs. */}
+                <p className="mt-2 font-mono text-[11px] leading-relaxed tracking-[0.1em] text-muted-foreground/70">
+                  {t(`skills_layer_${layer}_source`)}
+                </p>
+
+                <ul className="mt-5 space-y-2 text-[15px]">
+                  {proven.map(({ name, depth }) => (
+                    <li key={name} className="flex gap-2.5">
+                      <span
+                        aria-hidden="true"
+                        className={cn(
+                          "pt-[3px] font-mono text-[9px] leading-none",
+                          depth === "shipped"
+                            ? "text-primary"
+                            : "text-muted-foreground/60",
+                        )}
+                      >
+                        {DEPTH_MARK[depth]}
+                      </span>
+                      <span className="min-w-0">
+                        {name}
+                        <span className="sr-only">
+                          {` — ${t(`skills_legend_${depth}`)}`}
                         </span>
-                      )}
+                      </span>
                     </li>
                   ))}
                 </ul>
 
-                {/* Where the tier's claim comes from. The rule reads as "this
-                    line is subordinate to the one above" without spending a
-                    glyph on saying so. */}
-                <p className="mt-4 border-l border-border pl-3 font-mono text-[11px] leading-relaxed tracking-[0.14em] text-muted-foreground/70 uppercase">
-                  {t(`skills_tier_${depth}_source`)}
-                </p>
-              </div>
-            </motion.div>
-          ))}
+                {/* Coursework stays under its own layer, but out of the scan
+                    path: it's context for the column, not a claim in it. */}
+                {coursework.length > 0 && (
+                  <p className="mt-5 text-[13px] leading-relaxed text-muted-foreground/70">
+                    <span className="font-mono text-[11px] tracking-[0.12em] uppercase">
+                      {t("skills_coursework_label")}
+                    </span>
+                    <span className="pl-2">{coursework.join(" · ")}</span>
+                  </p>
+                )}
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Ship & ops runs full width rather than taking a fourth column: it's
+              the layer a reader checks for presence, not for depth. */}
+          <motion.div
+            variants={fadeIn}
+            className="flex flex-col gap-x-8 gap-y-2 border-t border-border py-6 md:flex-row"
+          >
+            <h3 className="font-mono text-xs tracking-[0.16em] text-foreground uppercase md:w-44 md:shrink-0">
+              {t("skills_layer_ops_label")}
+            </h3>
+            <ul className="flex flex-wrap gap-x-1 gap-y-1.5 text-[15px]">
+              {ops.proven.map(({ name, depth }, index) => (
+                <li key={name} className="whitespace-nowrap">
+                  <span
+                    aria-hidden="true"
+                    className={cn(
+                      "pr-2 font-mono text-[9px]",
+                      depth === "shipped"
+                        ? "text-primary"
+                        : "text-muted-foreground/60",
+                    )}
+                  >
+                    {DEPTH_MARK[depth]}
+                  </span>
+                  {name}
+                  <span className="sr-only">
+                    {` — ${t(`skills_legend_${depth}`)}`}
+                  </span>
+                  {index < ops.proven.length - 1 && (
+                    <span
+                      className="pl-2 text-muted-foreground/40"
+                      aria-hidden="true"
+                    >
+                      ·
+                    </span>
+                  )}
+                </li>
+              ))}
+            </ul>
+            {ops.coursework.length > 0 && (
+              <p className="text-[13px] leading-relaxed text-muted-foreground/70 md:pt-[3px]">
+                <span className="font-mono text-[11px] tracking-[0.12em] uppercase">
+                  {t("skills_coursework_label")}
+                </span>
+                <span className="pl-2">{ops.coursework.join(" · ")}</span>
+              </p>
+            )}
+          </motion.div>
+
+          {/* The gap row is the one line here that isn't a claim, and it's set
+              like it: no marker, no accent, muted throughout. */}
+          <motion.div
+            variants={fadeIn}
+            className="flex flex-col gap-x-8 gap-y-2 border-t border-border py-6 md:flex-row"
+          >
+            <h3 className="font-mono text-xs tracking-[0.16em] text-muted-foreground uppercase md:w-44 md:shrink-0">
+              {t("skills_gap_label")}
+            </h3>
+            <p className="text-[15px] text-muted-foreground">
+              {skillGaps.join(" · ")}
+              <span className="pl-2 text-muted-foreground/70">
+                {t("skills_gap_note")}
+              </span>
+            </p>
+          </motion.div>
         </motion.div>
       </div>
     </section>

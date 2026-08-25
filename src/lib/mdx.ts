@@ -147,6 +147,21 @@ export function getAdjacentPosts(slug: string): AdjacentPosts {
   };
 }
 
+/**
+ * Slug to title, for the `blogSlugs` links hanging off roles and projects.
+ *
+ * Those links used to render the raw `/slug` path, on the argument that reading
+ * a title client-side would cost a request. It doesn't: every surface rendering
+ * them sits under a server page that can read frontmatter for free and hand the
+ * map down. A path is only legible when the slug happens to be a sentence, and
+ * half of them aren't.
+ */
+export function getPostTitles(): Record<string, string> {
+  return Object.fromEntries(
+    getAllPostsMeta().map(({ slug, frontmatter }) => [slug, frontmatter.title]),
+  );
+}
+
 export function getAllPostsMeta(): PostMeta[] {
   try {
     const slugs = getPostSlugs();

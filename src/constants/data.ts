@@ -6,6 +6,7 @@ import {
   Skill,
   SkillDepth,
   SkillDomain,
+  SkillLayer,
 } from "@/types";
 
 export const domainPath = "https://kelvinyou.vercel.app";
@@ -38,13 +39,27 @@ export const experiences: Experience[] = [
     ],
     logo: "/images/companies/dtcpay.jpeg",
     // The two Kotlin write-ups are the only public evidence of server-side
-    // ownership — the rest of the site reads frontend-only without them.
+    // ownership — the rest of the site reads frontend-only without them, so they
+    // lead. The first five map onto the three responsibilities above; the rest
+    // fold behind a disclosure in `WroteAbout`, because sixteen links rendered
+    // flat would read as a blog index that wandered into a resume.
     blogSlugs: [
       "cas-instead-of-idempotency-key",
       "conserving-money-across-rows",
       "fail-closed-pii-masking",
       "maker-checker-state-machine",
       "verifying-a-migration-with-no-test-runner",
+      "shared-schema-library-across-services",
+      "idempotency-check-against-the-wrong-clock",
+      "read-mutate-write-back-reverted-update",
+      "three-copies-one-rule-disagreed-on-zero",
+      "guard-survived-refactor-became-tautology",
+      "flag-written-before-the-effect",
+      "never-configured-vs-disabled-same-fallback",
+      "permission-scope-trap-for-a-later-caller",
+      "cache-rebuild-looked-like-a-login",
+      "merge-conflict-enum-keys-runtime-break",
+      "constants-frozen-at-load-raced-async-init",
     ],
   },
   {
@@ -211,7 +226,9 @@ export const aboutProofPoints: {
   labelKey: "about_proof_1" | "about_proof_2" | "about_proof_3";
 }[] = [
   { value: "9,000+", labelKey: "about_proof_1" },
-  { value: "5", labelKey: "about_proof_2" },
+  // The positioning is agent-first, so one of the three proof slots has to
+  // be an agent number. All three used to be payments figures.
+  { value: "4 agents", labelKey: "about_proof_2" },
   { value: "RN + Kotlin", labelKey: "about_proof_3" },
 ];
 
@@ -368,6 +385,15 @@ export const projects: Project[] = [
       "Pydantic",
       "FastAPI",
     ],
+    // Ordered as an argument, not by date: the architecture, then the result it
+    // produced, then the two method posts that make the result checkable.
+    blogSlugs: [
+      "why-my-analysts-argue-before-answering",
+      "signal-loses-to-buy-and-hold",
+      "deflated-sharpe-and-the-strategy-search",
+      "outcome-memory-lookahead-bias",
+      "from-impressive-table-to-evidence-first",
+    ],
   },
   {
     title: "Personal-OS",
@@ -390,6 +416,10 @@ export const projects: Project[] = [
       "Python",
       "TypeScript",
       "Agent Skills",
+    ],
+    blogSlugs: [
+      "the-one-rule-my-agent-cannot-override",
+      "an-agent-that-audits-my-other-agents",
     ],
   },
   {
@@ -428,7 +458,13 @@ export const projects: Project[] = [
     access: "public",
     year: 2025,
     techStacks: ["Next.js", "TailwindCSS", "Shadcn", "React"],
-    blogSlugs: ["personal-website"],
+    // `why-i-wont-put-agentic-ai-on-my-resume` belongs here rather than under
+    // Personal-OS: the subject is this file's own skill tiers, not the agents.
+    blogSlugs: [
+      "why-i-wont-put-agentic-ai-on-my-resume",
+      "nextjs-seo",
+      "personal-website",
+    ],
   },
   {
     title: "Travel Guide",
@@ -503,9 +539,10 @@ export const certifications = [
 ];
 
 /**
- * Every skill, carrying both axes. This flat list is the single source of truth;
- * `skillGroups` and `skillTiers` below are projections of it, so the resume and
- * the website can present different cuts without drifting apart.
+ * Every skill, carrying all three axes. This flat list is the single source of
+ * truth; `skillGroups` (domain, for the resume) and `skillStack` (layer, for the
+ * website) below are projections of it, so the two surfaces can present
+ * different cuts without drifting apart.
  *
  * `depth` is not self-assessment — each value is checkable against data in this
  * same file. `shipped` means it appears in an `experiences[].skills` array or in
@@ -520,49 +557,79 @@ export const certifications = [
  */
 export const skillList: Skill[] = [
   // Production — dtcpay (9,000+ users), Simpletruss, PTIB (3 paying centres).
-  { name: "TypeScript", domain: "core", depth: "shipped" },
-  { name: "React", domain: "core", depth: "shipped" },
-  { name: "React Native", domain: "core", depth: "shipped" },
-  { name: "Kotlin", domain: "core", depth: "shipped" },
-  { name: "Next.js", domain: "core", depth: "shipped" },
-  { name: "GraphQL", domain: "core", depth: "shipped" },
-  { name: "Apollo Client", domain: "core", depth: "shipped" },
-  { name: "PostgreSQL", domain: "data", depth: "shipped" },
-  { name: "Supabase", domain: "data", depth: "shipped" },
-  { name: "Vercel", domain: "delivery", depth: "shipped" },
-  { name: "Git", domain: "tools", depth: "shipped" },
+  { name: "TypeScript", domain: "core", layer: "interface", depth: "shipped" },
+  { name: "React", domain: "core", layer: "interface", depth: "shipped" },
+  {
+    name: "React Native",
+    domain: "core",
+    layer: "interface",
+    depth: "shipped",
+  },
+  { name: "Next.js", domain: "core", layer: "interface", depth: "shipped" },
+  { name: "GraphQL", domain: "core", layer: "interface", depth: "shipped" },
+  {
+    name: "Apollo Client",
+    domain: "core",
+    layer: "interface",
+    depth: "shipped",
+  },
+  { name: "Kotlin", domain: "core", layer: "server", depth: "shipped" },
+  { name: "PostgreSQL", domain: "data", layer: "server", depth: "shipped" },
+  { name: "Supabase", domain: "data", layer: "server", depth: "shipped" },
+  { name: "Vercel", domain: "delivery", layer: "ops", depth: "shipped" },
+  { name: "Git", domain: "tools", layer: "ops", depth: "shipped" },
 
   // My own systems — public repos, no paying users behind them.
-  { name: "Python", domain: "core", depth: "built" },
-  { name: "Node.js", domain: "core", depth: "built" },
-  { name: "FastAPI", domain: "core", depth: "built" },
-  { name: "LLM Integration (Claude API)", domain: "ai", depth: "built" },
-  { name: "Claude Agent SDK", domain: "ai", depth: "built" },
-  { name: "MCP (Model Context Protocol)", domain: "ai", depth: "built" },
-  { name: "Multi-agent Systems", domain: "ai", depth: "built" },
-  { name: "RAG", domain: "ai", depth: "built" },
-  { name: "Prompt Engineering", domain: "ai", depth: "built" },
-  { name: "Docker", domain: "delivery", depth: "built" },
-  { name: "GitHub Actions (CI/CD)", domain: "delivery", depth: "built" },
-  { name: "Claude Code", domain: "tools", depth: "built" },
-  { name: "Playwright", domain: "tools", depth: "built" },
+  { name: "Python", domain: "core", layer: "server", depth: "built" },
+  { name: "Node.js", domain: "core", layer: "server", depth: "built" },
+  { name: "FastAPI", domain: "core", layer: "server", depth: "built" },
+  {
+    name: "LLM Integration (Claude API)",
+    domain: "ai",
+    layer: "ai",
+    depth: "built",
+  },
+  { name: "Claude Agent SDK", domain: "ai", layer: "ai", depth: "built" },
+  {
+    name: "MCP (Model Context Protocol)",
+    domain: "ai",
+    layer: "ai",
+    depth: "built",
+  },
+  { name: "Multi-agent Systems", domain: "ai", layer: "ai", depth: "built" },
+  { name: "RAG", domain: "ai", layer: "ai", depth: "built" },
+  { name: "Prompt Engineering", domain: "ai", layer: "ai", depth: "built" },
+  { name: "Claude Code", domain: "tools", layer: "ai", depth: "built" },
+  { name: "Docker", domain: "delivery", layer: "ops", depth: "built" },
+  {
+    name: "GitHub Actions (CI/CD)",
+    domain: "delivery",
+    layer: "ops",
+    depth: "built",
+  },
+  { name: "Playwright", domain: "tools", layer: "ops", depth: "built" },
 
   // Coursework — 2022-23 capstone and assignments, nothing since.
-  { name: "Java", domain: "core", depth: "coursework" },
-  { name: "Solidity", domain: "core", depth: "coursework" },
-  { name: "Flutter", domain: "core", depth: "coursework" },
-  { name: "Dask", domain: "core", depth: "coursework" },
-  { name: "scikit-learn", domain: "data", depth: "coursework" },
-  { name: "pandas", domain: "data", depth: "coursework" },
-  { name: "Firebase", domain: "delivery", depth: "coursework" },
+  { name: "Flutter", domain: "core", layer: "interface", depth: "coursework" },
+  { name: "Java", domain: "core", layer: "server", depth: "coursework" },
+  { name: "Solidity", domain: "core", layer: "server", depth: "coursework" },
+  { name: "Dask", domain: "core", layer: "server", depth: "coursework" },
+  {
+    name: "scikit-learn",
+    domain: "data",
+    layer: "server",
+    depth: "coursework",
+  },
+  { name: "pandas", domain: "data", layer: "server", depth: "coursework" },
+  { name: "Firebase", domain: "delivery", layer: "ops", depth: "coursework" },
 
   // Studied, never shipped. Rendered as a visible gap on the site and withheld
   // from the resume — a keyword there would read as a claim of experience.
   // Closing this is the current learning target, not a line to pad now.
-  { name: "Go", domain: "core", depth: "gap" },
-  { name: "Redis", domain: "data", depth: "gap" },
-  { name: "AWS", domain: "delivery", depth: "gap" },
-  { name: "Kubernetes", domain: "delivery", depth: "gap" },
+  { name: "Go", domain: "core", layer: "server", depth: "gap" },
+  { name: "Redis", domain: "data", layer: "server", depth: "gap" },
+  { name: "AWS", domain: "delivery", layer: "ops", depth: "gap" },
+  { name: "Kubernetes", domain: "delivery", layer: "ops", depth: "gap" },
 ];
 
 /**
@@ -591,18 +658,43 @@ export const skillGroups: { label: string; items: readonly string[] }[] =
   }));
 
 /**
- * The depth cut, for the website. Order is strongest-first, and the weak tiers
- * are kept — the honesty is what makes the top tier believable, the same rule
- * the projects ledger follows with its "no measured result" rows.
+ * The layer cut, for the website. Columns answer coverage in one glance — the
+ * question a full-stack reader actually arrives with — and depth survives as a
+ * per-item marker rather than as the grouping.
  *
- * Labels and provenance lines are translated; look under `sections` for
- * `skills_tier_<depth>_label` and `skills_tier_<depth>_source`.
+ * This replaced the depth cut (`skillTiers`), which grouped 33 names into four
+ * rows: correct, but it made the reader assemble "does he hold the server
+ * layer" out of items scattered across three tiers.
+ *
+ * `proven` is ordered shipped-first so the strongest name in a column is the
+ * first one read. `coursework` is split off rather than dropped — it belongs
+ * under its column, but not in the scan path.
+ *
+ * Labels and proof lines are translated; look under `sections` for
+ * `skills_layer_<layer>_label` and `skills_layer_<layer>_source`.
  */
-export const skillTiers: { depth: SkillDepth; items: readonly string[] }[] = (
-  ["shipped", "built", "coursework", "gap"] as const
-).map((depth) => ({
-  depth,
-  items: skillList
-    .filter((skill) => skill.depth === depth)
-    .map((skill) => skill.name),
-}));
+type ProvenDepth = Extract<SkillDepth, "shipped" | "built">;
+
+export const skillStack: {
+  layer: SkillLayer;
+  proven: readonly { name: string; depth: ProvenDepth }[];
+  coursework: readonly string[];
+}[] = (["interface", "server", "ai", "ops"] as const).map((layer) => {
+  const inLayer = skillList.filter((skill) => skill.layer === layer);
+  return {
+    layer,
+    proven: (["shipped", "built"] as const).flatMap((depth) =>
+      inLayer
+        .filter((skill) => skill.depth === depth)
+        .map(({ name }) => ({ name, depth })),
+    ),
+    coursework: inLayer
+      .filter((skill) => skill.depth === "coursework")
+      .map(({ name }) => name),
+  };
+});
+
+/** The one tier that stays a row of its own: a claim's absence, not a claim. */
+export const skillGaps: readonly string[] = skillList
+  .filter((skill) => skill.depth === "gap")
+  .map(({ name }) => name);

@@ -7,7 +7,12 @@ import { ExperienceEntry } from "@/components/experience/experience-entry";
 import { UnifiedSectionHeader } from "@/components/base/unified-section-header";
 import { staggerContainer, defaultViewport } from "@/lib/animations";
 
-export function ExperiencesSection() {
+export function ExperiencesSection({
+  postTitles,
+}: {
+  /** Slug to title for the write-up links, read on the server by the page. */
+  postTitles?: Record<string, string>;
+}) {
   const t = useTranslations("sections");
 
   return (
@@ -32,6 +37,7 @@ export function ExperiencesSection() {
               key={`${exp.company}-${exp.startDate}`}
               experience={exp}
               isCurrent={index === 0 && !exp.endDate}
+              postTitles={postTitles}
             />
           ))}
         </motion.div>

@@ -1,205 +1,151 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { FileText, Mail, MapPin, Puzzle, Compass, Rocket } from "lucide-react";
-import { buttonVariants } from "@/components/ui/button";
-import { MagneticButton } from "@/components/ui/magnetic-button";
+import { ArrowRight, MapPin } from "lucide-react";
 import { UnifiedSectionHeader } from "@/components/base/unified-section-header";
 import Image from "next/image";
 import Link from "next/link";
-import { aboutProofPoints, personalInfo, resumeRoute } from "@/constants";
-import { cn } from "@/lib/utils";
-import { fadeIn, staggerContainer, defaultViewport } from "@/lib/animations";
+import { aboutProofPoints, personalInfo } from "@/constants";
+import { fadeIn, defaultViewport } from "@/lib/animations";
 import { useTranslations } from "next-intl";
 
-const topTechs = [
-  "TypeScript",
-  "Next.js",
-  "React",
-  "Python",
-  "Claude Agent SDK",
-  "MCP",
-  "FastAPI",
-  "PostgreSQL",
-];
-
-const workSteps = [
-  { icon: Puzzle, labelKey: "about_step_1" as const },
-  { icon: Compass, labelKey: "about_step_2" as const },
-  { icon: Rocket, labelKey: "about_step_3" as const },
-];
-
+/**
+ * Two blocks used to live here and both were cut rather than restyled.
+ *
+ * `workSteps` (01 messy problem / 02 design a system / 03 ship it) said what
+ * every engineer says about their own process — and restated the section's
+ * own subtitle while doing it. `topTechs` listed eight technologies one
+ * scroll above SkillsSection, which is the component that owns that list.
+ *
+ * What is left is the text that only Kelvin could have written: three
+ * figures, and the thing currently being built.
+ */
 export function AboutSection() {
   const t = useTranslations("sections");
-  const tCommon = useTranslations("common");
 
   return (
     <section id="about" className="py-32 md:py-40">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        {/* One header, not two. This section used to stack an "About Me" /
+            "Learn more about my journey" header on top of an inner "How I
+            Work" heading — the subtitle was template filler and contradicted
+            the heading below it. The real heading is now the section's. */}
         <UnifiedSectionHeader
-          title={t("about_title")}
-          subtitle={t("about_subtitle")}
+          title={t("about_heading")}
+          subtitle={t("about_hook")}
         />
 
-        <div className="grid items-center gap-12 md:grid-cols-2">
-          {/* How-I-Work process visual */}
-          <motion.div
-            variants={staggerContainer}
+        {/* Capped width. The page container runs past 1900px on a wide
+            display, and every proportion here was being multiplied by that:
+            a 2-of-5 column became a 730px-wide photo, and a 4:5 frame turned
+            that into a 900px-tall one. Measure, not fraction. */}
+        <div className="mx-auto max-w-5xl">
+          {/* Proof figures — a ruled ledger, not three dashboard tiles.
+              Full width above the fold of the block, because these are the
+              only hard numbers in the section. */}
+          <motion.dl
+            variants={fadeIn}
             initial="hidden"
             whileInView="visible"
             viewport={defaultViewport}
-            className="flex flex-col gap-8 py-4"
+            className="grid grid-cols-3 divide-x divide-border border-y border-border"
           >
-            {/* Identity strip — the face behind the résumé. Greyscale by
-                default so the busy travel shot doesn't fight the monochrome
-                page; colour returns on hover. */}
+            {aboutProofPoints.map((point) => (
+              <div
+                key={point.labelKey}
+                className="group px-4 py-6 first:pl-0 sm:px-6"
+              >
+                <dt
+                  className="font-heading text-2xl font-extrabold tabular-nums leading-none tracking-tight text-foreground transition-colors duration-300 group-hover:text-primary-ink sm:text-4xl"
+                  style={{ letterSpacing: "-0.04em" }}
+                >
+                  {point.value}
+                </dt>
+                <dd className="mt-3 text-[10px] uppercase leading-snug tracking-[0.12em] text-muted-foreground sm:text-[11px]">
+                  {t(point.labelKey)}
+                </dd>
+              </div>
+            ))}
+          </motion.dl>
+
+          {/* Portrait and live project sit in one row as siblings of matched
+              height. The photo used to own a full column and dictate the
+              section's height, which is what produced the void beside it. */}
+          <div className="mt-8 grid gap-6 md:grid-cols-5 md:items-stretch">
             <motion.div
               variants={fadeIn}
-              className="group flex items-center gap-5"
+              initial="hidden"
+              whileInView="visible"
+              viewport={defaultViewport}
+              className="group relative order-2 aspect-square overflow-hidden rounded-3xl ring-1 ring-border shadow-[0_40px_80px_-30px_rgba(0,0,0,0.9)] md:order-1 md:col-span-2 md:aspect-auto"
             >
-              <div className="relative h-28 w-28 shrink-0 overflow-hidden rounded-2xl ring-1 ring-border transition-all duration-500 group-hover:ring-primary/40">
-                <Image
-                  src={personalInfo.profilePicture}
-                  alt={`Portrait of ${personalInfo.fullname}`}
-                  width={640}
-                  height={640}
-                  sizes="112px"
-                  className="h-full w-full object-cover grayscale transition-all duration-500 group-hover:scale-[1.04] group-hover:grayscale-0"
-                />
-              </div>
-              {/* No name here — the navbar wordmark and the hero already
-                  carry it. The strip only adds what they don't: a face and
-                  a timezone. */}
-              <p className="flex min-w-0 items-center gap-1.5 text-sm text-muted-foreground">
+              <Image
+                src={personalInfo.profilePicture}
+                alt={`Portrait of ${personalInfo.fullname}`}
+                fill
+                sizes="(min-width: 768px) 40vw, 100vw"
+                /* Anchored on the face (~62% across, ~30% down in the source),
+                 not on the top edge, so the crop holds the face high in the
+                 frame instead of leading with the mountain behind it. */
+                className="object-cover object-[62%_30%] transition-transform duration-[1200ms] ease-out group-hover:scale-[1.04]"
+                priority={false}
+              />
+              {/* Top scrim keeps the location pill legible; the bottom fade
+                grounds the frame now that no text sits over it. */}
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/25 via-transparent to-black/45" />
+              {/* Feathered vignette — fades the photo's own edges into the
+                surrounding void instead of ending in a hard rectangle, so
+                the card reads as blended-in rather than pasted-on. */}
+              <div
+                className="pointer-events-none absolute inset-0"
+                style={{
+                  background:
+                    "radial-gradient(120% 100% at 50% 40%, transparent 55%, rgba(0,0,0,0.5) 100%)",
+                }}
+              />
+              <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/[0.06] transition-all duration-500 group-hover:ring-primary/20" />
+
+              <p className="absolute bottom-5 left-5 flex items-center gap-1.5 rounded-full border border-white/10 bg-black/45 px-3 py-1.5 text-xs text-neutral-200 backdrop-blur-md">
                 <MapPin
-                  className="h-3.5 w-3.5 shrink-0 text-primary-ink"
+                  className="h-3 w-3 shrink-0 text-primary-ink"
                   aria-hidden="true"
                 />
                 {personalInfo.contact.location}
               </p>
             </motion.div>
 
-            <div className="relative flex flex-col gap-4">
-              <div className="absolute left-[27px] top-6 bottom-6 w-px bg-gradient-to-b from-primary/40 via-border to-transparent" />
-              {workSteps.map((step) => {
-                const Icon = step.icon;
-                return (
-                  <motion.div
-                    key={step.labelKey}
-                    variants={fadeIn}
-                    className="group relative z-10 flex items-center gap-4 rounded-2xl border border-border bg-card/60 p-5 backdrop-blur-sm transition-colors duration-300 hover:border-primary/30"
-                  >
-                    <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-border bg-background/60 transition-colors duration-300 group-hover:border-primary/40">
-                      <Icon className="h-6 w-6 text-primary-ink" />
-                    </div>
-                    <p className="text-base font-medium text-foreground/90 sm:text-lg">
-                      {t(step.labelKey)}
-                    </p>
-                  </motion.div>
-                );
-              })}
-            </div>
-          </motion.div>
-
-          {/* Content Stack */}
-          <div>
+            {/* The section's one forward link. About is section 2 of 7, so a
+              Contact button here asked for the sale before any proof and
+              scrolled the reader past Skills, Projects and Experience to do
+              it. The live pipeline has a featured project two sections down;
+              that's the next click. */}
             <motion.div
+              variants={fadeIn}
               initial="hidden"
               whileInView="visible"
               viewport={defaultViewport}
-              variants={fadeIn}
+              className="order-1 md:order-2 md:col-span-3"
             >
-              {/* Heading */}
-              <h3
-                className="mb-4 font-heading text-2xl font-extrabold tracking-tight sm:text-3xl"
-                style={{ letterSpacing: "-0.02em" }}
+              <Link
+                href="/#projects"
+                className="group flex h-full flex-col justify-between rounded-3xl border border-primary/20 bg-primary/[0.05] p-6 transition-colors duration-300 hover:border-primary/40 hover:bg-primary/[0.09] sm:p-8"
               >
-                {t("about_heading")}
-              </h3>
-
-              {/* Hook */}
-              <p className="mb-6 text-base leading-relaxed text-foreground/85 sm:text-lg">
-                {t("about_hook")}
-              </p>
-
-              {/* Proof row — the resume summary's figures, not its prose. The
-                  hook above says how I work; this says it worked. Hairline
-                  dividers instead of three more cards: the section already
-                  carries enough bordered boxes. */}
-              <dl className="mb-6 grid grid-cols-3 divide-x divide-border border-y border-border">
-                {aboutProofPoints.map((point) => (
-                  <div
-                    key={point.labelKey}
-                    className="group px-3 py-4 first:pl-0 last:pr-0"
-                  >
-                    <dt
-                      className="font-heading text-xl font-extrabold tabular-nums tracking-tight text-foreground transition-colors duration-300 group-hover:text-primary-ink sm:text-2xl"
-                      style={{ letterSpacing: "-0.03em" }}
-                    >
-                      {point.value}
-                    </dt>
-                    <dd className="mt-1 text-[11px] uppercase leading-snug tracking-wider text-muted-foreground">
-                      {t(point.labelKey)}
-                    </dd>
-                  </div>
-                ))}
-              </dl>
-
-              {/* Currently Building */}
-              <div className="mb-5 rounded-xl border border-primary/20 bg-primary/5 p-4">
-                <p className="mb-1 text-xs font-semibold uppercase tracking-wider text-primary-ink">
-                  {t("about_current_label")}
-                </p>
-                <p className="text-sm leading-relaxed text-muted-foreground">
-                  {t("about_current_detail")}
-                </p>
-              </div>
-
-              {/* Tech Badges */}
-              <div className="mb-6 flex flex-wrap gap-2">
-                {topTechs.map((tech) => (
-                  <span
-                    key={tech}
-                    className="rounded-full border border-border bg-card px-3 py-1 text-xs font-medium transition-colors duration-200 hover:border-primary/40 hover:text-primary-ink"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-
-              {/* CTAs */}
-              <div className="flex flex-wrap gap-3">
-                <MagneticButton>
-                  <Link
-                    href="/#contact"
-                    className={cn(
-                      buttonVariants(),
-                      "rounded-xl px-6 py-3 font-semibold cursor-pointer btn-bold-hover",
-                    )}
-                    aria-label="Contact me via email or social media"
-                  >
-                    <Mail className="mr-2 h-4 w-4" aria-hidden="true" />{" "}
-                    {tCommon("contact")}
-                  </Link>
-                </MagneticButton>
-                <MagneticButton>
-                  {/* /resume is the PDF, so this leaves the app: plain anchor,
-                      new tab, no locale prefix. */}
-                  <a
-                    href={resumeRoute}
-                    target="_blank"
-                    rel="noopener"
-                    className={cn(
-                      buttonVariants({ variant: "outline" }),
-                      "rounded-xl px-6 py-3 cursor-pointer border-border transition-all duration-300 hover:border-primary/40 hover:bg-card hover:text-foreground",
-                    )}
-                    aria-label="Open my resume PDF in a new tab"
-                  >
-                    <FileText className="mr-2 h-4 w-4" aria-hidden="true" />{" "}
-                    {tCommon("view_resume")}
-                  </a>
-                </MagneticButton>
-              </div>
+                <div>
+                  <p className="font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-primary-ink">
+                    {t("about_current_label")}
+                  </p>
+                  <p className="mt-5 text-lg leading-relaxed text-foreground/85 sm:text-xl">
+                    {t("about_current_detail")}
+                  </p>
+                </div>
+                <span className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-primary-ink">
+                  {t("about_current_cta")}
+                  <ArrowRight
+                    className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
+                    aria-hidden="true"
+                  />
+                </span>
+              </Link>
             </motion.div>
           </div>
         </div>

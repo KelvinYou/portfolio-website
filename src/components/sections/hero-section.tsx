@@ -2,16 +2,24 @@
 
 import { useRef, useEffect } from "react";
 import { motion, useTransform, useMotionValue } from "framer-motion";
-import { Sparkles } from "lucide-react";
-import { AnimatedCounter } from "@/components/ui/animated-counter";
-import { personalInfo, projects, experiences } from "@/constants";
+import { ArrowRight, FileText } from "lucide-react";
+import Link from "next/link";
+import { buttonVariants } from "@/components/ui/button";
+import { MagneticButton } from "@/components/ui/magnetic-button";
+import { personalInfo, resumeRoute } from "@/constants";
 import { SocialLinks } from "@/components/base/social-links";
-import { getTotalWorkingExperiences } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 
-const heroStats = [
-  { target: getTotalWorkingExperiences(experiences), suffix: "+", labelKey: "stats_years" as const },
-  { target: projects.length, suffix: "+", labelKey: "stats_projects" as const },
+/**
+ * Terminal output, not prose — deliberately untranslated. Three rows only:
+ * this card is the spec sheet backing the lead sentence, and the sentence
+ * stops being a claim the moment the card tries to list everything.
+ */
+const terminalRows = [
+  { label: "agents", value: "4 analysts · debate stage · outcome memory" },
+  { label: "payments", value: "cross-currency bulk · FX rate lock · 35% faster" },
+  { label: "stack", value: "TypeScript · Kotlin · Python · MCP" },
 ];
 
 export function HeroSection() {
@@ -19,6 +27,7 @@ export function HeroSection() {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const t = useTranslations("hero");
+  const tCommon = useTranslations("common");
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -52,25 +61,27 @@ export function HeroSection() {
         <div className="grid items-center gap-12 lg:grid-cols-2">
           {/* Left: Content */}
           <div className="max-w-3xl">
-            {/* Badge */}
+            {/* Availability pill. This used to hold a second identity
+                tagline; two labels chained with a middot read as hedging,
+                so the identity claim now lives in exactly one place (the
+                role line) and the pill carries the thing a recruiter
+                actually scans for. */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-card/80 px-4 py-1.5 backdrop-blur-sm"
+              className="mb-7 inline-flex items-center gap-2.5 rounded-full border border-primary/25 bg-primary/[0.06] px-4 py-1.5 backdrop-blur-sm"
             >
-              <div className="flex items-center justify-center rounded-full bg-primary/15 p-1">
-                <Sparkles className="h-3 w-3 text-primary-ink" />
-              </div>
-              <p className="text-xs font-medium text-muted-foreground">
-                {t("badge")}
-              </p>
-              <div className="h-1 w-1 rounded-full bg-primary animate-pulse" />
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
+                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-primary" />
+              </span>
+              <p className="text-xs font-medium text-primary-ink">{t("badge")}</p>
             </motion.div>
 
-            {/* Heading */}
+            {/* Name — the only element at display scale. */}
             <motion.h1
-              className="hero-heading mb-8"
+              className="hero-heading"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
@@ -89,41 +100,81 @@ export function HeroSection() {
                   </span>
                 </motion.div>
               </div>
-
-              <span className="mt-2 block text-3xl text-foreground/85 sm:text-4xl md:text-5xl lg:text-6xl">
-                {t("role")}
-              </span>
             </motion.h1>
 
-            {/* Stats */}
-            <motion.div
-              className="mb-10 flex gap-8 sm:gap-12"
+            {/* Role — demoted to a label. It was competing with the name at
+                near-display size, which left nothing for the sentence. */}
+            <motion.p
+              className="mt-4 font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground sm:text-sm"
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+            >
+              {t("role")}
+            </motion.p>
+
+            {/* Lead. The hero used to render no prose at all — only labels,
+                counters and a stat dump — which is what made it read as a
+                spec sheet. This sentence is the whole positioning. */}
+            <motion.p
+              className="mt-7 max-w-xl text-lg leading-snug text-foreground/90 sm:text-xl md:text-2xl"
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.55 }}
+              transition={{ duration: 0.6, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              style={{ letterSpacing: "-0.01em" }}
             >
-              {heroStats.map((stat, i) => (
-                <div key={stat.labelKey} className="flex flex-col">
-                  <AnimatedCounter
-                    target={stat.target}
-                    suffix={stat.suffix}
-                    className="text-2xl font-extrabold sm:text-3xl"
-                  />
-                  <span className="mt-0.5 text-xs text-muted-foreground sm:text-sm">
-                    {t(stat.labelKey)}
-                  </span>
-                  {i < heroStats.length - 1 && (
-                    <div className="absolute" />
+              {t("lead")}
+            </motion.p>
+
+            {/* Actions — the hero had none. The counters that used to sit
+                here (years, project count) are the weakest numbers on the
+                page and are covered by the About proof row. */}
+            <motion.div
+              className="mt-9 flex flex-wrap items-center gap-3"
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.62 }}
+            >
+              <MagneticButton>
+                <Link
+                  href="/blog"
+                  className={cn(
+                    buttonVariants(),
+                    "group rounded-xl px-6 py-3 font-semibold cursor-pointer btn-bold-hover",
                   )}
-                </div>
-              ))}
+                >
+                  {t("cta_primary")}
+                  <ArrowRight
+                    className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5"
+                    aria-hidden="true"
+                  />
+                </Link>
+              </MagneticButton>
+              <MagneticButton>
+                {/* /resume is the PDF, so this leaves the app: plain anchor,
+                    new tab, no locale prefix. */}
+                <a
+                  href={resumeRoute}
+                  target="_blank"
+                  rel="noopener"
+                  className={cn(
+                    buttonVariants({ variant: "outline" }),
+                    "rounded-xl px-6 py-3 cursor-pointer border-border transition-all duration-300 hover:border-primary/40 hover:bg-card hover:text-foreground",
+                  )}
+                  aria-label="Open my resume PDF in a new tab"
+                >
+                  <FileText className="mr-2 h-4 w-4" aria-hidden="true" />{" "}
+                  {tCommon("view_resume")}
+                </a>
+              </MagneticButton>
             </motion.div>
 
             {/* Social links */}
             <motion.div
+              className="mt-8"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.65 }}
+              transition={{ duration: 0.5, delay: 0.72 }}
             >
               <SocialLinks />
             </motion.div>
@@ -138,7 +189,7 @@ export function HeroSection() {
             style={{ perspective: "1200px", transformStyle: "preserve-3d" }}
           >
             <motion.div
-              className="w-[400px] overflow-hidden rounded-2xl border border-border bg-card/80 backdrop-blur-xl neo-shadow-lg"
+              className="w-[420px] overflow-hidden rounded-2xl border border-border bg-card/80 backdrop-blur-xl neo-shadow-lg"
               style={{ transformStyle: "preserve-3d", rotateX: cardRotateX, rotateY: cardRotateY }}
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.4, ease: "easeOut" }}
@@ -156,31 +207,23 @@ export function HeroSection() {
               {/* Terminal body */}
               <div className="p-5 font-mono text-sm" style={{ transform: "translateZ(20px)" }}>
                 <div className="text-muted-foreground">
-                  <span className="text-foreground">$</span> kelvin --stats
+                  <span className="text-foreground">$</span> kelvin --what-i-ship
                 </div>
-                <div className="mt-4 space-y-2">
-                  {[
-                    { label: "listed", value: `${projects.length} projects` },
-                    { label: "fintech", value: "9,000+ users in production" },
-                    { label: "payments", value: "cross-currency bulk, FX rate lock" },
-                    { label: "fastest", value: "35% load reduction" },
-                    { label: "agents", value: "4-agent debate pipeline" },
-                    { label: "stack", value: "TypeScript · Kotlin · Python · MCP" },
-                  ].map((line) => (
-                    <div key={line.label} className="flex gap-4">
-                      <span className="w-14 shrink-0 text-right text-subtle">
-                        {line.label}
+                <div className="mt-4 space-y-3">
+                  {terminalRows.map((row) => (
+                    <div key={row.label} className="flex gap-4">
+                      <span className="w-[4.5rem] shrink-0 text-right text-subtle">
+                        {row.label}
                       </span>
-                      <span className="text-primary-ink">{line.value}</span>
+                      <span className="flex-1 text-primary-ink">{row.value}</span>
                     </div>
                   ))}
                 </div>
-                <div className="mt-2 flex gap-4">
-                  <span className="w-14 shrink-0 text-right text-subtle">status</span>
-                  <span className="text-emerald-400">
-                    open to opportunities
-                    <span className="ml-0.5 inline-block h-4 w-1.5 animate-pulse rounded-sm bg-emerald-400/80" />
+                <div className="mt-4 flex gap-4">
+                  <span className="w-[4.5rem] shrink-0 text-right text-subtle" aria-hidden="true">
+                    {" "}
                   </span>
+                  <span className="inline-block h-4 w-1.5 animate-pulse rounded-sm bg-primary/70" />
                 </div>
               </div>
             </motion.div>
