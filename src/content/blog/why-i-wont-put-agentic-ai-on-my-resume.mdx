@@ -1,0 +1,100 @@
+---
+title: "Why I Won't Put 'Agentic AI' on My Own Resume"
+date: "2026-08-24"
+description: "Two skills were deleted from my portfolio rather than re-tiered. The test they failed: could a reader, in principle, prove the claim false?"
+tags: ["Career", "Engineering Culture", "AI", "Writing"]
+author: "Kelvin You"
+---
+
+I write agents for a living and for fun. I have a multi-agent stock research pipeline and a personal operating system with a dozen agent skills running on a weekly cadence, both public repos. By any reasonable reading, "Agentic AI" is a true statement about me.
+
+It is not on my skills list. Neither is "AI-assisted Development." Both were in an earlier draft, and both were deleted — not moved to a lower tier, deleted — because they failed a test that the rest of the list has to pass.
+
+The test is this: **could a reader, in principle, prove this claim false?** If no evidence could ever contradict the keyword, the keyword is not telling anyone anything.
+
+## The inflation problem
+
+Skills sections inflate for a boring structural reason: adding a keyword is free and removing one feels like a loss. Nobody audits the list. There is no cost to being 20% aspirational, and there is a visible cost — an empty-looking section — to being exact.
+
+So every list drifts toward the same shape. Twenty-five technologies, no ordering, no provenance, no way to distinguish the language you have shipped payment flows in from the one you did a tutorial in last March. The reader's rational response is to discount the entire list uniformly, which punishes the true entries to pay for the false ones.
+
+That is the actual damage. It is not that inflated lists mislead — experienced readers aren't misled. It is that they make honest lists unreadable, because there is no channel left to say "I mean this one."
+
+## The falsifiability filter
+
+Borrowing from Popper is a little grand for a resume, but the mechanic transfers cleanly. A claim earns its place if you can state what evidence would refute it.
+
+"PostgreSQL — shipped in production" is falsifiable. Go look: it either appears in a role I held or it doesn't. "React Native" is falsifiable the same way. Even a weak claim can be falsifiable — "Java, coursework only, nothing since 2023" is a specific, checkable, and quite unflattering assertion, and I would rather make it than make a vague strong one.
+
+Now try to falsify "AI-assisted Development." What would a reader have to observe to conclude it's false? That I don't use an editor with completion? Nobody fails this. It is not a skill claim, it is a statement that I am a working engineer in 2026. It went in the bin for exactly the same reason a soft-skills tab got deleted from that section — "communication," "team player," and "AI-assisted development" are the same species of unfalsifiable filler wearing different clothes.
+
+"Agentic AI" fails differently, and this is the more interesting case, because it *is* true. The problem is that it carries no information the list doesn't already carry. Multi-agent Systems is listed. MCP is listed. Claude Agent SDK is listed. Each of those points at something specific enough to check. "Agentic AI" is a category label sitting on top of three checkable entries, and its only effect is to make the section look like it contains four things instead of three.
+
+The rule is written into the source file so a future me can't quietly re-add them:
+
+```ts
+/**
+ * `depth` is not self-assessment — each value is checkable against data in this
+ * same file. `shipped` means it appears in an `experiences[].skills` array or in
+ * a project with paying users; `built` means a public repo of mine runs on it;
+ * `coursework` means a 2022-23 assignment and nothing since; `gap` means
+ * studied, never shipped.
+ *
+ * Two entries were dropped rather than re-tiered: "Agentic AI" (a buzzword
+ * restatement of Multi-agent Systems + MCP, both of which are listed) and
+ * "AI-assisted Development" (not falsifiable — the same reason the soft-skills
+ * tab was deleted from the section).
+ */
+```
+
+## Provenance instead of proficiency
+
+The usual fix for an inflated list is a proficiency rating — five stars, "advanced/intermediate," a percentage bar. That fix doesn't work, because proficiency is self-assessed and therefore just as unfalsifiable as the keyword it was meant to qualify. Nobody can check my four out of five on Kotlin.
+
+So the list carries a `depth` field with four tiers, and every tier is defined by *where the evidence lives* rather than by how good I think I am:
+
+| Tier | What it asserts | How you'd falsify it |
+| :--- | :--- | :--- |
+| `shipped` | In a role's skill list, or a project with paying users | Check the experience entries in the same file |
+| `built` | A public repo of mine runs on it | Open the repo; read the code |
+| `coursework` | A 2022–23 assignment and nothing since | Check the education entries and commit dates |
+| `gap` | Studied, never shipped | Nothing to check — that's the point of the label |
+
+Every one of those is a claim about an artifact, not about my competence. `shipped` currently holds TypeScript, React, React Native, Kotlin, Next.js, GraphQL, PostgreSQL. `built` holds Python, FastAPI, Claude Agent SDK, MCP, Multi-agent Systems, RAG, Prompt Engineering, Docker, GitHub Actions — the AI half of that rests on the two projects above, both open.
+
+Note what the tiering costs me. "Multi-agent Systems, built" is a strictly weaker claim than "Agentic AI" unqualified. I gave up the stronger-sounding phrase for the one a reader can go verify, and the verification is the entire product.
+
+## Publishing the gaps is the load-bearing part
+
+The tier that does the most work is the one that admits ignorance. `gap` is Go, Redis, AWS, Kubernetes — studied, never shipped, shown on the site as visible gaps.
+
+Keeping them is not humility as a personality trait. It's the mechanism that makes `shipped` believable. A list with no negatives on it gives a reader no reason to trust its positives, because they can't tell whether I omitted the weak entries or never had any. Once the weak entries are visible and labeled, the strong ones become an actual signal — the same reason a projects ledger is more credible when some rows say "no measured result."
+
+## Why the gaps don't go on the resume
+
+They don't. The resume PDF excludes the `gap` tier entirely, which looks like an inconsistency and isn't. The reason is in the file:
+
+```ts
+/**
+ * `gap` skills are excluded: on a resume a bare keyword is read as a claim of
+ * experience, and the qualifier that makes it honest only exists on the site.
+ */
+```
+
+A resume is a one-page scan with no room for a legend. Print "Kubernetes" there and the reader reads "has used Kubernetes," because that is what a skills line means on a resume — the medium supplies the claim whether I intend it or not. Print "Kubernetes — studied, never shipped" and it reads as hedging, and a one-page document that hedges reads as weak everywhere else too.
+
+The site has room for the qualifier. So the honest gap lives where its qualifier can live, and the resume gets the domain cut instead — grouped by whether I have the data layer, the delivery layer, the AI layer, answered fast. Same source list, two projections, no drift, because both are computed from one array rather than maintained by hand.
+
+## The counter-argument I take seriously
+
+Here's the honest objection: resume keywords are not written for humans. They're written for keyword filters and for a recruiter doing a six-second Ctrl-F. If a screen greps for "Agentic AI" and my page says "Multi-agent Systems," I don't get read at all, and my careful epistemology loses to someone's padded list. That is a real cost and I'm not going to pretend it isn't.
+
+Two things. First, the specific terms usually survive the filter anyway — a screen looking for agent work is far more likely to grep "MCP," "LangGraph," or "multi-agent" than a category noun, because that's what the job description was written from. Buzzword nouns are what candidates write; concrete tool names are what job descriptions write. Second, and more to the point: optimizing for the filter optimizes for getting into a room where the next step is a human asking what I actually did. I would rather arrive there with a list I can defend line by line than one where the first question exposes the weakest entry. Passing a screen with a claim I can't back is a loan, not a win.
+
+## What generalizes
+
+**A claim with no possible refutation is not a modest claim, it's an empty one.** This applies well past resumes — status updates that say "improved reliability," design docs that say "scalable architecture," commit messages that say "various fixes." If nothing could contradict it, it conveys nothing, and the honest version is usually shorter.
+
+**Rank by where the evidence lives, not by how good you feel about it.** "Self-assessed level" is a taste; "a public repo runs on it" is an address. The second one lets a reader do the work themselves, which is the only kind of credibility that survives contact with an interview.
+
+**Write the rule next to the data.** The comment above `skillList` isn't documentation, it's a commitment device. In six months I'll be tempted to re-add a buzzword because a job posting used it, and the rule will be sitting right there, in the diff, making me argue with myself first.

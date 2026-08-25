@@ -1,0 +1,205 @@
+---
+title: "Deflated Sharpe: The Backtest Metric That Stops You Fooling Yourself"
+date: "2026-08-24"
+description: "A Sharpe from a parameter sweep is an order statistic, not an estimate. How deflated Sharpe and Wilson intervals price in the search you ran."
+tags: ["Statistics", "Backtesting", "Python", "Quant", "Correctness"]
+author: "Kelvin You"
+---
+
+I ran a momentum factor across a grid of 6 lookback windows and 5 holding periods — 30 configurations — and the best one posted a Sharpe of 1.32 on held-out data. That is a good-looking number, and the honest thing to say about it is that **most of the reason it looks good is that I picked it for looking good.**
+
+This is not a bug in the backtest. The code was correct, the costs were charged, the holdout was real. The problem is that "the best of 30" is a different kind of quantity from "this strategy's Sharpe", and reporting the first as if it were the second is how a research pipeline starts lying to its owner.
+
+Deflated Sharpe is the correction. It takes a Sharpe, the length and shape of the sample it came from, and *how many things you tried*, and returns a probability that the edge survives all three. This post walks through what it actually adjusts for, why Wilson intervals belong next to it, and where the correction stops being able to save you.
+
+## Selecting on noise
+
+Start with the cleanest possible version of the problem. Take 30 strategies with **zero** true edge — coin flips dressed up as parameters. Score each on the same historical window. Each one's measured Sharpe is a draw from some distribution centred near zero, with a spread that comes from sample noise alone.
+
+Now report the highest. That number is not near zero. It is the maximum of 30 draws, and the maximum of 30 draws from a zero-mean distribution is reliably, substantially positive. You have not found a strategy. You have measured the width of your own noise and then reported its right tail.
+
+The uncomfortable part is that nothing about the winning row looks suspicious in isolation. It has a real equity curve, real trades, a real drawdown you could have lived through. The evidence that it is noise is not *in* the row — it is in the 29 rows you didn't write up. Which is exactly why the trial count has to be carried alongside the metric rather than discarded once the sweep finishes.
+
+## Why a swept Sharpe is not an estimate of anything
+
+A Sharpe ratio computed on a fixed, pre-registered strategy is an estimate — noisy, but unbiased. You could be unlucky and understate the edge as easily as overstate it.
+
+A Sharpe ratio computed on the winner of a search is an **order statistic**. It is biased upward by construction, and the bias grows with how hard you searched. Search breadth is not a footnote about methodology; it is a term in the estimator. My portfolio module says this in the type itself, because a field comment survives refactors better than a docstring paragraph:
+
+```python
+class PortfolioReport(BaseModel):
+    config: PortfolioConfig
+    strategies: list[StrategyReport]
+    # Number of strategies compared in this run. The winner's Sharpe has to be
+    # read against this: pick the best of six coin-flipping strategies and the
+    # best one looks good by construction.
+    n_strategies_tested: int = 0
+    best_strategy: str | None = None
+```
+
+The direction of the bias also explains why "but I used a holdout" is a partial defence rather than a complete one. A frozen holdout removes the bias from *fitting* to the test data. It does nothing about the bias from having chosen which strategy to carry into the holdout at all — and if you ever iterate, look at the holdout, and go back to the grid, the holdout has quietly become part of the training set.
+
+This is a different failure mode from leakage, where the backtest is fed information that did not exist yet. I wrote about that one separately in [the outcome-memory post](/blog/outcome-memory-lookahead-bias) — there the number is contaminated; here the number is clean and the *selection* is the problem. Both produce a metric that is too good, which is why they get confused.
+
+## What deflated Sharpe actually adjusts for
+
+Bailey & López de Prado's construction (2014, "The Deflated Sharpe Ratio") builds on the Probabilistic Sharpe Ratio, so it's worth taking them in order.
+
+**PSR** asks: what is the probability the true Sharpe exceeds a benchmark, given this observed Sharpe on this many observations, with this much skew and this much fat-tailedness? The last two matter more than people expect. Negative skew and heavy tails both inflate a naive Sharpe, and trading strategy returns reliably have both — sell-the-tail-risk profiles look magnificent right up until the tail arrives.
+
+```python
+def probabilistic_sharpe_ratio(
+    observed_sr: float,
+    n: int,
+    skew: float | None,
+    kurt: float | None,
+    benchmark_sr: float = 0.0,
+) -> float | None:
+    """Probability that the true Sharpe exceeds `benchmark_sr`."""
+    if n < 2:
+        return None
+    g3 = 0.0 if skew is None else skew
+    g4 = 3.0 if kurt is None else kurt
+    denom_sq = 1.0 - g3 * observed_sr + ((g4 - 1.0) / 4.0) * observed_sr**2
+    if denom_sq <= 0:
+        return None
+    z = (observed_sr - benchmark_sr) * math.sqrt(n - 1) / math.sqrt(denom_sq)
+    return _NORM.cdf(z)
+```
+
+Three things are load-bearing in that formula. `math.sqrt(n - 1)` is the sample-length term: the same Sharpe on 200 observations is far stronger evidence than on 20. The `- g3 * observed_sr` term penalises negative skew. The `(g4 - 1)/4 * SR²` term penalises kurtosis, and it's why my `kurtosis()` helper returns the **non-excess** form where a normal distribution gives 3.0 — hand this function excess kurtosis and every PSR shifts silently by `(3/4)·SR²`. That's the sort of unit mismatch that produces a plausible wrong number rather than a crash, so it lives in the docstring.
+
+**Deflated Sharpe** is then PSR with the benchmark moved. Instead of asking "is the true Sharpe above zero", it asks "is the true Sharpe above the best Sharpe you'd expect to see from a search this wide with no skill at all":
+
+```python
+def expected_max_sharpe(n_strategies: int, sr_variance: float) -> float | None:
+    """Expected maximum Sharpe across `n_strategies` with **no** real edge."""
+    if n_strategies < 2 or sr_variance <= 0:
+        return None
+    sr_std = math.sqrt(sr_variance)
+    a = _NORM.inv_cdf(1.0 - 1.0 / n_strategies)
+    b = _NORM.inv_cdf(1.0 - 1.0 / (n_strategies * math.e))
+    return sr_std * ((1.0 - _EULER_GAMMA) * a + _EULER_GAMMA * b)
+
+
+def deflated_sharpe_ratio(
+    observed_sr, n, skew, kurt, n_strategies: int, sr_variance: float
+) -> float | None:
+    benchmark = expected_max_sharpe(n_strategies, sr_variance)
+    if benchmark is None:
+        return None
+    return probabilistic_sharpe_ratio(observed_sr, n, skew, kurt, benchmark_sr=benchmark)
+```
+
+`expected_max_sharpe` is a Gumbel-based approximation to the expectation of the maximum of `n_strategies` normal draws — that's where the Euler–Mascheroni constant comes from. The two inputs are the count and the *dispersion of the Sharpes you observed across candidates*. That second input is the elegant bit: if all 30 configurations scored nearly identically, the search had little noise to exploit and the bar barely moves. If they were scattered, the search had a lot of noise to pick from and the bar rises sharply.
+
+So the reading is: **DSR 0.95 means a 95% probability the edge survives the knowledge that this was the winner of N attempts.** And it has the property you want from an honesty mechanism — adding candidates to the comparison raises the bar the winner must clear. You cannot improve your headline number by searching harder. That's the correct behaviour, and it's worth stating in the code so a future reader doesn't "fix" it:
+
+```python
+def test_expected_max_sharpe_grows_with_search_breadth(self):
+    few = stats.expected_max_sharpe(3, 0.04)
+    many = stats.expected_max_sharpe(50, 0.04)
+    self.assertGreater(many, few)
+
+def test_deflated_sharpe_is_below_undeflated_psr(self):
+    psr = stats.probabilistic_sharpe_ratio(0.5, 20, 0.0, 3.0)
+    dsr = stats.deflated_sharpe_ratio(0.5, 20, 0.0, 3.0, n_strategies=6, sr_variance=0.04)
+    self.assertLess(dsr, psr)
+```
+
+Both tests encode a monotonicity property rather than a value. Pinning the exact float would make them brittle against a change in the approximation; pinning the direction makes them catch the thing that actually matters.
+
+### The denominator is smaller than you think
+
+There's a second correction that has to happen before DSR is meaningful, and it's the one I see skipped most often: `n` is not the number of trades.
+
+Overlapping holding periods are not independent observations. Trials opened weekly at a 30-day horizon share 23 days of the same price path — five nominal trades, roughly one independent bet. Feed the nominal count into any significance formula and you inflate the t-statistic by about `√(n / n_eff)`.
+
+```python
+for start, end in spans:
+    concurrency = sum(1 for s, e in spans if start <= e and s <= end)
+    total += 1.0 / concurrency if concurrency else 0.0
+```
+
+A trial concurrent with `c` trials (itself included) contributes `1/c`. It's a per-trial simplification of López de Prado's average-uniqueness weighting — coarser, but it moves the number in the right direction and needs no bar-level data. It also has a documented blind spot: cross-sectional dependence is not captured. Three tech tickers analysed on the same date are close to one bet on one sector, and this counts them as three. So `effective_n` is an **upper bound** on independence, which means every downstream significance figure is the optimistic end of its range. Saying so in the docstring is cheaper than being surprised by it later.
+
+The whole selection-bias pipeline runs on `effective_n`, not the trade count:
+
+```python
+winner = max(ranked, key=lambda r: r.trade_sharpe)
+if winner.effective_n and winner.effective_n >= 2:
+    winner.deflated_sharpe = stats.deflated_sharpe_ratio(
+        winner.trade_sharpe,
+        int(winner.effective_n),
+        stats.skewness([t.return_pct for t in winner.trades]),
+        stats.kurtosis([t.return_pct for t in winner.trades]),
+        n_strategies=len(ranked),
+        sr_variance=sr_variance,
+    )
+```
+
+And when there aren't enough independent trades to estimate it, the report says *"Deflated Sharpe unavailable — too few independent trades to estimate it"* rather than falling back to the undeflated PSR. A missing metric is information. A silently substituted one is not.
+
+## Wilson intervals: the same discipline for hit rates
+
+Sharpe gets the sophisticated treatment because it's the number people quote. Hit rate needs it more, because it's the number people *believe* — "the model was right 64% of the time" feels concrete in a way a Sharpe doesn't.
+
+On a small sample it isn't concrete at all. The textbook normal approximation `p ± z·√(p(1-p)/n)` fails badly at backtest sample sizes: it hands back intervals extending below 0 or above 1, and — worse — it collapses to **zero width** when p hits 0 or 1. Nine hits out of nine gives you an interval of exactly [1.0, 1.0]. Perfect certainty from nine trades.
+
+The Wilson score interval fixes both by shrinking the centre toward 0.5 before building the interval around it:
+
+```python
+def wilson_interval(hits: int, n: int, z: float = 1.96) -> tuple[float, float] | None:
+    if n <= 0:
+        return None
+    p = hits / n
+    denom = 1.0 + z**2 / n
+    centre = (p + z**2 / (2 * n)) / denom
+    half = z / denom * math.sqrt(p * (1 - p) / n + z**2 / (4 * n**2))
+    return (max(0.0, centre - half), min(1.0, centre + half))
+```
+
+The shift is the `z²/(2n)` in the numerator and the `1 + z²/n` in the denominator — at large `n` both vanish and you recover the naive interval; at small `n` they dominate. The `z²/(4n²)` under the square root is what keeps the width positive at the boundaries.
+
+Then the interval has to be rendered in a way a tired reader cannot skip. A point estimate with an interval printed next to it still reads as an edge. So the report draws the conclusion in words:
+
+```python
+def _coin_flip_note(lo: float, hi: float) -> str:
+    """Flag a hit-rate interval that still contains 50%."""
+    return ", spans 50% — not distinguishable from a coin flip" if lo <= 0.5 <= hi else ""
+```
+
+Which turns a line that used to say `hit rate: 64%` into `hit rate: 64% (95% CI 41% – 82%, spans 50% — not distinguishable from a coin flip) — n=22 directional trials`. Same data, opposite emotional content. The information coefficient gets an identical treatment via a Fisher-z interval and a `spans 0 — no demonstrated skill` note, because a correlation's sampling distribution is badly skewed near ±1 and a symmetric interval around it would be wrong in the same direction.
+
+## The frozen split is what keeps the correction honest
+
+Here's where I have to be straight about my own numbers, because this is the part that's easy to gloss.
+
+The 30-configuration momentum sweep is protected by a **fixed/frozen split**, not by a DSR figure. Parameters were chosen on 2016–2022 only. The 2023–2026 window was frozen and untouched until a single candidate had been selected. The winner — 20-bar lookback, 20-bar holding — posted a **1.32 Sharpe on that frozen holdout, net of cost**, and at a punitive 30 bps/side, 10 of 12 tickers stayed net-positive.
+
+The DSR machinery in my codebase is wired into a different comparison: the six-strategy portfolio table, where the winner's Sharpe is automatically deflated against the number of candidates scored on the same trials. The parameter sweep doesn't route through it. So what I have on the momentum factor is a structural correction, not a numeric one, and I'm not going to invent a DSR for it.
+
+That distinction matters because the two mechanisms fail differently. A frozen split is binary and brittle: it's airtight until you peek, and there's no partial credit. Once you've looked at the holdout and gone back to tune, you no longer have a holdout — you have a slower, more expensive training set, and no formula can tell you how much of your edge you just spent. DSR is continuous and survives iteration, but only if you count the trials *honestly*, including the ones you ran before you started keeping score. Neither one protects you from the other's failure mode. The split is why my 1.32 means something; the absence of a DSR on it is why I won't call it durable alpha.
+
+And the conclusion the sweep actually supports is deflationary anyway: **the factor still lagged buy-and-hold** over the full out-of-sample window. Sharpe 1.32 net of cost, 10/12 tickers positive under stress, and it lost to doing nothing. If the write-up had stopped at the Sharpe, that sentence would never have been written — which is the whole argument for the discipline, made better than any formula makes it.
+
+The stack, for anyone who wants to poke at it: Python with Pydantic models throughout, FastAPI for the control plane, the Claude Agent SDK and MCP for the analyst layer. The stats module is written from scratch with no scipy — the whole point is honest behaviour in the small-sample regime, which rules out the normal approximations a lightweight dependency would buy. An exact Student-t tail is about 40 lines. scipy is about 30MB. Full code: [github.com/KelvinYou/ai-stock-analysis](https://github.com/KelvinYou/ai-stock-analysis).
+
+## What to report
+
+The rule I settled on: **never ship a point estimate alone.** Concretely, that's four things attached to every headline metric.
+
+- **The denominator, and the honest one.** `n=22 directional trials, n_eff=6.4`. If overlapping windows collapse your sample, say what it collapsed to.
+- **An interval, with its conclusion spelled out.** Wilson for proportions, Fisher-z for correlations, and a sentence when the interval spans the null.
+- **The search width.** How many configurations were tried, and whether the reported one was the best of them. This is the field most likely to be lost in a refactor, which is why it belongs on the report model, not in a commit message.
+- **Gross and net, side by side.** Costs never folded silently into the headline. My scorer charges a round trip to directional trials only, and prints both.
+
+## What generalizes
+
+Three things I'd carry to any measurement system, quant or not.
+
+**A metric computed on a winner is a different quantity from the same metric computed on a candidate.** Selection is part of the estimator. If your reporting layer doesn't know how many things you tried, it cannot tell you what the winning number means — and the count is exactly the thing that gets dropped first, because it lives in the process rather than the data.
+
+**Make honesty monotone.** The property I like most about DSR is that searching harder *raises* the bar. There is no way to improve the headline by doing more of the thing that causes the bias. Any metric where extra effort can only make the reported number look worse is a metric you can trust yourself with; any metric where effort inflates it will get inflated, without anyone deciding to.
+
+**Render the conclusion, not just the number.** `hit rate: 64% (95% CI 41–82%)` and `hit rate: 64% (95% CI 41–82%, spans 50% — not distinguishable from a coin flip)` contain identical information and produce different decisions. The interval was always there. Nobody read it. The clause that says what it means is the part that changes behaviour, and it costs one function and three lines.

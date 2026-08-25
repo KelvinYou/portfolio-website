@@ -1,0 +1,140 @@
+---
+title: "My Trading Signal Loses to Buy-and-Hold. I'm Publishing It Anyway."
+date: "2026-08-24"
+description: "A momentum factor with a 1.32 Sharpe on a frozen holdout that still lost to the index — and why the negative result is the credible part."
+tags: ["Backtesting", "Statistics", "Python", "Quant", "Research"]
+author: "Kelvin You"
+---
+
+Almost every quant blog post you have ever read was written after the number looked good.
+
+That is the whole problem. Nobody publishes the sweep that came back flat. Nobody publishes the strategy that beat five alternatives and still lost to buying the index and going to sleep. The result is a literature made almost entirely of survivors, where a 1.3 Sharpe reads as a finding instead of as the one draw out of thirty that happened to be worth writing up.
+
+So here is mine, including the part that does not flatter it. I built a multi-agent equity research pipeline, added a deterministic momentum factor underneath it, ran a walk-forward evaluation with a frozen holdout, and got **1.32 annualized Sharpe net of cost on the 2023–2026 window I had never touched**. Ten of twelve tickers stayed net-positive even at 30 bps per side.
+
+And the factor still lagged buy-and-hold.
+
+## The setup
+
+The pipeline itself is four analyst desks — fundamentals, technical, sentiment, macro — each exposed as its own MCP server so the agent behind it sees structured inputs rather than a wall of prose. They run concurrently, a debate stage argues bull against bear over their reports, and a synthesizer merges everything into a briefing with a signal and a conviction score. Python, Claude Agent SDK, MCP, Pydantic, FastAPI.
+
+That layer is the interesting engineering. It is also, for the purposes of this post, the layer I do not trust yet — LLM judgment is expensive to evaluate and easy to fool yourself about. So underneath it sits something deliberately dumb: a fixed, long-only time-series momentum rule with no model in it at all.
+
+```python
+class FactorConfig(BaseModel):
+    """Parameters for the fixed baseline factor."""
+
+    lookback_bars: int = Field(default=20, gt=0)
+    holding_bars: int = Field(default=20, gt=0)
+    initial_train_bars: int = Field(default=252, gt=0)
+    test_window_bars: int = Field(default=63, gt=0)
+    cost_bps_per_side: float = Field(default=0.0, ge=0.0, lt=10_000.0)
+```
+
+If 20-bar close-to-close momentum is positive at the close, go long at the next bar's open and exit at the close 20 bars later. Trades never overlap. Nothing is fitted inside a test window. The point of a baseline this crude is that it gives the agent stack something to beat, and gives me a place to make my measurement mistakes cheaply before they get expensive.
+
+The execution detail that matters is one index:
+
+```python
+entry_index = signal_index + 1
+exit_index = entry_index + config.holding_bars - 1
+entry_price = float(frame.at[entry_index, "open"])
+exit_price = float(frame.at[exit_index, "close"])
+```
+
+Signal computed on a close; fill on the *next* bar's open. Off-by-one there and you are trading on a price you could not have transacted at, which is how a mediocre factor becomes a spectacular one. I have written about a subtler version of the same class of bug — outcome memory leaking future returns into a backtest prompt — in [the lookahead-bias post](/blog/outcome-memory-lookahead-bias), so I will not relitigate leakage here.
+
+## The temptation
+
+Here is the part nobody writes down.
+
+I did not test one configuration. I tested a grid: lookback across 5, 10, 20, 40, 60, and 120 bars, crossed with holding periods of 5, 10, 20, 30, and 40. Thirty combinations. And I did it on a ticker I already knew had gone up a lot over the sample.
+
+Thirty draws is enough that *something* will look excellent. That is not a risk, it is arithmetic. If you run thirty coin-flipping strategies over the same decade of prices and report the best one, you will report a good Sharpe every single time, and you will be able to tell a plausible story about why 40 bars is the natural momentum horizon for this name. The story-generating faculty is the dangerous part. It does not have an error bar.
+
+The failure mode is not fraud. It is that "keep adjusting until the number is good" and "search for the true parameter" feel identical from the inside. Both involve running code, looking at output, and changing one thing. The only difference is whether you decided the stopping rule before or after you saw the results.
+
+So the discipline has to be structural, not moral. Two structures did the work here.
+
+## What the frozen holdout corrected for
+
+The first is boring and load-bearing: **parameters were selected on 2016 through 2022 only, and 2023 onward was never looked at until the configuration was locked.**
+
+Not "mostly not looked at." The walk-forward machinery expands a training window and steps a 63-bar test window forward through the series, so within the selection period every fold is already out-of-sample relative to its own training data. But walk-forward alone does not save you when *you* are the outer loop. I saw thirty grids' worth of fold results. My own choice of which row to keep is a form of fitting that no inner cross-validation can detect.
+
+The frozen window is the only defense against that, and it is single-use. Once you look, it is training data forever — which is why I wrote down the selected configuration and the reason for it before running the holdout:
+
+> The `20/20` candidate is preferred because it gives up only 1.17 percentage points of holdout compound return versus `60/20`, while having the best Sharpe, the highest positive-fold rate, and a materially smaller drawdown.
+
+Note what that sentence is doing. It is not picking the highest return. `60/20` had a higher compound return. I took the one with the better risk-adjusted profile and the higher fraction of positive folds, because a rule that works in three quarters of its test windows is a different object from one that works in half of them and gets rescued by a single fold.
+
+## What the deflated Sharpe corrected for
+
+The second structure is statistical, and it exists specifically to price in the search I just described.
+
+A Sharpe ratio computed on the winner of a comparison is not an estimate of that strategy's edge. It is an order statistic — the maximum of N draws — and the maximum of N draws from a distribution centered on zero is reliably positive. So the codebase computes what the expected best-of-N would be under the null of no skill at all, and measures the winner against *that* instead of against zero:
+
+```python
+def expected_max_sharpe(n_strategies: int, sr_variance: float) -> float | None:
+    """Expected maximum Sharpe across `n_strategies` with **no** real edge.
+
+    The benchmark a winning strategy has to clear before "it beat the others"
+    means anything. Search hard enough over strategies with zero true skill and
+    one of them posts a good Sharpe by construction.
+    """
+```
+
+The consequence is a bar that rises as you search harder. Add a seventh strategy to the comparison table and the winner has to clear more to mean the same thing. That reads like a bug the first time you see it and is the single most useful property of the whole module.
+
+The same restraint applies to hit rates. A win rate over a few dozen trades is a point estimate wearing a lab coat, so it never ships alone — Wilson intervals, chosen over the textbook normal approximation because at these sample sizes the normal one hands back intervals that run past 0 and 1 and collapse to zero width at the extremes, which is exactly backwards.
+
+```python
+def wilson_interval(hits: int, n: int, z: float = 1.96) -> tuple[float, float] | None:
+    if n <= 0:
+        return None
+    p = hits / n
+    denom = 1.0 + z**2 / n
+    centre = (p + z**2 / (2 * n)) / denom
+    half = z / denom * math.sqrt(p * (1 - p) / n + z**2 / (4 * n**2))
+    return (max(0.0, centre - half), min(1.0, centre + half))
+```
+
+There is a third correction I will mention only briefly because it surprised me most: overlapping holding windows are not independent observations. Trials spaced closer than the holding period share a price path, and treating them as independent understates variance and inflates every significance number computed downstream. The significance machinery runs on a uniqueness-discounted effective sample size rather than the trial count, and that discount is severe enough to turn several "significant" intermediate results into nothing.
+
+## The real numbers
+
+On the frozen 2023–2026 holdout, `20/20` net of cost:
+
+- **1.32 annualized Sharpe**
+- The best positive-fold rate of any candidate in the grid
+- The smallest drawdown among the top-returning configurations
+
+Cross-sectionally, checked on twelve US tickers, **ten of twelve stayed net-positive at 30 bps per side** — triple my baseline cost assumption, chosen as a stress case rather than a realistic one. That is the result I am happiest with, because it is the one that would have been easiest to lose. A rule that only survives at optimistic costs is a rule about my cost model, not about the market.
+
+Then the full out-of-sample window, and the sentence that this whole post exists for: **the factor's net compound return came in well below simply holding the same stock over the same period.** Not marginally. It was not close.
+
+Both facts are true at once. The rule produced a genuinely respectable risk-adjusted return, on data it had never seen, after costs, across most of a twelve-name universe — and an investor who ran it instead of buying and holding would have ended up with less money.
+
+The reason is not mysterious. The factor is in the market roughly when momentum is positive and flat otherwise, so it structurally forfeits part of a decade-long uptrend in exchange for smaller drawdowns. Whether that trade is worth making depends on things a Sharpe ratio does not encode. What it definitively is not is alpha.
+
+## Why "still loses to the index" is the more credible outcome
+
+If I had shown you the 1.32 Sharpe alone, you would have had no way to evaluate it. Not because it is a bad number, but because you would not know how many numbers I generated to get it, whether the window was frozen, whether the costs were realistic, or whether the comparison benchmark was chosen after the fact.
+
+Adding "and it lost to buy-and-hold" answers all four at once. It is the observation that a results-shopping process would have removed. Its presence is the evidence that the protocol ran to completion rather than stopping when the output got flattering.
+
+That is also why the repo's own conclusion is written as a refusal rather than a recommendation: the parameters were searched, the sample is historical, and the factor lagged the index. The honest framing is not a hedge attached to a finding. It *is* the finding.
+
+The corollary is uncomfortable for the multi-agent layer above it. Four LLM analyst desks and a debate engine now have a concrete bar to clear, and the bar is not "beat zero." It is "beat a twenty-line momentum rule that itself loses to doing nothing." I do not know yet whether it clears that. When I know, I will publish the number that comes out, not the number I was hoping for.
+
+## What generalizes
+
+Three things I would carry to any system that evaluates its own performance.
+
+**Write down the stopping rule before you look.** Searching and rationalizing feel the same from the inside. The only reliable distinction is whether the decision criterion existed before the results did, and the only way to know that is to have written it somewhere you cannot quietly edit.
+
+**Make the statistics penalize your own effort.** A metric that improves as you search harder is measuring your persistence. A metric that raises its own bar as you add candidates — deflated Sharpe, uniqueness-adjusted sample sizes, intervals instead of point estimates — is measuring the thing you actually care about. Build the correction into the reporting path so nobody, including you, can route around it.
+
+**Publish the benchmark that beats you.** Any result can be made impressive by omitting the comparison it loses to. Including that comparison costs you the headline and buys you the only thing that makes the headline worth anything. Every number in a report is a claim about the world; the ones that make you look worse are the ones a reader can use to calibrate all the others.
+
+The code, the sweep protocol, and the memo with all the losing rows in it are in [ai-stock-analysis](https://github.com/KelvinYou/ai-stock-analysis).

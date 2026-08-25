@@ -1,0 +1,160 @@
+---
+title: "The One Rule My Health Agent Isn't Allowed to Override"
+date: "2026-08-24"
+description: "Twelve agent skills, one rule none may override. Why an acute bad-sleep night is a hard stop while a 7-day trend defers to a live HRV reading."
+tags: ["System Design", "AI Agents", "Guardrails", "Python", "Multi-Agent"]
+author: "Kelvin You"
+---
+
+I run a personal management system called [Personal-OS](https://github.com/KelvinYou/personal-os): structured daily logs, a Python logic engine over them, and twelve Claude Code agent skills on a weekly cadence — `weekly-review` scores the week, `coach-planner` owns every timetable, `wealth-manager` handles money, `decision-log` records the trade-offs I make so I can grade them later.
+
+The health guardrails are the part I've rewritten the most, and the reason is that "AI life coach" systems fail in exactly two directions. Either they alert on every threshold breach, and you stop reading them by week three. Or they hedge so thoroughly that no output ever changes a decision, which is the same failure wearing a politer face.
+
+What I landed on is that **not all guardrails deserve the same authority**. Exactly one rule in my system cannot be overridden. Everything else can be argued down by a live measurement. That asymmetry is a budget I set on purpose, not an accident of implementation.
+
+## The naive version: alert on every breach
+
+The first version was the obvious one. Put every number in a config file, define a condition per number, fire when the condition trips. All thresholds live in `config/thresholds.yaml` — the project rule is that no script hardcodes a magic number, so the engine has no numbers of its own:
+
+```yaml
+sleep:
+  baseline_hours: 7.5           # below this counts toward sleep debt
+  poor_sleep_duration_hours: 6.5
+  debt_window_days: 7           # rolling window; older data decays out
+  debt_recovery_streak: 3       # 3 nights >= baseline unlocks Level 1
+  hrv_warning_low: 30           # absolute HRV red line (ms)
+
+readiness:
+  hrv_rel_baseline_min: 0.85    # HRV < 0.85 x baseline = low recovery
+  load_ratio_overtraining: 1.5  # ATI/CTI above this = overtraining
+```
+
+And the breakers themselves, each a metric, an operator, a value, and a list of enforced actions:
+
+```yaml
+circuit_breakers:
+  - name: "Sleep Debt Level 1"
+    description: "7-day rolling sleep debt, moderate (5-8h)"
+    condition:
+      metric: rolling_7d_sleep_debt
+      operator: ">="
+      value: 5.0
+    actions:
+      - "Morning run downgraded to Zone 2 (HR <= 145bpm, <= 30min)"
+      - "Resistance training -30% load (Deload Mode)"
+      - "Mandatory 20-30min nap"
+```
+
+The evaluator is deliberately boring. It takes a metrics dict and a list of breakers, and returns whichever tripped:
+
+```python
+def evaluate(metrics: dict, breakers: list[Breaker]) -> list[TrippedBreaker]:
+    tripped: list[TrippedBreaker] = []
+    for cb in breakers:
+        cond = cb.condition
+        actual = metrics.get(cond.metric)
+        if actual is None:
+            # missing data — skip to avoid false positives
+            continue
+        op_fn = _OPS.get(cond.operator)
+        if op_fn is None:
+            continue
+        if op_fn(float(actual), float(cond.value)):
+            tripped.append(TrippedBreaker(...))
+    return tripped
+```
+
+Nine breakers, all equal, all shouting with the same voice. Sleep Critical, two levels of sleep debt, Consecutive Poor Sleep, Energy Collapse, Mental Overload, HRV Recovery Alert, Overtraining Warning, Spending Surge.
+
+## Why that gets the whole system ignored
+
+Here is the problem with nine equal alarms: they don't fire independently. A rough week trips sleep debt, and sleep debt drags energy down, and low energy raises mental load. One underlying cause, four breakers, four blocks of "mandatory" restrictions in the report — each written in the same imperative tone as the others.
+
+The `rolling_7d_sleep_debt` breakers are the worst offenders, because they're the ones most likely to be *stale news*. Debt accumulates over a seven-day window, so a bad Monday keeps firing the breaker through the following Sunday even after I've slept well for four nights straight. The metric is lagging by construction. When it says "deload," it is describing a body that may have already recovered.
+
+So the report tells me to deload. I know I feel fine. I override it. And the moment I've overridden a breaker once and nothing bad happened, every breaker's authority has dropped, including the ones that were right. That's the actual failure mode — not the false alarm itself, but what the false alarm costs the true ones. A guardrail that fires every week on a lagging metric doesn't just waste attention; it spends down the credibility that a rare, correct alarm needs in order to work.
+
+The opposite fix is worse. Soften everything into "consider taking it easier" and the system produces text that never changes what I do. At that point I'm paying for a system to generate paragraphs I skim.
+
+## Acute vs chronic: different confidence, different authority
+
+The reframe that fixed it: a breach is not a breach. Some signals are single, direct measurements of a state that is true *right now*. Others are derived aggregates over a window, describing a state that was true at some point during that window.
+
+A night under `poor_sleep_duration_hours` is an acute signal. It's one measurement, it's from last night, there's no window to smear it, and its physiological meaning today is not really in dispute. A seven-day rolling debt figure is a chronic signal — a sum over a decaying window, sensitive to a single bad outlier, and quite capable of describing a hole I've already climbed out of.
+
+These deserve different authority, and the deciding question is not "how bad is the number" but "how likely is this number to be wrong about today."
+
+| | Acute signal | Chronic signal |
+| :--- | :--- | :--- |
+| Example | Last night's sleep duration | `rolling_7d_sleep_debt` |
+| Window | One measurement, last night | 7 days, decaying |
+| Lag | None | Up to a week |
+| Confidence about *today* | High | Moderate at best |
+| Sensitive to one outlier | No | Yes |
+| Override policy | **None. Hard stop.** | Deferred to a live reading |
+| Failure if wrong | One over-cautious day | Weeks of ignored alarms |
+
+The bottom row is the one that decides it. If the acute rule is wrong, I lose a training session and some deep work hours. If the chronic rule keeps firing and I keep overriding it, I lose the entire guardrail layer. Those costs are not symmetric, so the authority shouldn't be either.
+
+## The one hard rule, and why it earned that
+
+The non-overridable rule is the acute one — an actually bad night of sleep:
+
+```yaml
+  - name: "Sleep Critical"
+    description: "Severe single-night sleep deficit"
+    condition:
+      metric: sleep_duration
+      operator: "<"
+      # Intentionally mirrors sleep.poor_sleep_duration_hours (6.5h)
+      value: 6.5
+    actions:
+      - "No morning run; low-HR walk or full rest only"
+      - "No heavy resistance training (Deload only)"
+      - "Deep Work capped at 4h, mandatory 20min nap"
+      - "22:00 shutdown, zero tolerance"
+```
+
+It earned hard-stop status on three counts. It's a direct measurement, not a derivation. It's about last night, so there's no lag to argue with. And there is no plausible live reading that makes a genuinely short night safe to train hard on — a decent HRV after four hours of sleep is not evidence of recovery, it's just a number that hasn't caught up yet. There's nothing for an override to be based on.
+
+Everything downstream of that rule follows the same discipline. The system has a `logging_defaults` layer that fills in missing hand-entered fields, on the principle that silence should mean "ran to baseline," not "failed." But the boundaries on it are explicit in the config, and the second one exists for this rule:
+
+> Scoring only, never breakers. Breakers read the raw log — no evidence, no alarm. Fallback values must never be used to suppress a warning.
+
+A hard stop that can be triggered by an assumed value isn't a hard stop, it's a coin flip. And note the mirror-image rule in `evaluate()`: a missing metric is skipped, not treated as zero. A guardrail that can't be silenced by a default also must not be *fabricated* by one.
+
+## How a live HRV reading overrides the lagging trend
+
+The chronic rules work the other way round: they're the default, and a live measurement can lift them. If `rolling_7d_sleep_debt` has tripped Sleep Debt Level 1 but this morning's HRV is comfortably above `hrv_rel_baseline_min` (0.85 x my baseline) and clear of the `hrv_warning_low` red line at 30ms, the deload is a recommendation, not a mandate.
+
+The logic is just Bayesian housekeeping. The seven-day debt is a prior about my recovery state; today's HRV is a fresh observation of that same state, and it's both more recent and more direct. When the fresh observation disagrees with the stale aggregate, the fresh one should win — that's what "lagging indicator" means.
+
+Recovery has its own explicit exit condition rather than a vibe. `debt_recovery_streak: 3` means three consecutive nights at or above baseline clears Level 1, and the Level 2 actions say the Zone 2 running permission comes back only after dropping to Level 1. Guardrails need documented ways out; ones that only ever tighten get disabled wholesale.
+
+Where this currently sits is the honest caveat. The evaluator has no notion of override authority — it returns booleans, full stop. The tiering lives one layer up, in the skill definitions the agents read. `weekly-review` is instructed that "circuit breakers are non-negotiable" and applies a -3 scoring penalty per tripped breaker. `coach-planner` is instructed to weigh a close call out loud rather than mechanically:
+
+> "sleep was just above the configured Sleep Critical threshold, but your HRV is 32 and you had poor sleep quality two days ago, so the cumulative load tips this toward rest"
+
+That's a prose-level guardrail enforced by a language model, and it is weaker than a code-level one. An agent that can be reasoned with can be reasoned wrong. The trade-off I accepted: the chronic rules genuinely need judgment — they're the ones where the numbers and the body disagree — and encoding "HRV may override debt, but only above these two bounds, unless the acute breaker also fired" as declarative YAML produced a config I couldn't read. So the acute rule is being tightened toward code and the chronic ones stay in prose, which is the reverse of how I'd have guessed I'd build it.
+
+## Circuit breakers as the general shape
+
+The name isn't decoration. An electrical breaker has the properties a good automated guardrail needs: it acts on one measurement, it fails toward safety, it takes the decision away from the operator at the moment the operator is least equipped to make it, and it has an explicit reset.
+
+That last property is what most metric-driven alerting forgets. The reset is not a courtesy — it's what stops the breaker from becoming a permanent condition that gets routed around. And the "takes the decision away" part is why it must be rare. A house where every appliance can cut the mains is a house where someone tapes the breaker panel shut.
+
+The scoring layer follows the same asymmetry. Four dimensions, fixed weights — Output 40, Health 30, Mental 20, Habits 10 — and code computes the base score from measured values while the agent only contributes qualitative bonuses and penalties on top. The parts with hard numbers stay in code; the parts requiring judgment are fenced into a bounded adjustment. Same principle: authority proportional to signal quality.
+
+## What generalizes
+
+I have no measurement of whether this guardrail design works better than the flat one. There's no A/B here, no false-alarm rate, no adherence figure — one person, one system, and the honest answer is that I still read the reports, which the flat version had stopped being true of. That's the whole evidence base.
+
+What I'd carry to any system acting on noisy metrics:
+
+**Rank your signals by lag and directness before you decide what blocks.** Not by severity. A lagging aggregate and a direct live measurement are different kinds of claim, and giving them the same authority is what breaks trust in the aggregate first and everything else second.
+
+**Budget your hard stops and treat the budget as scarce.** The cost of a false hard stop is not the one bad decision — it's the credibility every other rule borrows from it. Mine is one. If a second rule ever wants that status, an existing one has to argue for keeping it.
+
+**Every override needs a named source, and every block needs a documented exit.** "HRV above 0.85 x baseline lifts the deload" is auditable. "Use judgment" is how a guardrail layer quietly becomes decoration.
+
+**Never let a default value trigger or suppress a guardrail.** Fallbacks are for scoring, where being approximately right is fine. Alarms read raw evidence or they don't fire — and a missing measurement is missing, not zero.

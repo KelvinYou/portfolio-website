@@ -1,0 +1,242 @@
+---
+title: "From 'Impressive Table' to Evidence-First: Redesigning a Research Cockpit"
+date: "2026-08-24"
+description: "My stock-research dashboard v1 optimised for looking sophisticated. Rebuilding it around evidence and provenance meant fixing five real UX failures."
+tags: ["Design System", "Accessibility", "Frontend", "Data Visualization", "UX"]
+author: "Kelvin You"
+---
+
+The first version of my stock-research dashboard looked great in a screenshot. Four analyst desks in a tab strip, a dense grid of bordered metric tiles, signal badges in green and red, numbers everywhere. I was pleased with it for about a week.
+
+Then I tried to actually use it to check a claim, and it fell apart. The pipeline behind it runs four analyst desks — fundamentals, technical, sentiment, macro — on MCP servers, argues their reports through a bull/bear debate, and synthesises a signal plus a conviction score. The single most useful question you can ask that system is *do the desks agree, and if not, why not*. The UI I'd built made that question require four clicks and a memory of what the last tab said.
+
+Density is not usefulness. A research tool's job is not to display data; it's to let you get from a claim to the thing that supports it. This post is the rework of one component — the Specialist desks section — from a table that looked impressive into something you can interrogate.
+
+## The reframe: every claim needs a visible path to its evidence
+
+The pipeline emits a strict schema. Each desk's report is a Pydantic model, so the frontend knows exactly what fields exist:
+
+```python
+class FundamentalsReport(BaseModel):
+    signal: Signal
+    confidence: Confidence
+    pe_assessment: str
+    margin_analysis: str
+    debt_analysis: str
+    growth_outlook: str
+    key_risks: list[str]
+    key_strengths: list[str]
+    summary: str
+```
+
+Notice what's in there. There's a *conclusion* (`signal`, `confidence`), a *trust level*, some *reasoning* in prose, and some *supporting facts* in lists. The v1 UI flattened all of that into one visual register: everything got a bordered card, everything got the same type size, and the reader was left to work out which parts were the claim and which parts were the backing.
+
+The rule I settled on: **a signal never appears without something that supports it in the same visual frame.** If the reader has to click to find out why a desk says sell, the design has failed, because in practice nobody clicks. That single rule generated all five of the fixes below.
+
+## The five things v1 got wrong
+
+Going back through the diff, here's the honest before/after. There was no formal user study — this came from me using my own tool and getting annoyed.
+
+| # | Problem in v1 | Fix |
+| :--- | :--- | :--- |
+| 1 | Four desks in a `<Tabs>`; three of four always hidden | A four-up signal matrix — all desks visible simultaneously |
+| 2 | Cards showed a verdict word with nothing behind it | Each card carries two named evidence lines, clamped to 150 chars |
+| 3 | Signal was a discrete word, so spread across desks was invisible | A `SignalTrack` axis placing each desk on a sell↔buy line |
+| 4 | Every schema field boxed as a bordered tile — context looked like a headline metric | Fields demoted to a `<dl>` inside a collapsed `<details>` |
+| 5 | Confidence borrowed the bull/bear hue — a high-confidence *sell* rendered green next to red | Confidence moved off colour entirely, onto a fading dotted underline |
+
+### 1. Tabs are a filing cabinet, not a comparison
+
+The v1 component was literally a tab strip with `defaultValue="fundamentals"`. Each tab rendered a full `ReportView`. It was tidy, it was easy to build, and it destroyed the only interesting property of the data — that four independent readers can disagree.
+
+Tabs are the right control when the panels are alternatives. Here the panels are *evidence for one decision*, so hiding three of them is hiding three quarters of the argument. The fix was a four-column grid where every desk shows its signal, its confidence, its lead sentence, and its two strongest evidence lines at once:
+
+```tsx
+<div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+  {desks.map((desk) => (
+    <article key={desk.key} className="rounded-lg border bg-card p-4">
+      <header className="flex items-start justify-between gap-3">
+        <h3 className="flex items-center gap-2 text-sm font-semibold text-ink">
+          <desk.Icon className="size-4 text-graphite" aria-hidden />
+          <span>{desk.label}</span>
+        </h3>
+        <SignalBadge signal={desk.signal} confidence={desk.confidence} size="lg" />
+      </header>
+      <SignalTrack signal={desk.signal} label={desk.label} />
+      <p className="prose-claim mt-4 line-clamp-3 text-sm">{desk.summary}</p>
+      {/* evidence list */}
+    </article>
+  ))}
+</div>
+```
+
+This costs vertical space and it does not screenshot as cleanly. That's the trade I wanted: the layout now makes disagreement the most visible thing on the section.
+
+### 2. Naming the evidence, per desk
+
+A signal with a three-line summary underneath is still just an assertion. So each desk definition now declares an explicit `evidence` array — one item toned up, one toned down — pulled from whichever schema field is that desk's strongest support:
+
+```tsx
+evidence: [
+  evidence("Strength", fundamentals.key_strengths[0] ?? fundamentals.margin_analysis, "up"),
+  evidence("Risk", fundamentals.key_risks[0] ?? fundamentals.pe_assessment, "down"),
+],
+```
+
+Two details matter. First, the fallback: `key_strengths` is a list an LLM populated, so it can come back empty, and a card that silently loses its evidence row is worse than one showing a slightly weaker fact. Second, the pairing is deliberately *one of each direction*. Showing only the supporting evidence for a signal would make the card an advocate. The technical desk uses `support_levels` and `resistance_levels` for the same shape; sentiment, which has no natural directional split, uses two neutral-toned items rather than inventing a polarity the schema doesn't have.
+
+Evidence text runs through a clamp so a verbose model can't blow out the grid:
+
+```ts
+export function clampText(text: string, max: number): string {
+  const clean = text.replace(/\s+/g, " ").trim();
+  if (clean.length <= max) return clean;
+  const cut = clean.slice(0, max);
+  const boundary = cut.lastIndexOf(" ");
+  const kept = boundary > max * 0.6 ? cut.slice(0, boundary) : cut;
+  return `${kept.replace(/[.,;:—-]$/, "")}…`;
+}
+```
+
+### 3. A signal has a position, not just a name
+
+`strong_sell` through `strong_buy` is an ordered scale, but rendering it as a word throws the ordering away. Four words in four cards tell you nothing about *how far apart* the desks are — and that spread is the thing that gates whether the synthesiser will quote price levels at all.
+
+So each card got a small axis with the desk's position marked on it, derived from the same `signalPosition()` map the main consensus axis uses:
+
+```tsx
+function SignalTrack({ signal, label }: { signal: Signal; label: string }) {
+  const position = signalPosition(signal);
+  const left = ((position + 1) / 2) * 100;
+
+  return (
+    <div
+      className="mt-4"
+      role="img"
+      aria-label={`${label} signal ${signalLabel(signal)} on a sell to buy axis`}
+    >
+      {/* gradient rail from bear through graphite to bull, plus an ink dot */}
+    </div>
+  );
+}
+```
+
+Sharing `signalPosition` rather than re-deriving it locally is the boring but important part. The screener, the sidebar and the topbar search each used to keep a private copy of a signal-to-colour map, and the three had drifted into disagreement. Anything that encodes the meaning of a signal now lives in one module.
+
+### 4. Not everything deserves a border
+
+v1 rendered each of `pe_assessment`, `margin_analysis`, `debt_analysis`, `growth_outlook` as a bordered card with an eyebrow label. Sixteen bordered tiles per ticker. It looked like a cockpit, which is exactly why it was wrong: a border is a promise that the thing inside is a discrete, important reading, and these are supporting context you consult *after* you've decided the desk is worth reading.
+
+They're now a plain definition list, inside a collapsed disclosure:
+
+```tsx
+<details key={desk.key} className="group border-b last:border-b-0">
+  <summary className="flex cursor-pointer list-none items-center justify-between gap-3 py-3">
+    <span className="text-sm font-medium text-ink">{desk.label}</span>
+    <span className="min-w-0 truncate text-micro text-graphite">
+      {desk.rows.map(([k]) => k).join(" · ")}
+    </span>
+  </summary>
+  {/* full report */}
+</details>
+```
+
+The truncated field names in the summary row are doing real work: they tell you what's behind the disclosure before you open it, so the collapse hides depth without hiding the *existence* of depth. Native `<details>` also gives keyboard operation and the browser's find-in-page for free, which a hand-rolled accordion would have to reimplement badly.
+
+## The design-system work that made it possible
+
+None of the above is achievable with a palette of "green, red, grey". The rework leaned on two pieces of system-level plumbing.
+
+**Semantic colour tokens, ranked rather than rationed.** Chrome is ink and graphite so it recedes. Colour belongs to data, and each hue means exactly one thing: `--bull` / `--bear` for direction, `--halt` for withheld levels and stale data, `--action` for anything clickable, and a separate violet ramp for moving averages so a trend line never borrows a directional hue it doesn't mean.
+
+```css
+--bull: 159 59% 30%;
+--bear: 2 59% 45%;
+/* Caution: withheld levels, stale data, extreme readings — 5.0:1 */
+--halt: 42 63% 33%;
+/* Interactive. Deep blue sits ~140° from both bull and bear, so "you can
+   click this" never reads as "this went up". 5.7:1 on paper. */
+--action: 223 65% 48%;
+```
+
+Every hue is tuned to clear 4.5:1 on its own ground. The stock `emerald-600`/`amber-600` this replaced sat at 3.4:1 and 3.1:1 — and did so at the smallest type sizes in the app, which is the worst possible place to spend your contrast budget.
+
+**Variable typography as a semantic axis.** Three faces, three kinds of claim, kept strictly disjoint: Archivo run wide carries structure (headers, tickers, the verdict word), Newsreader carries argument (anything a model reasoned out in words), DM Mono carries anything the pipeline computed deterministically. Once that split exists, you can tell a calculated number from an argued sentence without reading either.
+
+```css
+/* Computed: anything the pipeline calculated deterministically. */
+.num {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Argued: anything a model reasoned out in words. */
+.prose-claim {
+  font-family: var(--font-prose), ui-serif, Georgia, serif;
+  font-size: 0.9375rem;
+  line-height: 1.65;
+}
+```
+
+Archivo's width axis is what makes headers and ticker symbols read as signage — `font-stretch: 112%` on body, `125%` on headings and the signal badge. Without the variable axis this is just another grotesk, and structure stops being distinguishable from prose by anything other than size.
+
+The other half is a `SectionCard` with two tiers rather than one. `reference` sections — computed readings — are bordered, dense and quiet. `argument` sections are unboxed, with a wider measure and more air, so prose reads as prose instead of as another data tile. Specialist desks is an `argument` section, which is why the desk cards sit on open ground rather than nested inside a panel.
+
+## Accessibility: direction is never encoded in colour alone
+
+Every direction indicator in this app reads three ways at once — glyph, word, and hue:
+
+```ts
+const GLYPH: Record<Signal, string> = {
+  strong_buy: "▲▲",
+  buy: "▲",
+  neutral: "●",
+  sell: "▼",
+  strong_sell: "▼▼",
+};
+```
+
+The doubled glyph is how magnitude survives without a second colour stop. Colour is the last of the three to arrive and the first thing a colour-blind reader loses, so the glyph and the label are never dropped in its favour — the glyph is decoration, the label is the value.
+
+The fifth v1 bug was in this exact area, and it's the one I'm least proud of. Confidence was rendered on the bull/bear channel:
+
+```tsx
+// v1 — confidence borrowed the direction hue
+const CONFIDENCE_CLS: Record<Confidence, string> = {
+  high: "text-bull",
+  medium: "text-halt",
+  low: "text-graphite",
+};
+```
+
+Read that against a sell signal. You get a red word next to a green word, and it parses as two conflicting calls rather than one direction plus one trust level. Colour was already fully committed to meaning *direction* everywhere else in the app; spending it a second time on an orthogonal dimension was the bug.
+
+The fix takes confidence off hue entirely and puts it on a decoration that fades:
+
+```tsx
+const CONFIDENCE_CLS: Record<Confidence, string> = {
+  high: "decoration-graphite/70",
+  medium: "decoration-graphite/40",
+  low: "decoration-graphite/0",
+};
+```
+
+The word `high` / `medium` / `low` is always spelled out, so the underline is redundant reinforcement rather than the carrier. A low-confidence reading loses its underline and looks unmarked, which is the correct impression.
+
+The `SignalTrack` axis needed the same treatment. It's a positional graphic with no text, so it carries `role="img"` and an aria-label that spells out the reading in words — *"Technical signal Buy on a sell to buy axis"*. A screen-reader user gets the same fact the sighted reader gets from the dot's position, not a description of a dot.
+
+## One more thing: two charting approaches on purpose
+
+The frontend runs a dual charting architecture, and that's a deliberate split rather than technical debt. The price chart is Recharts — it needs pan, range switching, tooltips, brushing, and a stack of reference lines for support, resistance, entry, stop and targets. Reimplementing that would be foolish.
+
+The consensus axis and the desks' `SignalTrack` are hand-built from divs and CSS gradients. They're not really charts; they're bespoke instruments where the exact placement of one mark relative to another *is* the message. A charting library would give me axis ticks and a legend I'd then spend a day suppressing. The heuristic I use: if the reader needs to explore the data, reach for the library; if the graphic needs to make exactly one comparison legible, build it.
+
+## What generalizes
+
+**Density is a proxy metric, and it's the wrong one.** "How much information is on screen" is easy to optimise and feels like progress. "How many actions does it take to check a claim" is the metric that matters, and the two frequently point in opposite directions — the tab strip was *more* information-dense per square inch and strictly worse.
+
+**Pick the control that matches the relationship in the data.** Tabs say *these are alternatives*. A disclosure says *this is depth under a summary*. A grid says *compare these*. I reached for tabs because I had four of something, not because the four were alternatives, and the control then quietly argued for the wrong reading of the data.
+
+**Give every visual channel exactly one job, then write down what it is.** Colour meaning direction, weight and width meaning structural level, font family meaning computed-vs-argued. The confidence bug happened because I spent the direction channel twice, and that's only obvious once each channel's job is documented somewhere a reviewer can check it against.
+
+**Accessibility constraints improve the design for everyone.** "Never encode direction in colour alone" forced the glyph system, and the glyphs made signals legible in a dense table faster than the colours ever did. It forced the aria-label on the signal axis, which in turn forced me to articulate what the axis was claiming — and I found the claim was fuzzier than I'd assumed. The constraint wasn't a tax on the design; it was the thing that made me say out loud what each mark meant.
