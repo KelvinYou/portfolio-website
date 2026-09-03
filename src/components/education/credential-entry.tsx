@@ -5,6 +5,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import { Measured } from "@/components/experience/experience-entry";
+import { EntryPhotos } from "@/components/gallery/entry-photos";
 import { fadeIn } from "@/lib/animations";
 import { cn, formatTenure, tenureMonths } from "@/lib/utils";
 import type { Education } from "@/types";
@@ -203,6 +204,8 @@ export const CredentialEntry = React.memo(function CredentialEntry({
         )}
 
         <Coursework coursework={edu.coursework} />
+
+        <EntryPhotos photos={edu.photos} />
       </div>
     </motion.article>
   );

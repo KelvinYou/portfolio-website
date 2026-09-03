@@ -5,6 +5,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import { WroteAbout } from "@/components/blog/wrote-about";
+import { EntryPhotos } from "@/components/gallery/entry-photos";
 import { ArtifactLink } from "@/components/project-row";
 import { fadeIn } from "@/lib/animations";
 import { cn, formatTenure, tenureMonths } from "@/lib/utils";
@@ -264,6 +265,8 @@ export const ExperienceEntry = React.memo(function ExperienceEntry({
         {exp.blogSlugs && exp.blogSlugs.length > 0 && (
           <WroteAbout slugs={exp.blogSlugs} titles={postTitles} />
         )}
+
+        <EntryPhotos photos={exp.photos} />
       </div>
     </motion.article>
   );

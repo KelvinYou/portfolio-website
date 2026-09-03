@@ -88,6 +88,15 @@ export const experiences: Experience[] = [
     ],
     logo: "/images/companies/simpletruss.jpeg",
     blogSlugs: ["apollo-cache-and-the-list-you-forgot"],
+    photos: [
+      {
+        id: "simpletruss-farewell",
+        type: "image",
+        src: "/images/gallery/simpletruss/farewell.jpg",
+        alt: "Team photo on the last day at Simpletruss",
+        title: "Last day at Simpletruss",
+      },
+    ],
     projects: [
       {
         title: "LessenPro",
@@ -131,6 +140,40 @@ export const experiences: Experience[] = [
     ],
     logo: "/images/companies/beyondsoft.jpeg",
     blogSlugs: ["beyondsoft"],
+    photos: [
+      {
+        id: "beyondsoft-databrain-team",
+        type: "image",
+        src: "/images/blogs/beyondsoft/databrain-team.jpg",
+        alt: "The Databrain team at Beyondsoft",
+        title: "The Databrain team",
+        description:
+          "The group behind the visualization module — the dashboards, the 500K-row tables, and the CSS bug in the opening paragraph.",
+        width: 1000,
+        height: 750,
+        metadata: {
+          dateCreated: "May 2024",
+          location: "Beyondsoft, Kuala Lumpur",
+          dimensions: "1000 × 750 px",
+        },
+      },
+      {
+        id: "beyondsoft-big-group",
+        type: "image",
+        src: "/images/blogs/beyondsoft/big-group.png",
+        alt: "Group photo with the wider Beyondsoft team",
+        title: "The wider team",
+        description:
+          "Quarterly team building. Half the people in this photo have explained a Chinese spec term to me at some point.",
+        width: 1200,
+        height: 800,
+        metadata: {
+          dateCreated: "June 2024",
+          location: "Beyondsoft, Kuala Lumpur",
+          dimensions: "1200 × 800 px",
+        },
+      },
+    ],
     projects: [
       {
         title: "Databrain Global",
@@ -460,11 +503,7 @@ export const projects: Project[] = [
     techStacks: ["Next.js", "TailwindCSS", "Shadcn", "React"],
     // `why-i-wont-put-agentic-ai-on-my-resume` belongs here rather than under
     // Personal-OS: the subject is this file's own skill tiers, not the agents.
-    blogSlugs: [
-      "why-i-wont-put-agentic-ai-on-my-resume",
-      "nextjs-seo",
-      "personal-website",
-    ],
+    blogSlugs: ["why-i-wont-put-agentic-ai-on-my-resume"],
   },
   {
     title: "Travel Guide",

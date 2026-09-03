@@ -1,4 +1,5 @@
 import { Icons } from "@/components/icons";
+import type { GalleryItem } from "@/types/gallery";
 
 /** A separate page. */
 export interface NavItem {
@@ -31,6 +32,8 @@ export interface Experience {
   logo: string;
   projects?: WorkProject[];
   blogSlugs?: string[];
+  /** Photos on file for this role — team offsites, farewells. Rendered as an opt-in lightbox. */
+  photos?: GalleryItem[];
 }
 
 /** Something delivered inside a role. Rendered nested in the experience cards. */
@@ -178,4 +181,6 @@ export interface Education {
   documents: { certificate?: string; transcript?: string };
   logo?: string;
   techStacks: string[];
+  /** Photos on file for this credential — campus, graduation. Rendered as an opt-in lightbox. */
+  photos?: GalleryItem[];
 }
