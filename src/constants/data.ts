@@ -71,7 +71,7 @@ export const experiences: Experience[] = [
     startDate: "2024-6-10",
     endDate: "2025-7-7",
     description:
-      "Building enterprise property management SaaS. 500+ properties, 10K+ maintenance tickets monthly.",
+      "Vendor SaaS (LessenPro) for Lessen, a US property-services operator. 500+ properties managed.",
     responsibilities: [
       "Component library with compound patterns, TypeScript generics, Storybook docs. 40% faster dev velocity, 60KB bundle reduction.",
       "GraphQL layer: Apollo Client, 80% cache hit rate, custom hooks (usePaginatedQuery, useOptimisticMutation). Type-safe, zero prop-drilling.",
@@ -122,7 +122,7 @@ export const experiences: Experience[] = [
     startDate: "2023-7-31",
     endDate: "2024-6-7",
     description:
-      "Analytics platform for Tencent, MiHoYo (Genshin Impact), major game studios. Millions of events/day.",
+      "Game analytics platform (DataBrain) for Tencent's Level Infinite, 30+ studios.",
     responsibilities: [
       "Performance: Virtual scrolling (500K rows), Web Workers for parsing, debounced filters. Sub-3s loads at 60fps.",
       "Quality: Jest standards, mandatory reviews, 40% fewer production bugs. Docker dev env: 4h → 30min onboarding.",
