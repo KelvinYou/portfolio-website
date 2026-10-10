@@ -1,0 +1,177 @@
+---
+title: "AI Fixed the Modal. The Coach Mark Still Flashed."
+date: "2026-10-01"
+description: "Repeated AI fixes left a coach mark flashing. UI observation and targeted logs exposed what keeping the Modal mounted missed."
+tags: ["AI", "React Native", "Debugging", "Testing"]
+author: "Me"
+---
+
+**TL;DR**
+
+- I had asked AI to fix a flashing coach mark repeatedly. Several changes addressed real problems, but the visible symptom kept returning.
+- Keeping the Modal mounted still allowed its contents to disappear. Separately, moving the target restarted the tooltip's entrance animation.
+- The useful change in my workflow was asking the agent to operate the UI and collect runtime evidence, then evaluate each fix against the original symptom.
+
+The agent had another plausible explanation for the fix. I ran the app again, and the guide still flashed.
+
+This had happened enough times that asking for one more patch no longer seemed useful. I asked the AI to add console instrumentation and use computer control to inspect the running interface. Diagnosis started to narrow down once the agent could observe the symptom and investigate the state changes around it.
+
+The code history explains why the earlier fixes could be reasonable without resolving the experience. This retrospective draws on those changes, the regression tests, and the recorded QA finding. I have not reproduced the original console transcript here; the sequences below are reconstructions from that evidence.
+
+## One visible symptom, several possible causes
+
+The component was a coach mark: a dimmed overlay with a cutout around a target and a tooltip explaining the action. On a React Native wallet home screen, it highlighted the Send button.
+
+The screen continued changing after the guide appeared. Total assets loaded, the layout above Send changed, and the target moved. Other home popups also had their own eligibility checks and presentation lifecycle.
+
+A report that the guide "flashes" leaves several explanations open:
+
+| Possible cause | What would distinguish it |
+| :--- | :--- |
+| Another popup changes the guide's eligibility | The caller's visibility or queue state changes |
+| Remeasurement removes the overlay | The overlay unmounts and mounts again |
+| Remeasurement hides the overlay's contents | The Modal stays mounted, but target readiness becomes false |
+| A position update restarts the entrance animation | Visibility stays true while the animation resets |
+
+Each mechanism can produce a similar-looking interruption. A screenshot shows the appearance at one moment; it cannot establish which transition happened before it.
+
+The component's history also included coordinate and presentation fixes. Those were separate concerns. A spotlight in the wrong place, a tooltip that disappears, and an incorrectly shaped cutout need separate acceptance criteria even when they share a component.
+
+---
+
+## The Modal survived. Its contents did not.
+
+The September 25 change addressed an important lifecycle problem. Previously, a changed layout key could make the measurement hook return `null`, removing the overlay until a new measurement arrived. Dismissing and immediately presenting a native Modal introduces another race, particularly on iOS.
+
+The fix retained the previous rectangle and returned a readiness flag. This is the return expression from that version:
+
+```typescript
+return {
+  rect: measurement.rect,
+  ready: measurement.layoutKey === targetLayoutKey,
+};
+```
+
+That kept a measurement object available while the target was being remeasured. But the overlay used `targetReady` to conditionally render the content inside the Modal. The rendering relationship looked like this simplified excerpt:
+
+```tsx
+// Simplified rendering relationship; not a standalone component.
+<Modal transparent visible>
+  {targetReady && (
+    <Pressable>
+      {/* Scrim, spotlight cutout, and tooltip */}
+    </Pressable>
+  )}
+</Modal>
+```
+
+When the layout key changed, the old measurement's key no longer matched. `ready` became false until the replacement arrived. The Modal remained mounted while the scrim, cutout, and tooltip disappeared.
+
+The recorded QA scenario on September 30 connected this to total assets loading and moving the Send target. The resulting chain was:
+
+```text
+Total assets finish loading
+  → Send target moves
+  → target layout key changes
+  → old measurement becomes not ready
+  → overlay contents disappear
+  → new measurement arrives
+  → overlay contents return
+```
+
+**Remaining mounted and remaining visible were different properties.** The earlier change protected the native container's lifecycle. The user-facing requirement also needed continuity of its contents.
+
+---
+
+## The test agreed with the wrong acceptance criterion
+
+The earlier measurement test updated the target position and checked the intermediate result. These assertions came from that test:
+
+```typescript
+expect(measured.current?.rect.x).toBe(10);
+expect(measured.current?.ready).toBe(false);
+```
+
+After advancing the timers, it expected the replacement coordinate and `ready=true`.
+
+The test accurately described the intended implementation at the time. It also accepted the interval that caused the visible interruption. Its name referred to keeping the native coach mark mounted, but it exercised the measurement hook through a probe; it did not observe a native Modal or the rendered animation.
+
+A passing result therefore answered a narrower question: did the hook retain its rectangle and mark it unready during remeasurement? It could not establish that the guide stayed visible on a device.
+
+This is how a regression test can become reassuring without being sufficient. If the acceptance criterion starts one layer below the reported symptom, a green test may preserve the very transition the user wants removed.
+
+---
+
+## A second path replayed the entrance animation
+
+There was another way for a target movement to look like a flash. The tooltip's entrance animation depended on a key constructed from placement and target coordinates. A changed key caused the animation effect to reset its scale to zero and play again.
+
+That relationship is illustrated below; the variable names are shortened for clarity:
+
+```typescript
+// Before: simplified dependency relationship.
+const animationKey = `${position}:${targetX}:${targetY}:${targetWidth}`;
+
+// After: stable identity for the current guide step.
+const animationKey = step.id;
+```
+
+A new position does not necessarily mean the user has entered a new step. Reusing coordinates as animation identity coupled those events together.
+
+The September 30 fix supplied a stable animation key for each step. Position updates could then reposition the tooltip without replaying its entrance. This was a separate trigger from the readiness flag, so fixing one would not establish that the other was gone.
+
+---
+
+## Why watching the UI changed the diagnosis
+
+Computer control gave the agent access to the same visible failure I was reporting. Targeted console logs gave it a way to distinguish the transitions behind that failure.
+
+Either source alone has limits. An agent can read `visible=true` and infer that the guide is still displayed, while a child condition hides everything inside it. Watching the guide disappear confirms the symptom, but leaves the responsible state transition unknown.
+
+For this bug, the useful instrumentation would follow a small set of boundaries: caller visibility, queue eligibility, target layout key, measurement start and completion, readiness, mount and unmount, and entrance animation start. That is a proposed probe set for repeating the investigation, rather than a claim that every field appeared in the original logs.
+
+The aim is to connect an observed interruption to an event sequence. If visibility never changes, investigate the content gate and animation. If the component unmounts, investigate the lifecycle. Each observation should eliminate an explanation or make it more likely.
+
+I cannot quantify how much faster computer control made the work. I can say that the investigation became more directed after the agent started observing the running UI alongside runtime state. The code changes support the narrower finding: two mechanisms that could interrupt an otherwise active guide needed separate fixes.
+
+---
+
+## The fix, and its limits
+
+The revised measurement behavior retained the previous visible rectangle during a short remeasurement. A successful measurement replaced it. If no valid replacement arrived within one second, the guide hid the stale spotlight and tooltip.
+
+That is a deliberate trade-off. Briefly retaining the old position preserves continuity, but retaining it indefinitely could highlight the wrong location. The timeout bounds that risk; it does not prove that one second is optimal for every screen.
+
+The updated test injected a 300-millisecond measurement delay. It expected the old rectangle to remain ready during that interval, then the new rectangle to become ready after the callback. Another case covered measurement failure. The animation change separately stopped coordinate updates from resetting the entrance effect.
+
+Those checks encode more useful expectations than the previous hook test. Native presentation, animation timing, and the original asset-loading scenario still require runtime verification. This post documents the repair and the diagnosis lesson; it does not claim exhaustive iOS and Android coverage.
+
+A later change adjusted the spotlight shape, padding, pointer, and action alignment to match the original Flutter presentation. I would review those appearance changes independently from the continuity fix.
+
+---
+
+## The counter-argument I take seriously
+
+An experienced engineer can often identify a bug from code alone. Requiring UI automation before every change would slow down obvious fixes, and adding instrumentation can itself affect timing.
+
+I would reserve this heavier loop for the situation I was already in: an asynchronous visual failure, multiple plausible causes, and repeated patches that left the same symptom. Once that happens, another untested explanation has low value. A small experiment that distinguishes two explanations is worth more.
+
+Computer control also needs a sharper pass criterion than "the page loaded." For this case, the meaningful observation was whether the guide remained visible while the target moved, without replaying its entrance animation. A single successful run would be weak evidence for an intermittent failure.
+
+---
+
+## What I'd keep
+
+- **Define success at the user's symptom.** For this guide, the criterion is continuous display through a normal target remeasurement, with no entrance replay from a position update. Keeping the Modal mounted is one supporting condition, and needs its own narrower test.
+
+- **Make each hypothesis predict an observation.** Before adding a delay or another flag, state what should change if that explanation is correct. Instrument the boundary that distinguishes it, and connect the result to the visible failure.
+
+- **Return to diagnosis when the same symptom survives a fix.** A patch may have corrected a real defect while leaving another trigger intact. Re-run the original scenario and inspect the remaining evidence before stacking another workaround on the same explanation.
+
+- **Report verification at the scope it actually covers.** A hook test can protect measurement behavior. A device run can investigate presentation. Neither automatically establishes the other's result, and neither becomes exhaustive because the agent gives a fluent explanation.
+
+For a future uncertain bug, this is the instruction I would start with:
+
+> Reproduce the reported failure on the affected platform before changing business logic. List falsifiable hypotheses and collect targeted evidence to distinguish them. Test each change against the same scenario. If you cannot reproduce it, report the missing evidence. Separate what you observed from what you inferred.
+
+The next fix should come with a record of the failure, the observation that selected the cause, and the same observation after the change. That is a more useful deliverable than another plausible explanation of why the patch should work.
