@@ -11,7 +11,7 @@ export const siteOgImage = {
   url: `${domainPath}/api/og`,
   width: 1200,
   height: 630,
-  alt: "Kelvin You — AI-native Full-stack Engineer",
+  alt: "Kelvin You — AI-native Software Engineer",
 } as const;
 
 /** A card whose subject is a specific piece of writing or work. */

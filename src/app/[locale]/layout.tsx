@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     "Claude Agent SDK",
     "Prompt Engineering",
     "LLM Evaluation",
-    "AI-native Full-stack Engineer",
+    "AI-native Software Engineer",
     "Fintech Engineer",
     "Payment Systems",
     "Frontend Engineer",

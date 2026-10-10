@@ -241,7 +241,7 @@ export const experiences: Experience[] = [
 
 export const personalInfo = {
   name: "Kelvin You",
-  title: "AI-native Full-stack Engineer · Fintech Payments & Agent Systems",
+  title: "AI-native Software Engineer · Fintech Payments & Agent Systems",
   fullname: "Kelvin You Kok Eng",
   contact: {
     email: "ykekelvin0220@gmail.com",
@@ -256,7 +256,7 @@ export const personalInfo = {
   // Face-centred crop of the same photo, for the small circular avatars.
   profileAvatar: "/images/profile-avatar.jpg",
   memoji: "/images/memoji.png",
-  summary: `Full-stack engineer on a production payment platform serving 9,000+ users at dtcpay — React and React Native at the front, Kotlin at the back: cross-currency batch payments, fail-closed PII masking, AML review workflows. Off the clock, multi-agent LLM systems on the Claude Agent SDK — MCP tool servers, agent debate, and walk-forward evals that grade past calls.`,
+  summary: `Software engineer on a production payment platform serving 9,000+ users at dtcpay — React and React Native at the front, Kotlin at the back: cross-currency batch payments, fail-closed PII masking, AML review workflows. Off the clock, multi-agent LLM systems on the Claude Agent SDK — MCP tool servers, agent debate, and walk-forward evals that grade past calls.`,
 };
 
 // The About section's proof row. These are the same facts the resume summary

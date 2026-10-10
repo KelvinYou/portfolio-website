@@ -18,7 +18,7 @@ import { useTranslations } from "next-intl";
  */
 const terminalRows = [
   { label: "agents", value: "4 analysts · debate stage · outcome memory" },
-  { label: "payments", value: "cross-currency bulk · FX rate lock · 35% faster" },
+  { label: "payments", value: "cross-currency bulk · FX rate lock · CAS duplicate guard" },
   { label: "stack", value: "TypeScript · Kotlin · Python · MCP" },
 ];
 
@@ -137,7 +137,7 @@ export function HeroSection() {
             >
               <MagneticButton>
                 <Link
-                  href="/blog"
+                  href="/#projects"
                   className={cn(
                     buttonVariants(),
                     "group rounded-xl px-6 py-3 font-semibold cursor-pointer btn-bold-hover",

@@ -23,9 +23,9 @@
   },
   "hero": {
     "badge": "Open to AI-native engineering roles",
-    "role": "AI-native Full-stack Engineer",
-    "lead": "I build agents I don't trust — so they audit each other. Day job: payment flows that 9,000+ people move real money through.",
-    "cta_primary": "Read the agent write-ups"
+    "role": "AI-native Software Engineer",
+    "lead": "I build agents I don't trust — so they audit each other. Day job: payment software on a platform serving 9,000+ users.",
+    "cta_primary": "See the agent system"
   },
   "sections": {
     "about_heading": "How I Work",

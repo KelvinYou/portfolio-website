@@ -7,7 +7,7 @@
 
 ## Project Overview
 
-**What:** Personal portfolio website for Kelvin You — Frontend Engineer.
+**What:** Personal portfolio website for Kelvin You — AI-native Software Engineer; formal employer titles remain as recorded in `src/constants/data.ts`.
 **Stack:** Next.js 16 (App Router) + React 19 + TypeScript 5 + Tailwind CSS 4
 **Deploy:** Vercel at `kelvinyou.vercel.app`
 **Dev server:** `npm run dev` (uses Turbopack)
