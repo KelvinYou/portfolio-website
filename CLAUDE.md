@@ -31,16 +31,15 @@
 ```
 src/
 ├── app/                          # Next.js App Router
-│   ├── (main)/                   # Main layout group (navbar + footer)
-│   │   ├── page.tsx              # Homepage — renders all sections
-│   │   ├── projects/             # /projects listing page
-│   │   ├── resume/               # /resume PDF viewer
-│   │   └── products-services/    # /products-services page
-│   ├── (admin)/                  # Admin routes (MDX editor)
-│   ├── blog/                     # Blog routes (outside main layout)
-│   │   ├── page.tsx              # Blog listing
-│   │   └── [slug]/page.tsx       # Individual post (ISR: 3600s)
-│   ├── api/                      # API routes
+│   ├── [locale]/                 # next-intl locale segment (en / zh / ms)
+│   │   ├── (main)/               # Main layout group (navbar + footer)
+│   │   │   ├── page.tsx          # Homepage — renders all sections
+│   │   │   ├── projects/         # /projects listing page
+│   │   │   ├── blog/             # Blog listing + [slug] (force-static, build-time)
+│   │   │   └── products-services/# /products-services page
+│   │   └── (admin)/mdx-editor/   # Admin route (MDX editor)
+│   ├── resume/route.tsx          # /resume — serves the PDF directly (unprefixed, English only)
+│   ├── api/                      # API routes (mdx-files, og)
 │   ├── globals.css               # Global styles + CSS variables + design tokens
 │   ├── layout.tsx                # Root layout (fonts, metadata, ThemeProvider)
 │   ├── robots.ts                 # SEO: robots.txt
@@ -60,7 +59,6 @@ src/
 │   ├── blog/                     # Blog-specific (post-card, related-links)
 │   ├── gallery/                  # Gallery grid, lightbox
 │   ├── experience/               # Experience card
-│   ├── pdf-renderer/             # Resume PDF viewer
 │   ├── products-services/        # Products/services feature
 │   ├── mdx/                      # MDX rendering components
 │   ├── project-card.tsx          # Project card with dialog
@@ -73,7 +71,7 @@ src/
 │   ├── navItems.ts               # Navigation items config
 │   └── index.ts                  # Re-exports
 ├── content/
-│   └── blog/                     # MDX blog posts (7 articles)
+│   └── blog/                     # MDX blog posts (30 at last count)
 ├── lib/
 │   ├── utils.ts                  # cn(), formatDate(), slug generation, etc.
 │   ├── animations.ts             # Framer Motion variants (fadeIn, staggerContainer, slideIn, scaleIn)
@@ -411,7 +409,7 @@ great user experiences.`
 - **Frontmatter:** `title`, `date`, `description`, `tags[]`, `image?`, `author`.
 - **Processing:** `gray-matter` for frontmatter, `next-mdx-remote` for rendering.
 - **Static generation:** `generateStaticParams()` pre-renders all slugs at build time.
-- **ISR:** Blog posts revalidate every 3600s (1 hour).
+- **Static only:** `[slug]/page.tsx` is `force-static`. Posts live in the repo, so content changes only on rebuild; there is no ISR/revalidate.
 - **Plugins:** remark-gfm, rehype-slug, rehype-external-links.
 
 ### Section Components Pattern
