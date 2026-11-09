@@ -92,7 +92,8 @@ src/
 ```
 
 Conventions (named exports, Tailwind-only styling, the design system) are
-documented in [CLAUDE.md](CLAUDE.md). Product scope and requirements live in
+indexed in [docs/INDEX.md](docs/INDEX.md); agent instructions start in
+[AGENTS.md](AGENTS.md). Product scope and requirements live in
 [REQUIREMENTS.md](REQUIREMENTS.md).
 
 ## License
