@@ -4,6 +4,7 @@ date: "2026-10-01"
 description: "Repeated AI fixes left a coach mark flashing. UI observation and targeted logs exposed what keeping the Modal mounted missed."
 tags: ["AI", "React Native", "Debugging", "Testing"]
 author: "Me"
+image: "/images/blog/coach-mark-continuity/hero.webp"
 ---
 
 **TL;DR**
@@ -139,6 +140,10 @@ I cannot quantify how much faster computer control made the work. I can say that
 ## The fix, and its limits
 
 The revised measurement behavior retained the previous visible rectangle during a short remeasurement. A successful measurement replaced it. If no valid replacement arrived within one second, the guide hid the stale spotlight and tooltip.
+
+![Before: the overlay is visible, disappears during remeasurement, then returns. After: the old rectangle stays visible until a successful measurement replaces it. The native Modal remains mounted throughout both sequences.](/images/blog/coach-mark-continuity/remeasurement.webp)
+
+*Conceptual reconstruction of a successful remeasurement, not a device recording. The previous rectangle is retained briefly; a failed measurement still hides the stale guide after one second. The separate entrance-animation trigger is discussed above.*
 
 That is a deliberate trade-off. Briefly retaining the old position preserves continuity, but retaining it indefinitely could highlight the wrong location. The timeout bounds that risk; it does not prove that one second is optimal for every screen.
 

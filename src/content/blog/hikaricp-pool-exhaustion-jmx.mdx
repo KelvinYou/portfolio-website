@@ -1,39 +1,72 @@
 ---
 title: "The Pool Wasn't Out of Connections, It Was Out of the Right Ones"
 date: "2026-08-21"
-description: "Peak-hour failures on a legacy Java/JSP payment system looked like the connection pool running dry. JMX said otherwise: the pool had capacity, and the connections in it were the problem."
-tags: ["Java", "HikariCP", "Databases", "Fintech", "System Design"]
+description: "Peak-hour database errors read as an undersized connection pool by default. HikariCP's JMX metrics separate three different failures — real saturation, a leak, and dead connections — and only one of them is fixed by a bigger pool."
+tags: ["Java", "HikariCP", "Databases", "System Design"]
 author: "Kelvin You"
 ---
 
+*A technique note, not a post-mortem: there is no specific incident behind it, and no numbers from one.*
+
 **TL;DR**
 
-- A production payment system failed intermittently at peak hours. The instinct — "connection pool is too small" — was checked against JMX and turned out to be wrong twice: the pool wasn't full, and even a bigger pool wouldn't have fixed it.
-- The actual defect was connections leaving the pool in a bad state: never returned, or returned still inside an open transaction from a request that threw before reaching its `finally`.
-- The fix was leak detection plus explicit cleanup at every exit path, not a larger `maximumPoolSize` — a bigger pool of the same leaking connections just delays the same failure by a wider margin.
+- "Connection errors at peak hours" has at least three causes — the pool is genuinely too small, connections are leaking, or the pool is handing out connections the database already closed — and they all look the same in an error log.
+- HikariCP's JMX metrics tell them apart in minutes: saturation and leaks both pin `ActiveConnections` at the ceiling, but only a leak keeps it there after traffic drops; dead connections fail while `IdleConnections` is still above zero.
+- Raising `maximumPoolSize` fixes exactly one of the three, and it hides the other two by moving the failure to a higher traffic level.
 
-The symptom was specific: transaction failures clustered at peak hours, and cleared up on their own once traffic dropped. That shape usually means resource exhaustion, and the first hypothesis was the obvious one — the connection pool is undersized for peak concurrency, requests queue for a connection, some of them time out.
+You see `SQLTransientConnectionException: Connection is not available, request timed out` clustered around the busiest hour of the day, and it clears up on its own afterwards. The obvious reading is that peak concurrency outgrew the pool. Sometimes it did. Before you change the pool size, spend ten minutes finding out which failure you actually have.
 
-## What JMX actually showed
+## What to watch
 
-HikariCP exposes its pool state through JMX MBeans — active connections, idle connections, threads waiting, total created. Watching those numbers live during a peak window ruled out the first hypothesis fast: the pool wasn't maxed out. Active connections sat well under `maximumPoolSize`, and there were idle connections sitting in the pool the whole time failures were happening.
+Set `registerMbeans=true` and HikariCP publishes a `HikariPoolMXBean` per pool. Four values matter:
 
-That's the tell that the problem isn't *count*, it's *state*. A pool with idle capacity that still can't serve a request is handing out connections that are unusable the moment a caller gets one — already inside a transaction from whoever held it last, or already invalid.
+| Metric | Meaning |
+| :--- | :--- |
+| `ActiveConnections` | Connections currently borrowed by application code |
+| `IdleConnections` | Connections in the pool, ready to hand out |
+| `ThreadsAwaitingConnection` | Callers blocked waiting for one |
+| `TotalConnections` | Active + idle |
 
-## Where the leak actually was
+Watch them through a peak and the following quiet period. The three failures leave different shapes.
 
-The legacy request path acquired a connection at the top of a servlet method and released it at the bottom, by hand — no try-with-resources, no framework-managed transaction boundary. That pattern is correct exactly as long as every exit path reaches the release call. It wasn't: a validation exception thrown partway through the method skipped straight to the servlet's error handler, and the connection it was holding never got returned to the pool. Under low traffic that's a slow leak nobody notices for a long time. Under peak traffic, with more requests hitting that validation path per minute, the pool's *usable* fraction shrinks fast enough to produce clustered failures inside a single peak window and then quietly recover once traffic — and the leak rate — drops.
+## Shape 1: saturation
 
-The second-order problem was worse: on some paths, a connection that leaked out of a request came back to the pool later still inside an uncommitted transaction from a *different* request's `try` block that had also thrown early. The next caller to acquire that connection inherited a live transaction it never opened.
+`ActiveConnections` sits at `maximumPoolSize`, `ThreadsAwaitingConnection` climbs, and both fall back when traffic falls. This is the only shape where a bigger pool is a real fix — and even then check the database side first, because HikariCP's own sizing guidance is that a pool much larger than the database's core count usually makes throughput worse, not better. Slow queries holding connections longer look identical here; the query log decides which one you have.
 
-## The fix, in order
+## Shape 2: a leak
 
-1. **HikariCP's leak detection threshold** (`leakDetectionThreshold`) turned on first, in a lower environment — it logs a stack trace for any connection held longer than the threshold, which is what actually located the specific `catch` blocks that returned early without releasing.
-2. **`try/finally` around every acquisition**, not just the happy path, so the release call runs regardless of which exit the method takes.
-3. **Explicit rollback on the finally path** before returning the connection, so a connection that leaves a failed request never re-enters the pool mid-transaction.
+`ActiveConnections` also climbs to the ceiling — a leaked connection is still *borrowed*, so it counts as active — but it **does not come back down** when traffic drops. Every request that took a connection and never closed it has removed one from the pool permanently.
 
-Sizing `maximumPoolSize` up was deliberately *not* the fix, even though it would have made peak-hour failures less frequent — it dilutes the leak rate without closing the leak, and it costs more DB-side resources to buy the same eventual failure at a higher concurrency ceiling.
+The usual cause is manual acquire-and-release code where an exception skips the release:
+
+```java
+Connection conn = dataSource.getConnection();
+validate(request);          // throws → conn is never closed
+doWork(conn);
+conn.close();
+```
+
+`leakDetectionThreshold` makes HikariCP log the stack trace of *where the connection was borrowed* for any connection held longer than the threshold — which points straight at the method that forgot to close it. The fix is try-with-resources on every acquisition, so `close()` runs on every exit path:
+
+```java
+try (Connection conn = dataSource.getConnection()) {
+    validate(request);
+    doWork(conn);
+}
+```
+
+A bigger pool only buys a leak more time before it fails again.
+
+## Shape 3: dead connections
+
+Requests fail while `IdleConnections` is above zero. The pool has capacity; the connections in it are no longer valid, because something between you and the database — the database's own idle timeout, a firewall, a load balancer — closed them while they sat idle. This is the shape the title refers to.
+
+It rarely shows up as the clean timeout message. HikariCP tests a connection before handing it out if it has been idle longer than about half a second, and evicts it if the test fails — so the symptoms are slower borrows while the pool replaces what it evicted, plus link-failure or broken-pipe errors when a connection dies between that test and the query.
+
+HikariCP's documentation is direct about the fix: set `maxLifetime` several seconds shorter than any connection time limit imposed by the database or the network, so the pool retires connections before anything else kills them. Pool size is irrelevant here; a larger pool is just a larger supply of dead connections.
 
 ## The transferable part
 
-A resource pool failing under load reads as "not enough resources" by default. JMX (or the equivalent instrumentation for whatever pool you're running) turns that from a guess into a measurement — and the measurement that mattered here wasn't a number going to zero, it was idle capacity coexisting with failures, which is the signature of a state bug wearing a capacity bug's symptoms.
+**Read the pool before you resize it.** The error message is the same for all three failures, and the metrics are not. Two numbers — whether `ActiveConnections` recovers after peak, and whether failures happen while idle connections exist — tell you which problem you have.
+
+**A capacity fix on a state bug delays the failure, it doesn't remove it.** Leaks and dead connections both look like "not enough connections" from the outside. Adding connections changes the traffic level at which they show up, which makes the next investigation harder, not easier.

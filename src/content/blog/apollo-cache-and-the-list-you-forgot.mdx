@@ -10,9 +10,9 @@ author: "Kelvin You"
 
 - Apollo's normalized cache is genuinely automatic for updates to a single entity — every component reading that entity re-renders, everywhere, with zero code from you.
 - It is not automatic for membership: creating or deleting a row doesn't tell the cache which *lists* should now include or exclude it. That link only exists in a query response, and the mutation isn't one.
-- The fix is `cache.modify` on the parent field, not a `refetchQueries` — refetching a 10K-row query to add one row is the expensive way to solve a cheap problem, and it's the one juniors reach for first because it looks like it "just works."
+- The fix is `cache.modify` on the parent field, not a `refetchQueries` — refetching a whole paginated list to add one row is the expensive way to solve a cheap problem, and it's the one juniors reach for first because it looks like it "just works."
 
-Apollo Client's pitch is that you stop thinking about caching. Mutate an entity, and every component anywhere in the tree that reads that entity re-renders with the new value — no manual invalidation, no Redux-style dispatch to a dozen reducers. For updates, that pitch is true, and it's the reason a component library built on hooks like `usePaginatedQuery` and `useOptimisticMutation` can stay thin: the cache does the propagation, the hook just shapes the query.
+Apollo Client's pitch is that you stop thinking about caching. Mutate an entity, and every component anywhere in the tree that reads that entity re-renders with the new value — no manual invalidation, no Redux-style dispatch to a dozen reducers. For updates, that pitch is true, and it's the reason the data hooks behind a shared component library can stay thin: the cache does the propagation, the hook just shapes the query.
 
 The pitch stops being true at exactly one seam: **creating or removing a row.**
 
@@ -26,7 +26,7 @@ Delete has the same gap in the other direction: evicting the entity from the cac
 
 ## The trap: reaching for `refetchQueries`
 
-The obvious fix — and the one that ships first, because it requires no thought about cache internals — is `refetchQueries: ['GetMaintenanceTickets']` on the mutation. It works. It also means every create or delete re-runs a paginated, filtered, 10K-row-capable query in full, discarding whatever cache-hit rate you built the rest of the app around. On a screen where creates happen constantly (ticket intake), that turns a cheap local write into a network round-trip on every single action.
+The obvious fix — and the one that ships first, because it requires no thought about cache internals — is `refetchQueries: ['GetMaintenanceTickets']` on the mutation. It works. It also means every create or delete re-runs a paginated, filtered list query in full, discarding whatever cache-hit rate you built the rest of the app around. On a screen where creates happen constantly (ticket intake), that turns a cheap local write into a network round-trip on every single action.
 
 ## The actual fix: tell the cache what changed
 
@@ -59,6 +59,6 @@ This is also where **optimistic updates earn their keep**, and where they most o
 
 ## Where virtualization fits in
 
-None of this is free to skip if the list is also virtualized. A virtualized 10K-row table renders maybe 30 DOM rows at a time based on scroll position — but it still subscribes to the *entire* underlying array reference from the cache. If a create appends via `refetchQueries`, the virtualizer's row-height cache and scroll-anchor state get invalidated by a wholesale array replacement, and the scroll position visibly jumps even though the visible rows didn't change. A `cache.modify` append, by contrast, is a single reference added to the end of an existing array — same array identity for every row the virtualizer already measured, so scroll position holds.
+None of this is free to skip if the list is also virtualized. A virtualized table with thousands of rows renders maybe 30 DOM rows at a time based on scroll position — but it still subscribes to the *entire* underlying array reference from the cache. If a create appends via `refetchQueries`, the virtualizer's row-height cache and scroll-anchor state get invalidated by a wholesale array replacement, and the scroll position visibly jumps even though the visible rows didn't change. A `cache.modify` append, by contrast, is a single reference added to the end of an existing array — same array identity for every row the virtualizer already measured, so scroll position holds.
 
 The two problems compound in one direction: get list-membership updates wrong, and virtualization doesn't just re-render more than necessary, it also loses the exact position the user was looking at.

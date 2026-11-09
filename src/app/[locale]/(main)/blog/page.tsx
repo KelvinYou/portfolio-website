@@ -64,8 +64,8 @@ export default function BlogPage() {
   const posts = getPostIndex();
 
   return (
-    <div className="min-h-screen bg-background pb-24 pt-28 text-foreground md:pb-32">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-background pb-20 pt-28 text-foreground sm:pb-28 sm:pt-32">
+      <div className="mx-auto px-5 sm:px-8">
         <BlogClient posts={posts} />
       </div>
     </div>

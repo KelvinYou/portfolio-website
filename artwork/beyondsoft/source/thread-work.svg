@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1536" height="1024" viewBox="0 0 1536 1024">
+  <!--
+    Hand-authored replacement for the generated thread-work illustration.
+    Only owner-confirmed mechanisms: 100K+ row tables, infinite scroll,
+    parse + reshape moved to a Web Worker. No debounce, no virtualization,
+    no row count above what the owner confirmed, no timings.
+  -->
+  <defs>
+    <style>
+      text { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; fill: #181A1B; }
+      .title { font-size: 76px; font-weight: 700; letter-spacing: -1.5px; }
+      .heading { font-size: 42px; font-weight: 700; }
+      .lane { font-size: 34px; font-weight: 600; }
+      .block { font-size: 32px; font-weight: 700; }
+      .render { font-size: 30px; font-weight: 700; }
+      .note { font-size: 34px; font-weight: 700; }
+      .row { font-size: 22px; font-weight: 500; fill: #3A3B3C; }
+      .count { font-size: 32px; font-weight: 700; }
+      .footer { font-size: 26px; font-weight: 500; fill: #55524C; }
+    </style>
+    <marker id="arrow" viewBox="0 0 12 12" refX="6" refY="6" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M1,1 L11,6 L1,11 Z" fill="#181A1B"/>
+    </marker>
+    <g id="cursor">
+      <path d="M0,0 L0,40 L10,30 L18,48 L25,45 L17,27 L30,27 Z"/>
+    </g>
+    <g id="table">
+      <rect x="0" y="210" width="300" height="56" rx="12" fill="#E2DACB" stroke="#CFC5B2" stroke-width="2"/>
+      <rect x="0" y="194" width="300" height="56" rx="12" fill="#E7E1D4" stroke="#CFC5B2" stroke-width="2"/>
+      <rect x="0" y="178" width="300" height="56" rx="12" fill="#ECE6DA" stroke="#CFC5B2" stroke-width="2"/>
+      <text class="count" x="150" y="310" text-anchor="middle">100K+ rows</text>
+      <rect x="0" y="0" width="300" height="196" rx="14" fill="#FBF9F4" stroke="#CFC5B2" stroke-width="2"/>
+      <rect x="276" y="14" width="10" height="56" rx="5" fill="#CFC5B2"/>
+      <g class="rows">
+        <line x1="16" y1="48" x2="262" y2="48" stroke="#E2DACB" stroke-width="2"/>
+        <line x1="16" y1="84" x2="262" y2="84" stroke="#E2DACB" stroke-width="2"/>
+        <line x1="16" y1="120" x2="262" y2="120" stroke="#E2DACB" stroke-width="2"/>
+        <line x1="16" y1="156" x2="262" y2="156" stroke="#E2DACB" stroke-width="2"/>
+        <text class="row" x="26" y="38">Row 1</text>
+        <text class="row" x="26" y="74">Row 2</text>
+        <text class="row" x="26" y="110">Row 3</text>
+        <text class="row" x="26" y="146">Row 4</text>
+        <text class="row" x="26" y="182">Row 5</text>
+      </g>
+    </g>
+  </defs>
+
+  <rect width="1536" height="1024" fill="#F4F0E7"/>
+
+  <text class="title" x="56" y="112">Fewer DOM rows. Same CPU work.</text>
+
+  <!-- ============ BEFORE: everything on the main thread ============ -->
+  <rect x="40" y="160" width="430" height="68" rx="14" fill="#E7E1D4"/>
+  <text class="heading" x="64" y="209">Infinite scroll only</text>
+
+  <rect x="40" y="268" width="240" height="70" rx="14" fill="#E7E1D4"/>
+  <text class="lane" x="160" y="315" text-anchor="middle">Main thread</text>
+  <line x1="280" y1="303" x2="860" y2="303" stroke="#181A1B" stroke-width="3"/>
+
+  <rect x="310" y="270" width="150" height="66" rx="12" fill="#FF642D"/>
+  <text class="block" x="385" y="314" text-anchor="middle">Parse</text>
+  <rect x="478" y="270" width="176" height="66" rx="12" fill="#FF642D"/>
+  <text class="block" x="566" y="314" text-anchor="middle">Reshape</text>
+  <rect x="672" y="270" width="150" height="66" rx="12" fill="#FF642D"/>
+  <text class="block" x="747" y="314" text-anchor="middle">Filter</text>
+
+  <rect x="860" y="250" width="240" height="106" rx="14" fill="#FBF9F4" stroke="#181A1B" stroke-width="3"/>
+  <text class="render" x="980" y="296" text-anchor="middle">Render</text>
+  <text class="render" x="980" y="332" text-anchor="middle">loaded rows</text>
+
+  <path d="M314,356 L314,370 L818,370 L818,356" fill="none" stroke="#FF642D" stroke-width="4" stroke-linejoin="round"/>
+  <use href="#cursor" x="440" y="392" fill="#FF642D"/>
+  <text class="note" x="490" y="428">Input waits</text>
+
+  <use href="#table" x="1180" y="150"/>
+
+  <line x1="40" y1="508" x2="1496" y2="508" stroke="#CFC5B2" stroke-width="2"/>
+
+  <!-- ============ AFTER: parse + reshape in a Worker ============ -->
+  <rect x="40" y="544" width="520" height="68" rx="14" fill="#E7E1D4"/>
+  <text class="heading" x="64" y="593">Worker + infinite scroll</text>
+
+  <rect x="40" y="648" width="240" height="70" rx="14" fill="#E7E1D4"/>
+  <text class="lane" x="160" y="695" text-anchor="middle">Main thread</text>
+  <line x1="280" y1="683" x2="860" y2="683" stroke="#181A1B" stroke-width="3"/>
+  <rect x="306" y="650" width="190" height="66" rx="12" fill="#F4F0E7"/>
+  <use href="#cursor" x="318" y="660" fill="#35725B"/>
+  <text class="block" x="362" y="696">Input</text>
+  <rect x="306" y="730" width="246" height="50" rx="10" fill="#35725B"/>
+  <text class="render" x="429" y="765" text-anchor="middle" style="fill:#FFFFFF">UI can respond</text>
+
+  <rect x="860" y="630" width="240" height="106" rx="14" fill="#FBF9F4" stroke="#181A1B" stroke-width="3"/>
+  <text class="render" x="980" y="676" text-anchor="middle">Render</text>
+  <text class="render" x="980" y="712" text-anchor="middle">loaded rows</text>
+
+  <rect x="40" y="826" width="240" height="70" rx="14" fill="#E7E1D4"/>
+  <text class="lane" x="160" y="873" text-anchor="middle">Worker</text>
+  <line x1="280" y1="861" x2="980" y2="861" stroke="#181A1B" stroke-width="3"/>
+  <rect x="420" y="828" width="150" height="66" rx="12" fill="#FF642D"/>
+  <text class="block" x="495" y="872" text-anchor="middle">Parse</text>
+  <rect x="588" y="828" width="176" height="66" rx="12" fill="#FF642D"/>
+  <text class="block" x="676" y="872" text-anchor="middle">Reshape</text>
+  <path d="M980,861 L980,748" fill="none" stroke="#181A1B" stroke-width="3" marker-end="url(#arrow)"/>
+  <text class="note" x="1002" y="820">Result</text>
+
+  <use href="#table" x="1180" y="532"/>
+
+  <text class="footer" x="56" y="978">Conceptual sequence · Not a measured timeline</text>
+</svg>

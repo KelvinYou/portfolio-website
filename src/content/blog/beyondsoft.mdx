@@ -1,19 +1,19 @@
 ---
 title: "Every Boundary Leaked: A Year of Micro-Frontends at Tencent Scale"
 date: "2024-06-04"
-description: "A year building analytics dashboards for Tencent and MiHoYo. Every serious bug came from the same mistake: trusting a boundary — a style sandbox, the main thread, a CDN edge, a translated word — to be stronger than it was."
+description: "A year building analytics dashboards for Tencent's Level Infinite. Every serious bug came from the same mistake: trusting a boundary — a style sandbox, the main thread, a cross-border network, a translated word — to be stronger than it was."
 tags: ["Micro-frontends", "React", "TypeScript", "Performance", "System Design"]
-image: "/images/blogs/beyondsoft/hero.png"
+image: "/images/blogs/beyondsoft/hero-v2.webp"
 author: "Kelvin You"
 ---
 
 **TL;DR**
 
-- I spent a year on an analytics platform for Tencent, MiHoYo and other game studios — millions of events a day, dashboards users assemble themselves.
-- Every bug that cost me more than an afternoon came from assuming a boundary held: the style sandbox, the main thread, the CDN edge, the meaning of a word.
+- I spent a year on DataBrain, an analytics platform for Tencent's Level Infinite — dashboards that users assemble themselves.
+- Every bug that cost me more than an afternoon came from assuming a boundary held: the style sandbox, the main thread, the network between me and the users, the meaning of a word.
 - The fix was never cleverer code. It was learning where each boundary actually sits, and stopping treating it as someone else's problem.
 
-The platform ingested telemetry from games you have heard of and turned it into dashboards that analysts assembled themselves — drag a chart in, pivot it, filter half a million rows, share the link. My first ticket was a CSS bug. It took two days, and the reason it took two days is the reason I am writing this post.
+The platform ingested telemetry from games you have heard of and turned it into dashboards that analysts assembled themselves — drag a chart in, pivot it, filter a hundred thousand rows, share the link. My first ticket was a CSS bug. It took two days, and the reason it took two days is the reason I am writing this post.
 
 The stylesheet was scoped. The component was scoped. The bug was real anyway.
 
@@ -34,31 +34,35 @@ A micro-frontend shell promises isolation. What it actually gives you depends on
 
 qiankun's default style handling scopes a sub-app's stylesheets while it is mounted and rips them out on unmount. That is not the same as isolation. Two sub-apps mounted at once still share one `document`, one cascade, and — critically — one copy of the Ant Design theme, whose class names are global by design. A sub-app raising a modal's `z-index` raises everybody's. A team overriding `.ant-table-cell` padding to fit their layout changes a table three sub-apps away.
 
+![Two simultaneously mounted apps share one document. A global .ant-table-cell padding rule reaches the tables in both apps despite their separate component trees.](/images/blogs/beyondsoft/shared-cascade.webp)
+
+*Conceptual example: the same global selector reaches both tables. The 16px value illustrates the mechanism; it is not a recovered production setting.*
+
 Real isolation means opting into `strictStyleIsolation` (shadow DOM) or `experimentalStyleIsolation` (runtime selector prefixing), and both cost you something. Shadow DOM breaks any library that portals into `document.body` — which Ant Design's modals, dropdowns and tooltips all do. Selector prefixing handles that but doesn't touch styles injected at runtime.
 
 There is no setting that means "isolated, free." What I actually learned here is smaller and more useful than the config flag: **in a shared runtime, a global selector is an API you didn't document.** Once I started reading `.ant-table-cell` as a public interface rather than an implementation detail, the class of bug stopped surprising me.
 
 ## Boundary 2: the main thread doesn't care whose code it is
 
-The dashboards let users pull real result sets — the pathological case being a table around 500,000 rows. Rendering that is the easy half; the DOM only ever holds the visible window once you virtualize it.
+The dashboards let users pull real result sets — the pathological case being a table past 100,000 rows. Rendering that is the easy half; an infinite-scroll list only mounts the rows you have actually scrolled to.
 
-The half that actually hurt was everything *before* render. Parsing the response, reshaping it for the grid, running the filter — all of it synchronous, all of it on the one thread that also owns scrolling. Virtualize a 500K-row table and you get a beautiful 60fps list that freezes solid for two seconds every time someone types in the filter box.
+The half that actually hurt was everything *before* render. Parsing the response, reshaping it for the grid, running the filter — all of it synchronous, all of it on the one thread that also owns scrolling. Window the rows as tightly as you like and the list still freezes every time someone types in the filter box.
 
 So the fix came in three parts, and the order matters:
 
 1. **Profile first.** The React DevTools flame chart tells you which components re-render; the Performance panel tells you what actually blocked the frame. They disagree more often than you'd expect, and the second one is the one users feel.
-2. **Move the work off the thread.** Parsing and reshaping went to a Web Worker. Filters got debounced, so a burst of keystrokes costs one pass instead of eight.
+2. **Move the work off the thread.** Parsing and reshaping went to a Web Worker, so the main thread stays free to take input while that work runs.
 3. **Memoize last.** `useMemo` and `useCallback` on the heavy visualization components — genuinely useful, and genuinely the smallest of the three. Memoization stops you redoing work; it never makes the work cheap.
 
-That got us under three seconds to interactive at 60fps on the heavy dashboards. The habit I kept is the ordering: reach for the thread boundary before the render boundary, because a component that re-renders too often is annoying and a main thread that blocks is broken.
+![Infinite scroll limits how many rows are mounted, but parsing, reshaping and filtering on the main thread still make input wait. Moving parsing and reshaping to a Worker leaves the main thread free to respond while that work runs.](/images/blogs/beyondsoft/thread-work.webp)
+
+*Conceptual allocation of work, not a measured timeline. Only parsing and reshaping move to the Worker.*
+
+I didn't record a before/after benchmark, so there is no number here — only the order of the fixes, which is the part I'd defend. The habit I kept is the ordering: reach for the thread boundary before the render boundary, because a component that re-renders too often is annoying and a main thread that blocks is broken.
 
 ## Boundary 3: your machine is not the deployment target
 
-Two versions of this, both humbling.
-
-The first is geography. Our stakeholders were in China; I was in Kuala Lumpur. A bundle that loads fine over my connection is a different artifact when it crosses into a network with its own routing and its own idea of which origins are reachable. Asset hosts that resolve instantly here can stall there. "It works locally" and "it works from Shenzhen" are separate claims, and only one of them was in my test loop for the first few months.
-
-The second is the browser matrix. Enterprise clients meant Safari and IE11 were in scope, which is less a technical constraint than a design one — it decides which CSS features you get to use before you write any. The lesson wasn't the polyfills. It was that "supported browsers" is a product decision that arrives disguised as a build config.
+Our stakeholders were in China; I was in Kuala Lumpur. A bundle that loads fine over my connection is a different artifact when it crosses into a network with its own routing and its own idea of which origins are reachable. "It works locally" and "it works from Shenzhen" are separate claims, and only the first one is something you can check from your own desk.
 
 ## Boundary 4: a translated word is not the same word
 
@@ -71,20 +75,17 @@ Two examples that cost me rework:
 - **落地 (luòdì)** — literally "to land." Every dictionary says "implement." But in a spec review it carries a stronger claim than the English word does: shipped, in production, and actually being used. I read it as "we'll build it." It meant "this is done when someone is using it."
 - **颗粒度 (kēlìdù)** — "granularity." In an architecture discussion this was almost always about component scope: how much responsibility one piece owns. I heard the abstract noun and nodded. The sentence was asking me to make a decision.
 
-Both times the English translation was correct and useless. So I started keeping a glossary — not a dictionary, a note of what each term meant *in our reviews*, with the sentence I first heard it in. It's the single highest-return thing I did that year, and it is roughly forty lines long.
+Both times the English translation was correct and useless. So I started keeping a glossary — not a dictionary, a note of what each term meant *in our reviews*, with the sentence I first heard it in. It's the single highest-return thing I did that year.
 
 The general version: when you're the one working across the language boundary, passive comprehension feels like understanding right up until the sprint where it isn't. Restating the requirement back in your own words is the cheapest possible test, and it's the one I wasn't running.
 
 ## What I'd tell first-year me
 
-Three things.
+Two things.
 
 **Read the system, not the file.** The instinct from university is to find the file with the bug in it. In a composed runtime the bug is usually in the space *between* two files that were each written correctly.
 
 **Find out where the boundary actually is before you trust it.** Not what the docs promise — what the config you're running actually enables. Style isolation, thread isolation, network reachability, shared vocabulary: in every case I was defended by something weaker than I assumed, and finding that out took ten minutes I kept not spending.
-
-**Boring infrastructure compounds.** The change with the best ratio of effort to payoff wasn't any of the above; it was containerizing the dev environment and cutting setup from about half a day to half an hour. Every new joiner got that back, permanently.
-
 The composed-runtime lesson is the one that transferred. I've since worked in stacks with no qiankun anywhere in them and hit the exact same shape of bug — two things sharing a namespace that each believed they owned.
 
 ---
@@ -99,7 +100,7 @@ A few photos from that year — the Databrain team and the wider office.
       src: "/images/blogs/beyondsoft/databrain-team.jpg",
       alt: "The Databrain team at Beyondsoft",
       title: "The Databrain team",
-      description: "The group behind the visualization module — the dashboards, the 500K-row tables, and the CSS bug in the opening paragraph.",
+      description: "The group behind the visualization module — the dashboards, the 100K-row tables, and the CSS bug in the opening paragraph.",
       width: 1000,
       height: 750,
       metadata: {

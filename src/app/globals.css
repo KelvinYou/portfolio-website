@@ -541,3 +541,45 @@ section:not([aria-live]) {
     overflow-x: hidden;
   }
 }
+
+/* PhotoSwipe inherits the site's theme; artwork always keeps its full aspect ratio. */
+.pswp.article-image-viewer {
+  --pswp-bg: var(--background);
+  --pswp-icon-color: var(--foreground);
+  --pswp-icon-color-secondary: var(--background);
+  --pswp-icon-stroke-color: var(--background);
+  --pswp-icon-stroke-width: 1px;
+  --pswp-root-z-index: 100;
+}
+.article-image-viewer .pswp__counter {
+  color: var(--foreground);
+  text-shadow: none;
+}
+.article-image-viewer .pswp__button:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: -4px;
+}
+
+/* Keep reader navigation below the image, including touch devices. */
+.pswp.article-image-viewer .pswp__button--arrow {
+  top: auto;
+  bottom: 12px;
+  width: 44px;
+  height: 44px;
+  margin-top: 0;
+  visibility: visible;
+}
+.pswp.article-image-viewer .pswp__button--arrow--prev {
+  left: calc(50% - 56px);
+}
+.pswp.article-image-viewer .pswp__button--arrow--next {
+  right: calc(50% - 56px);
+}
+.pswp.article-image-viewer .pswp__button--arrow .pswp__icn {
+  top: 10px;
+  margin-top: 0;
+  left: 10px;
+  right: auto;
+  width: 24px;
+  height: 24px;
+}

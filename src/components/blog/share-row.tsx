@@ -57,7 +57,7 @@ function WhatsAppIcon() {
 // Hover moves the ring to cyan and the glyph to foreground. A cyan glyph would
 // be 1.33:1 against the light background.
 const BUTTON_CLASS =
-  "flex h-11 w-11 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors duration-200 hover:border-primary hover:text-foreground";
+  "flex h-11 w-11 items-center justify-center rounded-full text-muted-foreground transition-colors duration-200 hover:bg-muted hover:text-foreground";
 
 export function ShareRow({ title }: { title: string }) {
   const t = useTranslations("blog");
@@ -84,10 +84,8 @@ export function ShareRow({ title }: { title: string }) {
   };
 
   return (
-    <div className="mt-16 flex flex-wrap items-center justify-between gap-6 border-t border-border pt-8">
-      <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
-        {t("share_heading")}
-      </p>
+    <div className="mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-border pt-5">
+      <p className="text-xs text-muted-foreground">{t("share_heading")}</p>
 
       <div className="flex items-center gap-2">
         <button

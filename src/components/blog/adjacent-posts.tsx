@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 import type { PostMeta } from "@/lib/mdx";
@@ -28,8 +28,8 @@ export function AdjacentPosts({
   return (
     <nav
       className={cn(
-        "mt-16 grid divide-y divide-border border-y border-border",
-        bothSides && "sm:grid-cols-2 sm:divide-x sm:divide-y-0",
+        "mt-10 grid gap-x-8 border-t border-border",
+        bothSides && "sm:grid-cols-2",
       )}
     >
       {previous && <AdjacentLink post={previous} direction="previous" />}
@@ -59,7 +59,7 @@ function AdjacentLink({
     >
       <span
         className={cn(
-          "flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground",
+          "flex items-center gap-2 text-xs text-muted-foreground",
           isNext && "sm:flex-row-reverse",
         )}
       >
@@ -74,7 +74,7 @@ function AdjacentLink({
         />
         {isNext ? t("nav_later") : t("nav_earlier")}
       </span>
-      <span className="font-heading text-base font-semibold leading-snug tracking-tight text-foreground underline decoration-transparent decoration-2 underline-offset-4 transition-[text-decoration-color] duration-200 group-hover:decoration-primary-ink md:text-lg">
+      <span className="font-sans text-base font-medium leading-snug tracking-tight text-foreground underline decoration-transparent decoration-2 underline-offset-4 transition-[text-decoration-color] duration-200 group-hover:decoration-primary-ink md:text-lg">
         {post.frontmatter.title}
       </span>
     </Link>

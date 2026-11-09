@@ -1,0 +1,234 @@
+---
+title: "My E2E Checks Passed. Full Acceptance Stayed Blocked."
+date: "2026-11-08"
+description: "Building an E2E acceptance repository meant separating execution, requirements and evidence. A passing browser check could still leave full acceptance Blocked."
+tags: ["Testing", "Playwright", "System Design", "Developer Tools"]
+author: "Kelvin You"
+---
+
+<ArticleCarousel
+  title="Article in 8 images"
+  items={[
+    {
+      "id": "e2e-page-1",
+      "type": "image",
+      "src": "/images/blog/e2e-acceptance/carousel/01.webp",
+      "title": "The run finished. Acceptance did not.",
+      "description": "A fee-dialog smoke check can pass for one account context while the full case remains Blocked because other roles, account relationships and languages are unverified.",
+      "alt": "A fee-dialog smoke check can pass for one account context while the full case remains Blocked because other roles, account relationships and languages are unverified.",
+      "width": 1122,
+      "height": 1402
+    },
+    {
+      "id": "e2e-page-2",
+      "type": "image",
+      "src": "/images/blog/e2e-acceptance/carousel/02.webp",
+      "title": "One run. Three separate answers.",
+      "description": "Execution, acceptance and evidence are independent observations. A completed run with complete evidence can still have Blocked acceptance. This is an illustrative verdict.",
+      "alt": "Execution, acceptance and evidence are independent observations. A completed run with complete evidence can still have Blocked acceptance. This is an illustrative verdict.",
+      "width": 1122,
+      "height": 1402
+    },
+    {
+      "id": "e2e-page-3",
+      "type": "image",
+      "src": "/images/blog/e2e-acceptance/carousel/03.webp",
+      "title": "The script cannot grade its own completeness.",
+      "description": "The full export case requires readiness, submission, generating flow, generated file content and email delivery. The illustrated missing checks keep acceptance Blocked; catalogue contents also need review.",
+      "alt": "The full export case requires readiness, submission, generating flow, generated file content and email delivery. The illustrated missing checks keep acceptance Blocked; catalogue contents also need review.",
+      "width": 1122,
+      "height": 1402
+    },
+    {
+      "id": "e2e-page-4",
+      "type": "image",
+      "src": "/images/blog/e2e-acceptance/carousel/04.webp",
+      "title": "32 cases. No full acceptance.",
+      "description": "The November 6 report recorded 23 Pass, 8 Blocked and 1 Failed. Search failed before export, API limits prevented queued actions, and generated file contents and mail receipt remained outside the agreed UI/API scope.",
+      "alt": "The November 6 report recorded 23 Pass, 8 Blocked and 1 Failed. Search failed before export, API limits prevented queued actions, and generated file contents and mail receipt remained outside the agreed UI/API scope.",
+      "width": 1122,
+      "height": 1402
+    },
+    {
+      "id": "e2e-page-5",
+      "type": "image",
+      "src": "/images/blog/e2e-acceptance/carousel/05.webp",
+      "title": "A timeout leaves the outcome unknown.",
+      "description": "Persist the original intent before sending. Unresolved outcomes block another deposit; reconcile the original request. Local coordination does not guarantee global exactly-once behavior.",
+      "alt": "Persist the original intent before sending. Unresolved outcomes block another deposit; reconcile the original request. Local coordination does not guarantee global exactly-once behavior.",
+      "width": 1122,
+      "height": 1402
+    },
+    {
+      "id": "e2e-page-6",
+      "type": "image",
+      "src": "/images/blog/e2e-acceptance/carousel/06.webp",
+      "title": "A past Pass needs current proof.",
+      "description": "Sixteen earlier passing cases predated the final test-source manifest binding and required fresh verification. Current evidence must match source, deployment and target; unknown backend versions remain explicit.",
+      "alt": "Sixteen earlier passing cases predated the final test-source manifest binding and required fresh verification. Current evidence must match source, deployment and target; unknown backend versions remain explicit.",
+      "width": 1122,
+      "height": 1402
+    },
+    {
+      "id": "e2e-page-7",
+      "type": "image",
+      "src": "/images/blog/e2e-acceptance/carousel/07.webp",
+      "title": "Make the gate combine the evidence.",
+      "description": "Gate Pass requires completed execution, passing acceptance and complete evidence. Versions must also be verified when required by policy. Gate enforcement is opt-in; command exit alone is insufficient.",
+      "alt": "Gate Pass requires completed execution, passing acceptance and complete evidence. Versions must also be verified when required by policy. Gate enforcement is opt-in; command exit alone is insufficient.",
+      "width": 1122,
+      "height": 1402
+    },
+    {
+      "id": "e2e-page-8",
+      "type": "image",
+      "src": "/images/blog/e2e-acceptance/carousel/08.webp",
+      "title": "Name the claim your evidence supports.",
+      "description": "Keep required checks independent, preserve unknown outcomes, bind evidence to current targets, and state the tested scope. Simple smoke checks can remain simple. No measured reduction in escaped defects is claimed.",
+      "alt": "Keep required checks independent, preserve unknown outcomes, bind evidence to current targets, and state the tested scope. Simple smoke checks can remain simple. No measured reduction in escaped defects is claimed.",
+      "width": 1122,
+      "height": 1402
+    }
+  ]}
+/>
+
+**TL;DR**
+
+- A fee-dialog smoke check passed while the full case remained Blocked: other required roles, account relationships and languages were still uncovered.
+- The E2E repository records execution, acceptance and evidence separately. A versioned catalogue declares required checks independently of whichever steps a script currently implements.
+- The useful result is a bounded claim: what passed, what remains unknown, which deployment was observed, and what evidence supports the conclusion.
+
+The fee dialog opened. Its response and table checks passed. The report still said **Blocked**.
+
+That was the intended result. The smoke check covered one account context. The full acceptance case also required other roles, account relationships and language coverage. Finishing the implemented steps could not establish those missing requirements.
+
+I built the live E2E tooling into a separate repository around that distinction. Playwright drives the deployed interfaces; the surrounding code controls identity, permitted operations, reconciliation and evidence. Product repositories keep their component tests and mocked UI regressions.
+
+This article describes the implementation and recorded verification available on November 8, 2026. The illustrations are conceptual. I am not claiming that every registered scenario has passed live acceptance.
+
+## Three questions behind one green test
+
+A browser test has a relatively narrow success condition: the assertions it reached did not fail. A release decision asks more.
+
+The report separates three dimensions:
+
+| Dimension | What it establishes |
+| :--- | :--- |
+| Execution | The selected steps completed. |
+| Acceptance | Required checks passed within the declared scope. |
+| Evidence | The required evidence completed successfully. |
+
+The reporter has a framework regression that constructs a passing attempt with partial coverage. Its assertions deliberately expect two different answers:
+
+```typescript
+const result = publishAttempt(
+  directory(),
+  attempt({ coverage: 'partial' }),
+);
+
+assert.equal(result.cases[0].currentRunStatus, 'Pass');
+assert.equal(result.cases[0].status, 'Blocked');
+```
+
+This is a synthetic test of the reporting rule. It protects the distinction; it does not prove anything about a deployed fee dialog.
+
+## The script cannot define its own completeness
+
+Suppose an export flow checks that the dialog opens, the selected formats reach the API, and the generating state appears. Those are useful assertions. You still have no observation of the generated file's contents or its delivery.
+
+The acceptance catalogue keeps those requirements visible. This is the registered full export case's check list:
+
+```typescript
+TC_CSV_SUBMIT: [
+  'csv-ready',
+  'csv-submit',
+  'generating-flow',
+  'generated-csv-content',
+  'email-delivery',
+]
+```
+
+The catalogue lives outside the scenario's action sequence. The aggregator finds required IDs without a passing observation:
+
+```typescript
+export function missingChecks(caseId, checks) {
+  return (requiredChecks[caseId] ?? ['unregistered-case'])
+    .filter(id => !checks.some(
+      check => check.id === id && check.status === 'Pass',
+    ));
+}
+```
+
+The excerpt omits TypeScript parameter types. The important behavior is the fallback: an unknown case produces a missing requirement rather than silently becoming complete.
+
+There are two boundaries here. All registered checks might pass while the case still declares partial feature coverage. Alternatively, coverage might be declared full while a required check is missing. Either condition prevents a full Pass.
+
+Attempts record an acceptance version and a source reference. Historical results still need review before being applied to changed requirements. The catalogue itself can be incomplete; someone has to compare it with the applicable requirements and catch obligations nobody registered.
+
+## The recorded result that resisted a completion claim
+
+The November 6 transaction-export expansion registered 32 executable UI/API cases. The recorded real-environment report contained **23 Pass, 8 Blocked and 1 Failed**.
+
+The final failed case encountered a history-search response whose HTTP status was 200 but whose application success flag was false. It failed before selecting records or sending an export request. Subsequent checks hit an API abuse-control limit and queued business actions were prevented.
+
+That distinction matters when deciding what to do next. A search failure before submission gives you a different recovery problem from an export request whose outcome is unknown.
+
+There was also a provenance gap: 16 earlier passing cases predated the final test-source manifest binding. The strict whole-scope checker required fresh verification with that binding. It did not upgrade those historical attempts because their rows already said Pass.
+
+The UI/API expansion explicitly deferred file contents and mail receipt. The original full export case kept those requirements. A narrower agreed scope became a separate claim with its own checks; it did not erase the broader claim's missing evidence.
+
+Those are recorded results from that delivery, not a new live run performed for this article.
+
+## A failed assertion must not become another transaction
+
+Financial workflows add a second problem: repeating a test can repeat the business action.
+
+The incoming-payment path persists a checkpoint before dispatching its request. Its initial state is `dispatched-outcome-unknown`. Once the external system accepts the request, the record can move to `bank-accepted-waiting` while processing continues.
+
+If the browser crashes or a response is lost, a later run consults the original journal. An unresolved checkpoint blocks a new deposit. Recovery queries the original request or transaction instead of submitting another one.
+
+This also changes how I read a timeout. It establishes that the runner stopped waiting. It does not establish that the payment failed.
+
+The protection is deliberately limited. Local locks and a local journal coordinate participating processes on one machine. They cannot guarantee global exactly-once behavior, prevent a person from acting elsewhere, or replace backend idempotency. Financial write suites have zero automatic retries.
+
+## Evidence has to belong to the current claim
+
+A new result should not leave an old screenshot looking like its proof.
+
+The publisher keeps attempt history internally and presents the latest result for each case. Superseded report media is removed unless a current result explicitly retains a reference. Reports reject attempts from a different environment or frontend/backend target.
+
+Only explicitly selected screenshots and videos enter the delivered report. Private sessions, traces and raw diagnostics remain outside that attachment set. The media checker verifies report links; it cannot certify that a screenshot proves the right behavior or contains no sensitive information.
+
+Deployment identity has a similar boundary. The frontend can be recorded through an observed asset fingerprint. That fingerprint is not automatically a Git commit. A backend revision that the system does not expose stays `unknown`.
+
+The run gate combines the dimensions rather than trusting process completion. This is its return expression, formatted for readability:
+
+```typescript
+gatePass:
+  execution === 'completed'
+  && acceptance === 'Pass'
+  && evidence === 'complete'
+  && (!requireVersions || versions)
+```
+
+Strict version requirements are optional. Gate enforcement must also be enabled explicitly; diagnostic mode can finish with a verdict that does not pass. A successful command exit alone is therefore an insufficient release signal.
+
+## The counter-argument I take seriously
+
+This is more machinery than a small browser smoke test needs. Catalogues drift, evidence handling adds maintenance, and a separate test repository can lag behind the product.
+
+I would keep simple checks simple when their claim is equally small. The extra structure earns its place when one case spans roles, asynchronous processing, external systems or actions that are unsafe to repeat casually.
+
+I can point to the reporting rules, their framework tests and recorded live results. I cannot show a measured reduction in escaped defects or claim that the whole acceptance catalogue is complete. Those require different evidence.
+
+## What I'd keep
+
+- **Declare the requirement before interpreting the run.** Keep required checks independently of the steps currently implemented. Review changes to that catalogue against the requirement source; deleting a missing check changes the claim.
+
+- **Preserve unknown outcomes across reruns.** Persist the original intent before dispatch. A new process must inherit unresolved work and reconcile it before creating another business action.
+
+- **Attach evidence and versions to the result they support.** Retain history without presenting obsolete media as current proof. Keep unknown versions explicit and reject results from incompatible targets.
+
+- **Make the completion claim name its scope.** “Selected UI/API checks passed” is useful when that is what was observed. File correctness, delivery and other roles need their own observations before the claim expands.
+
+The question I would put beside the next green test is: which requirement would still be unverified if every assertion in this script passed?

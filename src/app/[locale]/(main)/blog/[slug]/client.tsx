@@ -7,23 +7,25 @@ import { ViewCounter } from "@/components/blog/view-counter";
 import type { TocEntry } from "@/lib/blog-content";
 import type { Post, PostMeta } from "@/lib/mdx";
 import { formatDate } from "@/lib/utils";
-import { fadeIn, staggerContainer } from "@/lib/animations";
-import { motion, useScroll } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { useEffect, useState } from "react";
-import { TocDesktop, TocMobile } from "./toc";
+import { ArticleOutline } from "./toc";
 
-/** Matches the article column's `scroll-mt` so a clicked heading clears the fixed navbar. */
-const HEADING_OFFSET_PX = 112;
+const HEADING_OFFSET_PX = 96;
 
-/**
- * The reading chrome: header, outline rail, share row, onward links. The
- * article itself arrives as `children`, already rendered by the server
- * component — this file never sees the post body.
- */
+export interface BlogPostClientProps {
+  frontmatter: Post["frontmatter"];
+  slug: string;
+  toc: TocEntry[];
+  readingMinutes: number;
+  previous: PostMeta | null;
+  next: PostMeta | null;
+  children: React.ReactNode;
+}
+
 export function BlogPostClient({
   frontmatter,
   slug,
@@ -32,147 +34,59 @@ export function BlogPostClient({
   previous,
   next,
   children,
-}: {
-  frontmatter: Post["frontmatter"];
-  slug: string;
-  toc: TocEntry[];
-  readingMinutes: number;
-  previous: PostMeta | null;
-  next: PostMeta | null;
-  children: React.ReactNode;
-}) {
+}: BlogPostClientProps) {
   const t = useTranslations("blog");
-  const { scrollYProgress } = useScroll();
   const activeId = useActiveHeading(toc);
-
   return (
-    <div className="min-h-screen">
-      <motion.div
-        className="fixed inset-x-0 top-0 z-50 h-px origin-left bg-primary"
-        style={{ scaleX: scrollYProgress }}
-        aria-hidden="true"
-      />
-
-      <div className="container mx-auto px-4 pb-24 pt-28 sm:px-6 lg:px-8">
-        {/* One measure for the whole column, so the header rule, the share
-            divider and the onward links all end where the text does — the
-            reading width used to be set on the article alone and no two
-            hairlines on the page lined up.
-
-            40rem is 73 characters at 17px Open Sans, measured in the browser
-            rather than estimated. The old layout ran to about 90. */}
-        <div className="mx-auto flex max-w-[62rem] flex-col gap-14 lg:flex-row lg:gap-16">
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={staggerContainer}
-            className="min-w-0 lg:max-w-[40rem] lg:flex-1"
-          >
-            <motion.div variants={fadeIn}>
-              <Link
-                href="/blog"
-                className="group inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-foreground"
-              >
-                <ArrowLeft
-                  className="h-3 w-3 transition-transform duration-200 group-hover:-translate-x-0.5"
-                  aria-hidden="true"
-                />
-                {t("back")}
-              </Link>
-            </motion.div>
-
-            <motion.header
-              variants={fadeIn}
-              className="mt-10 border-b border-border pb-10"
-            >
-              {/* One mono line of facts instead of four icon-and-label pairs.
-                  The author pair is gone: this is a single-author site, so the
-                  name repeated on every post carried no information — the
-                  BlogPosting JSON-LD states it for machines instead. */}
-              <p className="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
-                <span>{formatDate(frontmatter.date)}</span>
-                <Dot />
-                <span className="tabular-nums">
-                  {t("minutes", { count: readingMinutes })}
-                </span>
-                <ViewCounter slug={slug} />
-              </p>
-
-              <h1 className="mt-6 max-w-[26ch] font-heading text-3xl font-semibold leading-[1.08] tracking-tight text-foreground md:text-4xl lg:text-5xl">
-                {frontmatter.title}
-              </h1>
-
-              {frontmatter.description && (
-                <p className="mt-6 max-w-[58ch] text-lg leading-relaxed text-muted-foreground">
-                  {frontmatter.description}
-                </p>
-              )}
-
-              {frontmatter.tags.length > 0 && (
-                <p className="mt-7 font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
-                  {frontmatter.tags.join(" · ")}
-                </p>
-              )}
-            </motion.header>
-
-            {frontmatter.image && (
-              <motion.div
-                variants={fadeIn}
-                className="relative mt-10 aspect-video overflow-hidden rounded-xl border border-border"
-              >
-                <Image
-                  src={frontmatter.image}
-                  alt={frontmatter.title}
-                  fill
-                  className="object-cover"
-                  sizes="(min-width: 1024px) 48rem, 100vw"
-                  priority
-                />
-              </motion.div>
-            )}
-
-            <motion.div variants={fadeIn} className="mt-12 lg:hidden">
-              <TocMobile
-                toc={toc}
-                activeId={activeId}
-                onItemClick={scrollToHeading}
-              />
-            </motion.div>
-
-            <motion.article variants={fadeIn} className="mdx-body mt-12">
-              {children}
-            </motion.article>
-
-            <ShareRow title={frontmatter.title} />
-
-            <AdjacentPosts previous={previous} next={next} />
-
-            <Comments slug={slug} />
-          </motion.div>
-
-          <motion.div
-            className="hidden lg:block lg:w-52 lg:shrink-0"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.4, delay: 0.3 }}
-          >
-            <TocDesktop
-              toc={toc}
-              activeId={activeId}
-              onItemClick={scrollToHeading}
-            />
-          </motion.div>
+    <main className="mx-auto max-w-[46rem] px-5 pb-20 pt-24 text-foreground sm:px-8 sm:pb-28 sm:pt-28">
+      <Link
+        href="/blog"
+        className="inline-flex min-h-11 items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
+      >
+        <ArrowLeft className="size-3.5" aria-hidden="true" />
+        {t("back")}
+      </Link>
+      <header className="mt-7 sm:mt-10">
+        <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[13px] text-muted-foreground">
+          <time dateTime={frontmatter.date}>
+            {formatDate(frontmatter.date)}
+          </time>
+          <span aria-hidden="true">·</span>
+          <span>{t("minutes", { count: readingMinutes })}</span>
+          <ViewCounter slug={slug} />
+        </p>
+        <h1 className="mt-4 text-balance font-sans text-[2rem] font-semibold leading-[1.17] tracking-[-0.035em] sm:text-[2.75rem]">
+          {frontmatter.title}
+        </h1>
+        {frontmatter.description && (
+          <p className="mt-5 text-[17px] leading-[1.7] text-muted-foreground sm:text-lg">
+            {frontmatter.description}
+          </p>
+        )}
+        <ArticleOutline
+          toc={toc}
+          activeId={activeId}
+          onItemClick={scrollToHeading}
+        />
+      </header>
+      {frontmatter.image && (
+        <div className="mt-8 overflow-hidden rounded-sm sm:mt-10">
+          <Image
+            src={frontmatter.image}
+            alt={frontmatter.title}
+            width={1600}
+            height={900}
+            className="h-auto w-full"
+            sizes="(min-width: 768px) 42rem, 100vw"
+            priority
+          />
         </div>
-      </div>
-    </div>
-  );
-}
-
-function Dot() {
-  return (
-    <span className="text-faint" aria-hidden="true">
-      ·
-    </span>
+      )}
+      <article className="mdx-body mt-9 sm:mt-12">{children}</article>
+      <ShareRow title={frontmatter.title} />
+      <AdjacentPosts previous={previous} next={next} />
+      <Comments slug={slug} />
+    </main>
   );
 }
 

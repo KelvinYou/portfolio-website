@@ -2,6 +2,7 @@ import Image from "next/image";
 import React from "react";
 import { CodeBlock, InlineCode } from "./code-block";
 import { Gallery } from "@/components/gallery";
+import { ArticleCarousel } from "./article-carousel";
 
 /**
  * Long-form styling for post bodies.
@@ -25,7 +26,7 @@ import { Gallery } from "@/components/gallery";
  */
 
 const HEADING_BASE =
-  "font-heading font-semibold tracking-tight text-foreground scroll-mt-28";
+  "font-sans font-semibold tracking-[-0.02em] text-foreground scroll-mt-28";
 
 export const mdxComponents = {
   pre: (props: React.ComponentPropsWithoutRef<"pre">) => (
@@ -41,19 +42,19 @@ export const mdxComponents = {
   h1: (props: React.ComponentPropsWithoutRef<"h1">) => (
     <h1
       {...props}
-      className={`${HEADING_BASE} mb-6 mt-14 text-3xl md:text-4xl`}
+      className={`${HEADING_BASE} mb-5 mt-12 text-2xl md:text-3xl`}
     />
   ),
   h2: (props: React.ComponentPropsWithoutRef<"h2">) => (
     <h2
       {...props}
-      className={`${HEADING_BASE} mb-5 mt-14 text-2xl md:text-[1.75rem]`}
+      className={`${HEADING_BASE} mb-4 mt-12 text-[1.4rem] leading-[1.35] md:text-[1.65rem]`}
     />
   ),
   h3: (props: React.ComponentPropsWithoutRef<"h3">) => (
     <h3
       {...props}
-      className={`${HEADING_BASE} mb-4 mt-10 text-xl md:text-2xl`}
+      className={`${HEADING_BASE} mb-3 mt-9 text-xl leading-snug md:text-[1.35rem]`}
     />
   ),
   h4: (props: React.ComponentPropsWithoutRef<"h4">) => (
@@ -72,20 +73,20 @@ export const mdxComponents = {
   p: (props: React.ComponentPropsWithoutRef<"p">) => (
     <p
       {...props}
-      className="mb-6 text-[1.0625rem] leading-[1.75] text-foreground/90"
+      className="mb-6 text-[1.0625rem] leading-[1.85] sm:text-[1.125rem] text-foreground/90"
     />
   ),
 
   ol: (props: React.ComponentPropsWithoutRef<"ol">) => (
     <ol
       {...props}
-      className="my-6 list-outside list-decimal space-y-2.5 pl-7 text-[1.0625rem] leading-[1.75] text-foreground/90 marker:font-mono marker:text-sm marker:text-muted-foreground"
+      className="my-6 list-outside list-decimal space-y-2.5 pl-7 text-[1.0625rem] leading-[1.85] sm:text-[1.125rem] text-foreground/90 marker:font-mono marker:text-sm marker:text-muted-foreground"
     />
   ),
   ul: (props: React.ComponentPropsWithoutRef<"ul">) => (
     <ul
       {...props}
-      className="my-6 list-outside list-disc space-y-2.5 pl-7 text-[1.0625rem] leading-[1.75] text-foreground/90 marker:text-subtle"
+      className="my-6 list-outside list-disc space-y-2.5 pl-7 text-[1.0625rem] leading-[1.85] sm:text-[1.125rem] text-foreground/90 marker:text-subtle"
     />
   ),
   li: (props: React.ComponentPropsWithoutRef<"li">) => (
@@ -97,7 +98,7 @@ export const mdxComponents = {
   blockquote: (props: React.ComponentPropsWithoutRef<"blockquote">) => (
     <blockquote
       {...props}
-      className="my-8 border-l-2 border-primary/50 pl-6 text-[1.0625rem] leading-[1.75] not-italic text-foreground/80 [&>p:last-child]:mb-0"
+      className="my-8 border-l-2 border-border pl-5 text-[1.0625rem] leading-[1.85] sm:text-[1.125rem] not-italic text-foreground/80 [&>p:last-child]:mb-0"
     />
   ),
 
@@ -125,7 +126,7 @@ export const mdxComponents = {
       width={0}
       height={0}
       sizes="(min-width: 1024px) 44rem, 100vw"
-      className="my-8 h-auto w-full rounded-xl border border-border"
+      className="my-8 h-auto w-full rounded-sm"
       style={{ maxWidth: "100%" }}
     />
   ),
@@ -134,7 +135,7 @@ export const mdxComponents = {
   // four-column comparison wrapped to 68ch is unreadable. It scrolls in its
   // own container rather than pushing the page sideways.
   table: (props: React.ComponentPropsWithoutRef<"table">) => (
-    <div className="my-8 overflow-x-auto rounded-xl border border-border">
+    <div className="my-8 overflow-x-auto border-y border-border">
       <table {...props} className="w-full border-collapse text-left text-sm" />
     </div>
   ),
@@ -147,7 +148,7 @@ export const mdxComponents = {
   th: (props: React.ComponentPropsWithoutRef<"th">) => (
     <th
       {...props}
-      className="whitespace-nowrap px-5 py-3 font-mono text-[11px] uppercase tracking-[0.16em] font-normal text-muted-foreground"
+      className="whitespace-nowrap px-5 py-3 text-xs font-medium text-muted-foreground"
     />
   ),
   td: (props: React.ComponentPropsWithoutRef<"td">) => (
@@ -162,4 +163,5 @@ export const mdxComponents = {
   ),
 
   Gallery,
+  ArticleCarousel,
 };

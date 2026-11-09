@@ -61,21 +61,10 @@ export function Comments({ slug }: { slug: string }) {
     }
   }
 
-  if (!ready) {
-    return (
-      <section className="mt-12 pt-10 border-t border-border/30">
-        <p className="text-xs font-mono tracking-[0.16em] uppercase text-subtle mb-1">
-          Comments
-        </p>
-        <p className="text-sm text-muted-foreground">
-          Comments are temporarily unavailable.
-        </p>
-      </section>
-    );
-  }
+  if (!ready) return null;
 
   return (
-    <motion.section
+    <motion.div
       initial="hidden"
       whileInView="visible"
       viewport={defaultViewport}
@@ -132,9 +121,7 @@ export function Comments({ slug }: { slug: string }) {
           <span
             className={cn(
               "text-[11px] font-mono",
-              messageLength > 1800
-                ? "text-foreground"
-                : "text-subtle",
+              messageLength > 1800 ? "text-foreground" : "text-subtle",
             )}
           >
             {messageLength}/2000
@@ -169,7 +156,7 @@ export function Comments({ slug }: { slug: string }) {
           ))}
         </ul>
       )}
-    </motion.section>
+    </motion.div>
   );
 }
 
@@ -187,9 +174,7 @@ function CommentItem({ comment }: { comment: BlogComment }) {
           <span className="text-sm font-semibold text-foreground">
             {comment.name}
           </span>
-          <span className="text-[11px] text-subtle">
-            {dateLabel}
-          </span>
+          <span className="text-[11px] text-subtle">{dateLabel}</span>
         </div>
       </div>
       <p className="text-sm text-muted-foreground leading-relaxed whitespace-pre-wrap break-words pl-9">
