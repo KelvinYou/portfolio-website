@@ -1,5 +1,4 @@
-import { renderToBuffer } from "@react-pdf/renderer";
-import { ResumeDocument } from "@/lib/resume/resume-document";
+import { renderResumePdf } from "@/lib/resume/render-resume-pdf";
 
 /**
  * `/resume` IS the PDF — there is no HTML page wrapping it.
@@ -14,19 +13,13 @@ import { ResumeDocument } from "@/lib/resume/resume-document";
  * The URL is deliberately unprefixed and excluded from the next-intl matcher
  * (see `src/middleware.ts`): one English document, one canonical address that
  * stays valid on a printed application form.
+ *
+ * This is the default (AI product) variant; `/resume/frontend` serves the
+ * frontend one.
  */
 export const runtime = "nodejs";
 export const dynamic = "force-static";
 
-export async function GET() {
-  const buffer = await renderToBuffer(<ResumeDocument />);
-
-  return new Response(new Uint8Array(buffer), {
-    headers: {
-      "Cache-Control":
-        "public, max-age=0, s-maxage=86400, stale-while-revalidate=604800",
-      "Content-Disposition": 'inline; filename="KelvinYou-Resume.pdf"',
-      "Content-Type": "application/pdf",
-    },
-  });
+export function GET() {
+  return renderResumePdf("ai-product");
 }

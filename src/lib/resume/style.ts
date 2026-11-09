@@ -178,6 +178,14 @@ export const styles = StyleSheet.create({
     fontSize: 9.1,
     color: muted,
   },
+  // One-line scope (users, product, client) above the bullets: the bullets say
+  // what was built, this says how big the thing was.
+  jobContext: {
+    fontSize: 8.6,
+    lineHeight: 1.4,
+    color: ink,
+    marginTop: UNIT * 0.5,
+  },
 
   // ----------------------------------------------------------------- bullets
   bulletList: {

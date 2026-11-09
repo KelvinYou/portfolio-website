@@ -5,8 +5,12 @@ import {
   getLinkedInName,
   getPersonalWebsiteName,
 } from "@/lib/utils";
-import { resumeProfile } from "./resume-profile";
+import { getResumeProfile, type ResumeVariant } from "./resume-profile";
 import { styles } from "./style";
+
+interface ResumeDocumentProps {
+  variant: ResumeVariant;
+}
 
 /**
  * Hairline rule, tracked label, content. The rule carries the section break so
@@ -34,7 +38,8 @@ const Bullet = ({ children }: { children: string }) => (
   </View>
 );
 
-const ResumeDocument = () => {
+const ResumeDocument = ({ variant }: ResumeDocumentProps) => {
+  const resumeProfile = getResumeProfile(variant);
   const { personalInfo } = resumeProfile;
   const { contact } = personalInfo;
 
@@ -154,6 +159,9 @@ const ResumeDocument = () => {
                     {` · ${job.location} · ${job.type}`}
                   </Text>
                 </Text>
+                {job.description ? (
+                  <Text style={styles.jobContext}>{job.description}</Text>
+                ) : null}
 
                 <View style={styles.bulletList}>
                   {job.responsibilities.map((bullet) => (
