@@ -71,10 +71,12 @@
   },
   "blog": {
     "title": "Writing",
-    "intro": "Notes on building payment systems — mostly about a decision and what it cost. Newest first, grouped by year.",
+    "intro": "Notes on software, payments, and the decisions behind them.",
     "legend": "Right column: how long a note takes to read, and how long it runs next to the longest one here.",
     "search_label": "Search notes",
     "search_placeholder": "Title, summary, or topic",
+    "topics_label": "Filter by topic",
+    "all_topics": "All topics",
     "topic_all": "All",
     "count": "{count, plural, =1 {# note} other {# notes}}",
     "results": "{count, plural, =0 {No matches} =1 {1 match} other {# matches}}",

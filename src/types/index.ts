@@ -1,6 +1,23 @@
 import { Icons } from "@/components/icons";
 import type { GalleryItem } from "@/types/gallery";
 
+export type { WritingRowProps } from "@/components/blog/writing-row";
+export type {
+  BlogClientProps,
+  BlogIndexProps,
+} from "@/app/[locale]/(main)/blog/blog-client";
+export type {
+  BlogFiltersProps,
+  Topic,
+} from "@/app/[locale]/(main)/blog/blog-filters";
+export type { BlogPostClientProps } from "@/app/[locale]/(main)/blog/[slug]/client";
+export type { TocProps } from "@/app/[locale]/(main)/blog/[slug]/toc";
+
+export interface ArticleCarouselProps {
+  items: GalleryItem[];
+  title?: string;
+}
+
 /** A separate page. */
 export interface NavItem {
   name: string;

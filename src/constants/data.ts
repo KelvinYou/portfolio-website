@@ -23,19 +23,20 @@ export const experiences: Experience[] = [
     description:
       "Production payments platform, 9,000+ users. Led Flutter to React Native migration unifying mobile + web.",
     responsibilities: [
-      "Kotlin backend for cross-currency batch payments: FX quote lock, largest-remainder allocation, CAS-on-status duplicate guard.",
-      "Fail-closed PII masking across 5 payment surfaces — unmask only on explicit corporate classification.",
-      "KYT case review UI: maker-checker approval workflow, RFI state machine, scope-gated decisions.",
+      "Kotlin + Spring Boot cross-currency batch payments: locked FX quotes, cent-exact splits, duplicate guard.",
+      "PII masking across 5 payment surfaces, fail-closed: data stays masked unless explicitly classified corporate.",
+      "AML review (KYT) UI: maker-checker approvals, request-for-info state machine, scoped decisions.",
+      "Cross-system live E2E (Playwright): Wallet → TOP → bank callback → ledger checks, agent-operable runbooks.",
     ],
     skills: [
       "Kotlin",
+      "Spring Boot",
       "React",
       "React Native",
       "TypeScript",
       "Payment Systems",
       "Concurrency",
       "System Design",
-      "Fintech",
     ],
     logo: "/images/companies/dtcpay.jpeg",
     // The two Kotlin write-ups are the only public evidence of server-side
@@ -71,11 +72,13 @@ export const experiences: Experience[] = [
     startDate: "2024-6-10",
     endDate: "2025-7-7",
     description:
-      "Vendor SaaS (LessenPro) for Lessen, a US property-services operator. 500+ properties managed.",
+      "Vendor SaaS (LessenPro) for Lessen, a US property-services operator.",
+    // No percentages: none of them was ever measured. Each bullet is a
+    // mechanism the owner can walk through in an interview instead.
     responsibilities: [
-      "Component library with compound patterns, TypeScript generics, Storybook docs. 40% faster dev velocity, 60KB bundle reduction.",
-      "GraphQL layer: Apollo Client, 80% cache hit rate, custom hooks (usePaginatedQuery, useOptimisticMutation). Type-safe, zero prop-drilling.",
-      "Performance: Code splitting, virtualization for 10K+ rows, Zustand over Redux. 35% faster initial loads.",
+      "Built and owned the shared React component library (TypeScript, Storybook) behind LessenPro's screens.",
+      "Apollo cache: cache.modify list writes instead of refetchQueries, so new tickets skip a full list refetch.",
+      "Mobile-first responsive rebuild of the vendor app, with design and backend teams.",
     ],
     skills: [
       "React",
@@ -101,7 +104,7 @@ export const experiences: Experience[] = [
       {
         title: "LessenPro",
         description:
-          "Scheduling engine, vendor coordination, maintenance tracking. 500+ properties managed.",
+          "Scheduling engine, vendor coordination, maintenance tracking.",
         demo: "https://www.lessenpro.com/",
         techStacks: [
           "React",
@@ -122,11 +125,13 @@ export const experiences: Experience[] = [
     startDate: "2023-7-31",
     endDate: "2024-6-7",
     description:
-      "Game analytics platform (DataBrain) for Tencent's Level Infinite, 30+ studios.",
+      "Game analytics platform (DataBrain) for Tencent's Level Infinite.",
+    // Sourced from the owner's own 2025 write-up plus confirmed details; the
+    // earlier 500K-row / 60fps / Docker claims were template text, not facts.
     responsibilities: [
-      "Performance: Virtual scrolling (500K rows), Web Workers for parsing, debounced filters. Sub-3s loads at 60fps.",
-      "Quality: Jest standards, mandatory reviews, 40% fewer production bugs. Docker dev env: 4h → 30min onboarding.",
-      "Cross-team: Specs with Tencent engineers, cross-browser (Safari, IE11), China CDN optimization.",
+      "Shipped 15+ features in a qiankun micro-frontend (React, Umi, Ant Design) for user-configurable dashboards.",
+      "100K-row tables: Web Worker parsing, infinite scroll, memoized chart/table components to cut re-renders.",
+      "Delivered from Chinese-language specs with Tencent product and engineering teams across time zones.",
     ],
     skills: [
       "React",
@@ -148,7 +153,7 @@ export const experiences: Experience[] = [
         alt: "The Databrain team at Beyondsoft",
         title: "The Databrain team",
         description:
-          "The group behind the visualization module — the dashboards, the 500K-row tables, and the CSS bug in the opening paragraph.",
+          "The group behind the visualization module — the dashboards, the 100K-row tables, and the CSS bug in the opening paragraph.",
         width: 1000,
         height: 750,
         metadata: {
@@ -185,7 +190,7 @@ export const experiences: Experience[] = [
     ],
   },
   {
-    title: "Java Engineer Intern",
+    title: "Java Software Engineer Intern",
     company: "Finexus (Fintech)",
     companyUrl: "https://www.finexusgroup.com/",
     location: "Kuala Lumpur, Malaysia",
@@ -193,11 +198,14 @@ export const experiences: Experience[] = [
     startDate: "2023-2-1",
     endDate: "2023-7-31",
     description:
-      "First exposure to fintech production payment systems — legacy Java/JSP monolith, thousands of daily transactions. Foundation for current fintech work at dtcpay.",
+      "Legacy fintech Java applications: new payment features, test coverage, deployment scripts.",
+    // 2026-11-08: restored from the owner-confirmed 2023 entry. The later
+    // HikariCP pool bug, Jasper report tuning and every metric (99.9% uptime,
+    // 4h→2h, 8s→1.2s) were template text and never happened. The HikariCP blog
+    // post is now a general technique note and is no longer linked from here.
     responsibilities: [
-      "Fixed connection pool bug causing peak-hour failures. HikariCP + JMX monitoring → 99.9% uptime.",
-      "Deployment automation: Bash scripts for Tomcat WAR deploys. 4h → 2h per release.",
-      "Jasper Reports: Query optimization, indexing. 8s → 1.2s report generation.",
+      "Extended legacy Java applications with payment processing features, with unit and integration tests.",
+      "Shell scripts to automate Tomcat deployments and streamline release configuration.",
     ],
     skills: [
       "Java",
@@ -206,13 +214,12 @@ export const experiences: Experience[] = [
       "JSP",
       "Tomcat",
       "Shell Scripting",
-      "Jasper Reports",
+      "SOAP",
     ],
     logo: "/images/companies/finexus.png",
-    blogSlugs: ["hikaricp-pool-exhaustion-jmx"],
   },
   {
-    title: "Blockchain Engineer Intern",
+    title: "Software Engineer Intern",
     company: "Techtics (Web3)",
     companyUrl: "https://www.techtics.io/",
     location: "Kuala Lumpur, Malaysia",
@@ -220,22 +227,26 @@ export const experiences: Experience[] = [
     startDate: "2020-10-1",
     endDate: "2021-1-31",
     description:
-      "Ethereum dApp during 2020 DeFi boom. Smart contracts, gas optimization, MetaMask.",
+      "Ethereum dApp with MetaMask signing, plus a jQuery → React rebuild of the legacy frontend.",
+    // 2026-11-08: restored from the owner-confirmed 2023 entry. Reentrancy
+    // guards, IPFS gas optimization, "deployed to mainnet" and 65K→38K gas were
+    // template text. The reentrancy blog post is now a general technique note
+    // and is no longer linked from here.
     responsibilities: [
-      "Solidity contracts: Reentrancy guards, gas estimation UI, MetaMask signing. Deployed to mainnet.",
-      "Gas optimization: IPFS storage, batched transactions. 65K → 38K gas (40% savings).",
+      "Migrated the legacy jQuery frontend to React.",
+      "Built a dApp connecting Solidity smart contracts to MetaMask for transaction signing.",
+      "Real-time exchange-rate feeds, authentication flows and REST APIs for transaction management.",
     ],
     skills: [
       "React",
       "TypeScript",
       "Solidity",
       "MetaMask",
+      "Laravel",
       "Node.js",
       "Express",
-      "Redux",
     ],
     logo: "/images/companies/techtics.png",
-    blogSlugs: ["reentrancy-guards-and-the-gas-they-cost"],
   },
 ];
 
@@ -589,10 +600,10 @@ export const certifications = [
  * `coursework` means a 2022-23 assignment and nothing since; `gap` means
  * studied, never shipped.
  *
- * Two entries were dropped rather than re-tiered: "Agentic AI" (a buzzword
- * restatement of Multi-agent Systems + MCP, both of which are listed) and
- * "AI-assisted Development" (not falsifiable — the same reason the soft-skills
- * tab was deleted from the section).
+ * Three entries were dropped rather than re-tiered: "Agentic AI" (a buzzword
+ * restatement of Multi-agent Systems + MCP, both of which are listed),
+ * "AI-assisted Development" and "Prompt Engineering" (not falsifiable — the
+ * same reason the soft-skills tab was deleted from the section).
  */
 export const skillList: Skill[] = [
   // Production — dtcpay (9,000+ users), Simpletruss, PTIB (3 paying centres).
@@ -613,6 +624,7 @@ export const skillList: Skill[] = [
     depth: "shipped",
   },
   { name: "Kotlin", domain: "core", layer: "server", depth: "shipped" },
+  { name: "Spring Boot", domain: "core", layer: "server", depth: "shipped" },
   { name: "PostgreSQL", domain: "data", layer: "server", depth: "shipped" },
   { name: "Supabase", domain: "data", layer: "server", depth: "shipped" },
   { name: "Vercel", domain: "delivery", layer: "ops", depth: "shipped" },
@@ -637,7 +649,6 @@ export const skillList: Skill[] = [
   },
   { name: "Multi-agent Systems", domain: "ai", layer: "ai", depth: "built" },
   { name: "RAG", domain: "ai", layer: "ai", depth: "built" },
-  { name: "Prompt Engineering", domain: "ai", layer: "ai", depth: "built" },
   { name: "Claude Code", domain: "tools", layer: "ai", depth: "built" },
   { name: "Docker", domain: "delivery", layer: "ops", depth: "built" },
   {
@@ -675,8 +686,10 @@ export const skillList: Skill[] = [
  * The domain cut, for the resume PDF. A one-page scan wants "does he have the
  * data layer" answered fast, and depth tiers on paper would read as hedging.
  *
- * `gap` skills are excluded: on a resume a bare keyword is read as a claim of
- * experience, and the qualifier that makes it honest only exists on the site.
+ * Only `shipped` and `built` skills are listed: on a resume a bare keyword is
+ * read as a claim of current experience, and the qualifier that makes a `gap`
+ * or 2022-23 `coursework` entry honest only exists on the site. Coursework also
+ * cost the page two wrapped lines it needs for content.
  */
 const domainLabels: { domain: SkillDomain; label: string }[] = [
   { domain: "core", label: "Tech Stack" },
@@ -692,7 +705,11 @@ export const skillGroups: { label: string; items: readonly string[] }[] =
   domainLabels.map(({ domain, label }) => ({
     label,
     items: skillList
-      .filter((skill) => skill.domain === domain && skill.depth !== "gap")
+      .filter(
+        (skill) =>
+          skill.domain === domain &&
+          (skill.depth === "shipped" || skill.depth === "built"),
+      )
       .map((skill) => skill.name),
   }));
 

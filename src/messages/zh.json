@@ -71,10 +71,12 @@
   },
   "blog": {
     "title": "写作",
-    "intro": "关于支付系统开发的笔记 —— 大多是一个决定，以及它的代价。按年份分组，最新在前。",
+    "intro": "关于软件、支付系统，以及背后那些取舍的笔记。",
     "legend": "右栏：这篇要读多久，以及它相对本页最长一篇有多长。",
     "search_label": "搜索笔记",
     "search_placeholder": "标题、摘要或主题",
+    "topics_label": "按主题筛选",
+    "all_topics": "所有主题",
     "topic_all": "全部",
     "count": "{count} 篇",
     "results": "{count, plural, =0 {没有匹配} other {# 篇匹配}}",

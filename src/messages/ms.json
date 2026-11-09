@@ -71,10 +71,12 @@
   },
   "blog": {
     "title": "Penulisan",
-    "intro": "Nota tentang membina sistem pembayaran — kebanyakannya mengenai satu keputusan dan kosnya. Terbaharu dahulu, dikumpulkan mengikut tahun.",
+    "intro": "Nota tentang perisian, pembayaran, dan keputusan di sebaliknya.",
     "legend": "Lajur kanan: berapa lama sebuah nota diambil untuk dibaca, dan panjangnya berbanding nota terpanjang di sini.",
     "search_label": "Cari nota",
     "search_placeholder": "Tajuk, ringkasan, atau topik",
+    "topics_label": "Tapis mengikut topik",
+    "all_topics": "Semua topik",
     "topic_all": "Semua",
     "count": "{count} nota",
     "results": "{count, plural, =0 {Tiada padanan} other {# padanan}}",
